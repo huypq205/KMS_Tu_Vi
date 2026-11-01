@@ -1,13 +1,34 @@
 """Consume progress records without treating a partial/disconnected report as success."""
 import json
+import os
+
 import requests
+
+
+def _headers() -> dict:
+    """Gửi X-API-Key khi backend yêu cầu (env KMS_API_KEY); bỏ qua khi chưa bật."""
+    key = os.getenv("KMS_API_KEY", "").strip()
+    return {"X-API-Key": key} if key else {}
+
+
+def _raise_for_status(response) -> None:
+    """raise_for_status + thông điệp thân thiện cho lỗi 429 (rate limit)."""
+    try:
+        response.raise_for_status()
+    except requests.HTTPError as exc:
+        if response.status_code == 429:
+            raise ValueError(
+                "Bạn đã gửi quá nhiều yêu cầu trong 1 phút (giới hạn của dịch vụ). "
+                "Chờ ít phút rồi thử lại."
+            ) from exc
+        raise
 
 
 def ask_horoscope(api_base: str, payload: dict):
     """Hỏi nhanh theo chủ đề (/api/v1/horoscope/ask); trả JSON hoặc raise."""
     response = requests.post(f'{api_base}/api/v1/horoscope/ask', json=payload,
-                             timeout=(5, 75))
-    response.raise_for_status()
+                             headers=_headers(), timeout=(5, 75))
+    _raise_for_status(response)
     data = response.json()
     if not isinstance(data, dict) or data.get('status') != 'ok':
         raise ValueError(data.get('detail') or data.get('message') or 'Dịch vụ chưa trả được câu trả lời.')
@@ -16,9 +37,9 @@ def ask_horoscope(api_base: str, payload: dict):
 
 def reading_events(api_base: str, payload: dict):
     response = requests.post(f'{api_base}/api/v1/horoscope/read-stream', json=payload,
-                             stream=True, timeout=(5, 75))
+                             headers=_headers(), stream=True, timeout=(5, 75))
     try:
-        response.raise_for_status()
+        _raise_for_status(response)
         finished = False
         for line in response.iter_lines(decode_unicode=True):
             if not line:

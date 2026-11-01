@@ -90,6 +90,17 @@ Nếu bạn muốn kết nối Google Gemini API:
    ```
 3. Khi gọi API hoặc CLI, chọn provider là `gemini` hoặc `auto`.
 
+### Bảo mật API khi deploy (Render)
+Ba biến tuỳ chọn trong `.env` (mặc định: API mở, rate limit 10 yêu cầu/phút cho `/horoscope*`):
+
+```env
+KMS_API_KEY=            # khi đặt: mọi /api/v1/* (trừ /health) bắt buộc header X-API-Key
+KMS_RATE_LIMIT_PER_MIN=10   # 0 để tắt
+KMS_CORS_ORIGINS=http://localhost:8501,http://localhost:8502
+```
+
+Frontend Streamlit tự gửi `X-API-Key` khi `KMS_API_KEY` được đặt (cùng file `.env`), và tự hiển thị cảnh báo khi dev local "im lặng" trỏ vào backend production.
+
 ---
 
 ## 🛑 CÁCH DỪNG HỆ THỐNG

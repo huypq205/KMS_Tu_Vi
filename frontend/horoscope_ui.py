@@ -16,18 +16,19 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import importlib
-for _mod in ('frontend.horoscope_view', 'frontend.horoscope_transport', 'frontend.laso_renderer'):
+for _mod in ('frontend.horoscope_view', 'frontend.horoscope_transport', 'frontend.horoscope_ask', 'frontend.laso_renderer'):
     if _mod in sys.modules:
         try:
             importlib.reload(sys.modules[_mod])
         except Exception:
             pass
 
-from frontend.horoscope_view import (ASK_LABELS, ASK_SUGGESTIONS, BOOKS, HOURS, TOPICS, content,
+from frontend.horoscope_view import (BOOKS, HOURS, TOPICS, content,
                                     palace_preview, panel, text, topic_panel, validate_birth_date,
                                     annual_panel, star_table)
 from frontend.laso_renderer import luoi_html
-from frontend.horoscope_transport import ask_horoscope, reading_events
+from frontend.horoscope_transport import reading_events
+from frontend.horoscope_ask import ask_box
 
 st.set_page_config(page_title="Tử Vi · Bản đồ bản thân", layout="wide", initial_sidebar_state="auto")
 style = (ROOT / "frontend/assets/horoscope.css").read_text(encoding="utf-8")
@@ -54,60 +55,15 @@ API_BASE = _resolve_api_base()
 year_now = datetime.now(ZoneInfo("Asia/Bangkok")).year
 
 
-def _render_ask_answer(saved: dict) -> None:
-    result = saved["result"]
-    level = ASK_LABELS.get(result.get("muc_do_can_cu"), "—")
-    if result.get("muc_do_can_cu") == "dau_hieu_ro":
-        st.success(level)
-    elif result.get("muc_do_can_cu") == "dau_hieu_yeu":
-        st.warning(level)
-    else:
-        st.info(level)
-    body = f'<p>{text(result.get("tra_loi"))}</p>'
-    if result.get("giai_thich_thun_viet"):
-        body += f'<p class="muted">{text(result.get("giai_thich_thun_viet"))}</p>'
-    if result.get("gioi_han"):
-        body += f'<p class="muted">Giới hạn: {text(result.get("gioi_han"))}</p>'
-    st.markdown(body, unsafe_allow_html=True)
-    meta = result.get("meta", {})
-    mode_note = " · Chế độ chỉ dữ kiện lá số (không dùng AI)" if meta.get("is_mock") else ""
-    st.caption(f"Câu hỏi: “{text(saved.get('question'))}” · {text(saved.get('time', ''))}{mode_note} · Trích dẫn chưa kiểm duyệt thủ công.")
-    if result.get("citations"):
-        with st.expander(f"Nguồn sách đã đối chiếu ({len(result['citations'])})"):
-            for c in result["citations"]:
-                st.caption(f'[{c.get("ref_id")}] {c.get("book_title") or c.get("book_code", "Nguồn")} · {c.get("page_label") or "Trang không xác định"}')
-                st.text(c.get("excerpt") or "Chưa có đoạn trích.")
+def _is_in_container() -> bool:
+    """Streamlit Cloud / Docker: fallback production là hành vi bình thường, không cảnh báo."""
+    return Path("/.dockerenv").exists() or bool(os.getenv("KUBERNETES_SERVICE_HOST"))
 
 
-def _ask_box(key: str, snapshot: dict, mode: str) -> None:
-    """Ô "Hỏi nhanh có đáp · kèm nguồn sách" trong tab chủ đề; câu trả lời lưu theo chủ đề."""
-    st.markdown('<p class="muted"><strong>Hỏi nhanh có đáp · kèm nguồn sách</strong> — trả lời theo dữ kiện lá số và trích dẫn 3 sách nguồn; chưa kiểm duyệt thủ công.</p>', unsafe_allow_html=True)
-    for sug_index, suggestion in enumerate(ASK_SUGGESTIONS.get(key, [])):
-        if st.button(suggestion, key=f'ask_sug_{key}_{sug_index}'):
-            st.session_state[f'ask_q_{key}'] = suggestion
-    ask_input = st.text_input("Câu hỏi của bạn (tối đa 300 ký tự)", key=f'ask_q_{key}', max_chars=300,
-                              placeholder="VD: Năm nay có người tìm hiểu không?")
-    if st.button("Hỏi luận giải thông minh", key=f'ask_btn_{key}'):
-        question = str(ask_input).strip()
-        if question:
-            payload = {'ho_ten': snapshot.get('ho_ten', ''), 'ngay': snapshot['ngay'], 'thang': snapshot['thang'],
-                       'nam': snapshot['nam'], 'chi_gio': snapshot['chi_gio'], 'gioi_tinh': snapshot['gioi_tinh'],
-                       'duong_lich': snapshot['duong_lich'], 'target_year': snapshot.get('target_year'),
-                       'topic': key, 'question': question, 'provider': mode}
-            with st.spinner("Đang hỏi luận giải thông minh…"):
-                try:
-                    result = ask_horoscope(API_BASE, payload)
-                    st.session_state[f'ask_answer_{key}'] = {'question': question, 'result': result,
-                                                             'time': datetime.now(ZoneInfo("Asia/Bangkok")).strftime('%H:%M')}
-                except requests.Timeout:
-                    st.error("Kết nối đến dịch vụ hỏi đáp quá thời gian chờ. Thử lại sau.")
-                except requests.RequestException:
-                    st.error("Không kết nối được dịch vụ hỏi đáp. Báo cáo hiện có vẫn được giữ.")
-                except ValueError as exc:
-                    st.error(str(exc))
-    saved = st.session_state.get(f'ask_answer_{key}')
-    if saved:
-        _render_ask_answer(saved)
+# Dev local mà local backend (127.0.0.1:8000) không chạy => app sẽ "im lặng" gọi
+# backend production. Cảnh báo để tránh nhầm lẫn khi phát triển.
+PROD_FALLBACK = "onrender.com" in API_BASE and not os.getenv("KMS_API_BASE") and not _is_in_container()
+
 
 with st.sidebar:
     st.markdown('<div class="brand"><span class="brand-mark" aria-hidden="true">田</span><strong>KMS Tử Vi</strong></div>', unsafe_allow_html=True)
@@ -133,6 +89,11 @@ with st.sidebar:
 st.markdown('<div class="viewer-bar"><span>KMS Tử Vi · Bản đồ bản thân</span><span>Tri thức từ NPL · Bửu Đình · Đẩu Số</span></div>', unsafe_allow_html=True)
 st.title("Bản luận giải Tử Vi")
 st.markdown("Một góc nhìn từ tri thức truyền thống, để hiểu mình và chiêm nghiệm.")
+if PROD_FALLBACK:
+    st.warning(
+        f"Local backend (http://127.0.0.1:8000) chưa chạy — app đang dùng backend production "
+        f"({API_BASE}). Chạy run_server.py, hoặc đặt biến môi trường KMS_API_BASE nếu muốn dùng backend khác."
+    )
 
 if submitted:
     validation = validate_birth_date(day, month, year, calendar == "Dương lịch")
@@ -234,7 +195,7 @@ else:
     for key, tab in zip(order, tabs):
         with tab:
             st.markdown(topic_panel(key, reading.get(key, {})), unsafe_allow_html=True)
-            _ask_box(key, snapshot, snapshot.get('provider', 'auto'))
+            ask_box(key, snapshot, snapshot.get('provider', 'auto'), API_BASE)
     if reading.get('ket_luan'):
         st.subheader('Kết luận & phân tích sâu')
         st.caption('Mỗi mục gồm nhận định chuyên môn và phần chuyển thuật ngữ sang nghĩa đời thường, kèm dữ kiện/nguồn đối chiếu.')

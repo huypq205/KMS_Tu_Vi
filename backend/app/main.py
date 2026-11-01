@@ -7,8 +7,14 @@ Chạy:
 """
 from __future__ import annotations
 
+import os
+import threading
+import time
+from collections import deque
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.responses import JSONResponse
 
 from backend.app.core.config import EXCERPT_MAX_CHARS
 from backend.app.schemas.search import Citation, SearchRequest, SearchResponse
@@ -17,19 +23,88 @@ from backend.app.services.pages import format_page_label
 from backend.app.services.retriever import Retriever
 from backend.app.services.rag import RAGPipeline
 
+_retriever_instance: Retriever | None = None
+_pipeline_instance: RAGPipeline | None = None
+_component_lock = threading.Lock()
+
+
+def get_retriever() -> Retriever:
+    """Retriever chia sẻ cho mọi request (vector store / embedder chỉ nạp 1 lần)."""
+    global _retriever_instance
+    if _retriever_instance is None:
+        with _component_lock:
+            if _retriever_instance is None:
+                _retriever_instance = Retriever()
+    return _retriever_instance
+
+
+def get_rag_pipeline() -> RAGPipeline:
+    """RAGPipeline chia sẻ, dùng chung Retriever với endpoint search."""
+    global _pipeline_instance
+    if _pipeline_instance is None:
+        with _component_lock:
+            if _pipeline_instance is None:
+                _pipeline_instance = RAGPipeline(retriever=get_retriever())
+    return _pipeline_instance
+
 app = FastAPI(
     title="KMS Tử Vi",
     description="Tra cứu tri thức Tử Vi từ 3 sách nguồn (NPL, DAU, BD)",
     version="0.1.0",
 )
 
+# CORS theo danh sách origin (env KMS_CORS_ORIGINS, phân tách bằng dấu phẩy).
+# Tránh wildcard: browser từ chối khi allow_origins=["*"] + allow_credentials=True.
+CORS_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        "KMS_CORS_ORIGINS", "http://localhost:8501,http://localhost:8502"
+    ).split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=CORS_ORIGINS,
+    allow_credentials="*" not in CORS_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# --- Bảo mật đơn giản: API key tùy chọn + rate limit các endpoint nặng (LLM) ---
+# KMS_API_KEY: rỗng (mặc định) = mở; khi đặt, mọi /api/v1/* (trừ /health) cần header X-API-Key.
+# KMS_RATE_LIMIT_PER_MIN: giới hạn yêu cầu/phút cho /api/v1/horoscope* (0 = tắt).
+_API_KEY = os.getenv("KMS_API_KEY", "").strip()
+_RATE_LIMIT_PER_MIN = int(os.getenv("KMS_RATE_LIMIT_PER_MIN", "10"))
+_rate_buckets: dict[str, deque] = {}
+_rate_lock = threading.Lock()
+
+
+def _rate_limited(ip: str, now: float) -> bool:
+    bucket = _rate_buckets.setdefault(ip, deque())
+    while bucket and now - bucket[0] > 60.0:
+        bucket.popleft()
+    if len(bucket) >= _RATE_LIMIT_PER_MIN:
+        return True
+    bucket.append(now)
+    return False
+
+
+@app.middleware("http")
+async def security_middleware(request, call_next):
+    path = request.url.path
+    if path.startswith("/api/v1/") and not path.endswith("/health"):
+        if _API_KEY and request.headers.get("X-API-Key", "") != _API_KEY:
+            return JSONResponse(status_code=401, content={"detail": "Thiếu hoặc sai X-API-Key."})
+        if _RATE_LIMIT_PER_MIN > 0 and path.startswith("/api/v1/horoscope"):
+            ip = request.client.host if request.client else "unknown"
+            with _rate_lock:
+                if _rate_limited(ip, time.monotonic()):
+                    return JSONResponse(
+                        status_code=429,
+                        content={"detail": "Quá nhiều yêu cầu trong 1 phút. Vui lòng thử lại sau."},
+                    )
+    return await call_next(request)
 
 
 def _tier_badge_map() -> dict[int, str]:
@@ -79,9 +154,7 @@ def health() -> dict:
 
 @app.post("/api/v1/search", response_model=SearchResponse)
 def search(req: SearchRequest) -> SearchResponse:
-    from backend.app.services.retriever import Retriever
-
-    retriever = Retriever()
+    retriever = get_retriever()
     hits = retriever.search(
         req.query,
         top_k=req.top_k,
@@ -187,7 +260,7 @@ def stats() -> dict:
 
 @app.post("/api/v1/chat/ask", response_model=ChatAskResponse)
 def chat_ask(req: ChatAskRequest) -> ChatAskResponse:
-    pipeline = RAGPipeline()
+    pipeline = get_rag_pipeline()
     return pipeline.ask(
         question=req.question,
         top_k=req.top_k,
