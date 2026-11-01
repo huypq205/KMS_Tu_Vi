@@ -2,8 +2,7 @@
 from __future__ import annotations
 
 import json
-import os
-import shutil
+import threading
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Any
@@ -110,11 +109,23 @@ class NumpyVectorStore(VectorStore):
         pass
 
 
+_store_instance: VectorStore | None = None
+_store_lock = threading.Lock()
+
+
 def get_vector_store() -> VectorStore:
-    if VECTOR_STORE == "qdrant":
-        try:
-            from backend.app.services.vector_store_qdrant import QdrantVectorStore
-            return QdrantVectorStore()
-        except Exception:
-            pass
-    return NumpyVectorStore(QDRANT_PATH, EMBEDDING_DIM)
+    """Vector store chia sẻ toàn tiến trình (mở Qdrant local / nạp numpy 1 lần)."""
+    global _store_instance
+    if _store_instance is not None:
+        return _store_instance
+    with _store_lock:
+        if _store_instance is None:
+            if VECTOR_STORE == "qdrant":
+                try:
+                    from backend.app.services.vector_store_qdrant import QdrantVectorStore
+                    _store_instance = QdrantVectorStore()
+                except Exception:
+                    _store_instance = NumpyVectorStore(QDRANT_PATH, EMBEDDING_DIM)
+            else:
+                _store_instance = NumpyVectorStore(QDRANT_PATH, EMBEDDING_DIM)
+    return _store_instance

@@ -60,17 +60,14 @@ class Retriever:
         self.rrf_k = rrf_k
         self.mapping = load_mapping(RETRIEVAL_CONFIG.parent / "column_mapping.yaml")
         self.enabled_tiers = self.mapping.enabled_tiers
-        self._embedder = None
         self._store = None
 
-    # --- lazy load để tránh nạp model khi chỉ dùng FTS ---
+    # Adapter embedding là singleton toàn tiến trình (model nặng chỉ nạp 1 lần)
     @property
     def embedder(self):
-        if self._embedder is None:
-            from backend.app.services.embeddings import EmbeddingAdapter
+        from backend.app.services.embeddings import get_embedding_adapter
 
-            self._embedder = EmbeddingAdapter()
-        return self._embedder
+        return get_embedding_adapter()
 
     def _dense_search(
         self, query: str, top_k: int, book_code: str | None

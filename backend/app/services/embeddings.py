@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import os
 import sys
+import threading
 from pathlib import Path
 
 import numpy as np
@@ -40,8 +41,22 @@ class EmbeddingAdapter:
         self.store.close()
 
 
+_adapter_instance: "EmbeddingAdapter | None" = None
+_adapter_lock = threading.Lock()
+
+
+def get_embedding_adapter() -> "EmbeddingAdapter":
+    """Adapter embedding chia sẻ toàn tiến trình: model chỉ được nạp 1 lần."""
+    global _adapter_instance
+    if _adapter_instance is None:
+        with _adapter_lock:
+            if _adapter_instance is None:
+                _adapter_instance = EmbeddingAdapter()
+    return _adapter_instance
+
+
 if __name__ == "__main__":
-    adapter = EmbeddingAdapter()
+    adapter = get_embedding_adapter()
     print(f"Model: {EMBEDDING_MODEL}")
     print(f"Dim: {EMBEDDING_DIM}")
     print(f"Store: {type(adapter.store).__name__}")
