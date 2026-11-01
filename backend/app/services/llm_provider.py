@@ -133,7 +133,7 @@ class MockLLMProvider(LLMProvider):
 
 
 class GeminiLLMProvider(LLMProvider):
-    """Provider Gemini. Cần GEMINI_API_KEY trong .env."""
+    """Provider Gemini (SDK google-genai). Cần GEMINI_API_KEY trong .env."""
 
     name = "gemini"
 
@@ -146,30 +146,38 @@ class GeminiLLMProvider(LLMProvider):
         self.model = model or GEMINI_MODEL
         if not self.api_key:
             raise LLMError("Chưa cấu hình GEMINI_API_KEY trong .env")
+        self._client = None
+
+    def _get_client(self):
+        if self._client is None:
+            try:
+                import google.genai as genai
+            except ImportError as exc:  # pragma: no cover
+                raise LLMError(
+                    "Chưa cài google-genai. Cài: pip install google-genai"
+                ) from exc
+            self._client = genai.Client(api_key=self.api_key)
+        return self._client
 
     def generate(self, system_prompt: str, user_prompt: str) -> LLMResponse:
-        try:
-            import google.generativeai as genai
-        except ImportError as exc:  # pragma: no cover
-            raise LLMError(
-                "Chưa cài google-generativeai. Cài: pip install google-generativeai"
-            ) from exc
+        import google.genai as genai
 
-        genai.configure(api_key=self.api_key)
-        model = genai.GenerativeModel(
-            model_name=self.model,
+        client = self._get_client()
+        config = genai.types.GenerateContentConfig(
             system_instruction=system_prompt,
-            generation_config={
-                "temperature": LLM_TEMPERATURE,
-                "max_output_tokens": LLM_MAX_TOKENS,
-            },
+            temperature=LLM_TEMPERATURE,
+            max_output_tokens=LLM_MAX_TOKENS,
         )
         try:
-            resp = model.generate_content(user_prompt)
+            resp = client.models.generate_content(
+                model=self.model,
+                contents=user_prompt,
+                config=config,
+            )
         except Exception as exc:
             raise LLMError(f"Lỗi Gemini API: {exc}") from exc
 
-        usage = getattr(resp, "usage_metadata", None)
+        usage = getattr(resp, "usage_metadata", None) or getattr(resp, "usage", None)
         return LLMResponse(
             text=resp.text,
             provider=self.name,
