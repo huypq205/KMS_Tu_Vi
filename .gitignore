@@ -38,18 +38,24 @@ htmlcov/
 .tox/
 .nox/
 
-# Database & Vector DB local storage
-DB/
-!backend/app/db/
+# SQLite (giữ DB đã build trong repo cho Render; WAL/SHM không commit)
 *.db
 !data/processed/kms.db
-*.db
-!data/processed/kms.db-shm
-*.db
-!data/processed/kms.db-wal
+*.db-shm
+*.db-wal
 *.sqlite
 *.sqlite3
 qdrant_storage/
+
+# Dữ liệu lớn & học liệu (giữ local, không đưa lên git)
+data/raw/
+TuVi_*.xlsx
+*.jsonl
+1_KMS301/
+2_KMS301/
+Sách tu vi/
+Đã lọc xong/
+tuvi_import/
 
 # Node / Frontend
 node_modules/
