@@ -1,0 +1,22 @@
+# Backend runtime — tối giản cho image Docker/Render.
+# KHÔNG gồm: sentence-transformers (torch ~2GB), qdrant-client, pandas, streamlit
+# -> chỉ cài khi build index local: xem requirements.txt (gốc) hoặc requirements-index.txt
+# Web Framework & Server
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.8.0
+
+# Database & ORM
+sqlalchemy>=2.0.0
+
+# HTTP & API Clients
+requests>=2.32.0
+httpx>=0.27.0
+pyyaml>=6.0.1
+
+# AI & LLM (SDK mới, thay google-generativeai đã deprecated)
+google-genai>=2.0.0
+
+# Data & Utilities
+numpy>=1.26.0
+python-dateutil>=2.9.0

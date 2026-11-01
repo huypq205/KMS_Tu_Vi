@@ -1,0 +1,6 @@
+# Chỉ dùng cho build index local (dense vectors + import Excel).
+# Backend runtime (Render) dùng requirements-backend.txt, KHÔNG cần nhóm này.
+sentence-transformers>=3.0.0
+qdrant-client>=1.10.0
+pandas>=2.2.0
+openpyxl>=3.1.0

@@ -1,0 +1,34 @@
+# Git & secrets
+.git
+.github
+.gitignore
+.env
+.env.*
+
+# Python cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Học liệu & dữ liệu lớn — image chỉ cần backend + DB đã build
+1_KMS301/
+2_KMS301/
+Sách tu vi/
+Đã lọc xong/
+tuvi_import/
+data/raw/
+data/qdrant/
+data/reports/
+TuVi_*.xlsx
+*.jsonl
+
+# Không cần cho backend runtime (frontend chạy riêng trên Streamlit Cloud)
+docs/
+tests/
+scripts/
+_old_prototype/
+frontend/
+app.py
+run_*.bat
+run_*.py
+*.md

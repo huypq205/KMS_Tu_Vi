@@ -15,9 +15,8 @@ requests>=2.32.0
 httpx>=0.27.0
 pyyaml>=6.0.1
 
-# AI & LLM
+# AI & LLM (SDK mới; google-generativeai đã deprecated nên bỏ)
 google-genai>=2.0.0
-google-generativeai>=0.8.0
 
 # Vector & Data
 numpy>=1.26.0

@@ -10,11 +10,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl ca-certificates \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install python dependencies
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+# Install python dependencies (runtime tối giản — không torch/streamlit/qdrant)
+COPY requirements-backend.txt ./
+RUN pip install --no-cache-dir -r requirements-backend.txt
 
-# Copy application source code & data
+# Copy application source code & built DB (data/raw & học liệu đã loại trong .dockerignore)
 COPY . .
 
 EXPOSE 8000
