@@ -12,6 +12,7 @@ import hashlib
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
+from sqlalchemy import func
 
 from backend.app.db.session import session_scope
 from backend.app.db.models import KnowledgeItem, KnowledgePage
@@ -19,6 +20,7 @@ from backend.app.services.mapping import load_mapping
 from backend.app.services.normalize import nfc
 from backend.app.services.pages import parse_page_refs
 from backend.app.services.normalize import content_hash
+from backend.app.services.knowledge_gate import HYPOTHESIS_FLAG
 
 
 @dataclass
@@ -49,6 +51,8 @@ def build_chunks() -> list[ChunkSpec]:
         # chỉ lấy các knowledge_item đã qualifying (tier trong enabled, có evidence)
         items = session.query(KnowledgeItem).filter(
             KnowledgeItem.trust_tier.in_(enabled),
+            KnowledgeItem.trust_tier != 9,
+            ~func.upper(func.coalesce(KnowledgeItem.review_flag, "")).contains(HYPOTHESIS_FLAG),
             KnowledgeItem.evidences.any()
         ).order_by(KnowledgeItem.book_code, KnowledgeItem.knowledge_id).all()
 

@@ -48,6 +48,7 @@ sources:
     file_name: File_Name
     total_pages: Total_Pages
     source_status: Source_Status
+    source_type: Source_Type          # optional; FORUM/VIDEO = giả thuyết, tier 9
     book_code: Book_Code
 
 source_parts:                  # chỉ sách BD (7 PDF, trang đánh theo từng phần)
@@ -78,12 +79,15 @@ knowledge_items:
     extract_ids: Supporting_Extract_IDs
     source_certainty: Source_Certainty
     author_stance: Author_Stances
+    school: School                   # optional; gate T7
+    validation_example: Validation_Example  # optional; ví dụ/ca kiểm chứng
+    source_type: Source_Type          # optional; cũng đọc từ SOURCES qua Source_IDs
     review_flag: Review_Flag
     release_status: Release_Status
     validation_status: Validation_Status
     conflict_status: Conflict_Status  # BD/DAU: chưa đánh giá -> KHÔNG dùng để phát hiện mâu thuẫn
     dedupe_status: Dedupe_Status
-  required: [knowledge_id, book_code, text, pdf_pages_raw]
+  required: [knowledge_id, book_code, text]
 
 evidence:
   sheet: EVIDENCE
@@ -102,6 +106,7 @@ evidence:
     extraction_method: Extraction_Method
     review_status: Review_Status
     evidence_status: Evidence_Status
+    source_type: Source_Type          # optional; T7 kiểm tra nguồn D cả qua evidence
     origin: Evidence_Origin           # NPL: SYNTHESIZED_FROM_EXTRACTION (không phải evidence độc lập)
 
 id_redirects:
@@ -168,6 +173,8 @@ trust_tiers:
     3: {label: "BD — OCR, chưa duyệt",               ui_badge: "OCR chưa kiểm — có thể sai chính tả"}
     9: {label: "Loại khỏi index cho đến khi review", ui_badge: null}
   rules:
+    - tier: 9
+      when: {review_flag_contains: HYPOTHESIS_NEEDS_VALIDATION}
     - tier: 9
       when: {book_code: [BD, DAU], review_flag_contains: OCR_REVIEW_REQUIRED}
     - tier: 1

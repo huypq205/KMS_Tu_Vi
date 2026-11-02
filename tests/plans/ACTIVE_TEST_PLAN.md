@@ -615,3 +615,48 @@ escaping nhãn và chạy CLI từ thư mục khác.
 351 xfail là các bất đồng T4 đã được ghi nhận, không phải failure mới của T5.
 Tài liệu sử dụng: [data dictionary](../../docs/data_dictionary.md#trường-phái-an-sao-kms-đang-dùng).
 Lịch sử thay đổi: [CHANGELOG_KNOWLEDGE.md](../../docs/CHANGELOG_KNOWLEDGE.md).
+
+---
+
+## Governance T7 — Cổng kiểm duyệt nhập tri thức (2026-11-03)
+
+- **Trạng thái: PASSED** — kiểm thử và tích hợp cục bộ; chưa có dữ liệu import
+  thực tế trong workspace để xác nhận gate cho kho đó.
+- Validator read-only: `scripts/validate_knowledge_import.py`; nhận CSV export
+  `REPO_*` và workbook canonical, có `--json` để chỉ rõ file/sheet, dòng, ID, mã lỗi.
+- Knowledge mới phải có >=1: nguồn+trang hợp lệ; trường phái/Author_Stances;
+  ví dụ/ca kiểm chứng. ID cũ được nhận diện qua DB baseline mở read-only.
+- Nguồn FORUM/VIDEO bắt buộc `DRAFT_NOT_RELEASED` và token
+  `HYPOTHESIS_NEEDS_VALIDATION`, ép tier 9 trước rule theo sách; hiệu lực cả khi
+  không bật gate tùy chọn. Chunker loại giả thuyết và tier 9 dù cấu hình sai.
+- `import_excel.py --gate` kiểm tra trước init/ghi DB và kiểm tra lại trước khi
+  thay knowledge/evidence/chunk; lỗi không làm mất dữ liệu hiện có.
+- Metadata Source_Type, School, Validation_Example được đọc qua mapping.
+  Bản ghi đủ căn cứ B/C có thể lưu khi chưa có trang; gate pass không tự đủ điều
+  kiện index. Không thêm cột hay migrate DB production.
+- CI chạy fixture bắt buộc và test âm tính; chạy CSV thực tế nếu có
+  `tuvi_import/`, báo SKIPPED rõ ràng nếu vắng mặt. Thư mục có nhưng rỗng là lỗi.
+- Tài liệu và mẫu đề xuất: [KNOWLEDGE_GATE.md](../../docs/KNOWLEDGE_GATE.md).
+  Quy tắc nội dung không định mệnh tuyệt đối, không bịa nguồn/trang và giữ riêng
+  quan điểm sách vẫn cần review thủ công, không coi gate là xác minh ngữ nghĩa.
+
+### Kiểm chứng
+
+39 test bao phủ: ba yếu tố OR; placeholder/thiếu căn cứ; trang sai; liên kết
+source/evidence/redirect; nguồn D có release LOCKED; source D trộn nguồn sách;
+quarantine kể cả khi tắt gate; tier/index không bị override; CSV/Excel/CLI;
+preflight không init DB khi lỗi; bảo toàn knowledge/chunk; bản ghi chưa có trang;
+nguồn video không ghi đè tên/định danh sách đã có khi dùng chung Book_Code.
+
+```powershell
+.venv\Scripts\python.exe scripts/validate_knowledge_import.py tests/fixtures/knowledge_gate/valid/
+# PASSED; checked=4; new=4; quarantined=1; errors=0
+.venv\Scripts\python.exe -m pytest tests/test_knowledge_gate.py -v
+# 39 passed in 2.67s
+.venv\Scripts\python.exe -m pytest tests/ -q
+# 2072 passed, 351 xfailed in 49.73s
+```
+
+`python scripts/validate_knowledge_import.py tuvi_import/` hiện trả lỗi input thiếu;
+đây không phải bằng chứng kho import thực tế đã pass. Workbook gốc cũng vắng mặt.
+Chưa import dữ liệu thật hoặc chạy build index; các bài test tích hợp dùng DB tạm.

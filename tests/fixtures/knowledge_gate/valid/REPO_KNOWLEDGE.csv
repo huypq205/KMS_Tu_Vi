@@ -1,0 +1,5 @@
+Knowledge_ID,Book_Code,Source_IDs,Canonical_Knowledge,PDF_Pages,Author_Stances,Validation_Example,Release_Status,Review_Flag
+K-EVIDENCE,NPL,SRC_BOOK,Synthetic claim with a source and page,12,,,LOCKED,
+K-SCHOOL,NPL,SRC_BOOK,Synthetic school-specific claim,,School A,,,
+K-CASE,NPL,SRC_BOOK,Synthetic claim with a test case,,,CASE-SYNTHETIC-01,,
+K-VIDEO,NPL,SRC_VIDEO,Synthetic unverified hypothesis,,,Synthetic observation,DRAFT_NOT_RELEASED,HYPOTHESIS_NEEDS_VALIDATION

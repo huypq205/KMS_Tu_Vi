@@ -21,6 +21,19 @@ jobs:
         run: |
           pip install -r requirements-backend.txt
           pip install "streamlit>=1.38.0"
+          pip install pytest "pandas>=2" "openpyxl>=3.1"
+
+      - name: Validate knowledge import fixture
+        run: python scripts/validate_knowledge_import.py tests/fixtures/knowledge_gate/valid/
+
+      - name: Validate available knowledge CSV exports
+        shell: bash
+        run: |
+          if [ -d tuvi_import ]; then
+            python scripts/validate_knowledge_import.py tuvi_import/
+          else
+            echo "SKIPPED actual CSV validation: tuvi_import/ is absent; synthetic fixture and negative tests are mandatory."
+          fi
 
       - name: Run tests
         run: python -m pytest tests/ -v -m "not heavy"

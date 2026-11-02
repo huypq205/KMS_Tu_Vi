@@ -11,6 +11,7 @@ khác SHA thì so content_hash để upsert và tăng version.
 Chạy:
     python scripts/import_excel.py
     python scripts/import_excel.py --excel data/raw/<file>.xlsx
+    python scripts/import_excel.py --excel data/raw/<file>.xlsx --gate
 """
 from __future__ import annotations
 
@@ -27,7 +28,7 @@ sys.path.insert(0, str(ROOT))
 import pandas as pd
 from sqlalchemy import delete, select
 
-from backend.app.core.config import EXCEL_PATH, MAPPING_PATH, REPORTS_DIR
+from backend.app.core.config import DB_PATH, EXCEL_PATH, MAPPING_PATH, REPORTS_DIR
 from backend.app.db.models import (
     Book,
     BookPart,
@@ -46,9 +47,12 @@ from backend.app.services.mapping import load_mapping
 from backend.app.services.normalize import content_hash, nfc, sha256_file
 from backend.app.services.pages import parse_page_refs
 from backend.app.services.tiering import assign_tier
+from backend.app.services.knowledge_gate import (
+    GateReport, existing_knowledge_ids, is_source_d_type, validate_path, validate_records,
+)
 
 REQUIRED_FIELDS = {
-    "knowledge_items": ("knowledge_id", "book_code", "text", "pdf_pages_raw"),
+    "knowledge_items": ("knowledge_id", "book_code", "text"),
 }
 
 
@@ -70,6 +74,10 @@ def import_books(session, excel: Path, mapping) -> int:
         if not code:
             continue
         book = session.get(Book, code)
+        if book is not None and is_source_d_type(row.get("source_type")):
+            # A hypothesis source may reference a book code, but must not replace
+            # that book's bibliographic identity with a forum/video title.
+            continue
         if book is None:
             book = Book(book_code=code)
             session.add(book)
@@ -155,15 +163,33 @@ def import_vocabulary(session, excel: Path, mapping) -> int:
     return count
 
 
-def import_knowledge(session, excel: Path, mapping) -> dict:
+def import_knowledge(session, excel: Path, mapping, *, gate: bool = False) -> dict:
     """Nạp knowledge_items + knowledge_pages + evidences. Trả thống kê & báo cáo."""
     df = read_section(excel, mapping, "knowledge_items")
     ev_df = read_section(excel, mapping, "evidence")
+    sources = read_section(excel, mapping, "sources").to_dict("records")
+    existing = {k.knowledge_id: k for k in session.scalars(select(KnowledgeItem))}
 
     # evidence theo knowledge_id (tra redirect cho ID đã gộp)
     redirect_map: dict[str, str] = {}
     for r in session.scalars(select(IdRedirect)):
         redirect_map[r.original_id] = r.active_id
+    for _, r in read_section(excel, mapping, "id_redirects").iterrows():
+        original, active = _clean(r.get("original_id")), _clean(r.get("active_id"))
+        if original and active:
+            redirect_map[original] = active
+
+    # Validate before touching existing knowledge, evidence or chunks. Source-D
+    # release policy is mandatory even when the optional new-knowledge gate is off.
+    records = [{**row, "_row": index + 2, "_origin": str(excel)}
+               for index, row in enumerate(df.to_dict("records"))]
+    policy = validate_records(records, sources, ev_df.to_dict("records"),
+                              redirects=redirect_map, existing_ids=existing if gate else
+                              {_clean(r.get("knowledge_id")) for r in records}, mapping=mapping)
+    if gate:
+        policy.require_valid()
+    else:
+        GateReport(errors=[e for e in policy.errors if e.code.startswith("source_d_")]).require_valid()
 
     ev_by_kid: dict[str, list[dict]] = defaultdict(list)
     for _, row in ev_df.iterrows():
@@ -207,7 +233,6 @@ def import_knowledge(session, excel: Path, mapping) -> dict:
     short_records: list[dict] = []
     unparsed_pages: list[dict] = []
     per_book: dict[str, int] = defaultdict(int)
-    existing = {k.knowledge_id: k for k in session.scalars(select(KnowledgeItem))}
 
     for _, row in df.iterrows():
         kid = _clean(row.get("knowledge_id"))
@@ -215,7 +240,7 @@ def import_knowledge(session, excel: Path, mapping) -> dict:
         text = _clean(row.get("text"))
         pages_raw = _clean(row.get("pdf_pages_raw"))
 
-        if not kid or not book or not text or not pages_raw:
+        if not kid or not book or not text:
             rejected += 1
             continue
 
@@ -373,6 +398,8 @@ def main() -> int:
     ap.add_argument("--excel", type=Path, default=None)
     ap.add_argument("--mapping", type=Path, default=MAPPING_PATH)
     ap.add_argument("--report-dir", type=Path, default=REPORTS_DIR)
+    ap.add_argument("--gate", action="store_true",
+                    help="Kiểm tra tri thức mới trước khi ghi DB; nguồn FORUM/VIDEO luôn bị kiểm soát.")
     ap.add_argument(
         "--allow-count-mismatch",
         action="store_true",
@@ -387,6 +414,14 @@ def main() -> int:
     print(f"Excel: {excel}")
     print(f"SHA-256: {file_hash}")
 
+    if args.gate:
+        baseline = existing_knowledge_ids(DB_PATH) if DB_PATH.exists() else ()
+        preflight = validate_path(excel, mapping=mapping, existing_ids=baseline)
+        if not preflight.ok:
+            for error in preflight.errors:
+                print(f"{error.origin}:{error.row or '?'} {error.knowledge_id} [{error.code}] {error.message}")
+            return 1
+
     init_db()
     with session_scope() as session:
         n_books = import_books(session, excel, mapping)
@@ -394,7 +429,7 @@ def main() -> int:
         n_parts = import_book_parts(session, excel, mapping)
 
         print("\nĐối chiếu số lượng bản ghi:")
-        stats = import_knowledge(session, excel, mapping)
+        stats = import_knowledge(session, excel, mapping, gate=args.gate)
         counts_ok = check_counts(mapping, stats["per_book"])
 
         n_redirects = import_redirects(session, excel, mapping)

@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any
 
 from .mapping import Mapping
+from .knowledge_gate import has_flag, is_source_d_type
 
 
 def _matches(value: Any, expected: Any) -> bool:
@@ -42,6 +43,9 @@ def _matches_condition(record: dict[str, Any], key: str, expected: Any) -> bool:
 
 def assign_tier(record: dict[str, Any], mapping: Mapping) -> int:
     """Gán tier cho một bản ghi knowledge. Trả về default_tier nếu không khớp rule nào."""
+    # Mandatory quarantine outranks book-specific and user-configured rules.
+    if is_source_d_type(record.get("source_type")) or has_flag(record.get("review_flag")):
+        return 9
     rules = mapping.trust_tiers.get("rules", [])
     for rule in rules:
         tier = rule.get("tier")
