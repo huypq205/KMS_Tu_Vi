@@ -42,6 +42,12 @@ Mức tin cậy giờ sinh (input_confidence A–D) nằm trong DỮ KIỆN:
 - Mức C/D: chỉ kết luận loại cấu trúc (tính cách, xu hướng, điều kiện); cấm kết luận thời điểm
   hoặc sự kiện cụ thể (năm/tháng/ngày sẽ xảy ra chuyện gì). Mỗi mục gioi_han phải nêu
   "dữ liệu giờ sinh chưa chắc chắn (mức C/D)".
+Bậc tin cậy cho từng mục luan_diem và ket_luan (trường "muc_tin_cay", bắt buộc):
+- rat_manh: ≥3 fact_id/tầng độc lập, không có phản chứng lớn trong nguồn đã lấy.
+- manh: 2–3 tầng hoặc nguồn, phản chứng (nếu có) đã được giải thích.
+- trung_binh: thiếu điều kiện hoặc chỉ dựa vào một sách.
+- yeu: chỉ 1 dấu hiệu hoặc dữ liệu đầu vào yếu.
+Không viết phần trăm độ tin cậy (ví dụ "85% khả năng") trong bất kỳ trường nào.
 Không đủ căn cứ thì ghi 'Chưa đủ căn cứ từ nguồn đã lấy', không tự bổ sung kiến thức ngoài nguồn.
 Chỉ trả JSON theo schema, ngắn gọn: mỗi trường 1–2 câu. Tạo 3–5 luận điểm, gồm cung tiểu hạn
 năm được chọn và yếu tố cần lưu ý nếu có nguồn; không ép kết luận khi thiếu nguồn.
@@ -90,6 +96,14 @@ MODEL_FALLBACK_CODES = frozenset({
     'invalid_response', 'incomplete_response',
 })
 
+CONCLUSION_CONFIDENCE_LEVELS = ('rat_manh', 'manh', 'trung_binh', 'yeu')
+CONCLUSION_CONFIDENCE_LABELS = {
+    'rat_manh': 'Rất mạnh', 'manh': 'Mạnh', 'trung_binh': 'Trung bình', 'yeu': 'Yếu',
+}
+# Số fact_id tối thiểu để một mục được gắn bậc tương ứng.
+MIN_FACTS_BY_CONFIDENCE = {'rat_manh': 3, 'manh': 2, 'trung_binh': 1, 'yeu': 0}
+CONFIDENCE_PERCENT_PATTERN = re.compile(r'\d{1,3}(?:[.,]\d+)?\s*%')
+
 
 def _model_chain() -> list[str]:
     """Model chính trước, kế đến các model dự phòng đã cấu hình (không trùng lặp)."""
@@ -109,17 +123,19 @@ def response_schema() -> dict:
     properties['luan_diem'] = {'type': 'array', 'maxItems': 6, 'items': {
         'type': 'object', 'properties': {
             'nhan_dinh': {'type': 'string'}, 'gioi_han': {'type': 'string'},
+            'muc_tin_cay': {'type': 'string', 'enum': list(CONCLUSION_CONFIDENCE_LEVELS)},
             'fact_ids': {'type': 'array', 'items': {'type': 'string'}},
             'source_refs': {'type': 'array', 'items': {'type': 'integer'}},
-        }, 'required': ['nhan_dinh', 'gioi_han', 'fact_ids', 'source_refs'],
+        }, 'required': ['nhan_dinh', 'gioi_han', 'muc_tin_cay', 'fact_ids', 'source_refs'],
     }}
     properties['ket_luan'] = {'type': 'array', 'maxItems': 4, 'items': {
         'type': 'object', 'properties': {
             'nhan_dinh': {'type': 'string'}, 'giai_thich_thun_viet': {'type': 'string'},
             'gioi_han': {'type': 'string'},
+            'muc_tin_cay': {'type': 'string', 'enum': list(CONCLUSION_CONFIDENCE_LEVELS)},
             'fact_ids': {'type': 'array', 'items': {'type': 'string'}},
             'source_refs': {'type': 'array', 'items': {'type': 'integer'}},
-        }, 'required': ['nhan_dinh', 'giai_thich_thun_viet', 'gioi_han', 'fact_ids', 'source_refs'],
+        }, 'required': ['nhan_dinh', 'giai_thich_thun_viet', 'gioi_han', 'muc_tin_cay', 'fact_ids', 'source_refs'],
     }}
     return {'type': 'object', 'properties': properties, 'required': list(properties)}
 
@@ -165,6 +181,7 @@ def build_horoscope_user_prompt(features: dict[str, Any], formatted_context: str
         + '\nNGỮ CẢNH TRI THỨC TỪ SÁCH KINH ĐIỂN:\n' + (formatted_context or 'Chưa có nguồn sách.')
         + '\nYÊU CẦU ĐẦU RA JSON: theo schema; giữ năm xem, tên sao, cung và nguồn bên cạnh lập luận. '
           'Mỗi luận điểm dẫn fact_id khác nhau; phần vận trình nhắc đúng năm xem và can chi. '
+          'Mỗi mục luan_diem/ket_luan ghi "muc_tin_cay" (rat_manh/manh/trung_binh/yeu); không dùng phần trăm. '
           'Không lặp các câu tài chính/tình cảm dùng cho mọi lá số.'
     )
 
@@ -240,6 +257,45 @@ def validate_reading(reading: dict, facts: list, context: dict) -> None:
             raise HoroscopeGenerationError('invalid_response')
 
 
+def _iter_reading_text(value: Any):
+    if isinstance(value, str):
+        yield value
+    elif isinstance(value, dict):
+        for item in value.values():
+            yield from _iter_reading_text(item)
+    elif isinstance(value, (list, tuple)):
+        for item in value:
+            yield from _iter_reading_text(item)
+
+
+def check_conclusion_confidence(reading: dict) -> str | None:
+    """Kiểm tra nhãn bậc tin cậy per kết luận và việc không dùng phần trăm.
+
+    Trả về None nếu đạt; trả về lý do nếu thiếu/sai enum, bậc không khớp số
+    chứng cứ, hoặc có phần trăm độ tin cậy.
+    """
+    if not isinstance(reading, dict):
+        return "Bài đọc không phải JSON object."
+    for key in ('luan_diem', 'ket_luan'):
+        for point in reading.get(key) or []:
+            if not isinstance(point, dict):
+                continue
+            level = point.get('muc_tin_cay')
+            if level not in CONCLUSION_CONFIDENCE_LEVELS:
+                return (f'Mỗi mục {key} phải có muc_tin_cay thuộc '
+                        f'{", ".join(CONCLUSION_CONFIDENCE_LEVELS)}.')
+            needed = MIN_FACTS_BY_CONFIDENCE[level]
+            ids = point.get('fact_ids') or []
+            if len(ids) < needed:
+                return (f'Mức {level} cần ít nhất {needed} fact_id nhưng chỉ có {len(ids)}; '
+                        'hạ bậc tin cậy hoặc bổ sung dẫn chứng.')
+    for text in _iter_reading_text(reading):
+        if CONFIDENCE_PERCENT_PATTERN.search(text):
+            return ('Bài đọc không được dùng phần trăm độ tin cậy; '
+                    'hãy dùng bậc rat_manh/manh/trung_binh/yeu.')
+    return None
+
+
 def check_specificity(reading: dict, features: dict[str, Any], context: dict | None = None) -> str | None:
     """Kiểm tra bài đọc có bám dữ kiện riêng của lá số và năm đã chọn hay không.
 
@@ -309,7 +365,8 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
         if not refs:
             gioi_han += ' Chưa có trích dẫn sách đối chiếu.'
         return {'nhan_dinh': nhan, 'giai_thich_thun_viet': giai, 'fact_ids': ids,
-                'source_refs': refs, 'gioi_han': gioi_han}
+                'source_refs': refs, 'gioi_han': gioi_han,
+                'muc_tin_cay': 'trung_binh' if (refs and ids) else 'yeu'}
 
     ket_luan = [pt for pt in (palace_point('Phu thê'), palace_point('Phụ mẫu'), palace_point('Mệnh')) if pt]
     return {
@@ -389,15 +446,24 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
             try:
                 reading = _request_gemini(user_prompt, key, model)
                 validate_reading(reading, facts, context)
-                problem = check_input_confidence(reading, features) or check_specificity(reading, features, context)
+                confidence_problem = check_input_confidence(reading, features)
+                conclusion_problem = check_conclusion_confidence(reading)
+                problem = (confidence_problem or conclusion_problem
+                           or check_specificity(reading, features, context))
                 if problem:
                     attempts += 1
                     annual = features.get('nam_xem') or {}
                     extra = f"\nBỔ SUNG BẮT BUỘC: {problem} "
-                    if "mức C/D" in problem:
+                    if confidence_problem:
                         extra += (
                             "Giữ nguyên giờ sinh mức C/D: chỉ kết luận cấu trúc; mỗi mục "
                             f'gioi_han phải nêu nguyên văn "{LOW_CONFIDENCE_CAVEAT}". '
+                        )
+                    if conclusion_problem:
+                        extra += (
+                            'Mỗi mục luan_diem/ket_luan phải ghi "muc_tin_cay" '
+                            '(rat_manh/manh/trung_binh/yeu) đúng với số fact_id; '
+                            'không dùng phần trăm độ tin cậy. '
                         )
                     extra += (
                         f"Mỗi luận điểm phải dẫn fact_id khác nhau; "
@@ -405,6 +471,9 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                     )
                     reading = _request_gemini(user_prompt + extra, key, model)
                     validate_reading(reading, facts, context)
+                    conclusion_problem = check_conclusion_confidence(reading)
+                    if conclusion_problem:
+                        raise HoroscopeGenerationError('invalid_response')
                     problem = check_input_confidence(reading, features) or check_specificity(reading, features, context)
                 reading['_generation'] = {'actual_provider': 'gemini', 'is_mock': False, 'reason': None,
                                           'model': model, 'primary_model': chain[0], 'attempts': attempts,

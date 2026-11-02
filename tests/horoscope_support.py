@@ -33,6 +33,7 @@ def valid_reading(facts: list[dict], year_text: str = "2026 Bính Ngọ",
     points = [{
         "nhan_dinh": f"{f['sao']} tại {f['cung']} ({f['dia_chi']}) cần đối chiếu điều kiện trong nguồn.",
         "gioi_han": "Chỉ nêu điều kiện đã có trong dữ kiện lá số.",
+        "muc_tin_cay": "trung_binh",
         "fact_ids": [f["fact_id"]],
         "source_refs": [f["source_refs"][0]],
     } for f in usable]

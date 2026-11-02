@@ -22,6 +22,10 @@ from backend.app.db.session import init_db, session_scope
 
 logger = logging.getLogger(__name__)
 
+# Tăng khi cấu trúc bài đọc đổi (ví dụ thêm muc_tin_cay) để cache cũ tự miss,
+# tránh trả bài thiếu trường mới cho UI.
+CACHE_SCHEMA_VERSION = 2
+
 
 def _utcnow() -> datetime:
     return datetime.now(timezone.utc)
@@ -42,7 +46,7 @@ def compute_key(birth: dict[str, Any], provider: str, model: str, ctx_hash: str,
     """
     blob = json.dumps(
         {'birth': birth, 'provider': provider, 'model': model, 'context': ctx_hash,
-         'index_version': index_version},
+         'index_version': index_version, 'schema_version': CACHE_SCHEMA_VERSION},
         sort_keys=True, ensure_ascii=False,
     )
     return hashlib.sha256(blob.encode('utf-8')).hexdigest()

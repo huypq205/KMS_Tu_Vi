@@ -62,6 +62,20 @@ def panel(title: str, body: str, extra_class: str = "") -> str:
     return f'<section class="reading-panel {extra_class}"><h2>{text(title)}</h2>{body}</section>'
 
 
+CONFIDENCE_LABELS = {
+    "rat_manh": ("Rất mạnh", "conf-rat-manh"),
+    "manh": ("Mạnh", "conf-manh"),
+    "trung_binh": ("Trung bình", "conf-trung-binh"),
+    "yeu": ("Yếu", "conf-yeu"),
+}
+
+
+def confidence_badge(level) -> str:
+    """Nhãn bậc tin cậy per kết luận; bậc lạ hiển thị trung tính, không đoán."""
+    label, css = CONFIDENCE_LABELS.get(str(level or ""), ("Chưa rõ bậc", "conf-yeu"))
+    return f'<span class="conf-badge {css}">Tin cậy: {text(label)}</span>'
+
+
 def topic_panel(key: str, value: dict) -> str:
     if not isinstance(value, dict) or not value:
         return panel(TOPICS[key], '<p class="muted">Chưa có luận giải cho chủ đề này.</p>')

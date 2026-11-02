@@ -25,7 +25,7 @@ for _mod in ('frontend.horoscope_view', 'frontend.horoscope_transport', 'fronten
 
 from frontend.horoscope_view import (BOOKS, HOURS, TOPICS, content,
                                     palace_preview, panel, text, topic_panel, validate_birth_date,
-                                    annual_panel, star_table)
+                                    annual_panel, star_table, confidence_badge)
 from frontend.laso_renderer import luoi_html
 from frontend.horoscope_transport import reading_events
 from frontend.horoscope_ask import ask_box
@@ -236,7 +236,7 @@ else:
         st.caption('Mỗi mục gồm nhận định chuyên môn và phần chuyển thuật ngữ sang nghĩa đời thường, kèm dữ kiện/nguồn đối chiếu.')
         fact_map = {f['fact_id']: f for f in report.get('star_analysis', [])}
         for index, point in enumerate(reading['ket_luan'], 1):
-            st.markdown(f'<p class="muted">Kết luận {index}</p>', unsafe_allow_html=True)
+            st.markdown(f'<p class="muted" style="margin:0 0 4px">Kết luận {index} · {confidence_badge(point.get("muc_tin_cay"))}</p>', unsafe_allow_html=True)
             st.markdown(content(point.get('nhan_dinh')), unsafe_allow_html=True)
             if point.get('giai_thich_thun_viet'):
                 st.markdown('<p class="muted"><strong>Giải nghĩa thuần Việt:</strong> ' + text(point.get('giai_thich_thun_viet')) + '</p>', unsafe_allow_html=True)
@@ -248,6 +248,7 @@ else:
         st.subheader('Lập luận từ sao và nguồn sách')
         fact_map = {f['fact_id']: f for f in report.get('star_analysis', [])}
         for point in reading['luan_diem']:
+            st.markdown(f'<p style="margin:0 0 4px">{confidence_badge(point.get("muc_tin_cay"))}</p>', unsafe_allow_html=True)
             st.markdown(content(point.get('nhan_dinh')), unsafe_allow_html=True)
             labels = [f"{fact_map[i]['sao']} tại {fact_map[i]['cung']} ({fact_map[i]['dia_chi']})" for i in point.get('fact_ids', []) if i in fact_map]
             st.caption('Dữ kiện: ' + '; '.join(labels) + ' · Nguồn: ' + ', '.join(f'[{r}]' for r in point.get('source_refs', [])))
