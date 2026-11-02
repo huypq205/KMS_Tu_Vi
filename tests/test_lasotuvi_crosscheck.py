@@ -30,7 +30,7 @@ def normalized(value):
 @pytest.fixture(scope="module", params=VECTORS, ids=lambda v: v["id"])
 def chart(request):
     vector = request.param
-    return vector, generate_raw_horoscope(**vector["birth"])
+    return vector, generate_raw_horoscope(**vector["birth"], tu_hoa_table_id="lasotuvi")
 
 
 def observations(raw):
@@ -81,7 +81,7 @@ for vector in VECTORS:
 @pytest.fixture(scope="module")
 def observed():
     # Only actual charts are cached here. Golden values remain static JSON.
-    return {v["id"]: observations(generate_raw_horoscope(**v["birth"])) for v in VECTORS}
+    return {v["id"]: observations(generate_raw_horoscope(**v["birth"], tu_hoa_table_id="lasotuvi")) for v in VECTORS}
 
 
 @pytest.mark.parametrize("vector,field,expected", CASES)

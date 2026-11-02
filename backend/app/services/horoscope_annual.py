@@ -12,7 +12,6 @@ không phải dự báo sự kiện.
 from __future__ import annotations
 
 import sys
-import unicodedata
 from pathlib import Path
 from typing import Any
 
@@ -22,8 +21,10 @@ if str(VENDOR_PATH) not in sys.path:
     sys.path.insert(0, str(VENDOR_PATH))
 
 from lasotuvi.AmDuong import diaChi, dichCung, thienCan  # noqa: E402
+from backend.app.services.tu_hoa_tables import (  # noqa: E402
+    TU_HOA_CODES, find_parent_palace, get_tu_hoa_table, table_metadata,
+)
 
-TU_HOA_CODES = ("HOA_LOC", "HOA_QUYEN", "HOA_KHOA", "HOA_KY")
 TU_HOA_NAMES = {
     "HOA_LOC": "Hóa lộc",
     "HOA_QUYEN": "Hóa quyền",
@@ -31,19 +32,9 @@ TU_HOA_NAMES = {
     "HOA_KY": "Hóa kỵ",
 }
 
-# Bảng Tứ Hóa theo can năm. Nguồn: vendor/lasotuvi/App.py dòng 402-451.
-TU_HOA_BY_CAN: dict[str, dict[str, str]] = {
-    "Giáp": {"HOA_LOC": "Liêm Trinh", "HOA_QUYEN": "Phá Quân", "HOA_KHOA": "Vũ Khúc", "HOA_KY": "Thái Dương"},
-    "Ất": {"HOA_LOC": "Thiên Cơ", "HOA_QUYEN": "Thiên Lương", "HOA_KHOA": "Tử Vi", "HOA_KY": "Thái Âm"},
-    "Bính": {"HOA_LOC": "Thiên Đồng", "HOA_QUYEN": "Thiên Cơ", "HOA_KHOA": "Văn Xương", "HOA_KY": "Liêm Trinh"},
-    "Đinh": {"HOA_LOC": "Thái Âm", "HOA_QUYEN": "Thiên Đồng", "HOA_KHOA": "Thiên Cơ", "HOA_KY": "Cự Môn"},
-    "Mậu": {"HOA_LOC": "Tham Lang", "HOA_QUYEN": "Thái Âm", "HOA_KHOA": "Hữu Bật", "HOA_KY": "Thiên Cơ"},
-    "Kỷ": {"HOA_LOC": "Vũ Khúc", "HOA_QUYEN": "Tham Lang", "HOA_KHOA": "Thiên Lương", "HOA_KY": "Văn Khúc"},
-    "Canh": {"HOA_LOC": "Thái Dương", "HOA_QUYEN": "Vũ Khúc", "HOA_KHOA": "Thiên Đồng", "HOA_KY": "Thái Âm"},
-    "Tân": {"HOA_LOC": "Cự Môn", "HOA_QUYEN": "Thái Dương", "HOA_KHOA": "Văn Khúc", "HOA_KY": "Văn Xương"},
-    "Nhâm": {"HOA_LOC": "Thiên Lương", "HOA_QUYEN": "Tử Vi", "HOA_KHOA": "Thiên Phủ", "HOA_KY": "Vũ Khúc"},
-    "Quý": {"HOA_LOC": "Phá Quân", "HOA_QUYEN": "Cự Môn", "HOA_KHOA": "Thái Âm", "HOA_KY": "Tham Lang"},
-}
+# Compatibility export: always the default vendor table. Runtime selection below
+# uses table ids so an environment change cannot relabel an older chart.
+TU_HOA_BY_CAN: dict[str, dict[str, str]] = get_tu_hoa_table('lasotuvi')['by_can']
 
 # (tên sao, offset từ Thái Tuế, phân loại). Nguồn: vendor/lasotuvi/App.py dòng 150-185.
 VONG_THAI_TUE: tuple[tuple[str, int, str], ...] = (
@@ -64,19 +55,12 @@ VONG_THAI_TUE: tuple[tuple[str, int, str], ...] = (
 CAUTION_STARS = ("Thái Tuế", "Tuế Phá", "Bạch Hổ", "Tang Môn")
 
 METHOD = (
-    "An lưu niên theo vòng Thái Tuế (12 sao) và lưu Tứ Hóa theo can năm, "
-    "đối chiếu bảng an sao của vendor/lasotuvi/App.py."
+    "An lưu niên theo vòng Thái Tuế (12 sao) và lưu Tứ Hóa theo can năm."
 )
 LIMITATIONS = (
     "Chỉ an vòng Thái Tuế và lưu Tứ Hóa; chưa an các lưu tinh khác. "
     "Dùng để tham khảo và chiêm nghiệm, không phải dự báo sự kiện."
 )
-
-
-def _strip_accents(value: str) -> str:
-    return "".join(
-        c for c in unicodedata.normalize("NFD", value or "") if unicodedata.category(c) != "Mn"
-    ).lower()
 
 
 def can_chi_of_year(year: int) -> tuple[str, str]:
@@ -86,24 +70,14 @@ def can_chi_of_year(year: int) -> tuple[str, str]:
     return can, chi
 
 
-def tu_hoa_stars_for_can(can: str) -> dict[str, str]:
+def tu_hoa_stars_for_can(can: str, table_id: str | None = None) -> dict[str, str]:
     """Bốn sao nhận Tứ Hóa theo can (map code -> tên sao gốc)."""
-    return TU_HOA_BY_CAN.get(can, {})
+    return get_tu_hoa_table(table_id)['by_can'].get(can, {})
 
 
 def _find_star_palace(cungs: list[dict[str, Any]], star_name: str) -> dict[str, Any] | None:
-    """Tìm cung đang chứa sao gốc theo tên (ưu tiên khớp chính xác, sau đó bỏ dấu)."""
-    target = (star_name or "").casefold()
-    for cung in cungs:
-        for sao in cung.get("saos", []):
-            if (sao.get("saoTen") or "").casefold() == target:
-                return cung
-    target_norm = _strip_accents(star_name)
-    for cung in cungs:
-        for sao in cung.get("saos", []):
-            if _strip_accents(sao.get("saoTen") or "") == target_norm:
-                return cung
-    return None
+    """Tìm sao gốc, kể cả cách viết Tả phù/Tả Phụ của hai nguồn."""
+    return find_parent_palace(cungs, star_name)
 
 
 def _palace_brief(cung: dict[str, Any] | None, star_name: str) -> dict[str, Any]:
@@ -131,9 +105,12 @@ def compute_luu_nien(
     cung_than_so: int | None = None,
     dai_han_cung_so: int | None = None,
     tieu_han_cung_so: int | None = None,
+    tu_hoa_table_id: str | None = None,
 ) -> dict[str, Any]:
     """An lưu niên cho một năm: Can Chi, vòng Thái Tuế, lưu Tứ Hóa và cờ cần lưu ý."""
     can, chi = can_chi_of_year(year)
+    table = get_tu_hoa_table(tu_hoa_table_id)
+    method = f"{METHOD} Bảng Tứ Hóa: {table['school']}."
     by_cung_so = {c.get("cung_so"): c for c in thap_ni_cung}
     thai_tue_cung = next((c for c in thap_ni_cung if c.get("chuan_ten") == chi), None)
 
@@ -147,7 +124,7 @@ def compute_luu_nien(
 
     luu_tu_hoa: list[dict[str, Any]] = []
     for code in TU_HOA_CODES:
-        star_name = TU_HOA_BY_CAN[can][code]
+        star_name = table['by_can'][can][code]
         cung = _find_star_palace(thap_ni_cung, star_name)
         entry = _palace_brief(cung, star_name)
         entry.update({"ten_sao": star_name, "code": code, "ten": TU_HOA_NAMES[code]})
@@ -207,9 +184,10 @@ def compute_luu_nien(
             "count": len(hits),
             "level": level,
             "hits": hits,
-            "method": METHOD,
+            "method": method,
             "limitations": LIMITATIONS,
         },
-        "method": METHOD,
+        "tu_hoa_table": table_metadata(table),
+        "method": method,
         "limitations": LIMITATIONS,
     }

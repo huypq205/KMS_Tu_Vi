@@ -5,6 +5,7 @@ import unicodedata
 from typing import Any
 
 from backend.app.services.horoscope_annual import tu_hoa_stars_for_can
+from backend.app.services.tu_hoa_tables import normalize_star
 
 NATAL_GROUPS = ("chinh_tinh", "risk_stars", "cat_tinh")
 
@@ -117,7 +118,8 @@ def build_star_facts(features: dict[str, Any], context: dict[str, Any] | None = 
 
     basic = features.get("thong_tin_co_ban", {}) or {}
     birth_can = (basic.get("can_chi_nam") or "").split(" ")[0]
-    tu_hoa_names = {name.casefold() for name in tu_hoa_stars_for_can(birth_can).values()}
+    table_id = (basic.get("tu_hoa_table") or {}).get("id")
+    tu_hoa_names = {normalize_star(name) for name in tu_hoa_stars_for_can(birth_can, table_id).values()}
 
     palaces = features.get("palaces", [])
     for p in palaces:
@@ -131,7 +133,7 @@ def build_star_facts(features: dict[str, Any], context: dict[str, Any] | None = 
                 star_name = s.get("ten", "")
                 if not star_name:
                     continue
-                roles = ["Tứ hóa"] if star_name.casefold() in tu_hoa_names else []
+                roles = ["Tứ hóa"] if normalize_star(star_name) in tu_hoa_names else []
                 facts.append(_make_fact(
                     fact_id, star_name, cung_ten, dia_chi, group_key,
                     s.get("dac_tinh") or "—", roles, tuan, triet, ref_list,

@@ -517,3 +517,41 @@ Chi tiết: [báo cáo T4](../../docs/LASOTUVI_CROSSCHECK.md) và
 [hồ sơ bất đồng](../../docs/issues/T4_AN_SAO_DISCREPANCIES.md).
 GitHub issue đã đăng sau khi người dùng xác nhận cho phép công bố kết quả T4
 lên `huypq205/KMS_Tu_Vi`. Hiệu chuẩn bảng Tứ Hóa thuộc T5.
+
+---
+
+## Governance T5 — Hiệu chuẩn bảng Tứ Hóa (2026-11-03)
+
+- **Trạng thái: PASSED.**
+- Đã đối chiếu đủ 40 mục/10 Can bằng AST từ vendor. Config mặc định khớp vendor;
+  nguồn tham khảo cố định theo commit như T4. Có đúng 3 khác biệt:
+  Canh Hóa Khoa (Thiên Đồng / Thái Âm), Canh Hóa Kỵ (Thái Âm / Thiên Đồng),
+  Nhâm Hóa Khoa (Thiên Phủ / Tả Phụ).
+- Hai bảng tách riêng trong `configs/tu_hoa_tables.yaml`, có `school`, `source`,
+  `verification_status`; mặc định `lasotuvi`. Chọn bảng qua `KMS_TU_HOA_TABLE`.
+- Adapter cập nhật đồng bộ hóa tinh gốc, lưu niên, facts, prompt và nhãn UI;
+  hỗ trợ cách viết Tả phù/Tả Phụ. Không sửa file vendor hoặc tự gộp hai bảng.
+- Metadata ID/signature tách cache theo bảng và nội dung cấu hình.
+- Schema dữ kiện bổ sung được cập nhật cùng fixture chung và UI;
+  không thay đổi schema JSON bài luận T1/T2.
+- T4 ghim bảng vendor để không phụ thuộc cấu hình bảng của ứng dụng.
+- Chưa phân xử bất đồng bằng sách KMS; issue #1 vẫn OPEN. T5 hoàn tất nhánh
+  cấu hình nhiều bảng mà plan yêu cầu khi phát hiện khác biệt.
+
+### Kiểm chứng
+
+`tests/test_tu_hoa_tables.py`: **29 ca pass** trong lần hồi quy toàn bộ, gồm
+10 Can đối chiếu vendor, 3 khác biệt chính xác, lựa chọn bảng cho lá số gốc/lưu niên,
+facts/prompt/UI, bảo toàn snapshot, cache tách bảng, kiểm tra cấu hình lỗi,
+escaping nhãn và chạy CLI từ thư mục khác.
+
+```powershell
+.venv\Scripts\python.exe scripts/compare_tu_hoa_tables.py
+# 40 mục / 10 Can; 3 khác biệt; Config lasotuvi khớp vendor: True
+.venv\Scripts\python.exe -m pytest tests/ -q
+# 2033 passed, 351 xfailed in 92.75s
+```
+
+351 xfail là các bất đồng T4 đã được ghi nhận, không phải failure mới của T5.
+Tài liệu sử dụng: [data dictionary](../../docs/data_dictionary.md#trường-phái-an-sao-kms-đang-dùng).
+Lịch sử thay đổi: [CHANGELOG_KNOWLEDGE.md](../../docs/CHANGELOG_KNOWLEDGE.md).

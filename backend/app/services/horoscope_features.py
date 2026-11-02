@@ -13,6 +13,7 @@ Nhiệm vụ:
 from __future__ import annotations
 
 import sys
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 from datetime import datetime
@@ -43,6 +44,9 @@ from lasotuvi.DiaBan import diaBan as diaBanClass  # noqa: E402
 from lasotuvi import Sao as catalog  # noqa: E402
 
 from backend.app.services.horoscope_annual import compute_luu_nien  # noqa: E402
+from backend.app.services.tu_hoa_tables import (  # noqa: E402
+    apply_natal_table, get_tu_hoa_table, table_metadata,
+)
 
 TIME_ZONE = 7
 
@@ -129,7 +133,8 @@ def can_gio(can_ngay: int, chi: int) -> int:
 
 
 def generate_raw_horoscope(
-    nn: int, tt: int, nnnn: int, chi_gio: int, gioi_tinh: int, duong_lich: bool = True
+    nn: int, tt: int, nnnn: int, chi_gio: int, gioi_tinh: int, duong_lich: bool = True,
+    *, tu_hoa_table_id: str | None = None,
 ) -> dict[str, Any]:
     """An sao lá số Tử Vi hoàn chỉnh từ thư viện vendor/lasotuvi (thuần Python).
     
@@ -168,12 +173,17 @@ def generate_raw_horoscope(
                 "tieu_han_chi": getattr(c, "cungTieuHan", None),
                 "tuan_trung": getattr(c, "tuanTrung", False),
                 "triet_lo": getattr(c, "trietLo", False),
-                "saos": c.cungSao,
+                "saos": deepcopy(c.cungSao),
             }
         )
 
+    tu_hoa_table = get_tu_hoa_table(tu_hoa_table_id)
+    apply_natal_table(thap_ni_cung, thienCan[can_nam]["tenCan"], tu_hoa_table)
+    for palace in thap_ni_cung:
+        db.thapNhiCung[palace["cung_so"]].cungSao = deepcopy(palace["saos"])
     return {
         "db": db,
+        "tu_hoa_table": table_metadata(tu_hoa_table),
         "cung_menh_so": db.cungMenh,
         "cung_than_so": db.cungThan,
         "tu_cuc": cuc["cuc"],
@@ -416,9 +426,12 @@ def analyze_year(cungs: list[dict], year: int, birth_lunar_year: int) -> dict[st
     }
 
 
-def extract_tu_hoa(thap_ni_cung: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def extract_tu_hoa(
+    thap_ni_cung: list[dict[str, Any]], can: str | None = None, table_id: str | None = None,
+) -> list[dict[str, Any]]:
     """Trích xuất 4 hóa tinh (Lộc, Quyền, Khoa, Kỵ), cung đóng và ý nghĩa."""
     res = []
+    parents = get_tu_hoa_table(table_id)["by_can"].get(can, {}) if can else {}
     for sid, spec in TU_HOA_DEF.items():
         hit_cung = None
         for c in thap_ni_cung:
@@ -435,6 +448,7 @@ def extract_tu_hoa(thap_ni_cung: list[dict[str, Any]]) -> list[dict[str, Any]]:
                     "sao_id": sid,
                     "code": spec["code"],
                     "ten": spec["ten"],
+                    "ten_sao": parents.get(spec["code"], ""),
                     "cung_ten": hit_cung.get("ten_cung") or hit_cung["chuan_ten"],
                     "dia_chi": hit_cung["chuan_ten"],
                     "linh_vuc": CUNG_DOMAIN.get(hit_cung.get("ten_cung", ""), ""),
@@ -513,7 +527,8 @@ def extract_horoscope_features(
     than_stars_cat = categorize_stars_in_palace(than_cung.get("saos", []))
 
     # 6. Tứ Hóa
-    tu_hoa = extract_tu_hoa(cungs)
+    tu_hoa_table = get_tu_hoa_table((raw_laso.get("tu_hoa_table") or {}).get("id"))
+    tu_hoa = extract_tu_hoa(cungs, raw_laso["can_nam"], tu_hoa_table["id"])
 
     # 7. Tuổi và Đại Hạn hiện tại
     nam_sinh = raw_laso.get("nam_sinh_am", raw_laso.get("nam_sinh", 2000))
@@ -525,6 +540,7 @@ def extract_horoscope_features(
     luu_nien = compute_luu_nien(
         cungs, current_year, cung_menh_so, cung_than_so,
         (current_dai_han or {}).get("cung_so"), tieu_han.get("cung_so"),
+        tu_hoa_table_id=tu_hoa_table["id"],
     )
 
     # 8. Bóc tách 5 cung chính quan trọng đối với người xem
@@ -559,6 +575,7 @@ def extract_horoscope_features(
             "input_confidence": normalize_level(input_confidence),
             "gio_sinh_source": gio_sinh_source,
             "gio_sinh_error_phut": gio_sinh_error_phut,
+            "tu_hoa_table": table_metadata(tu_hoa_table),
         },
         "cung_domains": dict(CUNG_DOMAIN),
         "menh_cuc": menh_cuc,
