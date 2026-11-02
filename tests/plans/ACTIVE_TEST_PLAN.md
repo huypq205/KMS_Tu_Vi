@@ -484,3 +484,63 @@ python -m pytest tests/ -q                                     # 120 passed in 8
 - [x] Cache không trộn bài của các mức tin cậy khác nhau.
 - [x] UI gửi/nhận đủ 3 field và cảnh báo C/D.
 - [x] Không thêm phần trăm tin cậy (để dành T2 với `muc_tin_cay` 4 bậc).
+
+### Ghi chú giới hạn (chuyển tiếp T2/T3)
+
+- Nếu Gemini sau retry vẫn chứa kết luận thời điểm ở mức C/D, bài được trả về với cờ `specificity_low=True` (chưa chặn cứng). Plan gốc để việc chặn cứng cho T2/T3 (`loai_ket_luan`); cache không lưu bài `specificity_low`.
+
+---
+
+## T2 — Bậc tin cậy per kết luận (`muc_tin_cay`), cấm phần trăm
+
+- **Ngày:** 2026-11-03
+- **Trạng thái:** **PASSED**
+- **Nguồn kế hoạch:** `C:\Users\Admin\.opencode\plan\kms-tuvi-knowledge-governance-adopt-plan.md` (T2).
+- **Mục tiêu:** mỗi `luan_diem`/`ket_luan` trả về có nhãn bậc tin cậy; bậc phải khớp số chứng cứ; không dùng phần trăm tin cậy.
+
+### Thay đổi chính
+
+| File | Nội dung |
+|---|---|
+| `backend/app/services/horoscope_interpreter.py` | `response_schema()` thêm `muc_tin_cay` (enum, required) cho `luan_diem`/`ket_luan`; prompt định nghĩa 4 bậc + cấm %; `check_conclusion_confidence` kiểm tra enum, số fact_id tối thiểu và %; retry 1 lần, sau retry vẫn sai → `invalid_response`; mock gắn nhãn |
+| `backend/app/services/horoscope_cache.py` | `CACHE_SCHEMA_VERSION = 2` trong khóa cache để bài cũ thiếu `muc_tin_cay` tự miss |
+| `frontend/horoscope_view.py`, `frontend/horoscope_ui.py`, `frontend/assets/horoscope.css` | `confidence_badge` + badge màu 4 bậc ở phần Kết luận và Lập luận |
+| `tests/horoscope_support.py`, `tests/test_horoscope_feedback.py` | Fixture/mẫu cũ thêm `muc_tin_cay` để không vỡ hồi quy |
+
+### Quy tắc đã chốt
+
+- Enum: `rat_manh`, `manh`, `trung_binh`, `yeu`. Plan gốc ghi `yieu` (lỗi chính tả) → triển khai dùng `yeu`.
+- Số `fact_id` tối thiểu: `rat_manh` 3, `manh` 2, `trung_binh` 1, `yeu` 0.
+- Cấm mẫu phần trăm (`85%`, `85 %`, `12,5%`) trong mọi chuỗi của bài đọc.
+- Thiếu/sai nhãn → retry 1 lần kèm chỉ dẫn; sau retry vẫn sai → `invalid_response` (model fallback hoặc mock), không trả bài thiếu nhãn.
+
+### Ma trận test (`tests/test_horoscope_conclusion_confidence.py`)
+
+| # | Ca kiểm thử | Kết quả |
+|---|---|---|
+| 1 | Schema bắt buộc `muc_tin_cay` + enum 4 bậc | PASSED |
+| 2 | Prompt định nghĩa 4 bậc và cấm phần trăm | PASSED |
+| 3 | `valid_reading` có nhãn hợp lệ → pass | PASSED |
+| 4 | Thiếu nhãn hoặc nhãn lạ → reject | PASSED |
+| 5 | `rat_manh` với 1 fact_id → reject; đủ 3 → pass | PASSED |
+| 6 | `85%`, `85 %`, `12,5%` trong `nhan_dinh` → reject | PASSED |
+| 7 | Thiếu nhãn → retry 1 lần, lần 2 hợp lệ → nhận bài Gemini | PASSED |
+| 8 | Thiếu nhãn cả 2 lần → mock fallback `invalid_response`, không trả bài thiếu nhãn | PASSED |
+| 9 | Mock reading gắn nhãn cho mọi kết luận | PASSED |
+| 10 | `confidence_badge` map đúng 4 bậc + nhãn lạ về trung tính | PASSED |
+| 11 | AppTest: báo cáo mock hiển thị badge "Tin cậy:" | PASSED |
+
+### Kết quả chạy
+
+```powershell
+python -m pytest tests/test_horoscope_conclusion_confidence.py -v   # 11 passed
+python -m pytest tests/ -q                                          # 131 passed in 78.99s
+```
+
+### Definition of Done
+
+- [x] Mọi kết luận trả về (Gemini lẫn mock) có nhãn bậc tin cậy.
+- [x] Không có phần trăm tin cậy trong bài đọc.
+- [x] UI hiển thị badge màu theo bậc (rất mạnh = xanh, yếu = xám).
+- [x] Cache cũ tự miss nhờ `CACHE_SCHEMA_VERSION`.
+- [x] Hồi quy toàn bộ 131 test xanh.
