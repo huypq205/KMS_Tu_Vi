@@ -1790,3 +1790,85 @@ enabled_tiers = [1, 2, 3]
 | NPL_Definition_JSON | 0% | 0 |  |
 | Other_Definition_JSON | 0% | 0 |  |
 
+## Trường phái an sao KMS đang dùng
+
+Phần bổ sung T5, ngày 2026-11-03. Các thống kê workbook ở trên được sinh tự động;
+phần này mô tả cấu hình an sao của ứng dụng.
+
+Engine an sao: `vendor/lasotuvi` (doanguyen, 2016), được gọi qua adapter
+`backend/app/services/horoscope_features.py`. Những bất đồng an sao còn mở được
+ghi trong [báo cáo T4](LASOTUVI_CROSSCHECK.md) và [issue #1](https://github.com/huypq205/KMS_Tu_Vi/issues/1).
+
+### Hai bảng Tứ Hóa giữ riêng
+
+Nguồn cấu hình: [`configs/tu_hoa_tables.yaml`](../configs/tu_hoa_tables.yaml),
+schema version 1. Mỗi dòng theo thứ tự **Lộc / Quyền / Khoa / Kỵ**, đủ 10 Can.
+
+| ID | Nhãn trường phái / nguồn | Trạng thái |
+|---|---|---|
+| `lasotuvi` | Bảng hiện hành; chú thích trong `App.py` dẫn Thiên Lương, *Số tử vi dưới mắt khoa học* | `vendor_baseline`; mặc định, chưa coi là đã được ba sách KMS xác nhận |
+| `hung_ngm_reference` | Bảng §10 của [computation.md tại commit d0238e9](https://github.com/hung-ngm/tu-vi-dau-so/blob/d0238e9ee9f1a8a1603f5ff1328b18bf6e4635b7/tu-vi-dau-so/skills/tu-vi-dau-so/references/computation.md) | `reference_unverified`; tham khảo, chưa đối chiếu sách KMS |
+
+Đối chiếu 40 mục bằng `python scripts/compare_tu_hoa_tables.py` xác nhận 37 mục
+khớp và 3 mục khác:
+
+| Can | Hóa tinh | `lasotuvi` | `hung_ngm_reference` |
+|---|---|---|---|
+| Canh | Hóa Khoa | Thiên Đồng | Thái Âm |
+| Canh | Hóa Kỵ | Thái Âm | Thiên Đồng |
+| Nhâm | Hóa Khoa | Thiên Phủ | Tả Phụ |
+
+Script đọc nhánh an Tứ Hóa và tên sao bằng AST từ `App.py`/`Sao.py`, so với bảng
+tham khảo đã cố định trong YAML; không gọi mạng khi chạy. Script cũng kiểm tra
+bảng cấu hình `lasotuvi` khớp đủ 40 mục với vendor. Nếu lệch, trả exit code 1.
+Bất đồng giữa hai nguồn được báo cáo riêng và không làm script lỗi.
+
+Không tự hòa giải, gộp bảng hay coi repo tham khảo là canonical. Việc phân xử
+bằng sách KMS vẫn theo issue #1. Đây chỉ là metadata phương pháp an sao;
+không nhập bảng tham khảo vào RAG hoặc tạo tri thức canonical mới.
+
+### Chọn bảng và phạm vi áp dụng
+
+Mặc định không cần thêm cấu hình. Để chọn rõ trong `.env`:
+
+```dotenv
+KMS_TU_HOA_TABLE=lasotuvi
+```
+
+Hoặc chủ động dùng bảng tham khảo:
+
+```dotenv
+KMS_TU_HOA_TABLE=hung_ngm_reference
+```
+
+Khởi động lại backend sau khi đổi `.env`. Có thể đổi `default_table` trong YAML
+khi biến môi trường không được đặt. Tên bảng sai, thiếu Can, thiếu nhãn nguồn,
+sai tên sao hoặc sai số lượng bốn hóa đều bị từ chối; không âm thầm dùng bảng khác.
+
+Bảng được chọn áp dụng đồng bộ cho hóa tinh lá số gốc (Can năm sinh âm lịch),
+lưu Tứ Hóa (Can năm xem), vai trò Tứ Hóa trong facts, prompt luận giải/hỏi nhanh
+và nhãn UI ở bảng vận năm. Adapter chỉ chuyển các hóa tinh có vị trí khác;
+không sửa file vendor hay các quy tắc an sao khác.
+
+`generate_raw_horoscope(..., tu_hoa_table_id="lasotuvi")` cho phép công cụ nội bộ
+ghim bảng kiểm chứng; API người dùng chọn theo cấu hình backend. T4 ghim bảng
+vendor để giữ ý nghĩa kiểm tra chéo khi cấu hình ứng dụng đổi.
+
+### Trường dữ liệu bổ sung
+
+| Vị trí | Trường | Ý nghĩa |
+|---|---|---|
+| Raw chart, `thong_tin_co_ban`, `luu_nien` | `tu_hoa_table.id` | ID bảng đã chọn |
+| Như trên | `tu_hoa_table.school` | Nhãn bảng/trường phái đang dùng |
+| Như trên | `tu_hoa_table.source` | Nguồn cụ thể; URL tham khảo cố định theo commit |
+| Như trên | `tu_hoa_table.verification_status` | Phân biệt baseline và tham khảo chưa xác minh |
+| Như trên | `tu_hoa_table.signature` | SHA-256 của bảng cùng metadata; dùng tách cache |
+| `features.tu_hoa[]` | `ten_sao` | Tên sao gốc nhận hóa; cung chứa sao này là cung an hóa |
+
+Metadata đi vào prompt qua `thong_tin_co_ban` và `luu_nien` hiện có, không đổi
+schema JSON của bài luận T1/T2. Cache bài luận chứa cả ID và signature bảng để
+không dùng lại kết quả theo bảng khác. Fixture chung cũng kiểm tra các trường mới.
+
+Tên Tả Phụ của bảng tham khảo được chuẩn hóa với cách viết Tả phù trong catalog;
+vị trí Tả/Hữu hoặc các sao gốc không bị thay đổi khi đổi bảng Tứ Hóa.
+

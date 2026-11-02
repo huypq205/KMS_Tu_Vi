@@ -65,6 +65,7 @@ def reading_events(req: HoroscopeRequest):
             'input_confidence': req.input_confidence, 'gio_sinh_source': req.gio_sinh_source,
             'gio_sinh_error_phut': req.gio_sinh_error_phut,
             'target_year': features['nam_xem']['year'], 'top_k_per_topic': req.top_k_per_topic,
+            'tu_hoa_table': features['thong_tin_co_ban']['tu_hoa_table'],
         }
         cache_key = horoscope_cache.compute_key(
             birth, req.provider, HOROSCOPE_MODEL, horoscope_cache.context_hash(context),

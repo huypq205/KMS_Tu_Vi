@@ -1,0 +1,6126 @@
+{
+  "schema_version": 1,
+  "source_url": "https://github.com/hung-ngm/tu-vi-dau-so/blob/d0238e9ee9f1a8a1603f5ff1328b18bf6e4635b7/tu-vi-dau-so/skills/tu-vi-dau-so/references/computation.md",
+  "source_commit": "d0238e9ee9f1a8a1603f5ff1328b18bf6e4635b7",
+  "source_blob_sha": "28ffd19e28919c5a2b3eb98d146326bb22f07985",
+  "derivation": "Manually tabulated reference seeds; modular counting expands the seeds. No vendor import, vendor output, or KMS implementation is used for expected values. Lunar inputs isolate star placement from calendar conversion.",
+  "reference_limitations": [
+    "Section 5 contradicts itself on Water cycle length.",
+    "Metal day 1 lists both Dau and Hoi; vectors retain the first-listed Dau as disputed, not canonical.",
+    "For non-Water day 2 there is no exact absolute principal-star table; relative constellation checks still apply."
+  ],
+  "branches": [
+    "Tý",
+    "Sửu",
+    "Dần",
+    "Mão",
+    "Thìn",
+    "Tị",
+    "Ngọ",
+    "Mùi",
+    "Thân",
+    "Dậu",
+    "Tuất",
+    "Hợi"
+  ],
+  "stems": [
+    "Giáp",
+    "Ất",
+    "Bính",
+    "Đinh",
+    "Mậu",
+    "Kỷ",
+    "Canh",
+    "Tân",
+    "Nhâm",
+    "Quý"
+  ],
+  "issues": {
+    "T4-TUVI": {
+      "url": "https://github.com/huypq205/KMS_Tu_Vi/issues/1#t4-tuvi",
+      "publication_status": "published"
+    },
+    "T4-KHOIVIET": {
+      "url": "https://github.com/huypq205/KMS_Tu_Vi/issues/1#t4-khoiviet",
+      "publication_status": "published"
+    },
+    "T4-HOALINH": {
+      "url": "https://github.com/huypq205/KMS_Tu_Vi/issues/1#t4-hoalinh",
+      "publication_status": "published"
+    },
+    "T4-TUHOA": {
+      "url": "https://github.com/huypq205/KMS_Tu_Vi/issues/1#t4-tuhoa",
+      "publication_status": "published"
+    }
+  },
+  "vectors": [
+    {
+      "id": "month-01-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 26,
+          "Sửu": 16,
+          "Dần": 6,
+          "Mão": 116,
+          "Thìn": 106,
+          "Tị": 96,
+          "Ngọ": 86,
+          "Mùi": 76,
+          "Thân": 66,
+          "Dậu": 56,
+          "Tuất": 46,
+          "Hợi": 36
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      },
+      "discrepancies": {
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        }
+      }
+    },
+    {
+      "id": "month-01-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 6,
+        "menh": "Mão",
+        "than": "Sửu",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 96,
+          "Sửu": 106,
+          "Dần": 116,
+          "Mão": 6,
+          "Thìn": 16,
+          "Tị": 26,
+          "Ngọ": 36,
+          "Mùi": 46,
+          "Thân": 56,
+          "Dậu": 66,
+          "Tuất": 76,
+          "Hợi": 86
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      },
+      "discrepancies": {
+        "star:linh tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Hợi"
+        },
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        }
+      }
+    },
+    {
+      "id": "month-02-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 2,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 6,
+        "menh": "Mão",
+        "than": "Mão",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 96,
+          "Sửu": 106,
+          "Dần": 116,
+          "Mão": 6,
+          "Thìn": 16,
+          "Tị": 26,
+          "Ngọ": 36,
+          "Mùi": 46,
+          "Thân": 56,
+          "Dậu": 66,
+          "Tuất": 76,
+          "Hợi": 86
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Tị",
+        "star:hữu bật": "Dậu",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      },
+      "discrepancies": {
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        }
+      }
+    },
+    {
+      "id": "month-02-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 2,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 3,
+        "menh": "Thìn",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 43,
+          "Sửu": 33,
+          "Dần": 23,
+          "Mão": 13,
+          "Thìn": 3,
+          "Tị": 113,
+          "Ngọ": 103,
+          "Mùi": 93,
+          "Thân": 83,
+          "Dậu": 73,
+          "Tuất": 63,
+          "Hợi": 53
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Tị",
+        "star:hữu bật": "Dậu",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Thìn",
+        "star:thiên cơ": "Mão",
+        "star:thái dương": "Sửu",
+        "star:vũ khúc": "Tý",
+        "star:thiên đồng": "Hợi",
+        "star:liêm trinh": "Thân",
+        "star:thiên phủ": "Tý",
+        "star:thái âm": "Sửu",
+        "star:tham lang": "Dần",
+        "star:cự môn": "Mão",
+        "star:thiên tướng": "Thìn",
+        "star:thiên lương": "Tị",
+        "star:thất sát": "Ngọ",
+        "star:phá quân": "Tuất",
+        "star:hóa lộc": "Thân",
+        "star:hóa quyền": "Tuất",
+        "star:hóa khoa": "Tý",
+        "star:hóa kỵ": "Sửu"
+      },
+      "discrepancies": {
+        "star:hỏa tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Mão"
+        }
+      }
+    },
+    {
+      "id": "month-03-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 3,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 3,
+        "menh": "Thìn",
+        "than": "Thìn",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 43,
+          "Sửu": 33,
+          "Dần": 23,
+          "Mão": 13,
+          "Thìn": 3,
+          "Tị": 113,
+          "Ngọ": 103,
+          "Mùi": 93,
+          "Thân": 83,
+          "Dậu": 73,
+          "Tuất": 63,
+          "Hợi": 53
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Ngọ",
+        "star:hữu bật": "Thân",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Thìn",
+        "star:thiên cơ": "Mão",
+        "star:thái dương": "Sửu",
+        "star:vũ khúc": "Tý",
+        "star:thiên đồng": "Hợi",
+        "star:liêm trinh": "Thân",
+        "star:thiên phủ": "Tý",
+        "star:thái âm": "Sửu",
+        "star:tham lang": "Dần",
+        "star:cự môn": "Mão",
+        "star:thiên tướng": "Thìn",
+        "star:thiên lương": "Tị",
+        "star:thất sát": "Ngọ",
+        "star:phá quân": "Tuất",
+        "star:hóa lộc": "Thân",
+        "star:hóa quyền": "Tuất",
+        "star:hóa khoa": "Tý",
+        "star:hóa kỵ": "Sửu"
+      }
+    },
+    {
+      "id": "month-03-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 3,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 3,
+        "menh": "Tị",
+        "than": "Mão",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 73,
+          "Sửu": 83,
+          "Dần": 93,
+          "Mão": 103,
+          "Thìn": 113,
+          "Tị": 3,
+          "Ngọ": 13,
+          "Mùi": 23,
+          "Thân": 33,
+          "Dậu": 43,
+          "Tuất": 53,
+          "Hợi": 63
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Ngọ",
+        "star:hữu bật": "Thân",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Thìn",
+        "star:thiên cơ": "Mão",
+        "star:thái dương": "Sửu",
+        "star:vũ khúc": "Tý",
+        "star:thiên đồng": "Hợi",
+        "star:liêm trinh": "Thân",
+        "star:thiên phủ": "Tý",
+        "star:thái âm": "Sửu",
+        "star:tham lang": "Dần",
+        "star:cự môn": "Mão",
+        "star:thiên tướng": "Thìn",
+        "star:thiên lương": "Tị",
+        "star:thất sát": "Ngọ",
+        "star:phá quân": "Tuất",
+        "star:hóa lộc": "Thân",
+        "star:hóa quyền": "Tuất",
+        "star:hóa khoa": "Tý",
+        "star:hóa kỵ": "Sửu"
+      },
+      "discrepancies": {
+        "star:linh tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Hợi"
+        }
+      }
+    },
+    {
+      "id": "month-04-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 4,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 3,
+        "menh": "Tị",
+        "than": "Tị",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 73,
+          "Sửu": 83,
+          "Dần": 93,
+          "Mão": 103,
+          "Thìn": 113,
+          "Tị": 3,
+          "Ngọ": 13,
+          "Mùi": 23,
+          "Thân": 33,
+          "Dậu": 43,
+          "Tuất": 53,
+          "Hợi": 63
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Mùi",
+        "star:hữu bật": "Mùi",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Thìn",
+        "star:thiên cơ": "Mão",
+        "star:thái dương": "Sửu",
+        "star:vũ khúc": "Tý",
+        "star:thiên đồng": "Hợi",
+        "star:liêm trinh": "Thân",
+        "star:thiên phủ": "Tý",
+        "star:thái âm": "Sửu",
+        "star:tham lang": "Dần",
+        "star:cự môn": "Mão",
+        "star:thiên tướng": "Thìn",
+        "star:thiên lương": "Tị",
+        "star:thất sát": "Ngọ",
+        "star:phá quân": "Tuất",
+        "star:hóa lộc": "Thân",
+        "star:hóa quyền": "Tuất",
+        "star:hóa khoa": "Tý",
+        "star:hóa kỵ": "Sửu"
+      }
+    },
+    {
+      "id": "month-04-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 4,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 5,
+        "menh": "Ngọ",
+        "than": "Thìn",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 65,
+          "Sửu": 55,
+          "Dần": 45,
+          "Mão": 35,
+          "Thìn": 25,
+          "Tị": 15,
+          "Ngọ": 5,
+          "Mùi": 115,
+          "Thân": 105,
+          "Dậu": 95,
+          "Tuất": 85,
+          "Hợi": 75
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Mùi",
+        "star:hữu bật": "Mùi",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Ngọ",
+        "star:thiên cơ": "Tị",
+        "star:thái dương": "Mão",
+        "star:vũ khúc": "Dần",
+        "star:thiên đồng": "Sửu",
+        "star:liêm trinh": "Tuất",
+        "star:thiên phủ": "Tuất",
+        "star:thái âm": "Hợi",
+        "star:tham lang": "Tý",
+        "star:cự môn": "Sửu",
+        "star:thiên tướng": "Dần",
+        "star:thiên lương": "Mão",
+        "star:thất sát": "Thìn",
+        "star:phá quân": "Thân",
+        "star:hóa lộc": "Tuất",
+        "star:hóa quyền": "Thân",
+        "star:hóa khoa": "Dần",
+        "star:hóa kỵ": "Mão"
+      },
+      "discrepancies": {
+        "star:hỏa tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Mão"
+        }
+      }
+    },
+    {
+      "id": "month-05-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 5,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 5,
+        "menh": "Ngọ",
+        "than": "Ngọ",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 65,
+          "Sửu": 55,
+          "Dần": 45,
+          "Mão": 35,
+          "Thìn": 25,
+          "Tị": 15,
+          "Ngọ": 5,
+          "Mùi": 115,
+          "Thân": 105,
+          "Dậu": 95,
+          "Tuất": 85,
+          "Hợi": 75
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Thân",
+        "star:hữu bật": "Ngọ",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Ngọ",
+        "star:thiên cơ": "Tị",
+        "star:thái dương": "Mão",
+        "star:vũ khúc": "Dần",
+        "star:thiên đồng": "Sửu",
+        "star:liêm trinh": "Tuất",
+        "star:thiên phủ": "Tuất",
+        "star:thái âm": "Hợi",
+        "star:tham lang": "Tý",
+        "star:cự môn": "Sửu",
+        "star:thiên tướng": "Dần",
+        "star:thiên lương": "Mão",
+        "star:thất sát": "Thìn",
+        "star:phá quân": "Thân",
+        "star:hóa lộc": "Tuất",
+        "star:hóa quyền": "Thân",
+        "star:hóa khoa": "Dần",
+        "star:hóa kỵ": "Mão"
+      }
+    },
+    {
+      "id": "month-05-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 5,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 5,
+        "menh": "Mùi",
+        "than": "Tị",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 55,
+          "Sửu": 65,
+          "Dần": 75,
+          "Mão": 85,
+          "Thìn": 95,
+          "Tị": 105,
+          "Ngọ": 115,
+          "Mùi": 5,
+          "Thân": 15,
+          "Dậu": 25,
+          "Tuất": 35,
+          "Hợi": 45
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Thân",
+        "star:hữu bật": "Ngọ",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Ngọ",
+        "star:thiên cơ": "Tị",
+        "star:thái dương": "Mão",
+        "star:vũ khúc": "Dần",
+        "star:thiên đồng": "Sửu",
+        "star:liêm trinh": "Tuất",
+        "star:thiên phủ": "Tuất",
+        "star:thái âm": "Hợi",
+        "star:tham lang": "Tý",
+        "star:cự môn": "Sửu",
+        "star:thiên tướng": "Dần",
+        "star:thiên lương": "Mão",
+        "star:thất sát": "Thìn",
+        "star:phá quân": "Thân",
+        "star:hóa lộc": "Tuất",
+        "star:hóa quyền": "Thân",
+        "star:hóa khoa": "Dần",
+        "star:hóa kỵ": "Mão"
+      },
+      "discrepancies": {
+        "star:linh tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Hợi"
+        }
+      }
+    },
+    {
+      "id": "month-06-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 6,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 5,
+        "menh": "Mùi",
+        "than": "Mùi",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 55,
+          "Sửu": 65,
+          "Dần": 75,
+          "Mão": 85,
+          "Thìn": 95,
+          "Tị": 105,
+          "Ngọ": 115,
+          "Mùi": 5,
+          "Thân": 15,
+          "Dậu": 25,
+          "Tuất": 35,
+          "Hợi": 45
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Dậu",
+        "star:hữu bật": "Tị",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Ngọ",
+        "star:thiên cơ": "Tị",
+        "star:thái dương": "Mão",
+        "star:vũ khúc": "Dần",
+        "star:thiên đồng": "Sửu",
+        "star:liêm trinh": "Tuất",
+        "star:thiên phủ": "Tuất",
+        "star:thái âm": "Hợi",
+        "star:tham lang": "Tý",
+        "star:cự môn": "Sửu",
+        "star:thiên tướng": "Dần",
+        "star:thiên lương": "Mão",
+        "star:thất sát": "Thìn",
+        "star:phá quân": "Thân",
+        "star:hóa lộc": "Tuất",
+        "star:hóa quyền": "Thân",
+        "star:hóa khoa": "Dần",
+        "star:hóa kỵ": "Mão"
+      }
+    },
+    {
+      "id": "month-06-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 6,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 4,
+        "menh": "Thân",
+        "than": "Ngọ",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 84,
+          "Sửu": 74,
+          "Dần": 64,
+          "Mão": 54,
+          "Thìn": 44,
+          "Tị": 34,
+          "Ngọ": 24,
+          "Mùi": 14,
+          "Thân": 4,
+          "Dậu": 114,
+          "Tuất": 104,
+          "Hợi": 94
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Dậu",
+        "star:hữu bật": "Tị",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dậu",
+        "star:thiên cơ": "Thân",
+        "star:thái dương": "Ngọ",
+        "star:vũ khúc": "Tị",
+        "star:thiên đồng": "Thìn",
+        "star:liêm trinh": "Sửu",
+        "star:thiên phủ": "Mùi",
+        "star:thái âm": "Thân",
+        "star:tham lang": "Dậu",
+        "star:cự môn": "Tuất",
+        "star:thiên tướng": "Hợi",
+        "star:thiên lương": "Tý",
+        "star:thất sát": "Sửu",
+        "star:phá quân": "Tị",
+        "star:hóa lộc": "Sửu",
+        "star:hóa quyền": "Tị",
+        "star:hóa khoa": "Tị",
+        "star:hóa kỵ": "Ngọ"
+      },
+      "discrepancies": {
+        "star:hỏa tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Mão"
+        },
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        }
+      }
+    },
+    {
+      "id": "month-07-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 7,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 4,
+        "menh": "Thân",
+        "than": "Thân",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 84,
+          "Sửu": 74,
+          "Dần": 64,
+          "Mão": 54,
+          "Thìn": 44,
+          "Tị": 34,
+          "Ngọ": 24,
+          "Mùi": 14,
+          "Thân": 4,
+          "Dậu": 114,
+          "Tuất": 104,
+          "Hợi": 94
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Tuất",
+        "star:hữu bật": "Thìn",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dậu",
+        "star:thiên cơ": "Thân",
+        "star:thái dương": "Ngọ",
+        "star:vũ khúc": "Tị",
+        "star:thiên đồng": "Thìn",
+        "star:liêm trinh": "Sửu",
+        "star:thiên phủ": "Mùi",
+        "star:thái âm": "Thân",
+        "star:tham lang": "Dậu",
+        "star:cự môn": "Tuất",
+        "star:thiên tướng": "Hợi",
+        "star:thiên lương": "Tý",
+        "star:thất sát": "Sửu",
+        "star:phá quân": "Tị",
+        "star:hóa lộc": "Sửu",
+        "star:hóa quyền": "Tị",
+        "star:hóa khoa": "Tị",
+        "star:hóa kỵ": "Ngọ"
+      },
+      "discrepancies": {
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        }
+      }
+    },
+    {
+      "id": "month-07-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 7,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 4,
+        "menh": "Dậu",
+        "than": "Mùi",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 34,
+          "Sửu": 44,
+          "Dần": 54,
+          "Mão": 64,
+          "Thìn": 74,
+          "Tị": 84,
+          "Ngọ": 94,
+          "Mùi": 104,
+          "Thân": 114,
+          "Dậu": 4,
+          "Tuất": 14,
+          "Hợi": 24
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Tuất",
+        "star:hữu bật": "Thìn",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dậu",
+        "star:thiên cơ": "Thân",
+        "star:thái dương": "Ngọ",
+        "star:vũ khúc": "Tị",
+        "star:thiên đồng": "Thìn",
+        "star:liêm trinh": "Sửu",
+        "star:thiên phủ": "Mùi",
+        "star:thái âm": "Thân",
+        "star:tham lang": "Dậu",
+        "star:cự môn": "Tuất",
+        "star:thiên tướng": "Hợi",
+        "star:thiên lương": "Tý",
+        "star:thất sát": "Sửu",
+        "star:phá quân": "Tị",
+        "star:hóa lộc": "Sửu",
+        "star:hóa quyền": "Tị",
+        "star:hóa khoa": "Tị",
+        "star:hóa kỵ": "Ngọ"
+      },
+      "discrepancies": {
+        "star:linh tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Hợi"
+        },
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        }
+      }
+    },
+    {
+      "id": "month-08-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 8,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 4,
+        "menh": "Dậu",
+        "than": "Dậu",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 34,
+          "Sửu": 44,
+          "Dần": 54,
+          "Mão": 64,
+          "Thìn": 74,
+          "Tị": 84,
+          "Ngọ": 94,
+          "Mùi": 104,
+          "Thân": 114,
+          "Dậu": 4,
+          "Tuất": 14,
+          "Hợi": 24
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Hợi",
+        "star:hữu bật": "Mão",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dậu",
+        "star:thiên cơ": "Thân",
+        "star:thái dương": "Ngọ",
+        "star:vũ khúc": "Tị",
+        "star:thiên đồng": "Thìn",
+        "star:liêm trinh": "Sửu",
+        "star:thiên phủ": "Mùi",
+        "star:thái âm": "Thân",
+        "star:tham lang": "Dậu",
+        "star:cự môn": "Tuất",
+        "star:thiên tướng": "Hợi",
+        "star:thiên lương": "Tý",
+        "star:thất sát": "Sửu",
+        "star:phá quân": "Tị",
+        "star:hóa lộc": "Sửu",
+        "star:hóa quyền": "Tị",
+        "star:hóa khoa": "Tị",
+        "star:hóa kỵ": "Ngọ"
+      },
+      "discrepancies": {
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        }
+      }
+    },
+    {
+      "id": "month-08-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 8,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 6,
+        "menh": "Tuất",
+        "than": "Thân",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 106,
+          "Sửu": 96,
+          "Dần": 86,
+          "Mão": 76,
+          "Thìn": 66,
+          "Tị": 56,
+          "Ngọ": 46,
+          "Mùi": 36,
+          "Thân": 26,
+          "Dậu": 16,
+          "Tuất": 6,
+          "Hợi": 116
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Hợi",
+        "star:hữu bật": "Mão",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      },
+      "discrepancies": {
+        "star:hỏa tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Mão"
+        },
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        }
+      }
+    },
+    {
+      "id": "month-09-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 9,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 6,
+        "menh": "Tuất",
+        "than": "Tuất",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 106,
+          "Sửu": 96,
+          "Dần": 86,
+          "Mão": 76,
+          "Thìn": 66,
+          "Tị": 56,
+          "Ngọ": 46,
+          "Mùi": 36,
+          "Thân": 26,
+          "Dậu": 16,
+          "Tuất": 6,
+          "Hợi": 116
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Tý",
+        "star:hữu bật": "Dần",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      },
+      "discrepancies": {
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        }
+      }
+    },
+    {
+      "id": "month-09-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 9,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 6,
+        "menh": "Hợi",
+        "than": "Dậu",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 16,
+          "Sửu": 26,
+          "Dần": 36,
+          "Mão": 46,
+          "Thìn": 56,
+          "Tị": 66,
+          "Ngọ": 76,
+          "Mùi": 86,
+          "Thân": 96,
+          "Dậu": 106,
+          "Tuất": 116,
+          "Hợi": 6
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Tý",
+        "star:hữu bật": "Dần",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      },
+      "discrepancies": {
+        "star:linh tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Hợi"
+        },
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        }
+      }
+    },
+    {
+      "id": "month-10-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 10,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 6,
+        "menh": "Hợi",
+        "than": "Hợi",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 16,
+          "Sửu": 26,
+          "Dần": 36,
+          "Mão": 46,
+          "Thìn": 56,
+          "Tị": 66,
+          "Ngọ": 76,
+          "Mùi": 86,
+          "Thân": 96,
+          "Dậu": 106,
+          "Tuất": 116,
+          "Hợi": 6
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Sửu",
+        "star:hữu bật": "Sửu",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      },
+      "discrepancies": {
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        }
+      }
+    },
+    {
+      "id": "month-10-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 10,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 2,
+        "menh": "Tý",
+        "than": "Tuất",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 2,
+          "Sửu": 112,
+          "Dần": 102,
+          "Mão": 92,
+          "Thìn": 82,
+          "Tị": 72,
+          "Ngọ": 62,
+          "Mùi": 52,
+          "Thân": 42,
+          "Dậu": 32,
+          "Tuất": 22,
+          "Hợi": 12
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Sửu",
+        "star:hữu bật": "Sửu",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Sửu",
+        "star:thiên cơ": "Tý",
+        "star:thái dương": "Tuất",
+        "star:vũ khúc": "Dậu",
+        "star:thiên đồng": "Thân",
+        "star:liêm trinh": "Tị",
+        "star:thiên phủ": "Mão",
+        "star:thái âm": "Thìn",
+        "star:tham lang": "Tị",
+        "star:cự môn": "Ngọ",
+        "star:thiên tướng": "Mùi",
+        "star:thiên lương": "Thân",
+        "star:thất sát": "Dậu",
+        "star:phá quân": "Sửu",
+        "star:hóa lộc": "Tị",
+        "star:hóa quyền": "Sửu",
+        "star:hóa khoa": "Dậu",
+        "star:hóa kỵ": "Tuất"
+      },
+      "discrepancies": {
+        "star:hỏa tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Mão"
+        }
+      }
+    },
+    {
+      "id": "month-11-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 11,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 2,
+        "menh": "Tý",
+        "than": "Tý",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 2,
+          "Sửu": 112,
+          "Dần": 102,
+          "Mão": 92,
+          "Thìn": 82,
+          "Tị": 72,
+          "Ngọ": 62,
+          "Mùi": 52,
+          "Thân": 42,
+          "Dậu": 32,
+          "Tuất": 22,
+          "Hợi": 12
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Dần",
+        "star:hữu bật": "Tý",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Sửu",
+        "star:thiên cơ": "Tý",
+        "star:thái dương": "Tuất",
+        "star:vũ khúc": "Dậu",
+        "star:thiên đồng": "Thân",
+        "star:liêm trinh": "Tị",
+        "star:thiên phủ": "Mão",
+        "star:thái âm": "Thìn",
+        "star:tham lang": "Tị",
+        "star:cự môn": "Ngọ",
+        "star:thiên tướng": "Mùi",
+        "star:thiên lương": "Thân",
+        "star:thất sát": "Dậu",
+        "star:phá quân": "Sửu",
+        "star:hóa lộc": "Tị",
+        "star:hóa quyền": "Sửu",
+        "star:hóa khoa": "Dậu",
+        "star:hóa kỵ": "Tuất"
+      }
+    },
+    {
+      "id": "month-11-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 11,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 2,
+        "menh": "Sửu",
+        "than": "Hợi",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 112,
+          "Sửu": 2,
+          "Dần": 12,
+          "Mão": 22,
+          "Thìn": 32,
+          "Tị": 42,
+          "Ngọ": 52,
+          "Mùi": 62,
+          "Thân": 72,
+          "Dậu": 82,
+          "Tuất": 92,
+          "Hợi": 102
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Dần",
+        "star:hữu bật": "Tý",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Sửu",
+        "star:thiên cơ": "Tý",
+        "star:thái dương": "Tuất",
+        "star:vũ khúc": "Dậu",
+        "star:thiên đồng": "Thân",
+        "star:liêm trinh": "Tị",
+        "star:thiên phủ": "Mão",
+        "star:thái âm": "Thìn",
+        "star:tham lang": "Tị",
+        "star:cự môn": "Ngọ",
+        "star:thiên tướng": "Mùi",
+        "star:thiên lương": "Thân",
+        "star:thất sát": "Dậu",
+        "star:phá quân": "Sửu",
+        "star:hóa lộc": "Tị",
+        "star:hóa quyền": "Sửu",
+        "star:hóa khoa": "Dậu",
+        "star:hóa kỵ": "Tuất"
+      },
+      "discrepancies": {
+        "star:linh tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Hợi"
+        }
+      }
+    },
+    {
+      "id": "month-12-hour-01",
+      "birth": {
+        "nn": 1,
+        "tt": 12,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 2,
+        "menh": "Sửu",
+        "than": "Sửu",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 112,
+          "Sửu": 2,
+          "Dần": 12,
+          "Mão": 22,
+          "Thìn": 32,
+          "Tị": 42,
+          "Ngọ": 52,
+          "Mùi": 62,
+          "Thân": 72,
+          "Dậu": 82,
+          "Tuất": 92,
+          "Hợi": 102
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Mão",
+        "star:hữu bật": "Hợi",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Sửu",
+        "star:thiên cơ": "Tý",
+        "star:thái dương": "Tuất",
+        "star:vũ khúc": "Dậu",
+        "star:thiên đồng": "Thân",
+        "star:liêm trinh": "Tị",
+        "star:thiên phủ": "Mão",
+        "star:thái âm": "Thìn",
+        "star:tham lang": "Tị",
+        "star:cự môn": "Ngọ",
+        "star:thiên tướng": "Mùi",
+        "star:thiên lương": "Thân",
+        "star:thất sát": "Dậu",
+        "star:phá quân": "Sửu",
+        "star:hóa lộc": "Tị",
+        "star:hóa quyền": "Sửu",
+        "star:hóa khoa": "Dậu",
+        "star:hóa kỵ": "Tuất"
+      }
+    },
+    {
+      "id": "month-12-hour-12",
+      "birth": {
+        "nn": 1,
+        "tt": 12,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Tý",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 26,
+          "Sửu": 16,
+          "Dần": 6,
+          "Mão": 116,
+          "Thìn": 106,
+          "Tị": 96,
+          "Ngọ": 86,
+          "Mùi": 76,
+          "Thân": 66,
+          "Dậu": 56,
+          "Tuất": 46,
+          "Hợi": 36
+        },
+        "tieu_han": [
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi"
+        ],
+        "star:tả phụ": "Mão",
+        "star:hữu bật": "Hợi",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      },
+      "discrepancies": {
+        "star:hỏa tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Mão"
+        },
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        }
+      }
+    },
+    {
+      "id": "year-1984",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 106,
+          "Sửu": 116,
+          "Dần": 6,
+          "Mão": 16,
+          "Thìn": 26,
+          "Tị": 36,
+          "Ngọ": 46,
+          "Mùi": 56,
+          "Thân": 66,
+          "Dậu": 76,
+          "Tuất": 86,
+          "Hợi": 96
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      },
+      "discrepancies": {
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        }
+      }
+    },
+    {
+      "id": "year-1985",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1985,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Ất",
+        "chi_nam": "Sửu",
+        "cuc": 5,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Ngọ",
+          "Mùi"
+        ],
+        "dai_han": {
+          "Tý": 25,
+          "Sửu": 15,
+          "Dần": 5,
+          "Mão": 115,
+          "Thìn": 105,
+          "Tị": 95,
+          "Ngọ": 85,
+          "Mùi": 75,
+          "Thân": 65,
+          "Dậu": 55,
+          "Tuất": 45,
+          "Hợi": 35
+        },
+        "tieu_han": [
+          "Mùi",
+          "Thân",
+          "Dậu",
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Tý",
+        "star:thiên việt": "Thân",
+        "star:lộc tồn": "Mão",
+        "star:kình dương": "Thìn",
+        "star:đà la": "Dần",
+        "star:hỏa tinh": "Tuất",
+        "star:linh tinh": "Mão",
+        "star:thiên mã": "Hợi",
+        "star:hồng loan": "Dần",
+        "star:thiên hỉ": "Thân",
+        "star:tử vi": "Ngọ",
+        "star:thiên cơ": "Tị",
+        "star:thái dương": "Mão",
+        "star:vũ khúc": "Dần",
+        "star:thiên đồng": "Sửu",
+        "star:liêm trinh": "Tuất",
+        "star:thiên phủ": "Tuất",
+        "star:thái âm": "Hợi",
+        "star:tham lang": "Tý",
+        "star:cự môn": "Sửu",
+        "star:thiên tướng": "Dần",
+        "star:thiên lương": "Mão",
+        "star:thất sát": "Thìn",
+        "star:phá quân": "Thân",
+        "star:hóa lộc": "Tị",
+        "star:hóa quyền": "Mão",
+        "star:hóa khoa": "Ngọ",
+        "star:hóa kỵ": "Hợi"
+      }
+    },
+    {
+      "id": "year-1986",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1986,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Bính",
+        "chi_nam": "Dần",
+        "cuc": 3,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thìn",
+          "Tị"
+        ],
+        "dai_han": {
+          "Tý": 23,
+          "Sửu": 13,
+          "Dần": 3,
+          "Mão": 113,
+          "Thìn": 103,
+          "Tị": 93,
+          "Ngọ": 83,
+          "Mùi": 73,
+          "Thân": 63,
+          "Dậu": 53,
+          "Tuất": 43,
+          "Hợi": 33
+        },
+        "tieu_han": [
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi",
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Hợi",
+        "star:thiên việt": "Dậu",
+        "star:lộc tồn": "Tị",
+        "star:kình dương": "Ngọ",
+        "star:đà la": "Thìn",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Mão",
+        "star:thiên mã": "Thân",
+        "star:hồng loan": "Sửu",
+        "star:thiên hỉ": "Mùi",
+        "star:tử vi": "Thìn",
+        "star:thiên cơ": "Mão",
+        "star:thái dương": "Sửu",
+        "star:vũ khúc": "Tý",
+        "star:thiên đồng": "Hợi",
+        "star:liêm trinh": "Thân",
+        "star:thiên phủ": "Tý",
+        "star:thái âm": "Sửu",
+        "star:tham lang": "Dần",
+        "star:cự môn": "Mão",
+        "star:thiên tướng": "Thìn",
+        "star:thiên lương": "Tị",
+        "star:thất sát": "Ngọ",
+        "star:phá quân": "Tuất",
+        "star:hóa lộc": "Hợi",
+        "star:hóa quyền": "Mão",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Thân"
+      }
+    },
+    {
+      "id": "year-1987",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1987,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Đinh",
+        "chi_nam": "Mão",
+        "cuc": 4,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Dần",
+          "Mão"
+        ],
+        "dai_han": {
+          "Tý": 104,
+          "Sửu": 114,
+          "Dần": 4,
+          "Mão": 14,
+          "Thìn": 24,
+          "Tị": 34,
+          "Ngọ": 44,
+          "Mùi": 54,
+          "Thân": 64,
+          "Dậu": 74,
+          "Tuất": 84,
+          "Hợi": 94
+        },
+        "tieu_han": [
+          "Sửu",
+          "Tý",
+          "Hợi",
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Hợi",
+        "star:thiên việt": "Dậu",
+        "star:lộc tồn": "Ngọ",
+        "star:kình dương": "Mùi",
+        "star:đà la": "Tị",
+        "star:hỏa tinh": "Dậu",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Tị",
+        "star:hồng loan": "Tý",
+        "star:thiên hỉ": "Ngọ",
+        "star:tử vi": "Dậu",
+        "star:thiên cơ": "Thân",
+        "star:thái dương": "Ngọ",
+        "star:vũ khúc": "Tị",
+        "star:thiên đồng": "Thìn",
+        "star:liêm trinh": "Sửu",
+        "star:thiên phủ": "Mùi",
+        "star:thái âm": "Thân",
+        "star:tham lang": "Dậu",
+        "star:cự môn": "Tuất",
+        "star:thiên tướng": "Hợi",
+        "star:thiên lương": "Tý",
+        "star:thất sát": "Sửu",
+        "star:phá quân": "Tị",
+        "star:hóa lộc": "Thân",
+        "star:hóa quyền": "Thìn",
+        "star:hóa khoa": "Thân",
+        "star:hóa kỵ": "Tuất"
+      },
+      "discrepancies": {
+        "star:thiên khôi": {
+          "issue": "T4-KHOIVIET",
+          "observed": "Dậu"
+        },
+        "star:thiên việt": {
+          "issue": "T4-KHOIVIET",
+          "observed": "Hợi"
+        },
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        }
+      }
+    },
+    {
+      "id": "year-1988",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1988,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Mậu",
+        "chi_nam": "Thìn",
+        "cuc": 2,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Tý",
+          "Sửu"
+        ],
+        "dai_han": {
+          "Tý": 102,
+          "Sửu": 112,
+          "Dần": 2,
+          "Mão": 12,
+          "Thìn": 22,
+          "Tị": 32,
+          "Ngọ": 42,
+          "Mùi": 52,
+          "Thân": 62,
+          "Dậu": 72,
+          "Tuất": 82,
+          "Hợi": 92
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Tị",
+        "star:kình dương": "Ngọ",
+        "star:đà la": "Thìn",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Hợi",
+        "star:thiên hỉ": "Tị",
+        "star:tử vi": "Sửu",
+        "star:thiên cơ": "Tý",
+        "star:thái dương": "Tuất",
+        "star:vũ khúc": "Dậu",
+        "star:thiên đồng": "Thân",
+        "star:liêm trinh": "Tị",
+        "star:thiên phủ": "Mão",
+        "star:thái âm": "Thìn",
+        "star:tham lang": "Tị",
+        "star:cự môn": "Ngọ",
+        "star:thiên tướng": "Mùi",
+        "star:thiên lương": "Thân",
+        "star:thất sát": "Dậu",
+        "star:phá quân": "Sửu",
+        "star:hóa lộc": "Tị",
+        "star:hóa quyền": "Thìn",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Tý"
+      },
+      "discrepancies": {
+        "star:thiên khôi": {
+          "issue": "T4-KHOIVIET",
+          "observed": "Mùi"
+        },
+        "star:thiên việt": {
+          "issue": "T4-KHOIVIET",
+          "observed": "Sửu"
+        }
+      }
+    },
+    {
+      "id": "year-1989",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1989,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Kỷ",
+        "chi_nam": "Tị",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 26,
+          "Sửu": 16,
+          "Dần": 6,
+          "Mão": 116,
+          "Thìn": 106,
+          "Tị": 96,
+          "Ngọ": 86,
+          "Mùi": 76,
+          "Thân": 66,
+          "Dậu": 56,
+          "Tuất": 46,
+          "Hợi": 36
+        },
+        "tieu_han": [
+          "Mùi",
+          "Thân",
+          "Dậu",
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Tý",
+        "star:thiên việt": "Thân",
+        "star:lộc tồn": "Ngọ",
+        "star:kình dương": "Mùi",
+        "star:đà la": "Tị",
+        "star:hỏa tinh": "Tuất",
+        "star:linh tinh": "Mão",
+        "star:thiên mã": "Hợi",
+        "star:hồng loan": "Tuất",
+        "star:thiên hỉ": "Thìn",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Tuất",
+        "star:hóa quyền": "Thìn",
+        "star:hóa khoa": "Mùi",
+        "star:hóa kỵ": "Thìn"
+      },
+      "discrepancies": {
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        }
+      }
+    },
+    {
+      "id": "year-1990",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1990,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Canh",
+        "chi_nam": "Ngọ",
+        "cuc": 5,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Ngọ",
+          "Mùi"
+        ],
+        "dai_han": {
+          "Tý": 25,
+          "Sửu": 15,
+          "Dần": 5,
+          "Mão": 115,
+          "Thìn": 105,
+          "Tị": 95,
+          "Ngọ": 85,
+          "Mùi": 75,
+          "Thân": 65,
+          "Dậu": 55,
+          "Tuất": 45,
+          "Hợi": 35
+        },
+        "tieu_han": [
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi",
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Thân",
+        "star:kình dương": "Dậu",
+        "star:đà la": "Mùi",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Mão",
+        "star:thiên mã": "Thân",
+        "star:hồng loan": "Dậu",
+        "star:thiên hỉ": "Mão",
+        "star:tử vi": "Ngọ",
+        "star:thiên cơ": "Tị",
+        "star:thái dương": "Mão",
+        "star:vũ khúc": "Dần",
+        "star:thiên đồng": "Sửu",
+        "star:liêm trinh": "Tuất",
+        "star:thiên phủ": "Tuất",
+        "star:thái âm": "Hợi",
+        "star:tham lang": "Tý",
+        "star:cự môn": "Sửu",
+        "star:thiên tướng": "Dần",
+        "star:thiên lương": "Mão",
+        "star:thất sát": "Thìn",
+        "star:phá quân": "Thân",
+        "star:hóa lộc": "Mão",
+        "star:hóa quyền": "Dần",
+        "star:hóa khoa": "Hợi",
+        "star:hóa kỵ": "Sửu"
+      },
+      "discrepancies": {
+        "star:thiên khôi": {
+          "issue": "T4-KHOIVIET",
+          "observed": "Mùi"
+        },
+        "star:thiên việt": {
+          "issue": "T4-KHOIVIET",
+          "observed": "Sửu"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUHOA",
+          "observed": "Sửu"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUHOA",
+          "observed": "Hợi"
+        }
+      }
+    },
+    {
+      "id": "year-1991",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1991,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Tân",
+        "chi_nam": "Mùi",
+        "cuc": 3,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thìn",
+          "Tị"
+        ],
+        "dai_han": {
+          "Tý": 103,
+          "Sửu": 113,
+          "Dần": 3,
+          "Mão": 13,
+          "Thìn": 23,
+          "Tị": 33,
+          "Ngọ": 43,
+          "Mùi": 53,
+          "Thân": 63,
+          "Dậu": 73,
+          "Tuất": 83,
+          "Hợi": 93
+        },
+        "tieu_han": [
+          "Sửu",
+          "Tý",
+          "Hợi",
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Ngọ",
+        "star:thiên việt": "Dần",
+        "star:lộc tồn": "Dậu",
+        "star:kình dương": "Tuất",
+        "star:đà la": "Thân",
+        "star:hỏa tinh": "Dậu",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Tị",
+        "star:hồng loan": "Thân",
+        "star:thiên hỉ": "Dần",
+        "star:tử vi": "Thìn",
+        "star:thiên cơ": "Mão",
+        "star:thái dương": "Sửu",
+        "star:vũ khúc": "Tý",
+        "star:thiên đồng": "Hợi",
+        "star:liêm trinh": "Thân",
+        "star:thiên phủ": "Tý",
+        "star:thái âm": "Sửu",
+        "star:tham lang": "Dần",
+        "star:cự môn": "Mão",
+        "star:thiên tướng": "Thìn",
+        "star:thiên lương": "Tị",
+        "star:thất sát": "Ngọ",
+        "star:phá quân": "Tuất",
+        "star:hóa lộc": "Mão",
+        "star:hóa quyền": "Sửu",
+        "star:hóa khoa": "Thìn",
+        "star:hóa kỵ": "Tuất"
+      }
+    },
+    {
+      "id": "year-1992",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1992,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Nhâm",
+        "chi_nam": "Thân",
+        "cuc": 4,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Dần",
+          "Mão"
+        ],
+        "dai_han": {
+          "Tý": 104,
+          "Sửu": 114,
+          "Dần": 4,
+          "Mão": 14,
+          "Thìn": 24,
+          "Tị": 34,
+          "Ngọ": 44,
+          "Mùi": 54,
+          "Thân": 64,
+          "Dậu": 74,
+          "Tuất": 84,
+          "Hợi": 94
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Mão",
+        "star:thiên việt": "Tị",
+        "star:lộc tồn": "Hợi",
+        "star:kình dương": "Tý",
+        "star:đà la": "Tuất",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mùi",
+        "star:thiên hỉ": "Sửu",
+        "star:tử vi": "Dậu",
+        "star:thiên cơ": "Thân",
+        "star:thái dương": "Ngọ",
+        "star:vũ khúc": "Tị",
+        "star:thiên đồng": "Thìn",
+        "star:liêm trinh": "Sửu",
+        "star:thiên phủ": "Mùi",
+        "star:thái âm": "Thân",
+        "star:tham lang": "Dậu",
+        "star:cự môn": "Tuất",
+        "star:thiên tướng": "Hợi",
+        "star:thiên lương": "Tý",
+        "star:thất sát": "Sửu",
+        "star:phá quân": "Tị",
+        "star:hóa lộc": "Tý",
+        "star:hóa quyền": "Dậu",
+        "star:hóa khoa": "Thìn",
+        "star:hóa kỵ": "Tị"
+      },
+      "discrepancies": {
+        "star:thiên khôi": {
+          "issue": "T4-KHOIVIET",
+          "observed": "Tị"
+        },
+        "star:thiên việt": {
+          "issue": "T4-KHOIVIET",
+          "observed": "Mão"
+        },
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUHOA",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        }
+      }
+    },
+    {
+      "id": "year-1993",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1993,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Quý",
+        "chi_nam": "Dậu",
+        "cuc": 2,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Tý",
+          "Sửu"
+        ],
+        "dai_han": {
+          "Tý": 22,
+          "Sửu": 12,
+          "Dần": 2,
+          "Mão": 112,
+          "Thìn": 102,
+          "Tị": 92,
+          "Ngọ": 82,
+          "Mùi": 72,
+          "Thân": 62,
+          "Dậu": 52,
+          "Tuất": 42,
+          "Hợi": 32
+        },
+        "tieu_han": [
+          "Mùi",
+          "Thân",
+          "Dậu",
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Mão",
+        "star:thiên việt": "Tị",
+        "star:lộc tồn": "Tý",
+        "star:kình dương": "Sửu",
+        "star:đà la": "Hợi",
+        "star:hỏa tinh": "Tuất",
+        "star:linh tinh": "Mão",
+        "star:thiên mã": "Hợi",
+        "star:hồng loan": "Ngọ",
+        "star:thiên hỉ": "Tý",
+        "star:tử vi": "Sửu",
+        "star:thiên cơ": "Tý",
+        "star:thái dương": "Tuất",
+        "star:vũ khúc": "Dậu",
+        "star:thiên đồng": "Thân",
+        "star:liêm trinh": "Tị",
+        "star:thiên phủ": "Mão",
+        "star:thái âm": "Thìn",
+        "star:tham lang": "Tị",
+        "star:cự môn": "Ngọ",
+        "star:thiên tướng": "Mùi",
+        "star:thiên lương": "Thân",
+        "star:thất sát": "Dậu",
+        "star:phá quân": "Sửu",
+        "star:hóa lộc": "Sửu",
+        "star:hóa quyền": "Ngọ",
+        "star:hóa khoa": "Thìn",
+        "star:hóa kỵ": "Tị"
+      }
+    },
+    {
+      "id": "year-1994",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1994,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tuất",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Thân",
+          "Dậu"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 26,
+          "Sửu": 16,
+          "Dần": 6,
+          "Mão": 116,
+          "Thìn": 106,
+          "Tị": 96,
+          "Ngọ": 86,
+          "Mùi": 76,
+          "Thân": 66,
+          "Dậu": 56,
+          "Tuất": 46,
+          "Hợi": 36
+        },
+        "tieu_han": [
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi",
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Mão",
+        "star:thiên mã": "Thân",
+        "star:hồng loan": "Tị",
+        "star:thiên hỉ": "Hợi",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      },
+      "discrepancies": {
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Thân"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Dậu"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        }
+      }
+    },
+    {
+      "id": "year-1995",
+      "birth": {
+        "nn": 1,
+        "tt": 1,
+        "nnnn": 1995,
+        "chi_gio": 1,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "day_1_first_listed_candidate",
+      "expected": {
+        "can_nam": "Ất",
+        "chi_nam": "Hợi",
+        "cuc": 5,
+        "menh": "Dần",
+        "than": "Dần",
+        "tuan": [
+          "Thân",
+          "Dậu"
+        ],
+        "triet": [
+          "Ngọ",
+          "Mùi"
+        ],
+        "dai_han": {
+          "Tý": 105,
+          "Sửu": 115,
+          "Dần": 5,
+          "Mão": 15,
+          "Thìn": 25,
+          "Tị": 35,
+          "Ngọ": 45,
+          "Mùi": 55,
+          "Thân": 65,
+          "Dậu": 75,
+          "Tuất": 85,
+          "Hợi": 95
+        },
+        "tieu_han": [
+          "Sửu",
+          "Tý",
+          "Hợi",
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị",
+          "Thìn",
+          "Mão",
+          "Dần"
+        ],
+        "star:tả phụ": "Thìn",
+        "star:hữu bật": "Tuất",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Tý",
+        "star:thiên việt": "Thân",
+        "star:lộc tồn": "Mão",
+        "star:kình dương": "Thìn",
+        "star:đà la": "Dần",
+        "star:hỏa tinh": "Dậu",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Tị",
+        "star:hồng loan": "Thìn",
+        "star:thiên hỉ": "Tuất",
+        "star:tử vi": "Ngọ",
+        "star:thiên cơ": "Tị",
+        "star:thái dương": "Mão",
+        "star:vũ khúc": "Dần",
+        "star:thiên đồng": "Sửu",
+        "star:liêm trinh": "Tuất",
+        "star:thiên phủ": "Tuất",
+        "star:thái âm": "Hợi",
+        "star:tham lang": "Tý",
+        "star:cự môn": "Sửu",
+        "star:thiên tướng": "Dần",
+        "star:thiên lương": "Mão",
+        "star:thất sát": "Thìn",
+        "star:phá quân": "Thân",
+        "star:hóa lộc": "Tị",
+        "star:hóa quyền": "Mão",
+        "star:hóa khoa": "Ngọ",
+        "star:hóa kỵ": "Hợi"
+      }
+    },
+    {
+      "id": "tuan-1",
+      "birth": {
+        "nn": 2,
+        "tt": 12,
+        "nnnn": 1984,
+        "chi_gio": 12,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "not_specified_by_reference",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Tý",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 106,
+          "Sửu": 116,
+          "Dần": 6,
+          "Mão": 16,
+          "Thìn": 26,
+          "Tị": 36,
+          "Ngọ": 46,
+          "Mùi": 56,
+          "Thân": 66,
+          "Dậu": 76,
+          "Tuất": 86,
+          "Hợi": 96
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Mão",
+        "star:hữu bật": "Hợi",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu"
+      },
+      "discrepancies": {
+        "star:linh tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Hợi"
+        }
+      }
+    },
+    {
+      "id": "tuan-2",
+      "birth": {
+        "nn": 2,
+        "tt": 12,
+        "nnnn": 1994,
+        "chi_gio": 12,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "not_specified_by_reference",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tuất",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Tý",
+        "tuan": [
+          "Thân",
+          "Dậu"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 26,
+          "Sửu": 16,
+          "Dần": 6,
+          "Mão": 116,
+          "Thìn": 106,
+          "Tị": 96,
+          "Ngọ": 86,
+          "Mùi": 76,
+          "Thân": 66,
+          "Dậu": 56,
+          "Tuất": 46,
+          "Hợi": 36
+        },
+        "tieu_han": [
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi",
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị"
+        ],
+        "star:tả phụ": "Mão",
+        "star:hữu bật": "Hợi",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Tý",
+        "star:linh tinh": "Dần",
+        "star:thiên mã": "Thân",
+        "star:hồng loan": "Tị",
+        "star:thiên hỉ": "Hợi"
+      },
+      "discrepancies": {
+        "star:hỏa tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Dần"
+        }
+      }
+    },
+    {
+      "id": "tuan-3",
+      "birth": {
+        "nn": 2,
+        "tt": 12,
+        "nnnn": 2004,
+        "chi_gio": 12,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "not_specified_by_reference",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Thân",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Tý",
+        "tuan": [
+          "Ngọ",
+          "Mùi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 106,
+          "Sửu": 116,
+          "Dần": 6,
+          "Mão": 16,
+          "Thìn": 26,
+          "Tị": 36,
+          "Ngọ": 46,
+          "Mùi": 56,
+          "Thân": 66,
+          "Dậu": 76,
+          "Tuất": 86,
+          "Hợi": 96
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Mão",
+        "star:hữu bật": "Hợi",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mùi",
+        "star:thiên hỉ": "Sửu"
+      },
+      "discrepancies": {
+        "star:linh tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Hợi"
+        }
+      }
+    },
+    {
+      "id": "tuan-4",
+      "birth": {
+        "nn": 2,
+        "tt": 12,
+        "nnnn": 2014,
+        "chi_gio": 12,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "not_specified_by_reference",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Ngọ",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Tý",
+        "tuan": [
+          "Thìn",
+          "Tị"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 26,
+          "Sửu": 16,
+          "Dần": 6,
+          "Mão": 116,
+          "Thìn": 106,
+          "Tị": 96,
+          "Ngọ": 86,
+          "Mùi": 76,
+          "Thân": 66,
+          "Dậu": 56,
+          "Tuất": 46,
+          "Hợi": 36
+        },
+        "tieu_han": [
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi",
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị"
+        ],
+        "star:tả phụ": "Mão",
+        "star:hữu bật": "Hợi",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Tý",
+        "star:linh tinh": "Dần",
+        "star:thiên mã": "Thân",
+        "star:hồng loan": "Dậu",
+        "star:thiên hỉ": "Mão"
+      },
+      "discrepancies": {
+        "star:hỏa tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Dần"
+        }
+      }
+    },
+    {
+      "id": "tuan-5",
+      "birth": {
+        "nn": 2,
+        "tt": 12,
+        "nnnn": 2024,
+        "chi_gio": 12,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "not_specified_by_reference",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Thìn",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Tý",
+        "tuan": [
+          "Dần",
+          "Mão"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 106,
+          "Sửu": 116,
+          "Dần": 6,
+          "Mão": 16,
+          "Thìn": 26,
+          "Tị": 36,
+          "Ngọ": 46,
+          "Mùi": 56,
+          "Thân": 66,
+          "Dậu": 76,
+          "Tuất": 86,
+          "Hợi": 96
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Mão",
+        "star:hữu bật": "Hợi",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Sửu",
+        "star:linh tinh": "Dậu",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Hợi",
+        "star:thiên hỉ": "Tị"
+      },
+      "discrepancies": {
+        "star:linh tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Hợi"
+        }
+      }
+    },
+    {
+      "id": "tuan-6",
+      "birth": {
+        "nn": 2,
+        "tt": 12,
+        "nnnn": 2034,
+        "chi_gio": 12,
+        "gioi_tinh": 2,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "not_specified_by_reference",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Dần",
+        "cuc": 6,
+        "menh": "Dần",
+        "than": "Tý",
+        "tuan": [
+          "Tý",
+          "Sửu"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 26,
+          "Sửu": 16,
+          "Dần": 6,
+          "Mão": 116,
+          "Thìn": 106,
+          "Tị": 96,
+          "Ngọ": 86,
+          "Mùi": 76,
+          "Thân": 66,
+          "Dậu": 56,
+          "Tuất": 46,
+          "Hợi": 36
+        },
+        "tieu_han": [
+          "Thìn",
+          "Mão",
+          "Dần",
+          "Sửu",
+          "Tý",
+          "Hợi",
+          "Tuất",
+          "Dậu",
+          "Thân",
+          "Mùi",
+          "Ngọ",
+          "Tị"
+        ],
+        "star:tả phụ": "Mão",
+        "star:hữu bật": "Hợi",
+        "star:văn khúc": "Mão",
+        "star:văn xương": "Hợi",
+        "star:địa kiếp": "Tuất",
+        "star:địa không": "Tý",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Tý",
+        "star:linh tinh": "Dần",
+        "star:thiên mã": "Thân",
+        "star:hồng loan": "Sửu",
+        "star:thiên hỉ": "Mùi"
+      },
+      "discrepancies": {
+        "star:hỏa tinh": {
+          "issue": "T4-HOALINH",
+          "observed": "Dần"
+        }
+      }
+    },
+    {
+      "id": "water-day-02",
+      "birth": {
+        "nn": 2,
+        "tt": 11,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "water_explicit_day_table",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 2,
+        "menh": "Tý",
+        "than": "Tý",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 2,
+          "Sửu": 12,
+          "Dần": 22,
+          "Mão": 32,
+          "Thìn": 42,
+          "Tị": 52,
+          "Ngọ": 62,
+          "Mùi": 72,
+          "Thân": 82,
+          "Dậu": 92,
+          "Tuất": 102,
+          "Hợi": 112
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Dần",
+        "star:hữu bật": "Tý",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Dần",
+        "star:thiên cơ": "Sửu",
+        "star:thái dương": "Hợi",
+        "star:vũ khúc": "Tuất",
+        "star:thiên đồng": "Dậu",
+        "star:liêm trinh": "Ngọ",
+        "star:thiên phủ": "Dần",
+        "star:thái âm": "Mão",
+        "star:tham lang": "Thìn",
+        "star:cự môn": "Tị",
+        "star:thiên tướng": "Ngọ",
+        "star:thiên lương": "Mùi",
+        "star:thất sát": "Thân",
+        "star:phá quân": "Tý",
+        "star:hóa lộc": "Ngọ",
+        "star:hóa quyền": "Tý",
+        "star:hóa khoa": "Tuất",
+        "star:hóa kỵ": "Hợi"
+      }
+    },
+    {
+      "id": "water-day-04",
+      "birth": {
+        "nn": 4,
+        "tt": 11,
+        "nnnn": 1984,
+        "chi_gio": 1,
+        "gioi_tinh": 1,
+        "duong_lich": false
+      },
+      "source_sections": [
+        2,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        18,
+        19,
+        20
+      ],
+      "absolute_principal_reference": "water_explicit_day_table",
+      "expected": {
+        "can_nam": "Giáp",
+        "chi_nam": "Tý",
+        "cuc": 2,
+        "menh": "Tý",
+        "than": "Tý",
+        "tuan": [
+          "Tuất",
+          "Hợi"
+        ],
+        "triet": [
+          "Thân",
+          "Dậu"
+        ],
+        "dai_han": {
+          "Tý": 2,
+          "Sửu": 12,
+          "Dần": 22,
+          "Mão": 32,
+          "Thìn": 42,
+          "Tị": 52,
+          "Ngọ": 62,
+          "Mùi": 72,
+          "Thân": 82,
+          "Dậu": 92,
+          "Tuất": 102,
+          "Hợi": 112
+        },
+        "tieu_han": [
+          "Tuất",
+          "Hợi",
+          "Tý",
+          "Sửu",
+          "Dần",
+          "Mão",
+          "Thìn",
+          "Tị",
+          "Ngọ",
+          "Mùi",
+          "Thân",
+          "Dậu"
+        ],
+        "star:tả phụ": "Dần",
+        "star:hữu bật": "Tý",
+        "star:văn khúc": "Thìn",
+        "star:văn xương": "Tuất",
+        "star:địa kiếp": "Hợi",
+        "star:địa không": "Hợi",
+        "star:thiên khôi": "Sửu",
+        "star:thiên việt": "Mùi",
+        "star:lộc tồn": "Dần",
+        "star:kình dương": "Mão",
+        "star:đà la": "Sửu",
+        "star:hỏa tinh": "Dần",
+        "star:linh tinh": "Tuất",
+        "star:thiên mã": "Dần",
+        "star:hồng loan": "Mão",
+        "star:thiên hỉ": "Dậu",
+        "star:tử vi": "Thìn",
+        "star:thiên cơ": "Mão",
+        "star:thái dương": "Sửu",
+        "star:vũ khúc": "Tý",
+        "star:thiên đồng": "Hợi",
+        "star:liêm trinh": "Thân",
+        "star:thiên phủ": "Tý",
+        "star:thái âm": "Sửu",
+        "star:tham lang": "Dần",
+        "star:cự môn": "Mão",
+        "star:thiên tướng": "Thìn",
+        "star:thiên lương": "Tị",
+        "star:thất sát": "Ngọ",
+        "star:phá quân": "Tuất",
+        "star:hóa lộc": "Thân",
+        "star:hóa quyền": "Tuất",
+        "star:hóa khoa": "Tý",
+        "star:hóa kỵ": "Sửu"
+      },
+      "discrepancies": {
+        "star:tử vi": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:thiên cơ": {
+          "issue": "T4-TUVI",
+          "observed": "Dần"
+        },
+        "star:thái dương": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        },
+        "star:vũ khúc": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:thiên đồng": {
+          "issue": "T4-TUVI",
+          "observed": "Tuất"
+        },
+        "star:liêm trinh": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:thiên phủ": {
+          "issue": "T4-TUVI",
+          "observed": "Sửu"
+        },
+        "star:thái âm": {
+          "issue": "T4-TUVI",
+          "observed": "Dần"
+        },
+        "star:tham lang": {
+          "issue": "T4-TUVI",
+          "observed": "Mão"
+        },
+        "star:cự môn": {
+          "issue": "T4-TUVI",
+          "observed": "Thìn"
+        },
+        "star:thiên tướng": {
+          "issue": "T4-TUVI",
+          "observed": "Tị"
+        },
+        "star:thiên lương": {
+          "issue": "T4-TUVI",
+          "observed": "Ngọ"
+        },
+        "star:thất sát": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:phá quân": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:hóa lộc": {
+          "issue": "T4-TUVI",
+          "observed": "Mùi"
+        },
+        "star:hóa quyền": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:hóa khoa": {
+          "issue": "T4-TUVI",
+          "observed": "Hợi"
+        },
+        "star:hóa kỵ": {
+          "issue": "T4-TUVI",
+          "observed": "Tý"
+        }
+      }
+    }
+  ]
+}

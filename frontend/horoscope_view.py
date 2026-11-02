@@ -139,6 +139,12 @@ def palace_preview() -> str:
     return f'<div class="palace-preview" aria-label="Sơ đồ minh họa mười hai địa chi">{cells}<div class="map-center"><strong>12 cung</strong><span>Một bản đồ để chiêm nghiệm</span></div></div>'
 
 
+def tu_hoa_table_caption(info: dict | None) -> str:
+    if not info or not info.get('school'):
+        return ''
+    return f"Bảng Tứ Hóa: {info['school']}."
+
+
 def annual_panel(annual: dict, luu_nien: dict | None = None) -> str:
     p = annual.get('tieu_han') or {}
     stars = ', '.join(f"{s['ten']} ({s['dac_tinh']})" for s in p.get('chinh_tinh', [])) or 'Vô chính diệu'
@@ -148,6 +154,9 @@ def annual_panel(annual: dict, luu_nien: dict | None = None) -> str:
         f"<p>Chính tinh gốc: {text(stars)}.<br>Nhóm cần lưu ý: {text(risks)}.</p>"
     ]
     if luu_nien:
+        caption = tu_hoa_table_caption(luu_nien.get('tu_hoa_table'))
+        if caption:
+            body.append(f"<p class='muted'>{text(caption)}</p>")
         thai_tue = luu_nien.get('thai_tue') or {}
         vong = luu_nien.get('vong_thai_tue') or {}
         cat = [name for name, entry in vong.items() if entry.get('loai') == 'cat']

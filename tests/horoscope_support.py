@@ -8,6 +8,9 @@ from backend.app.core.evidence_types import NO_COUNTER_EVIDENCE
 from backend.app.schemas.horoscope import HoroscopeRequest
 
 BIRTH = {"ngay": 15, "thang": 8, "nam": 1995, "chi_gio": 5, "gioi_tinh": 1}
+# Additive T5 response contract; make_features() derives these from the selected
+# table rather than hardcoding a school into every report fixture.
+TU_HOA_TABLE_FIELDS = {"id", "school", "source", "verification_status", "signature"}
 
 
 def make_request(provider: str = "mock", target_year: int | None = None, **extra) -> HoroscopeRequest:

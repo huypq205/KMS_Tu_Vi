@@ -6,6 +6,7 @@ from typing import Any
 
 from backend.app.core.evidence_types import EvidenceType
 from backend.app.services.horoscope_annual import tu_hoa_stars_for_can
+from backend.app.services.tu_hoa_tables import normalize_star
 
 NATAL_GROUPS = ("chinh_tinh", "risk_stars", "cat_tinh")
 CHI_ORDER = ("Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi")
@@ -149,7 +150,8 @@ def build_star_facts(features: dict[str, Any], context: dict[str, Any] | None = 
 
     basic = features.get("thong_tin_co_ban", {}) or {}
     birth_can = (basic.get("can_chi_nam") or "").split(" ")[0]
-    tu_hoa_names = {name.casefold() for name in tu_hoa_stars_for_can(birth_can).values()}
+    table_id = (basic.get("tu_hoa_table") or {}).get("id")
+    tu_hoa_names = {normalize_star(name) for name in tu_hoa_stars_for_can(birth_can, table_id).values()}
     tam_phuong = features.get("tam_phuong_tu_chinh_menh") or {}
 
     palaces = features.get("palaces", [])
@@ -164,8 +166,9 @@ def build_star_facts(features: dict[str, Any], context: dict[str, Any] | None = 
                 star_name = s.get("ten", "")
                 if not star_name:
                     continue
-                roles = ["Tứ hóa"] if star_name.casefold() in tu_hoa_names else []
-                is_tu_hoa = star_name.casefold() in tu_hoa_names or star_name.casefold() in TU_HOA_MARKERS
+                norm = normalize_star(star_name)
+                is_tu_hoa = norm in tu_hoa_names or star_name.casefold() in TU_HOA_MARKERS
+                roles = ["Tứ hóa"] if norm in tu_hoa_names else []
                 kind = (EvidenceType.TU_HOA.value if is_tu_hoa
                         else _palace_evidence_kind(dia_chi, tam_phuong))
                 facts.append(_make_fact(

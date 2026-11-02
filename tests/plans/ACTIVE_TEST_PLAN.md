@@ -616,3 +616,74 @@ python -m pytest tests/ -q                                    # 146 passed in 63
 - UI dùng bảng **3 cột** (luận điểm + 2 cột dấu hiệu) thay vì chỉ 2 cột, để giữ nhận định/giới hạn đi kèm.
 - Mock reading từ T2 có `luan_diem` rỗng; T3 bổ sung 3 luận điểm dữ kiện (mỗi loại chứng cứ một mục) để bảng hiển thị được cả khi offline.
 - Chưa sinh fact `kind=menh_cuc`; nhãn này để dành cho hồ sơ sao/nghiệm lý ở T6/T8.
+
+---
+
+## Governance T4 — Cross-check an sao (2026-11-03)
+
+- **Trạng thái kiểm thử: PASSED** — có bất đồng nguồn được ghi nhận bằng strict XFAIL.
+- **Trạng thái nghiệm thu T4: PASSED** — bất đồng đã document và có
+  [GitHub issue #1](https://github.com/huypq205/KMS_Tu_Vi/issues/1).
+  Các bất đồng chưa được phân xử bằng bảng/trang sách KMS.
+- Phạm vi độc lập với T1/T2: chỉ bổ sung test, fixture và tài liệu;
+  không thay đổi backend, UI, vendor hoặc bảng Tứ Hóa.
+- Nguồn: `hung-ngm/tu-vi-dau-so`, commit
+  `d0238e9ee9f1a8a1603f5ff1328b18bf6e4635b7`, `references/computation.md`.
+- Fixture tĩnh: `tests/fixtures/an_sao_vectors.json`, **44 vector**, kỳ vọng
+  từ các mốc tra độc lập, không sinh từ output vendor. Phủ 12 tháng × giờ Tý/Hợi,
+  5 Cục, âm/dương nam/nữ, 10 Can, 12 Chi, ngày chẵn/lẻ, 6 Tuần và các nhóm sao T4.
+- Nguồn không mô tả đủ vị trí tuyệt đối cho 6 vector ngày 2/Hỏa:
+  vẫn kiểm tra hai chòm tương đối, sao phụ và hạn; ghi rõ giới hạn trong fixture.
+- 351 trường khác thuộc 4 nhóm: Tử Vi và sai khác lan truyền (322),
+  Khôi/Việt (8), Hỏa/Linh (18), Tứ Hóa (3). Mỗi trường có test quan sát riêng
+  để không che regression mới. Không sửa kỳ vọng chỉ để làm test xanh.
+
+```powershell
+.venv\Scripts\python.exe -m pytest tests/test_lasotuvi_crosscheck.py -v
+# 1873 passed, 351 xfailed in 4.07s
+.venv\Scripts\python.exe -m pytest tests/ -q
+# 2004 passed, 351 xfailed in 83.31s
+```
+
+Chi tiết: [báo cáo T4](../../docs/LASOTUVI_CROSSCHECK.md) và
+[hồ sơ bất đồng](../../docs/issues/T4_AN_SAO_DISCREPANCIES.md).
+GitHub issue đã đăng sau khi người dùng xác nhận cho phép công bố kết quả T4
+lên `huypq205/KMS_Tu_Vi`. Hiệu chuẩn bảng Tứ Hóa thuộc T5.
+
+---
+
+## Governance T5 — Hiệu chuẩn bảng Tứ Hóa (2026-11-03)
+
+- **Trạng thái: PASSED.**
+- Đã đối chiếu đủ 40 mục/10 Can bằng AST từ vendor. Config mặc định khớp vendor;
+  nguồn tham khảo cố định theo commit như T4. Có đúng 3 khác biệt:
+  Canh Hóa Khoa (Thiên Đồng / Thái Âm), Canh Hóa Kỵ (Thái Âm / Thiên Đồng),
+  Nhâm Hóa Khoa (Thiên Phủ / Tả Phụ).
+- Hai bảng tách riêng trong `configs/tu_hoa_tables.yaml`, có `school`, `source`,
+  `verification_status`; mặc định `lasotuvi`. Chọn bảng qua `KMS_TU_HOA_TABLE`.
+- Adapter cập nhật đồng bộ hóa tinh gốc, lưu niên, facts, prompt và nhãn UI;
+  hỗ trợ cách viết Tả phù/Tả Phụ. Không sửa file vendor hoặc tự gộp hai bảng.
+- Metadata ID/signature tách cache theo bảng và nội dung cấu hình.
+- Schema dữ kiện bổ sung được cập nhật cùng fixture chung và UI;
+  không thay đổi schema JSON bài luận T1/T2.
+- T4 ghim bảng vendor để không phụ thuộc cấu hình bảng của ứng dụng.
+- Chưa phân xử bất đồng bằng sách KMS; issue #1 vẫn OPEN. T5 hoàn tất nhánh
+  cấu hình nhiều bảng mà plan yêu cầu khi phát hiện khác biệt.
+
+### Kiểm chứng
+
+`tests/test_tu_hoa_tables.py`: **29 ca pass** trong lần hồi quy toàn bộ, gồm
+10 Can đối chiếu vendor, 3 khác biệt chính xác, lựa chọn bảng cho lá số gốc/lưu niên,
+facts/prompt/UI, bảo toàn snapshot, cache tách bảng, kiểm tra cấu hình lỗi,
+escaping nhãn và chạy CLI từ thư mục khác.
+
+```powershell
+.venv\Scripts\python.exe scripts/compare_tu_hoa_tables.py
+# 40 mục / 10 Can; 3 khác biệt; Config lasotuvi khớp vendor: True
+.venv\Scripts\python.exe -m pytest tests/ -q
+# 2033 passed, 351 xfailed in 92.75s
+```
+
+351 xfail là các bất đồng T4 đã được ghi nhận, không phải failure mới của T5.
+Tài liệu sử dụng: [data dictionary](../../docs/data_dictionary.md#trường-phái-an-sao-kms-đang-dùng).
+Lịch sử thay đổi: [CHANGELOG_KNOWLEDGE.md](../../docs/CHANGELOG_KNOWLEDGE.md).

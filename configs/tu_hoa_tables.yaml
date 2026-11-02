@@ -1,0 +1,35 @@
+# Ordered values: Hóa Lộc / Hóa Quyền / Hóa Khoa / Hóa Kỵ.
+# Separate factual reference tables; no prose imported into canonical knowledge.
+version: 1
+default_table: lasotuvi
+tables:
+  lasotuvi:
+    school: "Bảng lasotuvi hiện hành (chú thích vendor: Thiên Lương)"
+    source: "vendor/lasotuvi/App.py, lapDiaBan, nhánh canNam 1–10"
+    verification_status: vendor_baseline
+    by_can:
+      Giáp: &giap [Liêm Trinh, Phá Quân, Vũ Khúc, Thái Dương]
+      Ất: &at [Thiên Cơ, Thiên Lương, Tử Vi, Thái Âm]
+      Bính: &binh [Thiên Đồng, Thiên Cơ, Văn Xương, Liêm Trinh]
+      Đinh: &dinh [Thái Âm, Thiên Đồng, Thiên Cơ, Cự Môn]
+      Mậu: &mau [Tham Lang, Thái Âm, Hữu Bật, Thiên Cơ]
+      Kỷ: &ky [Vũ Khúc, Tham Lang, Thiên Lương, Văn Khúc]
+      Canh: [Thái Dương, Vũ Khúc, Thiên Đồng, Thái Âm]
+      Tân: &tan [Cự Môn, Thái Dương, Văn Khúc, Văn Xương]
+      Nhâm: [Thiên Lương, Tử Vi, Thiên Phủ, Vũ Khúc]
+      Quý: &quy [Phá Quân, Cự Môn, Thái Âm, Tham Lang]
+  hung_ngm_reference:
+    school: "Bảng tham khảo hung-ngm (chưa đối chiếu sách KMS)"
+    source: "https://github.com/hung-ngm/tu-vi-dau-so/blob/d0238e9ee9f1a8a1603f5ff1328b18bf6e4635b7/tu-vi-dau-so/skills/tu-vi-dau-so/references/computation.md#10-an-tứ-hóa-theo-thiên-can-năm-sinh"
+    verification_status: reference_unverified
+    by_can:
+      Giáp: *giap
+      Ất: *at
+      Bính: *binh
+      Đinh: *dinh
+      Mậu: *mau
+      Kỷ: *ky
+      Canh: [Thái Dương, Vũ Khúc, Thái Âm, Thiên Đồng]
+      Tân: *tan
+      Nhâm: [Thiên Lương, Tử Vi, Tả Phụ, Vũ Khúc]
+      Quý: *quy
