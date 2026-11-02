@@ -15,6 +15,13 @@ from backend.app.core.config import (
     HOROSCOPE_FALLBACK_MODELS, LLM_TEMPERATURE,
 )
 from backend.app.services.horoscope_analysis import build_star_facts, palace_summary, strip_accents
+from backend.app.services.horoscope_confidence import (
+    LOW_CONFIDENCE_CAVEAT,
+    check_input_confidence,
+    confidence_prompt_line,
+    is_low_confidence,
+    low_confidence_prompt_line,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +37,11 @@ Giữ tên sao và cung trong câu giải thích, sau đó giải nghĩa. Không
 Phân biệt lá số gốc, đại hạn 10 năm, tiểu hạn năm và lưu niên (vòng Thái Tuế, lưu Tứ Hóa).
 Sao gốc ở cung tiểu hạn KHÔNG phải lưu tinh; chỉ gọi là lưu niên khi dữ kiện ghi rõ.
 Năm xem là năm âm lịch Can Chi; không gán sự kiện theo tháng hay ngày.
+Mức tin cậy giờ sinh (input_confidence A–D) nằm trong DỮ KIỆN:
+- Mức A/B: được luận cả cấu trúc lẫn vận hạn theo năm xem, nhưng vẫn không tuyệt đối.
+- Mức C/D: chỉ kết luận loại cấu trúc (tính cách, xu hướng, điều kiện); cấm kết luận thời điểm
+  hoặc sự kiện cụ thể (năm/tháng/ngày sẽ xảy ra chuyện gì). Mỗi mục gioi_han phải nêu
+  "dữ liệu giờ sinh chưa chắc chắn (mức C/D)".
 Không đủ căn cứ thì ghi 'Chưa đủ căn cứ từ nguồn đã lấy', không tự bổ sung kiến thức ngoài nguồn.
 Chỉ trả JSON theo schema, ngắn gọn: mỗi trường 1–2 câu. Tạo 3–5 luận điểm, gồm cung tiểu hạn
 năm được chọn và yếu tố cần lưu ý nếu có nguồn; không ép kết luận khi thiếu nguồn.
@@ -144,6 +156,8 @@ def build_horoscope_user_prompt(features: dict[str, Any], formatted_context: str
     )
     return (
         f"THÔNG TIN LÁ SỐ\n- Giới tính: {basic.get('gioi_tinh')} | Năm sinh can chi: {basic.get('can_chi_nam')} (Năm {year})\n"
+        + confidence_prompt_line(basic)
+        + low_confidence_prompt_line(basic)
         + year_line
         + json.dumps(prompt_data(features), ensure_ascii=False)
         + '\nDỮ KIỆN SAO, CUNG VÀ ĐIỀU KIỆN (fact_ids):\n'
@@ -258,6 +272,7 @@ def check_specificity(reading: dict, features: dict[str, Any], context: dict | N
 def generate_mock_reading(features: dict[str, Any], context: dict | None = None) -> dict[str, Any]:
     """Offline report of actual chart facts. Does not pretend to infer a person's future."""
     basic = features.get('thong_tin_co_ban', {})
+    low_confidence = is_low_confidence(features)
     palaces = {p['ten'].casefold(): p for p in features.get('palaces', [])}
     domains = features.get('cung_domains') or {}
     facts = build_star_facts(features, context or {})
@@ -270,6 +285,9 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
     annual = features.get('nam_xem', {})
     dh = features.get('dai_han_hien_tai') or {}
     period = f"Năm {annual.get('year', '—')} {annual.get('can_chi', '')}; đại hạn {dh.get('tu_tuoi', '—')}–{dh.get('den_tuoi', '—')} tuổi tại {dh.get('cung_ten', '—')}."
+    limitations = annual.get('limitations', 'Chưa có dữ liệu theo năm.')
+    if low_confidence:
+        limitations += f' {LOW_CONFIDENCE_CAVEAT}; chỉ nêu cấu trúc, không kết luận thời điểm/sự kiện.'
 
     def palace_point(name: str) -> dict | None:
         p = palaces.get(name.casefold())
@@ -286,6 +304,8 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
         domain = domains.get(ten, '')
         giai = (domain + '. ' if domain else '') + risk(ten)
         gioi_han = 'Phân tích dữ kiện, chưa kiểm duyệt thủ công; đối chiếu mục Sao & nguồn sách.'
+        if low_confidence:
+            gioi_han += f' {LOW_CONFIDENCE_CAVEAT}; chỉ nêu cấu trúc, không kết luận thời điểm/sự kiện.'
         if not refs:
             gioi_han += ' Chưa có trích dẫn sách đối chiếu.'
         return {'nhan_dinh': nhan, 'giai_thich_thun_viet': giai, 'fact_ids': ids,
@@ -308,7 +328,7 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
                     'bi_quyet_hoa_hop': risk('Phu thê')},
         'van_han_hien_tai': {'giai_doan': period, 'chu_de_trong_tam': 'Cung tiểu hạn năm được chọn: ' + palace_summary(annual.get('tieu_han')),
                             'co_hoi_nen_nam_bat': 'Cần đọc cùng đại hạn và các điều kiện trong sách; chưa suy ra sự kiện trong năm.',
-                            'thach_thuc_can_can_trong': annual.get('limitations', 'Chưa có dữ liệu theo năm.')},
+                            'thach_thuc_can_can_trong': limitations},
         'loi_khuyen_hanh_dong': ['Đọc tên sao, cung và trạng thái trước khi đối chiếu các nhận định trong sách.',
                                'Kiểm tra điều kiện đồng cung/hội chiếu và Tuần/Triệt của đoạn sách.',
                                'Phân biệt sao gốc tại cung tiểu hạn với lưu tinh theo năm.'],
@@ -369,17 +389,23 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
             try:
                 reading = _request_gemini(user_prompt, key, model)
                 validate_reading(reading, facts, context)
-                problem = check_specificity(reading, features, context)
+                problem = check_input_confidence(reading, features) or check_specificity(reading, features, context)
                 if problem:
                     attempts += 1
                     annual = features.get('nam_xem') or {}
-                    extra = (
-                        f"\nBỔ SUNG BẮT BUỘC: {problem} Mỗi luận điểm phải dẫn fact_id khác nhau; "
+                    extra = f"\nBỔ SUNG BẮT BUỘC: {problem} "
+                    if "mức C/D" in problem:
+                        extra += (
+                            "Giữ nguyên giờ sinh mức C/D: chỉ kết luận cấu trúc; mỗi mục "
+                            f'gioi_han phải nêu nguyên văn "{LOW_CONFIDENCE_CAVEAT}". '
+                        )
+                    extra += (
+                        f"Mỗi luận điểm phải dẫn fact_id khác nhau; "
                         f"phần vận trình phải nhắc năm xem {annual.get('year', '')} ({annual.get('can_chi', '')})."
                     )
                     reading = _request_gemini(user_prompt + extra, key, model)
                     validate_reading(reading, facts, context)
-                    problem = check_specificity(reading, features, context)
+                    problem = check_input_confidence(reading, features) or check_specificity(reading, features, context)
                 reading['_generation'] = {'actual_provider': 'gemini', 'is_mock': False, 'reason': None,
                                           'model': model, 'primary_model': chain[0], 'attempts': attempts,
                                           'specificity_low': bool(problem), 'specificity_reason': problem,

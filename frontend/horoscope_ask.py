@@ -53,7 +53,11 @@ def ask_box(key: str, snapshot: dict, mode: str, api_base: str) -> None:
         if question:
             payload = {'ho_ten': snapshot.get('ho_ten', ''), 'ngay': snapshot['ngay'], 'thang': snapshot['thang'],
                        'nam': snapshot['nam'], 'chi_gio': snapshot['chi_gio'], 'gioi_tinh': snapshot['gioi_tinh'],
-                       'duong_lich': snapshot['duong_lich'], 'target_year': snapshot.get('target_year'),
+                       'duong_lich': snapshot['duong_lich'],
+                       'input_confidence': snapshot.get('input_confidence', 'A'),
+                       'gio_sinh_source': snapshot.get('gio_sinh_source', 'memory'),
+                       'gio_sinh_error_phut': snapshot.get('gio_sinh_error_phut'),
+                       'target_year': snapshot.get('target_year'),
                        'topic': key, 'question': question, 'provider': mode}
             with st.spinner("Đang hỏi luận giải thông minh…"):
                 try:

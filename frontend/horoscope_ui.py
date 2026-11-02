@@ -54,6 +54,19 @@ def _resolve_api_base() -> str:
 API_BASE = _resolve_api_base()
 year_now = datetime.now(ZoneInfo("Asia/Bangkok")).year
 
+CONFIDENCE_OPTIONS = {
+    "A": "A · Giờ sinh rõ, không sát ranh giới giờ",
+    "B": "B · Sai số nhỏ, không sát ranh giới giờ",
+    "C": "C · Sát ranh giới giờ hoặc chỉ nhớ gần đúng",
+    "D": "D · Thiếu dữ liệu giờ sinh cốt lõi",
+}
+CONFIDENCE_SOURCES = {
+    "document": "Giấy tờ/hồ sơ ghi rõ",
+    "memory": "Nhớ lại từ gia đình",
+    "estimate": "Ước lượng",
+    "unknown": "Không rõ",
+}
+
 
 def _is_in_container() -> bool:
     """Streamlit Cloud / Docker: fallback production là hành vi bình thường, không cảnh báo."""
@@ -77,6 +90,22 @@ with st.sidebar:
     year = st.number_input("Năm sinh", min_value=1900, max_value=min(year_now, 2100), value=1995, step=1, key="birth_year")
     hour = st.selectbox("Giờ sinh", range(1, 13), index=4, format_func=lambda n: HOURS[n-1], key="birth_hour")
     gender = st.radio("Giới tính theo lá số", [1, 2], format_func=lambda n: "Nam" if n == 1 else "Nữ", horizontal=True, key="birth_gender")
+    with st.expander("Độ tin cậy dữ liệu giờ sinh", expanded=False):
+        confidence = st.selectbox(
+            "Độ tin cậy giờ sinh", list(CONFIDENCE_OPTIONS), index=0,
+            format_func=CONFIDENCE_OPTIONS.get, key="input_confidence",
+            help="C/D nghĩa là giờ sinh sát ranh giới hoặc thiếu dữ liệu; báo cáo chỉ nêu kết luận cấu trúc, không kết luận thời điểm/sự kiện.",
+        )
+        gio_sinh_source = st.selectbox(
+            "Nguồn giờ sinh", list(CONFIDENCE_SOURCES), index=1,
+            format_func=CONFIDENCE_SOURCES.get, key="gio_sinh_source",
+        )
+        gio_sinh_error = st.number_input(
+            "Sai số ước tính (phút, 0 = không rõ)", min_value=0, max_value=720, value=0, step=5,
+            key="gio_sinh_error",
+        )
+        if confidence in ("C", "D"):
+            st.warning("Mức C/D: báo cáo chỉ nêu kết luận cấu trúc và ghi rõ giới hạn; không kết luận thời điểm/sự kiện cụ thể.")
     with st.expander("Tùy chọn bài đọc", expanded=True):
         target_year = st.number_input("Năm chiêm nghiệm (âm lịch)", min_value=1900, max_value=2200, value=year_now, step=1, key="target_year",
                                       help="Chọn năm Can Chi để xem tiểu hạn, vòng Thái Tuế và lưu Tứ Hóa. Đổi năm sẽ hiện nhắc tạo lại báo cáo.")
@@ -104,6 +133,8 @@ if submitted:
     else:
         payload = {"ho_ten": name.strip(), "ngay": day, "thang": month, "nam": year,
                    "chi_gio": hour, "gioi_tinh": gender, "duong_lich": calendar == "Dương lịch",
+                   "input_confidence": confidence, "gio_sinh_source": gio_sinh_source,
+                   "gio_sinh_error_phut": int(gio_sinh_error) if gio_sinh_error else None,
                    "target_year": target_year, "provider": mode, "top_k_per_topic": 4}
         try:
             preview = st.empty()
@@ -158,6 +189,10 @@ else:
     meta = report.get("meta", {})
     snapshot = st.session_state["report_input"]
     is_mock = meta.get("is_mock")
+    input_confidence = str(basic.get("input_confidence") or "A").upper()
+    if input_confidence in ("C", "D"):
+        st.warning(f"Dữ liệu giờ sinh chưa chắc chắn (mức {input_confidence}): báo cáo chỉ nêu kết luận cấu trúc, "
+                   "không kết luận thời điểm/sự kiện cụ thể. Hãy đối chiếu lại giờ sinh nếu có thể.")
     if is_mock:
         reason = "Bạn đã chọn chế độ chỉ dữ kiện lá số." if meta.get('reason') == 'requested' else meta.get('message', 'Luận giải thông minh chưa trả được bài hợp lệ.')
         st.markdown('<p class="notice">Phân tích dữ kiện lá số · ' + text(reason) + ' Phần dưới mô tả sao/cung tính được; chưa phải bài luận giải thông minh.</p>', unsafe_allow_html=True)
@@ -168,7 +203,7 @@ else:
     if meta.get('specificity_low'):
         st.caption('Bài tổng hợp dựa trên ít dữ kiện riêng của lá số; xem mục Phân tích sao để đối chiếu.')
     st.markdown(f'<div class="report-heading"><h2>{text(report.get("ho_ten"))}</h2><span>{text(st.session_state["report_time"])}</span></div>'
-                f'<p class="muted">{snapshot["ngay"]:02d}/{snapshot["thang"]:02d}/{snapshot["nam"]} · {"Dương lịch" if snapshot["duong_lich"] else "Âm lịch"} · {text(HOURS[snapshot["chi_gio"]-1])} · Năm {snapshot["target_year"]}</p>', unsafe_allow_html=True)
+                f'<p class="muted">{snapshot["ngay"]:02d}/{snapshot["thang"]:02d}/{snapshot["nam"]} · {"Dương lịch" if snapshot["duong_lich"] else "Âm lịch"} · {text(HOURS[snapshot["chi_gio"]-1])} · Năm {snapshot["target_year"]} · Giờ sinh mức {text(input_confidence)}</p>', unsafe_allow_html=True)
     report_year = meta.get('target_year') or (report.get('annual') or {}).get('year')
     if report_year and target_year != report_year:
         st.warning(f"Báo cáo bên dưới là của năm {report_year}. Ô Năm chiêm nghiệm đang là {target_year}; "

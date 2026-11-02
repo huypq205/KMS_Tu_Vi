@@ -432,3 +432,55 @@ Thay đổi so với plan gốc khi triển khai:
 - **Ngoài tầm kiểm thử tự động (nghiệm thu thủ công, không block hoàn thành):**
   - Chất lượng văn phong Gemini thật (thuộc giai đoạn 6 kế hoạch phát triển chung).
   - An lưu tinh bổ sung ngoài vòng Tuê + lưu Tứ Hóa (giai đoạn sau).
+
+---
+
+## T1 — Độ tin cậy dữ liệu giờ sinh (`input_confidence` A–D)
+
+- **Ngày:** 2026-11-03
+- **Trạng thái:** **PASSED**
+- **Nguồn kế hoạch:** `C:\Users\Admin\.opencode\plan\kms-tuvi-knowledge-governance-adopt-plan.md` (T1).
+- **Mục tiêu:** người xem khai mức chắc chắn của giờ sinh; mức C/D chỉ cho kết luận cấu trúc, cấm kết luận thời điểm/sự kiện, và mọi phần giới hạn phải nêu rõ dữ liệu giờ sinh chưa chắc chắn.
+
+### Thay đổi chính
+
+| File | Nội dung |
+|---|---|
+| `backend/app/schemas/horoscope.py` | Thêm `input_confidence` (A–D), `gio_sinh_source` (document/memory/estimate/unknown), `gio_sinh_error_phut` (≥0) cho cả request luận giải và hỏi nhanh; default A/memory/None để tương thích API cũ. |
+| `backend/app/services/horoscope_confidence.py` **(MỚI)** | Nhãn A–D, chính sách C/D, phát hiện kết luận thời điểm/sự kiện, kiểm tra caveat trong `gioi_han`. |
+| `backend/app/services/horoscope_features.py` | Truyền 3 field vào `thong_tin_co_ban`. |
+| `backend/app/services/horoscope_interpreter.py` | Dòng dữ kiện trong prompt, rule A/B–C/D trong system prompt, `check_input_confidence` trong luồng retry, caveat trong mock reading. |
+| `backend/app/services/horoscope_ask.py` | Prompt/rule C/D, kiểm tra câu trả lời Gemini, caveat trong mock answer. |
+| `backend/app/services/horoscope_service.py` | Truyền field khi trích xuất features; đưa mức tin cậy vào cache key để không lẫn bài A với C/D. |
+| `frontend/horoscope_ui.py`, `frontend/horoscope_ask.py` | 3 input optional, badge cảnh báo C/D, hiển thị mức trong báo cáo, truyền field sang hỏi nhanh. |
+
+### Ma trận test (`tests/test_horoscope_input_confidence.py`)
+
+| # | Ca kiểm thử | Kết quả |
+|---|---|---|
+| 1 | Schema default A/memory/None + enum + sai số âm bị từ chối | PASSED |
+| 2 | Features propagate đúng 3 field | PASSED |
+| 3 | Prompt có nhãn mức, sai số, ràng buộc C/D; mức A không có ràng buộc | PASSED |
+| 4 | Prompt hỏi nhanh có nhãn mức + caveat | PASSED |
+| 5 | `check_input_confidence` chỉ chặn C/D; bắt kết luận thời điểm và caveat thiếu | PASSED |
+| 6 | `check_ask_input_confidence` chặn câu trả lời có kết luận thời điểm | PASSED |
+| 7 | Mock reading C/D có caveat ở mọi kết luận + vận hạn | PASSED |
+| 8 | Mock ask C/D có caveat | PASSED |
+| 9 | Retry 1 lần khi bài C/D chứa kết luận thời điểm | PASSED |
+| 10 | Cache tách mức A và C (2 lượt gọi LLM, không dùng lại bài A) | PASSED |
+| 11 | AppTest: UI gửi đủ 3 field + hiện cảnh báo C/D | PASSED |
+
+### Kết quả chạy
+
+```powershell
+python -m pytest tests/test_horoscope_input_confidence.py -v   # 11 passed
+python -m pytest tests/ -q                                     # 120 passed in 89.71s
+```
+
+### Definition of Done
+
+- [x] Mức C/D không cho kết luận thời điểm/sự kiện; `gioi_han` nêu nguyên văn "dữ liệu giờ sinh chưa chắc chắn (mức C/D)".
+- [x] Mức A/B giữ nguyên hành vi cũ; default A nên client cũ không cần đổi payload.
+- [x] Cache không trộn bài của các mức tin cậy khác nhau.
+- [x] UI gửi/nhận đủ 3 field và cảnh báo C/D.
+- [x] Không thêm phần trăm tin cậy (để dành T2 với `muc_tin_cay` 4 bậc).

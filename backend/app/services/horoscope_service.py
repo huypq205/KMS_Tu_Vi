@@ -30,7 +30,9 @@ def reading_events(req: HoroscopeRequest):
         yield progress('chart', 'Đang lập lá số và xác định cung tiểu hạn…')
         mark = time.perf_counter()
         raw = generate_raw_horoscope(req.ngay, req.thang, req.nam, req.chi_gio, req.gioi_tinh, req.duong_lich)
-        features = extract_horoscope_features(raw, req.target_year)
+        features = extract_horoscope_features(
+            raw, req.target_year, req.input_confidence, req.gio_sinh_source, req.gio_sinh_error_phut,
+        )
         timings['chart'] = round((time.perf_counter() - mark) * 1000, 1)
         yield progress('retrieval', 'Đã lập lá số. Đang tìm nguồn theo tên sao và tổ hợp…')
         mark = time.perf_counter()
@@ -60,6 +62,8 @@ def reading_events(req: HoroscopeRequest):
         birth = {
             'ngay': req.ngay, 'thang': req.thang, 'nam': req.nam, 'chi_gio': req.chi_gio,
             'gioi_tinh': req.gioi_tinh, 'duong_lich': req.duong_lich,
+            'input_confidence': req.input_confidence, 'gio_sinh_source': req.gio_sinh_source,
+            'gio_sinh_error_phut': req.gio_sinh_error_phut,
             'target_year': features['nam_xem']['year'], 'top_k_per_topic': req.top_k_per_topic,
         }
         cache_key = horoscope_cache.compute_key(

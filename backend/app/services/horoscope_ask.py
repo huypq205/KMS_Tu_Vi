@@ -26,6 +26,13 @@ from backend.app.services.horoscope_rag_bridge import (
     BOOK_FULL_NAMES, mentioned_stars, palace_queries, search_fts_sqlite,
 )
 from backend.app.services.horoscope_analysis import build_star_facts
+from backend.app.services.horoscope_confidence import (
+    LOW_CONFIDENCE_CAVEAT,
+    check_ask_input_confidence,
+    confidence_prompt_line,
+    is_low_confidence,
+    low_confidence_prompt_line,
+)
 from backend.app.services.horoscope_interpreter import PROMPT_KEYS
 from backend.app.services.pages import format_page_label
 
@@ -53,6 +60,9 @@ Mọi nhận định chuyên môn dẫn fact_id và source_ref [n] có thật; c
 trạng thái sao, Tuần/Triệt, Tứ Hóa) sang nghĩa thuần Việt đời thường, nội dung bám nguồn đã
 trích dẫn; không bổ sung kiến thức ngoài nguồn.
 Không gán sự kiện theo tháng hay ngày; năm theo âm lịch Can Chi.
+Mức tin cậy giờ sinh (input_confidence A–D) nằm trong DỮ KIỆN: mức C/D chỉ được
+kết luận cấu trúc, cấm kết luận thời điểm/sự kiện cụ thể; mục gioi_han phải nêu
+"dữ liệu giờ sinh chưa chắc chắn (mức C/D)".
 Không đủ căn cứ thì tra_loi ghi "Chưa đủ căn cứ từ nguồn đã lấy" và đặt
 muc_do_can_cu="chua_du_can_cu", không đoán. Chỉ trả JSON theo schema."""
 
@@ -151,6 +161,8 @@ def build_ask_user_prompt(features: dict, refs: list, facts: list,
     return (
         f"THÔNG TIN LÁ SỐ\n- Giới tính: {basic.get('gioi_tinh')} | Năm sinh: {basic.get('can_chi_nam')} "
         f"· Năm xem: {annual.get('year', 'chưa có')} {annual.get('can_chi', '')} (tuổi âm {annual.get('tuoi_am', '—')})\n"
+        + confidence_prompt_line(basic)
+        + low_confidence_prompt_line(basic)
         + prompt_json
         + "\nDỮ KIỆN SAO, CUNG LIÊN QUAN ĐẾN CÂU HỎI (fact_ids):\n"
         + json.dumps(facts, ensure_ascii=False)
@@ -188,6 +200,11 @@ def mock_ask_answer(features: dict, refs: list, facts: list, topic: str, questio
     """Bản dữ kiện deterministic (không dùng AI): sao + nghĩa cung thuần Việt + nguồn đã lấy."""
     domains = features.get("cung_domains") or {}
     palaces = {p["ten"].casefold(): p for p in features.get("palaces", [])}
+    low_confidence = is_low_confidence(features)
+    caveat = (
+        f" {LOW_CONFIDENCE_CAVEAT}; chỉ nêu cấu trúc, không kết luận thời điểm/sự kiện."
+        if low_confidence else ""
+    )
     palace_name = TOPIC_PALACE.get(topic)
     p = palaces.get(palace_name.casefold()) if palace_name else None
     if p:
@@ -213,7 +230,7 @@ def mock_ask_answer(features: dict, refs: list, facts: list, topic: str, questio
             "giai_thich_thun_viet": base_giai,
             "fact_ids": fact_ids,
             "source_refs": [],
-            "gioi_han": "Chỉ có dữ kiện lá số; chưa truy xuất được đoạn sách phù hợp cho câu hỏi, chưa kiểm duyệt thủ công.",
+            "gioi_han": "Chỉ có dữ kiện lá số; chưa truy xuất được đoạn sách phù hợp cho câu hỏi, chưa kiểm duyệt thủ công." + caveat,
         }
     risk_present = any(f["nhom"] == "risk_stars" for f in facts)
     level = "dau_hieu_yeu" if risk_present else "dau_hieu_ro"
@@ -227,7 +244,7 @@ def mock_ask_answer(features: dict, refs: list, facts: list, topic: str, questio
         "giai_thich_thun_viet": base_giai,
         "fact_ids": fact_ids,
         "source_refs": [r["ref_id"] for r in used],
-        "gioi_han": "Bản dữ kiện lá số (không dùng AI luận giải); nguồn chưa kiểm duyệt thủ công và chưa xác nhận điều kiện tổ hợp đã khớp.",
+        "gioi_han": "Bản dữ kiện lá số (không dùng AI luận giải); nguồn chưa kiểm duyệt thủ công và chưa xác nhận điều kiện tổ hợp đã khớp." + caveat,
     }
 
 
@@ -284,7 +301,9 @@ def ask_horoscope(req: HoroscopeAskRequest) -> dict:
                 "meta": {"provider_used": "none"}}
     try:
         raw = generate_raw_horoscope(req.ngay, req.thang, req.nam, req.chi_gio, req.gioi_tinh, req.duong_lich)
-        features = extract_horoscope_features(raw, req.target_year)
+        features = extract_horoscope_features(
+            raw, req.target_year, req.input_confidence, req.gio_sinh_source, req.gio_sinh_error_phut,
+        )
     except Exception as exc:
         logger.exception("horoscope_ask: failed to build chart")
         return {"status": "error", "detail": f"Lập lá số thất bại: {exc}",
@@ -307,7 +326,11 @@ def ask_horoscope(req: HoroscopeAskRequest) -> dict:
                     build_ask_user_prompt(features, refs, facts, req, topic), key, HOROSCOPE_MODEL)
                 if candidate is not None:
                     validate_ask(candidate, fact_map, allowed_refs)
-                    answer, provider_used = candidate, "gemini"
+                    confidence_problem = check_ask_input_confidence(candidate, features)
+                    if confidence_problem:
+                        reason = "invalid_response"
+                    else:
+                        answer, provider_used = candidate, "gemini"
             except requests.RequestException:
                 reason = "network"
             except ValueError:
@@ -340,5 +363,6 @@ def ask_horoscope(req: HoroscopeAskRequest) -> dict:
             "reason": reason,
             "total_chunks_retrieved": len(citations),
             "target_year": (features.get("nam_xem") or {}).get("year"),
+            "input_confidence": (features.get("thong_tin_co_ban") or {}).get("input_confidence", "A"),
         },
     }

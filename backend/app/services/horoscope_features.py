@@ -18,6 +18,12 @@ from typing import Any
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
+from backend.app.services.horoscope_confidence import (
+    DEFAULT_GIO_SINH_SOURCE,
+    DEFAULT_INPUT_CONFIDENCE,
+    normalize_level,
+)
+
 ROOT = Path(__file__).resolve().parents[3]
 VENDOR_PATH = ROOT / "vendor"
 if str(VENDOR_PATH) not in sys.path:
@@ -471,9 +477,17 @@ def find_current_dai_han(
 
 
 def extract_horoscope_features(
-    raw_laso: dict[str, Any], target_year: int | None = None
+    raw_laso: dict[str, Any],
+    target_year: int | None = None,
+    input_confidence: str = DEFAULT_INPUT_CONFIDENCE,
+    gio_sinh_source: str = DEFAULT_GIO_SINH_SOURCE,
+    gio_sinh_error_phut: int | None = None,
 ) -> dict[str, Any]:
-    """Hàm tổng hợp bóc tách toàn bộ đặc trưng của một lá số Tử Vi."""
+    """Hàm tổng hợp bóc tách toàn bộ đặc trưng của một lá số Tử Vi.
+
+    Ba tham số cuối ghi lại độ tin cậy/nguồn/sai số giờ sinh để prompt và UI
+    biết giới hạn dữ liệu đầu vào (mức C/D chỉ luận cấu trúc).
+    """
     cungs = raw_laso["thap_ni_cung"]
     by_cung_so = {c["cung_so"]: c for c in cungs}
     by_chuan_ten = {c["chuan_ten"]: c for c in cungs}
@@ -542,6 +556,9 @@ def extract_horoscope_features(
             "cung_menh": menh_cung.get("chuan_ten", ""),
             "cung_than": than_cung.get("chuan_ten", ""),
             "cung_than_so": cung_than_so,
+            "input_confidence": normalize_level(input_confidence),
+            "gio_sinh_source": gio_sinh_source,
+            "gio_sinh_error_phut": gio_sinh_error_phut,
         },
         "cung_domains": dict(CUNG_DOMAIN),
         "menh_cuc": menh_cuc,

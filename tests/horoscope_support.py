@@ -21,9 +21,9 @@ def make_raw() -> dict:
     )
 
 
-def make_features(target_year: int | None = None) -> dict:
+def make_features(target_year: int | None = None, **extra) -> dict:
     from backend.app.services.horoscope_features import extract_horoscope_features
-    return extract_horoscope_features(make_raw(), target_year)
+    return extract_horoscope_features(make_raw(), target_year, **extra)
 
 
 def valid_reading(facts: list[dict], year_text: str = "2026 Bính Ngọ",
