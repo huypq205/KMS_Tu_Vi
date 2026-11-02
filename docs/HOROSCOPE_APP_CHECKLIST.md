@@ -101,6 +101,8 @@
   - [x] Mở endpoint mới: `POST /api/v1/horoscope/read` dành riêng cho bói toán & luận giải cá nhân.
 - [x] **4.2. Xây dựng Request Schema (`HoroscopeRequest`)**
   - [x] Nhận: Họ tên, Ngày/Tháng/Năm, Chi giờ sinh (12 khung giờ kèm tên cung + giờ thực tế), Giới tính, Loại lịch (Dương/Âm), top_k, provider (auto/mock/gemini), target_year.
+  - [x] T1: nhận `input_confidence` (A–D), `gio_sinh_source` (document/memory/estimate/unknown), `gio_sinh_error_phut` (≥0); default A/memory/None để tương thích client cũ.
+  - [x] T2: response `luan_diem`/`ket_luan` có `muc_tin_cay` (rat_manh/manh/trung_binh/yeu); cấm phần trăm tin cậy.
   - [x] Schema: `backend/app/schemas/horoscope.py` — `HoroscopeRequest` (Pydantic v2, validation đầy đủ ge/le), `HoroscopeResponse`.
 - [x] **4.3. Pipeline xử lý trọn gói tại Controller**
   - [x] Nhận request → Gọi `generate_raw_horoscope` → `extract_horoscope_features` → `retrieve_horoscope_context` → `interpret_horoscope` → Trả JSON có cấu trúc.
