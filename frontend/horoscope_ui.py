@@ -25,7 +25,7 @@ for _mod in ('frontend.horoscope_view', 'frontend.horoscope_transport', 'fronten
 
 from frontend.horoscope_view import (BOOKS, HOURS, TOPICS, content,
                                     palace_preview, panel, text, topic_panel, validate_birth_date,
-                                    annual_panel, star_table, confidence_badge)
+                                    annual_panel, star_table, confidence_badge, evidence_table)
 from frontend.laso_renderer import luoi_html
 from frontend.horoscope_transport import reading_events
 from frontend.horoscope_ask import ask_box
@@ -246,13 +246,9 @@ else:
     st.markdown(panel("Gợi ý để chiêm nghiệm", content(reading.get("loi_khuyen_hanh_dong"))), unsafe_allow_html=True)
     if reading.get('luan_diem'):
         st.subheader('Lập luận từ sao và nguồn sách')
+        st.caption('Dấu hiệu thuận là loại chứng cứ gắn với fact_id; dấu hiệu nghịch là phản chứng trong nguồn hoặc câu "Không ghi nhận phản chứng trong nguồn đã lấy".')
         fact_map = {f['fact_id']: f for f in report.get('star_analysis', [])}
-        for point in reading['luan_diem']:
-            st.markdown(f'<p style="margin:0 0 4px">{confidence_badge(point.get("muc_tin_cay"))}</p>', unsafe_allow_html=True)
-            st.markdown(content(point.get('nhan_dinh')), unsafe_allow_html=True)
-            labels = [f"{fact_map[i]['sao']} tại {fact_map[i]['cung']} ({fact_map[i]['dia_chi']})" for i in point.get('fact_ids', []) if i in fact_map]
-            st.caption('Dữ kiện: ' + '; '.join(labels) + ' · Nguồn: ' + ', '.join(f'[{r}]' for r in point.get('source_refs', [])))
-            st.caption('Điều kiện / giới hạn: ' + point.get('gioi_han', 'Chưa xác minh thủ công.'))
+        st.markdown(evidence_table(reading['luan_diem'], fact_map), unsafe_allow_html=True)
     if report.get('star_analysis'):
         st.subheader('Sao & yếu tố cần đối chiếu')
         st.caption('Nhóm cần lưu ý lấy từ danh mục sao truyền thống; không phải điểm rủi ro hay dự báo một biến cố. M/V/Đ/B/H là trạng thái sao gốc.')

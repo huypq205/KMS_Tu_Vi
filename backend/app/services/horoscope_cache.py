@@ -22,9 +22,9 @@ from backend.app.db.session import init_db, session_scope
 
 logger = logging.getLogger(__name__)
 
-# Tăng khi cấu trúc bài đọc đổi (ví dụ thêm muc_tin_cay) để cache cũ tự miss,
-# tránh trả bài thiếu trường mới cho UI.
-CACHE_SCHEMA_VERSION = 2
+# Tăng khi cấu trúc bài đọc đổi (ví dụ thêm muc_tin_cay, loi_chung_cu) để cache
+# cũ tự miss, tránh trả bài thiếu trường mới cho UI.
+CACHE_SCHEMA_VERSION = 3
 
 
 def _utcnow() -> datetime:

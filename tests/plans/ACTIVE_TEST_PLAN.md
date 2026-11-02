@@ -544,3 +544,75 @@ python -m pytest tests/ -q                                          # 131 passed
 - [x] UI hiển thị badge màu theo bậc (rất mạnh = xanh, yếu = xám).
 - [x] Cache cũ tự miss nhờ `CACHE_SCHEMA_VERSION`.
 - [x] Hồi quy toàn bộ 131 test xanh.
+
+---
+
+## T3 — Từ điển loại chứng cứ + phản chứng bắt buộc
+
+- **Ngày:** 2026-11-03
+- **Trạng thái:** **PASSED**
+- **Nguồn kế hoạch:** `C:\Users\Admin\.opencode\plan\kms-tuvi-knowledge-governance-adopt-plan.md` (T3).
+- **Mục tiêu:** mỗi fact sao/cung có `kind` thuộc 10 loại chứng cứ; mỗi `luan_diem` có `loi_chung_cu` khớp `kind` của fact đã dẫn và `phan_chung` bắt buộc.
+
+### Thay đổi chính
+
+| File | Nội dung |
+|---|---|
+| `backend/app/core/evidence_types.py` (mới) | Enum 10 loại chứng cứ + nhãn tiếng Việt + câu chuẩn `NO_COUNTER_EVIDENCE` |
+| `backend/app/services/horoscope_analysis.py` | Mỗi fact thêm `kind`: tọa thủ/tam hợp/xung chiếu/giáp cung theo vị trí so với Mệnh; tứ hóa gốc và lưu tứ hóa → `tu_hoa`; vòng Thái Tuế lưu niên → `van_han` |
+| `backend/app/services/horoscope_interpreter.py` | Schema `luan_diem` thêm `loi_chung_cu` (enum, `minItems: 1`) và `phan_chung` (required); prompt giải thích 10 loại; `check_evidence_labels`; retry 1 lần rồi hard-reject; mock có `luan_diem` gắn nhãn |
+| `backend/app/services/horoscope_cache.py` | `CACHE_SCHEMA_VERSION = 3` để bài cache cũ thiếu trường T3 tự miss |
+| `frontend/horoscope_view.py`, `frontend/horoscope_ui.py`, `frontend/assets/horoscope.css` | `evidence_table` 3 cột (luận điểm, dấu hiệu thuận, dấu hiệu nghịch) + chip loại chứng cứ |
+| `tests/horoscope_support.py`, `tests/test_horoscope_feedback.py`, `tests/test_horoscope_facts_schema.py` | Fixture/mẫu cũ thêm `loi_chung_cu`, `phan_chung`; schema fact yêu cầu `kind` |
+
+### Quy tắc đã chốt
+
+- 10 loại: `toa_thu`, `tam_hop`, `xung_chieu`, `giap_cung`, `tu_hoa`, `menh_cuc`, `van_han`, `nghiem_ly`, `truong_phai`, `suy_luan`.
+- `loi_chung_cu` phải khớp ít nhất một `kind` của `fact_id` đã dẫn; `suy_luan` được phép đi kèm nhưng không thay thế loại chứng cứ thật.
+- `phan_chung` bắt buộc không rỗng; nếu nguồn không có phản chứng thì ghi nguyên văn "Không ghi nhận phản chứng trong nguồn đã lấy."
+- Thiếu/sai nhãn hoặc phản chứng rỗng → retry 1 lần; sau retry vẫn lỗi → `invalid_response` (model fallback hoặc mock), không trả bài thiếu nhãn.
+- `MENH_CUC`, `NGHIEM_LY`, `TRUONG_PHAI`, `SUY_LUAN` là nhãn ngữ cảnh dành cho bước sau (hồ sơ sao/nghiệm lý/trường phái); hiện chỉ fact sao/cung được gắn `kind`.
+
+### Ma trận test (`tests/test_horoscope_evidence_labels.py`)
+
+| # | Ca kiểm thử | Kết quả |
+|---|---|---|
+| 1 | Từ điển đủ 10 loại, nhãn không rỗng | PASSED |
+| 2 | Fact có `kind` đúng quan hệ cung với Mệnh (tọa thủ/tam hợp/xung chiếu/giáp cung) | PASSED |
+| 3 | Tứ hóa gốc + lưu tứ hóa → `tu_hoa`; vòng Thái Tuế → `van_han` | PASSED |
+| 4 | Schema bắt buộc `loi_chung_cu` (enum, min 1) và `phan_chung` | PASSED |
+| 5 | Prompt hệ thống định nghĩa đủ 10 loại và câu phản chứng chuẩn | PASSED |
+| 6 | Bài đọc hợp lệ có nhãn/phản chứng → pass | PASSED |
+| 7 | Thiếu hoặc rỗng `loi_chung_cu` khi có fact → reject | PASSED |
+| 8 | Nhãn ngoài enum → reject | PASSED |
+| 9 | Nhãn không khớp `kind` của fact_id → reject; thêm `suy_luan` hợp lệ → pass | PASSED |
+| 10 | `phan_chung` rỗng → reject; câu chuẩn → pass | PASSED |
+| 11 | Thiếu nhãn → retry 1 lần kèm chỉ dẫn, lần 2 hợp lệ → nhận bài Gemini | PASSED |
+| 12 | Phản chứng rỗng cả 2 lần → mock fallback `invalid_response` | PASSED |
+| 13 | Mock reading có `luan_diem` gắn nhãn + phản chứng | PASSED |
+| 14 | `evidence_table` có 2 cột dấu hiệu, chip loại chứng cứ, escape HTML | PASSED |
+| 15 | AppTest: báo cáo mock hiển thị bảng "Dấu hiệu thuận/nghịch" | PASSED |
+
+### Kết quả chạy
+
+```powershell
+python -m pytest tests/test_horoscope_evidence_labels.py -v   # 15 passed
+python -m pytest tests/ -q                                    # 146 passed in 63.48s
+```
+
+### Definition of Done
+
+- [x] 10 loại chứng cứ có nhãn tiếng Việt dùng chung backend/UI.
+- [x] Mỗi fact sao/cung có `kind` và mỗi luận điểm có `loi_chung_cu` khớp fact.
+- [x] `phan_chung` bắt buộc; có câu chuẩn khi nguồn không có phản chứng.
+- [x] UI hiển thị bảng luận điểm với dấu hiệu thuận/nghịch.
+- [x] Cache cũ tự miss nhờ `CACHE_SCHEMA_VERSION = 3`.
+- [x] Hồi quy toàn bộ 146 test xanh.
+
+### Khác biệt so với plan
+
+- Plan chỉ yêu cầu label thuộc enum; bản triển khai kiểm tra thêm **label phải khớp `kind` của fact đã dẫn** để tránh gắn nhãn chứng cứ sai.
+- Plan gợi ý `phan_chung` được phép ghi câu "không ghi nhận…"; bản triển khai bắt buộc chuỗi không rỗng và dùng câu chuẩn trong prompt/mock, nhưng vẫn chấp nhận phản chứng cụ thể khác.
+- UI dùng bảng **3 cột** (luận điểm + 2 cột dấu hiệu) thay vì chỉ 2 cột, để giữ nhận định/giới hạn đi kèm.
+- Mock reading từ T2 có `luan_diem` rỗng; T3 bổ sung 3 luận điểm dữ kiện (mỗi loại chứng cứ một mục) để bảng hiển thị được cả khi offline.
+- Chưa sinh fact `kind=menh_cuc`; nhãn này để dành cho hồ sơ sao/nghiệm lý ở T6/T8.

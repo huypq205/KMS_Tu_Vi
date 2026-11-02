@@ -14,6 +14,11 @@ from backend.app.core.config import (
     GEMINI_API_KEY, HOROSCOPE_MODEL, HOROSCOPE_TIMEOUT_SECONDS, HOROSCOPE_MAX_TOKENS,
     HOROSCOPE_FALLBACK_MODELS, LLM_TEMPERATURE,
 )
+from backend.app.core.evidence_types import (
+    EVIDENCE_TYPE_VALUES,
+    NO_COUNTER_EVIDENCE,
+    evidence_label,
+)
 from backend.app.services.horoscope_analysis import build_star_facts, palace_summary, strip_accents
 from backend.app.services.horoscope_confidence import (
     LOW_CONFIDENCE_CAVEAT,
@@ -48,6 +53,20 @@ Bậc tin cậy cho từng mục luan_diem và ket_luan (trường "muc_tin_cay"
 - trung_binh: thiếu điều kiện hoặc chỉ dựa vào một sách.
 - yeu: chỉ 1 dấu hiệu hoặc dữ liệu đầu vào yếu.
 Không viết phần trăm độ tin cậy (ví dụ "85% khả năng") trong bất kỳ trường nào.
+Loại chứng cứ cho từng mục luan_diem (trường "loi_chung_cu", bắt buộc khi có fact_ids):
+- toa_thu: sao tọa thủ tại cung đang luận.
+- tam_hop: sao nằm trong cung tam hợp với Mệnh.
+- xung_chieu: sao nằm đối cung Mệnh.
+- giap_cung: sao nằm giáp cung Mệnh.
+- tu_hoa: sao mang Tứ hóa gốc hoặc lưu niên.
+- menh_cuc: quan hệ Mệnh – Cục.
+- van_han: sao/vòng vận hạn theo năm xem.
+- nghiem_ly: ca nghiệm lý đã kiểm chứng, chỉ khi có trong dữ kiện.
+- truong_phai: khác biệt giữa các trường phái hoặc sách.
+- suy_luan: phần nối mạch của người viết, không thay cho fact_id.
+Chỉ ghi loại khớp với "kind" của các fact_id đã dẫn. Trường "phan_chung" (bắt buộc):
+nêu dấu hiệu hoặc đoạn sách trái chiều; nếu nguồn đã lấy không có thì ghi nguyên văn
+"Không ghi nhận phản chứng trong nguồn đã lấy."
 Không đủ căn cứ thì ghi 'Chưa đủ căn cứ từ nguồn đã lấy', không tự bổ sung kiến thức ngoài nguồn.
 Chỉ trả JSON theo schema, ngắn gọn: mỗi trường 1–2 câu. Tạo 3–5 luận điểm, gồm cung tiểu hạn
 năm được chọn và yếu tố cần lưu ý nếu có nguồn; không ép kết luận khi thiếu nguồn.
@@ -124,9 +143,13 @@ def response_schema() -> dict:
         'type': 'object', 'properties': {
             'nhan_dinh': {'type': 'string'}, 'gioi_han': {'type': 'string'},
             'muc_tin_cay': {'type': 'string', 'enum': list(CONCLUSION_CONFIDENCE_LEVELS)},
+            'loi_chung_cu': {'type': 'array', 'minItems': 1,
+                             'items': {'type': 'string', 'enum': list(EVIDENCE_TYPE_VALUES)}},
+            'phan_chung': {'type': 'string', 'minLength': 1},
             'fact_ids': {'type': 'array', 'items': {'type': 'string'}},
             'source_refs': {'type': 'array', 'items': {'type': 'integer'}},
-        }, 'required': ['nhan_dinh', 'gioi_han', 'muc_tin_cay', 'fact_ids', 'source_refs'],
+        }, 'required': ['nhan_dinh', 'gioi_han', 'muc_tin_cay', 'loi_chung_cu',
+                        'phan_chung', 'fact_ids', 'source_refs'],
     }}
     properties['ket_luan'] = {'type': 'array', 'maxItems': 4, 'items': {
         'type': 'object', 'properties': {
@@ -182,6 +205,8 @@ def build_horoscope_user_prompt(features: dict[str, Any], formatted_context: str
         + '\nYÊU CẦU ĐẦU RA JSON: theo schema; giữ năm xem, tên sao, cung và nguồn bên cạnh lập luận. '
           'Mỗi luận điểm dẫn fact_id khác nhau; phần vận trình nhắc đúng năm xem và can chi. '
           'Mỗi mục luan_diem/ket_luan ghi "muc_tin_cay" (rat_manh/manh/trung_binh/yeu); không dùng phần trăm. '
+          'Mỗi mục luan_diem ghi "loi_chung_cu" (loại chứng cứ khớp kind của fact_id) và "phan_chung" '
+          '(nêu phản chứng hoặc câu "Không ghi nhận phản chứng trong nguồn đã lấy"). '
           'Không lặp các câu tài chính/tình cảm dùng cho mọi lá số.'
     )
 
@@ -296,6 +321,41 @@ def check_conclusion_confidence(reading: dict) -> str | None:
     return None
 
 
+def check_evidence_labels(reading: dict, facts: list) -> str | None:
+    """Kiểm tra nhãn loại chứng cứ và phản chứng của từng luận điểm.
+
+    Trả về None nếu đạt; trả về lý do nếu thiếu/sai enum, nhãn không khớp
+    ``kind`` của fact_id đã dẫn, hoặc phản chứng rỗng.
+    """
+    if not isinstance(reading, dict):
+        return "Bài đọc không phải JSON object."
+    fact_kinds = {
+        str(fact.get('fact_id')): fact.get('kind')
+        for fact in facts if isinstance(fact, dict) and fact.get('fact_id') is not None
+    }
+    for point in reading.get('luan_diem') or []:
+        if not isinstance(point, dict):
+            continue
+        ids = [str(i) for i in (point.get('fact_ids') or [])]
+        labels = point.get('loi_chung_cu')
+        if ids:
+            if not isinstance(labels, list) or not labels:
+                return ('Mỗi luận điểm có fact_id phải có "loi_chung_cu" '
+                        f'thuộc {", ".join(EVIDENCE_TYPE_VALUES)}.')
+            invalid = [label for label in labels if label not in EVIDENCE_TYPE_VALUES]
+            if invalid:
+                return (f'Loại chứng cứ không hợp lệ: {", ".join(map(str, invalid))}; '
+                        f'chỉ dùng {", ".join(EVIDENCE_TYPE_VALUES)}.')
+            cited_kinds = {fact_kinds.get(i) for i in ids if fact_kinds.get(i)}
+            if not cited_kinds.intersection(labels):
+                return ('"loi_chung_cu" không khớp loại chứng cứ (kind) của fact_id đã dẫn; '
+                        'hãy ghi đúng loại của chứng cứ đang dùng.')
+        phan_chung = point.get('phan_chung')
+        if not isinstance(phan_chung, str) or not phan_chung.strip():
+            return 'Mỗi luận điểm phải có "phan_chung" không rỗng.'
+    return None
+
+
 def check_specificity(reading: dict, features: dict[str, Any], context: dict | None = None) -> str | None:
     """Kiểm tra bài đọc có bám dữ kiện riêng của lá số và năm đã chọn hay không.
 
@@ -369,6 +429,27 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
                 'muc_tin_cay': 'trung_binh' if (refs and ids) else 'yeu'}
 
     ket_luan = [pt for pt in (palace_point('Phu thê'), palace_point('Phụ mẫu'), palace_point('Mệnh')) if pt]
+    luan_diem = []
+    used_kinds = set()
+    for fact in facts:
+        if len(luan_diem) >= 3:
+            break
+        if not fact.get('source_refs') or fact.get('kind') in used_kinds:
+            continue
+        used_kinds.add(fact.get('kind'))
+        gioi_han = 'Phân tích dữ kiện, chưa kiểm duyệt thủ công; đối chiếu mục Sao & nguồn sách.'
+        if low_confidence:
+            gioi_han += f' {LOW_CONFIDENCE_CAVEAT}; chỉ nêu cấu trúc, không kết luận thời điểm/sự kiện.'
+        luan_diem.append({
+            'nhan_dinh': (f"{fact['sao']} tại {fact['cung']} ({fact['dia_chi']}); "
+                          f"loại chứng cứ: {evidence_label(fact.get('kind'))}. Chưa kết luận sự kiện."),
+            'gioi_han': gioi_han,
+            'muc_tin_cay': 'trung_binh',
+            'loi_chung_cu': [fact['kind']],
+            'phan_chung': NO_COUNTER_EVIDENCE,
+            'fact_ids': [fact['fact_id']],
+            'source_refs': fact['source_refs'][:1],
+        })
     return {
         'tieu_de': f"Dữ kiện lá số — {basic.get('can_chi_nam', '')}",
         'tong_quan': {
@@ -389,7 +470,7 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
         'loi_khuyen_hanh_dong': ['Đọc tên sao, cung và trạng thái trước khi đối chiếu các nhận định trong sách.',
                                'Kiểm tra điều kiện đồng cung/hội chiếu và Tuần/Triệt của đoạn sách.',
                                'Phân biệt sao gốc tại cung tiểu hạn với lưu tinh theo năm.'],
-        'luan_diem': [],
+        'luan_diem': luan_diem,
         'ket_luan': ket_luan,
     }
 
@@ -448,7 +529,8 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                 validate_reading(reading, facts, context)
                 confidence_problem = check_input_confidence(reading, features)
                 conclusion_problem = check_conclusion_confidence(reading)
-                problem = (confidence_problem or conclusion_problem
+                evidence_problem = check_evidence_labels(reading, facts)
+                problem = (confidence_problem or conclusion_problem or evidence_problem
                            or check_specificity(reading, features, context))
                 if problem:
                     attempts += 1
@@ -465,6 +547,13 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                             '(rat_manh/manh/trung_binh/yeu) đúng với số fact_id; '
                             'không dùng phần trăm độ tin cậy. '
                         )
+                    if evidence_problem:
+                        extra += (
+                            'Mỗi mục luan_diem phải có "loi_chung_cu" đúng loại chứng cứ '
+                            f'({", ".join(EVIDENCE_TYPE_VALUES)}) khớp "kind" của fact_id đã dẫn, '
+                            f'và "phan_chung" không rỗng; nếu không có phản chứng thì ghi '
+                            f'nguyên văn "{NO_COUNTER_EVIDENCE}". '
+                        )
                     extra += (
                         f"Mỗi luận điểm phải dẫn fact_id khác nhau; "
                         f"phần vận trình phải nhắc năm xem {annual.get('year', '')} ({annual.get('can_chi', '')})."
@@ -472,7 +561,8 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                     reading = _request_gemini(user_prompt + extra, key, model)
                     validate_reading(reading, facts, context)
                     conclusion_problem = check_conclusion_confidence(reading)
-                    if conclusion_problem:
+                    evidence_problem = check_evidence_labels(reading, facts)
+                    if conclusion_problem or evidence_problem:
                         raise HoroscopeGenerationError('invalid_response')
                     problem = check_input_confidence(reading, features) or check_specificity(reading, features, context)
                 reading['_generation'] = {'actual_provider': 'gemini', 'is_mock': False, 'reason': None,
