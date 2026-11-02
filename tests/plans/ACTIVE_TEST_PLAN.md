@@ -484,3 +484,36 @@ python -m pytest tests/ -q                                     # 120 passed in 8
 - [x] Cache không trộn bài của các mức tin cậy khác nhau.
 - [x] UI gửi/nhận đủ 3 field và cảnh báo C/D.
 - [x] Không thêm phần trăm tin cậy (để dành T2 với `muc_tin_cay` 4 bậc).
+
+---
+
+## Governance T4 — Cross-check an sao (2026-11-03)
+
+- **Trạng thái kiểm thử: PASSED** — có bất đồng nguồn được ghi nhận bằng strict XFAIL.
+- **Trạng thái nghiệm thu T4: PASSED** — bất đồng đã document và có
+  [GitHub issue #1](https://github.com/huypq205/KMS_Tu_Vi/issues/1).
+  Các bất đồng chưa được phân xử bằng bảng/trang sách KMS.
+- Phạm vi độc lập với T1/T2: chỉ bổ sung test, fixture và tài liệu;
+  không thay đổi backend, UI, vendor hoặc bảng Tứ Hóa.
+- Nguồn: `hung-ngm/tu-vi-dau-so`, commit
+  `d0238e9ee9f1a8a1603f5ff1328b18bf6e4635b7`, `references/computation.md`.
+- Fixture tĩnh: `tests/fixtures/an_sao_vectors.json`, **44 vector**, kỳ vọng
+  từ các mốc tra độc lập, không sinh từ output vendor. Phủ 12 tháng × giờ Tý/Hợi,
+  5 Cục, âm/dương nam/nữ, 10 Can, 12 Chi, ngày chẵn/lẻ, 6 Tuần và các nhóm sao T4.
+- Nguồn không mô tả đủ vị trí tuyệt đối cho 6 vector ngày 2/Hỏa:
+  vẫn kiểm tra hai chòm tương đối, sao phụ và hạn; ghi rõ giới hạn trong fixture.
+- 351 trường khác thuộc 4 nhóm: Tử Vi và sai khác lan truyền (322),
+  Khôi/Việt (8), Hỏa/Linh (18), Tứ Hóa (3). Mỗi trường có test quan sát riêng
+  để không che regression mới. Không sửa kỳ vọng chỉ để làm test xanh.
+
+```powershell
+.venv\Scripts\python.exe -m pytest tests/test_lasotuvi_crosscheck.py -v
+# 1873 passed, 351 xfailed in 4.07s
+.venv\Scripts\python.exe -m pytest tests/ -q
+# 2004 passed, 351 xfailed in 83.31s
+```
+
+Chi tiết: [báo cáo T4](../../docs/LASOTUVI_CROSSCHECK.md) và
+[hồ sơ bất đồng](../../docs/issues/T4_AN_SAO_DISCREPANCIES.md).
+GitHub issue đã đăng sau khi người dùng xác nhận cho phép công bố kết quả T4
+lên `huypq205/KMS_Tu_Vi`. Hiệu chuẩn bảng Tứ Hóa thuộc T5.
