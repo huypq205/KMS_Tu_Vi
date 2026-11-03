@@ -160,6 +160,10 @@ def response_schema() -> dict:
             'source_refs': {'type': 'array', 'items': {'type': 'integer'}},
         }, 'required': ['nhan_dinh', 'giai_thich_thun_viet', 'gioi_han', 'muc_tin_cay', 'fact_ids', 'source_refs'],
     }}
+    for key in ('luan_diem', 'ket_luan'):
+        item = properties[key]['items']
+        item['properties']['loai_ket_luan'] = {'type': 'string', 'enum': ['cau_truc', 'thoi_diem']}
+        item['required'].append('loai_ket_luan')
     return {'type': 'object', 'properties': properties, 'required': list(properties)}
 
 
@@ -205,6 +209,7 @@ def build_horoscope_user_prompt(features: dict[str, Any], formatted_context: str
         + '\nYÊU CẦU ĐẦU RA JSON: theo schema; giữ năm xem, tên sao, cung và nguồn bên cạnh lập luận. '
           'Mỗi luận điểm dẫn fact_id khác nhau; phần vận trình nhắc đúng năm xem và can chi. '
           'Mỗi mục luan_diem/ket_luan ghi "muc_tin_cay" (rat_manh/manh/trung_binh/yeu); không dùng phần trăm. '
+          'Ghi loai_ket_luan=cau_truc hoặc thoi_diem; dữ liệu giờ sinh C/D chỉ được cau_truc. '
           'Mỗi mục luan_diem ghi "loi_chung_cu" (loại chứng cứ khớp kind của fact_id) và "phan_chung" '
           '(nêu phản chứng hoặc câu "Không ghi nhận phản chứng trong nguồn đã lấy"). '
           'Không lặp các câu tài chính/tình cảm dùng cho mọi lá số.'
@@ -253,6 +258,8 @@ def validate_reading(reading: dict, facts: list, context: dict) -> None:
     for point in points:
         if not isinstance(point, dict):
             raise HoroscopeGenerationError('invalid_response')
+        if point.get('loai_ket_luan') not in ('cau_truc', 'thoi_diem'):
+            raise HoroscopeGenerationError('invalid_response')
         ids, refs = point.get('fact_ids'), point.get('source_refs')
         if not isinstance(ids, list) or not ids or not all(isinstance(i, str) and i in fact_map for i in ids):
             raise HoroscopeGenerationError('invalid_response')
@@ -268,6 +275,8 @@ def validate_reading(reading: dict, facts: list, context: dict) -> None:
         raise HoroscopeGenerationError('invalid_response')
     for point in deep_points:
         if not isinstance(point, dict):
+            raise HoroscopeGenerationError('invalid_response')
+        if point.get('loai_ket_luan') not in ('cau_truc', 'thoi_diem'):
             raise HoroscopeGenerationError('invalid_response')
         ids, refs = point.get('fact_ids'), point.get('source_refs')
         if not isinstance(ids, list) or not ids or not all(isinstance(i, str) and i in fact_map for i in ids):
@@ -430,7 +439,7 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
             gioi_han += f' {LOW_CONFIDENCE_CAVEAT}; chỉ nêu cấu trúc, không kết luận thời điểm/sự kiện.'
         if not refs:
             gioi_han += ' Chưa có trích dẫn sách đối chiếu.'
-        return {'nhan_dinh': nhan, 'giai_thich_thun_viet': giai, 'fact_ids': ids,
+        return {'nhan_dinh': nhan, 'giai_thich_thun_viet': giai, 'fact_ids': ids, 'loai_ket_luan': 'cau_truc',
                 'source_refs': refs, 'gioi_han': gioi_han,
                 'muc_tin_cay': 'trung_binh' if (refs and ids) else 'yeu'}
 
@@ -447,6 +456,7 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
         if low_confidence:
             gioi_han += f' {LOW_CONFIDENCE_CAVEAT}; chỉ nêu cấu trúc, không kết luận thời điểm/sự kiện.'
         luan_diem.append({
+            'loai_ket_luan': 'cau_truc',
             'nhan_dinh': (f"{fact['sao']} tại {fact['cung']} ({fact['dia_chi']}); "
                           f"loại chứng cứ: {evidence_label(fact.get('kind'))}. Chưa kết luận sự kiện."),
             'gioi_han': gioi_han,
@@ -568,7 +578,7 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                     validate_reading(reading, facts, context)
                     conclusion_problem = check_conclusion_confidence(reading)
                     evidence_problem = check_evidence_labels(reading, facts)
-                    if conclusion_problem or evidence_problem:
+                    if conclusion_problem or evidence_problem or check_input_confidence(reading, features):
                         raise HoroscopeGenerationError('invalid_response')
                     problem = check_input_confidence(reading, features) or check_specificity(reading, features, context)
                 reading['_generation'] = {'actual_provider': 'gemini', 'is_mock': False, 'reason': None,

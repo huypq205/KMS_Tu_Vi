@@ -18,7 +18,11 @@ task to origin/main. Do not publish private input workbooks or CSV summaries.
 ## Findings and evidence
 
 - Local main started clean at ab7e636, already includes T7 and origin/main.
-- T3 merged without conflicts; review fixes tested: 2089 passed, 351 known T4 xfailed.
+- T3 merged, reviewed and pushed to origin/main at 5b5d508 (2089 passed, 351 known T4 xfailed).
+- T1 review fixed final-retry leakage for C/D, added conclusion classification
+  across schema/UI/fixture. Regression: 2091 passed, 351 known T4 xfailed.
+- Test suite modifies the tracked kms.db cache; do not stage that generated DB
+  change. Preserve a backup before cleaning it at the end.
 - T3 initial integration regression: 2087 passed, 351 known T4 xfailed.
 - T3 review reproductions found uncited evidence labels accepted and Tị/Tỵ
   inconsistent in adjacent-palace classification. Regression tests added; fixes

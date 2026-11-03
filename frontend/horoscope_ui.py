@@ -236,6 +236,7 @@ else:
         st.caption('Mỗi mục gồm nhận định chuyên môn và phần chuyển thuật ngữ sang nghĩa đời thường, kèm dữ kiện/nguồn đối chiếu.')
         fact_map = {f['fact_id']: f for f in report.get('star_analysis', [])}
         for index, point in enumerate(reading['ket_luan'], 1):
+            st.caption('Loại kết luận: ' + {'cau_truc': 'Cấu trúc', 'thoi_diem': 'Thời điểm'}.get(point.get('loai_ket_luan'), 'Chưa phân loại'))
             st.markdown(f'<p class="muted" style="margin:0 0 4px">Kết luận {index} · {confidence_badge(point.get("muc_tin_cay"))}</p>', unsafe_allow_html=True)
             st.markdown(content(point.get('nhan_dinh')), unsafe_allow_html=True)
             if point.get('giai_thich_thun_viet'):

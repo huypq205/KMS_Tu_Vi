@@ -133,6 +133,7 @@ class TestHoroscopeInterpreter(unittest.TestCase):
 
         reading = valid_reading(facts, "2026 Bính Ngọ", fact_count=2)
         reading["ket_luan"] = [{
+            "loai_ket_luan": "cau_truc",
             "nhan_dinh": f"Sao {f0['sao']} tại {f0['cung']} cần cân nhắc theo nguồn đã trích.",
             "giai_thich_thun_viet": "Giải nghĩa thuần Việt cho vị thế của sao này trong cung.",
             "gioi_han": "Chưa xác minh toàn bộ điều kiện tổ hợp sao.",
@@ -143,6 +144,7 @@ class TestHoroscopeInterpreter(unittest.TestCase):
 
         bad = valid_reading(facts, "2026 Bính Ngọ", fact_count=2)
         bad["ket_luan"] = [{
+            "loai_ket_luan": "cau_truc",
             "nhan_dinh": "Nhận định bịa.",
             "giai_thich_thun_viet": "Giải thích bịa.",
             "gioi_han": "Giới hạn bịa.",

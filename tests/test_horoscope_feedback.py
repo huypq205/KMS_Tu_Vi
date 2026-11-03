@@ -110,7 +110,7 @@ def test_busy_primary_model_falls_back_before_mock():
     fact = next(s for s in facts if s['source_refs'])
     reading = interpreter.generate_mock_reading(f)
     reading['luan_diem'] = [{'nhan_dinh': 'Một nhận định có điều kiện.', 'gioi_han': 'Cần kiểm tra tổ hợp.',
-                             'muc_tin_cay': 'trung_binh',
+                             'muc_tin_cay': 'trung_binh', 'loai_ket_luan': 'cau_truc',
                              'loi_chung_cu': [fact.get('kind', 'toa_thu')],
                              'phan_chung': 'Không ghi nhận phản chứng trong nguồn đã lấy.',
                              'fact_ids': [fact['fact_id']], 'source_refs': fact['source_refs'][:1]}]
@@ -144,7 +144,7 @@ def test_complete_ai_response_requires_real_fact_and_source_links():
     fact = next(s for s in facts if s['source_refs'])
     reading = interpreter.generate_mock_reading(f)
     reading['luan_diem'] = [{'nhan_dinh': 'Một nhận định có điều kiện.', 'gioi_han': 'Cần kiểm tra tổ hợp.',
-                             'muc_tin_cay': 'trung_binh',
+                             'muc_tin_cay': 'trung_binh', 'loai_ket_luan': 'cau_truc',
                              'loi_chung_cu': [fact.get('kind', 'toa_thu')],
                              'phan_chung': 'Không ghi nhận phản chứng trong nguồn đã lấy.',
                              'fact_ids': [fact['fact_id']], 'source_refs': fact['source_refs'][:1]}]

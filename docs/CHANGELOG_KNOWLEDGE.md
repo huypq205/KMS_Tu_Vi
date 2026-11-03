@@ -1,5 +1,13 @@
 # Changelog tri thức KMS Tử Vi
 
+## 2026-11-03 — T1 review: giới hạn C/D được chặn sau retry
+
+- Trước → sau: retry vẫn có thể trả kết luận thời điểm với specificity_low →
+  từ chối bài không tuân thủ C/D, dùng fallback có giới hạn hoặc lỗi rõ ràng.
+- Bổ sung `loai_ket_luan` (cau_truc/thoi_diem) cho luận điểm/kết luận, schema,
+  mock, fixture và UI cùng đợt; C/D chỉ được cấu trúc. Cache schema 3 → 4.
+- Review/test tái hiện trước sửa; hồi quy: 2091 passed, 351 known T4 xfailed.
+
 ## 2026-11-03 — T3: merge và review loại chứng cứ
 
 - Trước → sau: facts chưa có loại → từ điển 10 loại, `kind`, luận điểm có

@@ -111,6 +111,7 @@ def evidence_table(points, fact_map=None) -> str:
         rows.append(
             '<tr>'
             f'<td>{confidence_badge(point.get("muc_tin_cay"))}'
+            f'<p class="muted">Loại: {text({"cau_truc": "Cấu trúc", "thoi_diem": "Thời điểm"}.get(point.get("loai_ket_luan"), "Chưa phân loại"))}</p>'
             f'<p>{text(point.get("nhan_dinh"))}</p>'
             f'<p class="muted">Điều kiện / giới hạn: {text(point.get("gioi_han"))}</p></td>'
             f'<td>{support}</td>'

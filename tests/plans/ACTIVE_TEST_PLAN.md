@@ -1,5 +1,10 @@
 # TEST PLAN: Horoscope — Khắc phục 4 điểm feedback giảng viên + baseline facts schema
 
+> Review T1 sau merge T3: PASSED. Chặn cứng kết luận thời điểm C/D kể cả sau
+> retry; thêm loai_ket_luan vào schema/mock/fixture/UI, cache v4. Hồi quy review:
+> 2091 passed, 351 known T4 xfailed. Ghi chú cũ về trả specificity_low cho vi phạm
+> C/D bên dưới là lịch sử, đã được sửa bởi review này.
+
 - **Ngày lập:** 2026-11-01
 - **Người lập kế hoạch (Planner):** Claude (QA & Test Architect)
 - **Người triển khai code (Coder):** Gemini (Antigravity IDE)

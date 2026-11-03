@@ -139,6 +139,8 @@ def check_input_confidence(reading: dict[str, Any], features: dict[str, Any]) ->
         )
     for key in ("luan_diem", "ket_luan"):
         for point in reading.get(key) or []:
+            if isinstance(point, dict) and point.get('loai_ket_luan') == 'thoi_diem':
+                return 'Giờ sinh mức C/D chỉ cho phép loai_ket_luan=cau_truc.'
             if isinstance(point, dict) and not has_low_confidence_caveat(point.get("gioi_han")):
                 return (
                     "Giờ sinh mức C/D: mỗi mục gioi_han phải nêu nguyên văn "

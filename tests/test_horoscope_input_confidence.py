@@ -187,6 +187,27 @@ def test_interpret_retries_when_cd_reading_has_timing_claim():
     assert check_input_confidence(reading, features) is None
 
 
+def test_cd_timing_claim_after_retry_is_never_returned_as_low_specificity():
+    features = make_features(2026, input_confidence='D')
+    bad = _reading_with_caveat(features)
+    bad['van_han_hien_tai']['co_hoi_nen_nam_bat'] = 'Năm 2026 sẽ kết hôn.'
+    context = retrieve_horoscope_context(features, 2)
+    with patch.object(interpreter, 'GEMINI_API_KEY', 'test-key'), patch.object(
+        interpreter, 'HOROSCOPE_FALLBACK_MODELS', (),
+    ), patch('backend.app.services.horoscope_interpreter.requests.post',
+             side_effect=[gemini_response(bad), gemini_response(bad)]):
+        result = interpret_horoscope(features, format_context_for_prompt(context), 'auto', context)
+    assert result['_generation']['is_mock'] is True
+    assert check_input_confidence(result, features) is None
+
+
+def test_cd_rejects_explicit_temporal_conclusion_type():
+    features = make_features(2026, input_confidence='C')
+    reading = _reading_with_caveat(features)
+    reading['luan_diem'][0]['loai_ket_luan'] = 'thoi_diem'
+    assert check_input_confidence(reading, features)
+
+
 # 7. Cache isolation --------------------------------------------------------
 
 def test_cache_does_not_mix_confidence_levels():
