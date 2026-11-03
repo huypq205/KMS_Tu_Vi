@@ -1,0 +1,949 @@
+# P2 (Plan_Fix_Mai_Anh_v2): danh mục quy tắc cách cục đã kiểm kê.
+#
+# Nguồn: file cách cục của skill tu-vi-dau-so (tham khảo, CHUA đối chiếu KMS).
+# Trách nhiệm (P2 §4.2): do AI/engineer kiểm kê; "duyet_dung" chỉ gán khi có
+# người duyệt chuyên môn được chỉ định (reviewer_role). Khi reviewer_role là
+# "chua_chi_dinh", không rule nào được "duyet_dung".
+#
+# Trạng thái (P2 §4.1): duyet_dung | chi_tham_khao | can_doi_chieu | chua_ho_tro
+# san_sang_thuc_thi: điều kiện đủ rõ để P3 nhận diện (không còn điểm mơ hồ).
+# ung_vien_ban_dau: tập con (<=8) cho bản đầu của P3.
+
+version: 1
+source_file: "skills/tu-vi-dau-so-main/tu-vi-dau-so/skills/tu-vi-dau-so/references/cach_cuc_luan_giai.md"
+source_status: "reference_unverified"
+reviewer_role: "chua_chi_dinh"
+
+rules:
+  # ============ 21 QUY CÁCH (section 1 của nguồn) ============
+
+  - id: "quy-tu-pu-dong-cung"
+    ten: "Tử Phủ đồng cung"
+    nhom: "quy_cach"
+    sao: ["Tử Vi", "Thiên Phủ"]
+    dieu_kien:
+      bat_buoc:
+        - "Tử Vi và Thiên Phủ đồng cung (chỉ có thể tại Dần hoặc Thân)"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Dần", "Thân"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Lá số có Tử Vi và Thiên Phủ đồng cung tại Dần (hoặc Thân)."
+      am: "Lá số không có Tử Vi và Thiên Phủ đồng cung (hai sao ở cung khác nhau)."
+      thieu: "Chưa có dữ liệu an sao 12 cung để xác định vị trí Tử Vi/Thiên Phủ."
+    diem_giai_trinh: "\"Chung thân phúc hậu\" - cả đời phú quý phúc hậu (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: true
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-nhat-le-trung-thien"
+    ten: "Nhật lệ trung thiên"
+    nhom: "quy_cach"
+    sao: ["Thái Dương"]
+    dieu_kien:
+      bat_buoc:
+        - "Thái Dương cư Ngọ, vô sát"
+      ho_tro:
+        - "Tuổi Giáp, Đinh, Kỷ -> nhập cách đại quý"
+      pha_cach:
+        - "Có sát tinh (nguồn ghi 'vô sát' nhưng chưa định nghĩa danh sách sát)"
+    quan_he: ["dong_cung"]
+    chi: ["Ngọ"]
+    can_tuoi: ["Giáp", "Đinh", "Kỷ"]
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'vô sát' chưa định nghĩa danh sách sát tinh được tính"
+      - "chưa rõ là Thái Dương tại cung Ngọ hay Mệnh an tại Ngọ"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Thái Dương tại cung Ngọ, không có sát tinh (theo danh sách cần chốt)."
+      am: "Thái Dương tại cung Ngọ nhưng có sát tinh."
+      thieu: "Chưa an được sao Thái Dương của lá số."
+    diem_giai_trinh: "\"Hữu chuyên quyền chi quý, địch quốc chi phú\" - quyền quý cực cao, giàu bậc nhất (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-nguyet-lang-thien-mon"
+    ten: "Nguyệt lãng thiên môn"
+    nhom: "quy_cach"
+    sao: ["Thái Âm"]
+    dieu_kien:
+      bat_buoc:
+        - "Thái Âm cư Hợi"
+      ho_tro:
+        - "Có cát tinh đồng cung (nguồn ghi 'cát tinh', chưa định danh)"
+        - "Tuổi Bính, Đinh -> chủ quý; Nhâm, Quý -> chủ phú"
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Hợi"]
+    can_tuoi: ["Bính", "Đinh", "Nhâm", "Quý"]
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'cát tinh' đồng cung chưa định nghĩa danh sách"
+      - "điều kiện tuổi tách 2 nhánh (Bính Đinh -> quý, Nhâm Quý -> phú) cần tách kết luận riêng"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Thái Âm tại Hợi, đồng cung có cát tinh (theo danh sách cần chốt), tuổi Bính."
+      am: "Thái Âm tại Hợi nhưng không có cát tinh đồng cung."
+      thieu: "Chưa an được sao Thái Âm của lá số."
+    diem_giai_trinh: "\"Đại phú đại quý\" (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-thuy-trung-quie-ngac"
+    ten: "Thủy trừng quế ngạc"
+    nhom: "quy_cach"
+    sao: ["Thái Âm"]
+    dieu_kien:
+      bat_buoc:
+        - "Thái Âm cư Tý"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Tý"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Thái Âm tại cung Tý (Mệnh hoặc cung nào có Thái Âm an tại Tý)."
+      am: "Thái Âm không tại Tý (ví dụ Thái Âm tại Sửu)."
+      thieu: "Chưa an được sao Thái Âm của lá số."
+    diem_giai_trinh: "\"Đắc thanh yếu chi chức\" - giữ chức vụ quan trọng (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: true
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-nhat-chieu-loi-mon"
+    ten: "Nhật chiếu lôi môn"
+    nhom: "quy_cach"
+    sao: ["Thái Dương"]
+    dieu_kien:
+      bat_buoc:
+        - "Thái Dương tại Mão"
+      ho_tro:
+        - "Tam phương có cát tinh (nguồn ghi 'tam phương cát', chưa định nghĩa)"
+        - "Tuổi Giáp, Ất, Canh, Tân hợp cách; thêm Hình Kị Sát cũng no ấm"
+      pha_cach: []
+    quan_he: ["tam_hop"]
+    chi: ["Mão"]
+    can_tuoi: ["Giáp", "Ất", "Canh", "Tân"]
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'tam phương cát' chưa định nghĩa điều kiện"
+      - "'thêm Hình Kị Sát cũng no ấm' mâu thuẫn với điều kiện cát chủ đạo"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Thái Dương tại Mão, tam phương có cát tinh (theo danh sách cần chốt)."
+      am: "Thái Dương tại Mão nhưng tam phương toàn sát."
+      thieu: "Chưa an được sao Thái Dương của lá số."
+    diem_giai_trinh: "Cách quý theo tuổi; thêm Hình Kị Sát cũng no ấm (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-minh-chau-xuat-hai"
+    ten: "Minh châu xuất hải"
+    nhom: "quy_cach"
+    sao: ["Thái Âm", "Thái Dương"]
+    dieu_kien:
+      bat_buoc:
+        - "Phương án A: Thái Âm tại Hợi chiếu Mệnh tại Mùi"
+        - "Phương án B: Thái Dương tại Mão và Thái Âm tại Dậu, chiếu Mệnh tại Sửu"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["xung_chieu"]
+    chi: ["Hợi", "Mùi", "Mão", "Dậu", "Sửu"]
+    can_tuoi: []
+    cung_neo: "Mệnh"
+    cung_muc_tieu: ["Mệnh"]
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "từ 'chiếu' chưa chỉ rõ quan hệ (tam hợp hay đối cung); Hợi và Mùi không cùng nhóm tam hợp chuẩn"
+      - "hai phương án A/B cần tách thành 2 quy tắc riêng để nhận diện"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Thái Dương tại Mão + Thái Âm tại Dậu, Mệnh an tại Sửu (phương án B)."
+      am: "Thái Dương tại Mão nhưng Thái Âm không tại Dậu."
+      thieu: "Chưa an được vị trí Thái Dương/Thái Âm."
+    diem_giai_trinh: "\"Tiền tài quan lộc song toàn\" (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-cu-nhat-dong-cung"
+    ten: "Cự Nhật đồng cung"
+    nhom: "quy_cach"
+    sao: ["Cự Môn", "Thái Dương"]
+    dieu_kien:
+      bat_buoc:
+        - "Cự Môn và Thái Dương đồng cung"
+      ho_tro:
+        - "Tại Dần -> thượng cách (quan phong tam đại)"
+        - "Tại Thân -> thứ cách"
+      pha_cach:
+        - "Tại Tỵ, Hợi -> không đẹp"
+        - "Dần cung Nhật thủ Mệnh có Kiếp Không hoặc Tứ Sát -> mất thượng cách (danh sách 'Tứ Sát', 'Kiếp Không' chưa định nghĩa)"
+    quan_he: ["dong_cung"]
+    chi: ["Dần", "Thân", "Tỵ", "Hợi"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'Tứ Sát' chưa định nghĩa danh sách"
+      - "'Kiếp Không' chưa định nghĩa (Địa Kiếp + Thiên Không?)"
+      - "cùng cách cục nhưng 3 mức kết quả theo chi (Dần/Thân/Tị Hợi) - cần tách theo từng chi"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Cự Nhật đồng cung tại Dần, Mệnh thủ tại cung đó, không Kiếp Không/Tứ Sát."
+      am: "Cự Nhật đồng cung tại Tỵ (mức 'không đẹp')."
+      thieu: "Chưa an được Cự Môn/Thái Dương."
+    diem_giai_trinh: "\"Quan phong tam đại\" thượng cách; tại Thân thứ cách; Tị Hợi không đẹp (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-co-nguyet-dong-liuong"
+    ten: "Cơ Nguyệt Đồng Lương"
+    nhom: "quy_cach"
+    sao: ["Thiên Cơ", "Thái Âm", "Thiên Đồng", "Thiên Lương"]
+    dieu_kien:
+      bat_buoc:
+        - "Bốn sao Thiên Cơ, Thái Âm, Thiên Đồng, Thiên Lương hội tam phương"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["tam_hop"]
+    chi: []
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'hội tam phương' chưa tách quan hệ đồng cung và tam hợp"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Bốn sao Cơ Nguyệt Đồng Lương hội (đồng cung hoặc tam hợp - theo quan hệ chốt)."
+      am: "Thiếu một trong bốn sao."
+      thieu: "Chưa an đủ 4 sao của lá số."
+    diem_giai_trinh: "\"Tác lại nhân\" - hợp làm công chức, viên chức (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-tham-vo-dong-hanh"
+    ten: "Tham Vũ đồng hành"
+    nhom: "quy_cach"
+    sao: ["Tham Lang", "Vũ Khúc"]
+    dieu_kien:
+      bat_buoc:
+        - "Tham Lang và Vũ Khúc đồng cung (chỉ có tại Sửu hoặc Mùi)"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Sửu", "Mùi"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Tham Lang + Vũ Khúc đồng cung tại Sửu (hoặc Mùi)."
+      am: "Tham Lang và Vũ Khúc không đồng cung (ở hai cung khác nhau)."
+      thieu: "Chưa an được Tham Lang/Vũ Khúc."
+    diem_giai_trinh: "\"Uy trấn biên di\" - văn võ song toàn; \"tiền bần hậu phú\" (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: true
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-sat-pha-liem-tham-mieu"
+    ten: "Sát Phá Liêm Tham (miếu)"
+    nhom: "quy_cach"
+    sao: ["Thất Sát", "Phá Quân", "Liêm Trinh", "Tham Lang"]
+    dieu_kien:
+      bat_buoc:
+        - "Bốn sao Thất Sát, Phá Quân, Liêm Trinh, Tham Lang đều miếu vượng"
+      ho_tro: []
+      pha_cach: []
+    quan_he: []
+    chi: []
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'miếu vượng' của từng sao chưa chỉ chi cụ thể (cần bảng miếu/vượng theo sao, thuộc P2b)"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Bốn sao đều miếu vượng (theo chi chốt từ P2b)."
+      am: "Có sao trong nhóm hãm địa."
+      thieu: "Chưa có bảng miếu/vượng của 4 sao."
+    diem_giai_trinh: "\"Chưởng tam quân\" - đứng đầu ba quân, cỡ tướng lĩnh (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-phu-tuong-trieu-vien"
+    ten: "Phủ Tướng triều viên"
+    nhom: "quy_cach"
+    sao: ["Thiên Phủ", "Thiên Tướng"]
+    dieu_kien:
+      bat_buoc:
+        - "Thiên Phủ và Thiên Tướng tam hợp chiếu Mệnh"
+      ho_tro:
+        - "Ví dụ nguồn: Dần cung an Mệnh, Phủ tại Ngọ + Tướng tại Tuất tới chầu -> thăng tiến"
+      pha_cach: []
+    quan_he: ["tam_hop"]
+    chi: []
+    can_tuoi: []
+    cung_neo: "Mệnh"
+    cung_muc_tieu: ["Mệnh"]
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Mệnh an Dần; Thiên Phủ tại Ngọ, Thiên Tướng tại Tuất (tam hợp chiếu Mệnh)."
+      am: "Mệnh an Dần nhưng Thiên Phủ/Thiên Tướng không đồng nhóm tam hợp chiếu."
+      thieu: "Chưa xác định vị trí Mệnh hoặc vị trí Thiên Phủ/Thiên Tướng."
+    diem_giai_trinh: "\"Toàn gia thực lộc\" - cả nhà có lộc ăn (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: false
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-khoa-quyen-loc-hoi"
+    ten: "Khoa Quyền Lộc hội (Tam Hóa hội chiếu)"
+    nhom: "quy_cach"
+    sao: ["Hóa Khoa", "Hóa Quyền", "Hóa Lộc"]
+    dieu_kien:
+      bat_buoc:
+        - "Hóa Khoa + Hóa Quyền + Hóa Lộc (theo tuổi Can của chủ thể) hội tại tam phương của một cung (đồng cung + tam hợp)"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["tam_hop"]
+    chi: []
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Ba sao lưu Tứ Hóa gốc theo tuổi Can đồng nhóm tam phương của một cung."
+      am: "Chỉ có 2/3 sao Tứ Hóa trong nhóm tam phương."
+      thieu: "Chưa có bảng Tứ Hóa gốc của tuổi chủ thể."
+    diem_giai_trinh: "\"Danh dự chiêu chương\" - tước vị Tam Công (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: true
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-thien-khoi-thien-viet"
+    ten: "Thiên Khôi Thiên Việt"
+    nhom: "quy_cach"
+    sao: ["Thiên Khôi", "Thiên Việt"]
+    dieu_kien:
+      bat_buoc:
+        - "Tọa Quý hướng Quý, thêm cát hóa"
+      ho_tro: []
+      pha_cach: []
+    quan_he: []
+    chi: []
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'Tọa Quý hướng Quý' không phải cách ghi chuẩn, chưa diễn đạt lại được thành điều kiện an sao"
+      - "'cát hóa' chưa định nghĩa (Hóa Lộc/Quyền/Khoa?)"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: ""
+      am: ""
+      thieu: "Điều kiện chưa diễn đạt lại được (xem diem_mo_ho)."
+    diem_giai_trinh: "\"Cái thế văn chương\" - văn chương cái thế (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-loc-ma-giao-chi"
+    ten: "Lộc Mã giao trì"
+    nhom: "quy_cach"
+    sao: ["Lộc Tồn", "Thiên Mã"]
+    dieu_kien:
+      bat_buoc:
+        - "Lộc Tồn và Thiên Mã đồng cung hoặc tam hợp"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung", "tam_hop"]
+    chi: []
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Lộc Tồn + Thiên Mã đồng cung (hoặc tam hợp) tại một cung."
+      am: "Lộc Tồn và Thiên Mã ở hai nhóm cung không liên quan (không đồng/tam hợp)."
+      thieu: "Chưa an được Lộc Tồn/Thiên Mã."
+    diem_giai_trinh: "\"Kinh nhân giáp đệ\" - đỗ đạt thủ khoa (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: true
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-tham-hoa-tham-linh"
+    ten: "Tham Hỏa / Tham Linh (Tham Vũ ngộ Hỏa)"
+    nhom: "quy_cach"
+    sao: ["Tham Lang", "Hỏa Tinh", "Linh Tinh"]
+    dieu_kien:
+      bat_buoc:
+        - "Tham Lang + Hỏa Tinh (hoặc Linh Tinh) tại tứ Mộ (Thìn, Tuất, Sửu, Mùi)"
+      ho_tro:
+        - "Tuổi Mậu, Kỷ hợp cách"
+        - "Nguồn ghi 'Tý Thìn -> rất đẹp'"
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Thìn", "Tuất", "Sửu", "Mùi", "Tý"]
+    can_tuoi: ["Mậu", "Kỷ"]
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'Tý Thìn -> rất đẹp' mâu thuẫn điều kiện tứ Mộ (Hỏa Tinh không an tại Tý theo quy tắc thông dụng)"
+      - "Hỏa Tinh và Linh Tinh cần tách thành 2 quy tắc riêng để nhận diện"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Tham Lang + Hỏa Tinh đồng cung tại Thìn (hoặc Tuất/Sửu/Mùi), tuổi Mậu."
+      am: "Tham Lang + Hỏa Tinh tại cung không thuộc tứ Mộ."
+      thieu: "Chưa an được Tham Lang/Hỏa Tinh."
+    diem_giai_trinh: "\"Tướng tướng chi danh\" - tướng tài lừng lẫy (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-kim-du-phu-gia"
+    ten: "Kim dư phù giá"
+    nhom: "quy_cach"
+    sao: ["Tử Vi", "Tả Phụ", "Hữu Bật"]
+    dieu_kien:
+      bat_buoc:
+        - "Tử Vi cư Ngọ, Tả Hữu chầu"
+      ho_tro:
+        - "Có thêm cát tinh (nguồn ghi 'cát tinh', chưa định danh)"
+      pha_cach: []
+    quan_he: ["tam_hop"]
+    chi: ["Ngọ"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'cát tinh' đồng cung chưa định nghĩa danh sách"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Tử Vi tại Ngọ, Tả Phụ + Hữu Bật tới chầu (tam phương), có cát tinh."
+      am: "Tử Vi tại Ngọ nhưng thiếu Tả hoặc Hữu."
+      thieu: "Chưa an được Tử Vi/Tả Hữu."
+    diem_giai_trinh: "Vua ngồi xe vàng, quần thần phù tá (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-co-cu-dong-cung-mao"
+    ten: "Cơ Cự đồng cung (Mão)"
+    nhom: "quy_cach"
+    sao: ["Thiên Cơ", "Cự Môn"]
+    dieu_kien:
+      bat_buoc:
+        - "Thiên Cơ và Cự Môn đồng cung tại Mão"
+      ho_tro:
+        - "Tuổi Tân, Ất + Tả Hữu Xương Khúc -> 'công khanh chi vị'"
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Mão"]
+    can_tuoi: ["Tân", "Ất"]
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Thiên Cơ + Cự Môn đồng cung tại Mão, tuổi Tân (hoặc Ất)."
+      am: "Thiên Cơ + Cự Môn đồng cung tại cung khác Mão (ví dụ Tuất)."
+      thieu: "Chưa an được Thiên Cơ/Cự Môn."
+    diem_giai_trinh: "\"Công khanh chi vị\" (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: true
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-giap-quy-loc-quyen-khoa"
+    ten: "Giáp Quý, Giáp Lộc, Giáp Quyền, Giáp Khoa"
+    nhom: "quy_cach"
+    sao: ["Thiên Khôi", "Thiên Việt", "Lộc Tồn", "Hóa Lộc", "Hóa Quyền", "Hóa Khoa"]
+    dieu_kien:
+      bat_buoc:
+        - "Hai cung giáp Mệnh có một trong bốn nhóm: Quý nhân tinh (Khôi/Việt), Lộc, Quyền, Khoa"
+      ho_tro:
+        - "Ví dụ nguồn: tuổi Bính, Đinh, Nhâm, Quý, Mệnh tại Thìn/Tuất -> giáp Khôi Việt"
+      pha_cach: []
+    quan_he: ["giap_cung"]
+    chi: []
+    can_tuoi: ["Bính", "Đinh", "Nhâm", "Quý"]
+    cung_neo: "Mệnh"
+    cung_muc_tieu: ["Mệnh"]
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Mệnh an Thìn; hai cung giáp (Mão, Tỵ) có Thiên Khôi/Thiên Việt."
+      am: "Mệnh an Thìn; hai cung giáp không có Khôi Việt/Lộc/Quyền/Khoa."
+      thieu: "Chưa xác định được vị trí Mệnh và sao hai cung giáp."
+    diem_giai_trinh: "Rất hiếm, cực quý (luận nguồn, chưa đối chiếu KMS). Ghi chú: 4 quy tắc con (Giáp Quý/Lộc/Quyền/Khoa) gộp chung một mục; P3 tách thành 4 mục nhận diện."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: false
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-that-sat-trieu-dau"
+    ten: "Thất Sát triều đẩu"
+    nhom: "quy_cach"
+    sao: ["Thất Sát"]
+    dieu_kien:
+      bat_buoc:
+        - "Thất Sát miếu tại Dần hoặc Thân"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Dần", "Thân"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Thất Sát tại Dần (hoặc Thân), trạng thái miếu theo bảng P2b."
+      am: "Thất Sát tại Tỵ (không thuộc Dần/Thân)."
+      thieu: "Chưa an được Thất Sát hoặc chưa có bảng miếu."
+    diem_giai_trinh: "\"Tước lộc vinh xương\" (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: true
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-vu-khuc-mieu-vien"
+    ten: "Vũ Khúc miếu viên"
+    nhom: "quy_cach"
+    sao: ["Vũ Khúc"]
+    dieu_kien:
+      bat_buoc:
+        - "Vũ Khúc nhập miếu tại Thìn hoặc Tuất"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Thìn", "Tuất"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Vũ Khúc tại Thìn (hoặc Tuất), trạng thái miếu theo bảng P2b."
+      am: "Vũ Khúc tại Sửu (không thuộc Thìn/Tuất)."
+      thieu: "Chưa an được Vũ Khúc."
+    diem_giai_trinh: "\"Uy danh hách dịch\" (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: true
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "quy-kinh-duong-hoa-tinh-tu-mo"
+    ten: "Kình Dương Hỏa Tinh (tứ Mộ)"
+    nhom: "quy_cach"
+    sao: ["Kình Dương", "Hỏa Tinh"]
+    dieu_kien:
+      bat_buoc:
+        - "Kình Dương + Hỏa Tinh nhập miếu tại Thìn, Tuất, Sửu, Mùi"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Thìn", "Tuất", "Sửu", "Mùi"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Kình Dương + Hỏa Tinh đồng cung tại Thìn (hoặc Tuất/Sửu/Mùi)."
+      am: "Kình Dương + Hỏa Tinh đồng cung tại Dần (không thuộc tứ Mộ)."
+      thieu: "Chưa an được Kình Dương/Hỏa Tinh."
+    diem_giai_trinh: "\"Uy quyền xuất chúng\" - văn võ song toàn (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: false
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  # ============ 9 PHÁ CÁCH (section 2 của nguồn) ============
+
+  - id: "pha-linh-xuong-da-vu"
+    ten: "Linh Xương Đà Vũ"
+    nhom: "pha_cach"
+    sao: ["Linh Tinh", "Văn Xương", "Đà La", "Vũ Khúc"]
+    dieu_kien:
+      bat_buoc:
+        - "Linh Tinh + Văn Xương + Đà La + Vũ Khúc hội tại Thìn hoặc Tuất"
+      ho_tro:
+        - "Tuổi Tân, Nhâm, Kỷ -> hung"
+      pha_cach: []
+    quan_he: ["tam_hop"]
+    chi: ["Thìn", "Tuất"]
+    can_tuoi: ["Tân", "Nhâm", "Kỷ"]
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'hội' tại Thìn/Tuất chưa tách quan hệ đồng cung và tam hợp"
+    noi_dung_nhay_cam: true
+    ca_kiem_thu:
+      duong: "Bốn sao Linh Xương Đà Vũ hội (đồng/tam hợp - theo quan hệ chốt) tại Thìn."
+      am: "Thiếu một trong bốn sao."
+      thieu: "Chưa an đủ 4 sao."
+    diem_giai_trinh: "\"Hạn chí đầu hà\" - dễ chết đuối (LUẬN TỬ VONG - phải được duyệt nội dung trước khi dùng, P2 §4.5; chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "pha-cu-hoa-kinh-duong"
+    ten: "Cự Hỏa Kình Dương"
+    nhom: "pha_cach"
+    sao: ["Cự Môn", "Hỏa Tinh", "Kình Dương"]
+    dieu_kien:
+      bat_buoc:
+        - "Cự Môn + Hỏa Tinh + Kình Dương gặp nhau"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: []
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "thiếu chi và quan hệ (đồng cung hay hội chiếu)"
+      - "sự kiện tử vong 'ải tử' cần duyệt nội dung trước"
+    noi_dung_nhay_cam: true
+    ca_kiem_thu:
+      duong: ""
+      am: ""
+      thieu: "Điều kiện chưa đủ rõ (xem diem_mo_ho)."
+    diem_giai_trinh: "\"Chung thân ải tử\" - dễ thắt cổ (LUẬN TỬ VONG - phải được duyệt nội dung trước khi dùng; chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "pha-ma-dau-dai-kiem"
+    ten: "Mã đầu đới kiếm"
+    nhom: "pha_cach"
+    sao: ["Kình Dương"]
+    dieu_kien:
+      bat_buoc:
+        - "Kình Dương tại cung Thiên Mã (tứ mã: Dần, Thân, Tị, Hợi)"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Dần", "Thân", "Tỵ", "Hợi"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "vị trí 'cung Thiên Mã' an theo tuổi/chưa có trong engine hiện tại (chỉ có vòng Thái Tuế + lưu Tứ Hóa)"
+    noi_dung_nhay_cam: true
+    ca_kiem_thu:
+      duong: ""
+      am: ""
+      thieu: "Chưa xác định được cung Thiên Mã (xem diem_mo_ho)."
+    diem_giai_trinh: "\"Phi yểu chiết tắc hình thương\" - không chết non thì bị thương tật (LUẬN TỬ VONG - phải được duyệt nội dung trước khi dùng; chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "pha-loc-dao-ma-dao"
+    ten: "Lộc đảo Mã đảo"
+    nhom: "pha_cach"
+    sao: ["Lộc Tồn", "Thiên Mã"]
+    dieu_kien:
+      bat_buoc:
+        - "Lộc Tồn hoặc Thiên Mã bị Không Vong án ngữ"
+      ho_tro: []
+      pha_cach:
+        - "Kị gặp năm có Kiếp Không hội chiếu"
+    quan_he: ["dong_cung"]
+    chi: []
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho:
+      - "'Không Vong' chưa định nghĩa danh sách sao (Địa Kiếp/Thiên Không?)"
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: ""
+      am: ""
+      thieu: "'Không Vong' chưa định nghĩa (xem diem_mo_ho)."
+    diem_giai_trinh: "Lộc/Mã bị đảo -> phát mà mất; kị năm Kiếp Không (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: false
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "pha-giap-bai"
+    ten: "Giáp bại (Giáp hung)"
+    nhom: "pha_cach"
+    sao: ["Kình Dương", "Đà La", "Hỏa Tinh", "Linh Tinh", "Địa Kiếp", "Thiên Không"]
+    dieu_kien:
+      bat_buoc:
+        - "Hai cung giáp Mệnh có một trong sáu hung sát: Kình, Đà, Hỏa, Linh, Kiếp, Không"
+      ho_tro: []
+      pha_cach:
+        - "Nếu tam phương có Quyền hoặc Lộc -> không luận giáp bại (điều kiện phá cách)"
+    quan_he: ["giap_cung"]
+    chi: []
+    can_tuoi: []
+    cung_neo: "Mệnh"
+    cung_muc_tieu: ["Mệnh"]
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Mệnh an tại một cung; hai cung giáp có Kình Dương (hoặc Đà/Hỏa/Linh/Kiếp/Không), tam phương không có Quyền/Lộc."
+      am: "Hai cung giáp có hung sát nhưng tam phương có Hóa Quyền (phá cách - không luận giáp bại)."
+      thieu: "Chưa xác định hai cung giáp Mệnh."
+    diem_giai_trinh: "Rất xấu, trừ khi tam phương có Quyền Lộc (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: false
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "pha-pham-thuy-dao-hoa"
+    ten: "Phạm thủy đào hoa"
+    nhom: "pha_cach"
+    sao: ["Tham Lang"]
+    dieu_kien:
+      bat_buoc:
+        - "Tham Lang cư Tý hoặc Hợi (thủy cung)"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Tý", "Hợi"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Tham Lang tại Tý (hoặc Hợi)."
+      am: "Tham Lang tại cung không phải thủy (ví dụ Thân)."
+      thieu: "Chưa an được Tham Lang."
+    diem_giai_trinh: "Số đào hoa lênh đênh (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: false
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "pha-phong-luu-thai-truong"
+    ten: "Phong lưu thái trượng"
+    nhom: "pha_cach"
+    sao: ["Thiên Hình", "Tham Lang"]
+    dieu_kien:
+      bat_buoc:
+        - "Thiên Hình + Tham Lang đồng cung tại Dần hoặc Thân"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: ["Dần", "Thân"]
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: []
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Thiên Hình + Tham Lang đồng cung tại Dần."
+      am: "Thiên Hình + Tham Lang đồng cung tại cung khác (ví dụ Mão)."
+      thieu: "Chưa an được Thiên Hình/Tham Lang."
+    diem_giai_trinh: "Dễ bị ăn đòn vì phong lưu (luận nguồn, nhẹ; chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: false
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "pha-menh-vu-chinh-dieu"
+    ten: "Mệnh vô chính diệu"
+    nhom: "pha_cach"
+    sao: []
+    dieu_kien:
+      bat_buoc:
+        - "Cung Mệnh không có 14 chính tinh"
+      ho_tro: []
+      pha_cach:
+        - "Trừ khi đối cung chiếu có chính tinh mạnh (điều kiện phá cách, 'mạnh' chưa định nghĩa)"
+    quan_he: ["xung_chieu"]
+    chi: []
+    can_tuoi: []
+    cung_neo: "Mệnh"
+    cung_muc_tieu: ["Mệnh"]
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: true
+    ca_kiem_thu:
+      duong: "Cung Mệnh trống chính tinh; đối cung chiếu cũng không có chính tinh mạnh."
+      am: "Cung Mệnh có chính tinh (không phải vô chính diệu)."
+      thieu: "Chưa an sao chính tinh cho cung Mệnh."
+    diem_giai_trinh: "\"Yểu chiết cô bần\" - nghèo khổ hoặc chết non (LUẬN TỬ VONG/TUỔI THỌ - phải được duyệt nội dung trước khi dùng; chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: false
+    trang_thai: "can_doi_chieu"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+  - id: "pha-kiep-khong-lam-tai-phuc"
+    ten: "Kiếp Không lâm Tài Phúc"
+    nhom: "pha_cach"
+    sao: ["Địa Kiếp", "Thiên Không"]
+    dieu_kien:
+      bat_buoc:
+        - "Địa Kiếp hoặc Thiên Không tại cung Tài Bạch hoặc Phúc Đức"
+      ho_tro: []
+      pha_cach: []
+    quan_he: ["dong_cung"]
+    chi: []
+    can_tuoi: []
+    cung_neo: null
+    cung_muc_tieu: ["Tài Bạch", "Phúc Đức"]
+    tang_thoi_gian: "la_so_goc"
+    diem_mo_ho: []
+    noi_dung_nhay_cam: false
+    ca_kiem_thu:
+      duong: "Địa Kiếp tại cung Tài Bạch (hoặc Thiên Không tại Phúc Đức)."
+      am: "Địa Kiếp/Thiên Không chỉ tại các cung khác (không phải Tài Bạch/Phúc Đức)."
+      thieu: "Chưa an được Địa Kiếp/Thiên Không."
+    diem_giai_trinh: "\"Sinh lai bần tiện\" - cuộc đời nghèo hèn (luận nguồn, chưa đối chiếu KMS)."
+    san_sang_thuc_thi: true
+    ung_vien_ban_dau: false
+    trang_thai: "chi_tham_khao"
+    nguoi_duyet: null
+    ngay_duyet: null
+
+# ============ Các section KHÔNG phải cách cục nhận diện được (3-10) ============
+# P2 chỉ kiểm kê 30 quy tắc section 1-2. Các section sau được khai báo để
+# không bị âm thầm bỏ qua; item nhạy cảm gắn nhãn để P2 §4.5 chặn đúng.
+sections_khong_phan_van:
+  - ma: 3
+    ten: "Đắc Địa theo 12 Cung"
+    ly_do: "Chuẩn tắc luận theo cung (Mệnh an cung nào sao nào đẹp), chưa tách thành điều kiện nhận diện riêng."
+    noi_dung_nhay_cam: false
+    ghi_chu: "Chiến dịch 'Mệnh an tại cung nào' có thể tách sau P2b."
+  - ma: 4
+    ten: "Thất Hãm theo 12 Cung"
+    ly_do: "Ghép nhiều sao theo từng cung, chưa tách điều kiện; kèm luận yểu chiết."
+    noi_dung_nhay_cam: true
+    ghi_chu: "Chứa luận yểu chiết - phải duyệt nội dung trước khi dùng (P2 §4.5)."
+  - ma: 5
+    ten: "Cốt Tủy Phú - Nguyên tắc vàng"
+    ly_do: "Nguyên tắc luận giải chung (thứ tự xem, sinh khắc, hung cát), không phải điều kiện nhận diện sao-cung."
+    noi_dung_nhay_cam: false
+    ghi_chu: "Dùng làm khung quy tắc cho P3/P6, không phải quy tắc cách cục."
+  - ma: 6
+    ten: "Luận Đại Hạn"
+    ly_do: "Nguyên tắc diễn giải theo đại hạn (P6 phạm vi), cần kết hợp Mệnh + Hạn."
+    noi_dung_nhay_cam: false
+    ghi_chu: ""
+  - ma: 7
+    ten: "Luận Lưu Niên"
+    ly_do: "Danh sách thần lưu niên (Thái Tuế 12 thần, vòng Bác Sĩ) - chưa có trong engine, thuộc P4/P6."
+    noi_dung_nhay_cam: false
+    ghi_chu: ""
+  - ma: 8
+    ten: "Luận Nam Nữ Mệnh"
+    ly_do: "Phân biệt giới + luận phẩm hạnh; cần duyệt nội dung trước khi dùng."
+    noi_dung_nhay_cam: true
+    ghi_chu: "Chứa luận phẩm hạnh/phân biệt giới - P2 §4.5."
+  - ma: 9
+    ten: "Phân loại 10 loại Mệnh"
+    ly_do: "Phân nhóm 10 loại mệnh theo tổ hợp sao; chưa tách điều kiện nhận diện rõ."
+    noi_dung_nhay_cam: false
+    ghi_chu: ""
+  - ma: 10
+    ten: "Các cách Nghề nghiệp"
+    ly_do: "Diễn giải nghề nghiệp theo tổ hợp; chưa tách điều kiện, cần duyệt nội dung."
+    noi_dung_nhay_cam: false
+    ghi_chu: ""

@@ -7,6 +7,11 @@
 > lồng nhau + meta đường lỗi đủ trường hợp đồng. Hồi quy: 2163 passed /
 > 351 known T4 xfailed.
 > T2/T3/T9 (governance) không bị thay thế hay khép lại bởi gói này.
+>
+> Review P2 (Plan_Fix_Mai_Anh_v2): PASSED; kiểm kê 30 quy tắc cách cục (21 quý + 9 phá)
+> thành `configs/cach_cuc_catalog.yaml` (4 trạng thái + sẵn sàng thực thi + 8 ứng viên
+> bản đầu + 4 rule nhạy cảm bị chặn); loader/validator với bất biến duyệt nguồn, không
+> tự duyệt (reviewer_role='chua_chi_dinh'). Hồi quy: 2175 passed / 351 known T4 xfailed.
 
 > Review T1 sau merge T3: PASSED. Chặn cứng kết luận thời điểm C/D kể cả sau
 > retry; thêm loai_ket_luan vào schema/mock/fixture/UI, cache v4. Hồi quy review:
@@ -860,3 +865,41 @@ Chi tiết: [LOCAL_TUVI_SKILL_INTEGRATION.md](../../docs/LOCAL_TUVI_SKILL_INTEGR
 - P1 chỉ chốt **hợp đồng + tương thích + ca kiểm thử**; hành vi pipeline ba mức (prompt, ngân sách token, fallback nội dung) thuộc P6.
 - `rule_ids` hiện luôn `MISSING` — P3 (nhận diện cách cục) sẽ điền; UI (P7) hiển thị "chưa có quy tắc".
 - Cache bump v7 làm toàn bộ cache cũ tự miss một lần (đúng thiết kế, không sửa data).
+
+## Plan_Fix_Mai_Anh_v2 P2 — Kiểm kê và duyệt nguồn cách cục (2026-11-03)
+
+**Trạng thái:** **PASSED** — 12 test riêng `tests/test_cach_cuc_catalog.py`; hồi quy toàn cục: **2175 passed / 351 known T4 xfailed** (63.52s, `-m "not heavy"`).
+
+**Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P2 §4) — danh mục quy tắc có trạng thái và người duyệt; không tự duyệt; nội dung nhạy cảm bị chặn; file nguồn thiếu phải nhận diện đúng.
+
+### Thay đổi chính
+
+| File | Thay đổi |
+|---|---|
+| `configs/cach_cuc_catalog.yaml` | **MỚI**: kiểm kê 30 quy tắc (21 quý cách + 9 phá cách, section 1–2 của nguồn) + khai báo 8 section ngoài phạm vi (3–10) với nhãn nội dung nhạy cảm |
+| `backend/app/services/cach_cuc_catalog.py` | **MỚI**: loader + validator (bất biến I1–I5), `filter_rules`, `batch_candidates`, `catalog_signature` |
+| `tests/test_cach_cuc_catalog.py` | **MỚI**: P2.TC-01…09 |
+
+### Ma trận test
+
+- **P2.TC-01** (Unit): đủ 30 quy tắc (21 quý + 9 phá), id duy nhất, `reviewer_role='chua_chi_dinh'` nên không rule nào `duyet_dung`, mọi `nguoi_duyet` là null.
+- **P2.TC-02** (Unit): trạng thái hợp lệ; rule nhạy cảm (4 quy tắc luận tử vong) không vượt `chi_tham_khao`/`can_doi_chieu` khi chưa duyệt.
+- **P2.TC-03** (Unit): bất biến "sẵn sàng thực thi" — `san_sang_thuc_thi=true` ⟺ `diem_mo_ho=[]` + đủ 3 ca (đúng/sai/thiếu).
+- **P2.TC-04** (Unit): đúng 8 ứng viên bản đầu cho P3, đủ rõ và không nhạy cảm.
+- **P2.TC-05** (Unit): 8 section 3–10 được khai báo; section 4 (yểu chiết) và 8 (phẩm hạnh/giới) mang nhãn nhạy cảm; không rule nào trùng section.
+- **P2.TC-06** (Unit): `filter_rules` theo nhom/trạng thái/sẵn sàng; `get_rule` raise KeyError cho id lạ.
+- **P2.TC-07** (Unit): `catalog_signature` ổn định theo nội dung (P6 dùng cho cache key, truy ngược nguồn).
+- **P2.TC-08** (Unit): validator chặn trạng thái sai, id trùng, **tự duyệt khi reviewer chưa chỉ định**, `duyet_dung` thiếu người duyệt + mốc.
+- **P2.TC-09** (Unit): file nguồn không tồn tại → `CatalogError` rõ (không chạy im lặng).
+
+### Phân công & nhãn (P2 §4.2)
+
+- Kiểm kê, chuẩn hóa, test: AI/engineer (báo cáo này).
+- Người duyệt chuyên môn: **chưa chỉ định** (`reviewer_role: 'chua_chi_dinh'`) — khi chỉ định, sửa field này trong YAML rồi mới gán `duyet_dung` (có `nguoi_duyet` + `ngay_duyet`).
+- Bạn: chốt phạm vi đưa vào sản phẩm.
+
+### Kiểm kê nội bộ (số liệu cho quyết định phạm vi)
+
+- 30 quy tắc: 16 đủ rõ (`san_sang_thuc_thi=true`), 14 còn điểm mơ hồ/mâu thuẫn (`can_doi_chieu`).
+- 4 quy tắc nội dung nhạy cảm (tử vong/tuổi thọ): Linh Xương Đà Vũ, Cự Hỏa Kình Dương, Mã đầu đới kiếm, Mệnh vô chính diệu — bị chặn khỏi bản đầu.
+- Bản đầu P3: 8 quy tắc ứng viên (`ung_vien_ban_dau`), đúng trần plan ("khoảng 5–8").
