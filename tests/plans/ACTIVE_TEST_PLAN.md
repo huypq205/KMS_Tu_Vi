@@ -25,6 +25,13 @@
 > (một nguồn sự thật địa chi), thêm P2b.TC-09c (nhãn tiếng Việt 5 trạng thái sao).
 > Hồi quy: 2202 passed / 351 known T4 xfailed. T2/T3/T9 (governance) không bị thay thế hay
 > khép lại bởi gói này.
+>
+> Review P3 (Plan_Fix_Mai_Anh_v2): PASSED; bộ nhận diện cách cục chạy bằng code trên dữ kiện
+> lá số (`cach_cuc_detector`), đúng 8 quy tắc bản đầu, phân biệt khớp đủ / khớp một phần /
+> không khớp / chưa thể đánh giá, liên kết `fact_id`, báo dữ kiện dùng chung, ghi điều kiện
+> thuận/nghịch; AI bị chặn dẫn `rule_ids` ngoài kết quả nhận diện. Quy tắc vẫn giữ
+> `chi_tham_khao` (không tự duyệt). Hồi quy: 2225 passed / 351 known T4 xfailed.
+> T2/T3/T9 (governance) không bị thay thế hay khép lại bởi gói này.
 
 > Review T1 sau merge T3: PASSED. Chặn cứng kết luận thời điểm C/D kể cả sau
 > retry; thêm loai_ket_luan vào schema/mock/fixture/UI, cache v4. Hồi quy review:
@@ -984,3 +991,76 @@ Ngoài phạm vi gói này (chỉ ghi nhận, không sửa):
 - `"ty"` không dấu là mơ hồ giữa Tý (1) và Tỵ (6) → trả `None`; muốn chỉ định phải viết có dấu.
 - `quan_he` trả `"khong"` khi hai cung không liên hệ; `"khong"` không nằm trong danh mục quy tắc P2 (quy tắc chỉ dùng 4 quan hệ).
 - P3 sẽ dùng `quan_he`/`resolve_anchor`/`dac_tinh_in_palace`; P5 dùng cùng module để vẽ/đánh dấu quan hệ cung.
+
+## Plan_Fix_Mai_Anh_v2 P3 — Nhận diện cách cục (2026-11-03)
+
+**Trạng thái:** **PASSED** — 23 test riêng `tests/test_cach_cuc_detector.py`; hồi quy toàn cục: **2225 passed / 351 known T4 xfailed** (80.63s, `-m "not heavy"`).
+
+**Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P3 §6) — nhận diện cách cục **bằng code trên dữ kiện lá số**, độc lập AI: đối chiếu sao/cung/quan hệ P2b/tầng thời gian, gắn kết quả với `fact_id`, ghi **đạt / không đạt / chưa kiểm tra được**, phát hiện dữ kiện bị nhiều quy tắc dùng, ghi điều kiện thuận/nghịch. Bản đầu chạy đúng 8 quy tắc `ung_vien_ban_dau` của P2.
+
+### Thay đổi chính
+
+| File | Thay đổi |
+|---|---|
+| `backend/app/services/cach_cuc_detector.py` | **MỚI**: `detect_cach_cuc` (8 quy tắc bản đầu), dựng chỉ mục sao theo cung + chỉ mục `fact_id`, đối chiếu điều kiện cấu trúc (sao/cung/quan hệ/chi) và bổ sung (trạng thái sao), xếp 4 kết quả, ghi `fact_reuse`, `check_rule_ids` chặn AI tự thêm cách cục |
+| `backend/app/services/cach_cuc_catalog.py` | Thêm `DAC_TINH_STATES`; chuẩn hóa/kiểm `trang_thai_sao` (mapping tên sao → `mieu/vuong/dac/binh/ham`, sao phải thuộc quy tắc) |
+| `configs/cach_cuc_catalog.yaml` | Thêm `trang_thai_sao` cho 3 quy tắc có yêu cầu "miếu" trong văn bản nguồn (Thất Sát, Vũ Khúc, Kình Dương/Hỏa Tinh); **không** đổi bảng miếu vượng/Tứ Hóa |
+| `backend/app/services/horoscope_interpreter.py` | `generate_mock_reading` chạy nhận diện và thêm khối `cach_cuc`; `luan_diem`/`ket_luan` mang `rule_ids` + `dieu_kien_chua_kiem_tra`; prompt có khối cách cục đã nhận diện và lệnh cấm tự thêm; schema/mock points thêm 2 trường; `interpret_horoscope` chạy `check_rule_ids` và retry/fallback như các kiểm tra khác |
+| `tests/test_cach_cuc_detector.py` | **MỚI**: P3.TC-01…21b |
+
+### Bốn kết quả nhận diện (P3 §6.2)
+
+| Mã | Nghĩa | Cách xếp |
+|---|---|---|
+| `khop_du` | Khớp đủ | Mọi điều kiện bắt buộc đạt; điều kiện bổ sung (nếu có) cũng đạt |
+| `khop_mot_phan` | Khớp một phần | Cấu trúc (sao/cung/quan hệ/chi) đạt, nhưng điều kiện bổ sung không đạt |
+| `khong_khop` | Không khớp | Có ít nhất một điều kiện cấu trúc không đạt (kể cả thiếu sao) |
+| `chua_the_danh_gia` | Chưa thể đánh giá | Thiếu dữ kiện: chưa đủ 12 cung, chưa an sao, thiếu trạng thái sao, hoặc quy tắc ngoài tầng lá số gốc |
+
+Điều kiện con ghi `dat` / `khong_dat` / `chua_kiem_tra` (kèm lý do), không gộp "thiếu dữ liệu" với "không đạt".
+
+### API chính
+
+- `detect_cach_cuc(features, catalog=None, rules=None, facts=None, context=None)` → `{phien_ban, catalog_signature, tong_so_quy_tac, tom_tat, rules, fact_reuse, canh_bao}`. Không truyền `rules` thì chạy `batch_candidates(catalog)`.
+- `check_rule_ids(reading, detection)` → `None` nếu hợp lệ, chuỗi lý do nếu AI dẫn `rule_id` không có trong kết quả hoặc quy tắc `khong_khop`/`chua_the_danh_gia`. `rule_ids` vắng/None/`MISSING` (báo cáo cũ) được bỏ qua.
+- Hằng số: `OUTCOME_*`, `OUTCOMES`, `CONDITION_DAT/KHONG_DAT/UNKNOWN`, `DETECTION_CAVEAT`.
+
+### Hành vi trên fixture thật
+
+`make_features(2026)` (lá số 15/8/1995): **0 khớp đủ, 0 khớp một phần, 8 không khớp, 0 chưa thể đánh giá** — đúng kỳ vọng vì lá số này không có Tử Phủ đồng cung tại Dần/Thân, Thái Âm tại Tý, Tham Vũ tại Sửu/Mùi, v.v. Dữ kiện `fact_id` `10` (Vũ Khúc tại Dần) được báo dùng chung bởi `quy-tham-vo-dong-hanh` và `quy-vu-khuc-mieu-vien`. Lá số rỗng (không an sao) trả cả 8 quy tắc `chua_the_danh_gia`, không đoán.
+
+### Ma trận test
+
+- **P3.TC-01** (Unit): đúng 8 quy tắc `ung_vien_ban_dau`, đúng thứ tự danh mục; mọi kết quả giữ `trang_thai_noi_dung == "chi_tham_khao"` (không tự duyệt); `tom_tat` cộng đúng 8; có `catalog_signature`.
+- **P3.TC-02** (Positive): Tử Vi + Thiên Phủ đồng cung tại Dần → `khop_du`; điều kiện `quan_he`/`chi` đạt; `fact_ids` đúng 2 fact của Tử Vi/Thiên Phủ tại Dần.
+- **P3.TC-03** (Negative): chỉ có Tử Vi → `khong_khop`; điều kiện `sao:Thiên Phủ` là `khong_dat`; vẫn giữ `fact_id` của Tử Vi.
+- **P3.TC-04** (Near-miss): Tử Phủ đồng cung tại Tý → `khong_khop`; `quan_he` đạt nhưng `chi` không đạt, `gia_tri_thuc_te == "Tý"`.
+- **P3.TC-05** (Near-miss): Tử Vi tại Dần, Thiên Phủ tại Ngọ → `khong_khop`; điều kiện `quan_he` ghi `quan_he_thuc_te == "tam_hop"`.
+- **P3.TC-06** (Positive): Lộc Tồn tại Tý + Thiên Mã tại Thìn (tam hợp) → `khop_du`.
+- **P3.TC-07** (Thiếu dữ liệu): Thất Sát tại Dần nhưng `dac_tinh == "—"` → `chua_the_danh_gia`; `trang_thai_sao` là `chua_kiem_tra`, giá trị `MISSING`; `dieu_kien_chua_kiem_tra` không rỗng.
+- **P3.TC-08** (Partial): Thất Sát tại Dần, trạng thái Hãm → `khop_mot_phan`; `chi` đạt, `trang_thai_sao` không đạt.
+- **P3.TC-09** (Positive): Thất Sát tại Dần, trạng thái Miếu → `khop_du`.
+- **P3.TC-10** (Ranh giới): sao lưu niên Thất Sát tại Dần **không** thoả quy tắc `la_so_goc` → `khong_khop`; `fact_id` lưu niên không nằm trong kết quả.
+- **P3.TC-11** (Ranh giới): quy tắc `tang_thoi_gian == "luu_nien"` → `chua_the_danh_gia`, lý do nêu "tầng thời gian" (P3 bản đầu chỉ nhận diện lá số gốc).
+- **P3.TC-12** (Positive): Hóa Khoa/Tý + Hóa Quyền/Thìn + Hóa Lộc/Thân (tam phương) → `khop_du`.
+- **P3.TC-13** (Negative): chỉ 2/3 Tứ Hóa → `khong_khop`, điều kiện `sao:Hóa Lộc` không đạt.
+- **P3.TC-14** (Điều kiện thuận): Thiên Cơ + Cự Môn đồng cung tại Mão với can tuổi không thuộc `can_tuoi` vẫn `khop_du`; `can_tuoi` nằm ở `dieu_kien_thuan` và ghi `khong_dat`/`dat` tương ứng — không chặn kết quả.
+- **P3.TC-15** (Dữ kiện dùng chung): Tham Lang + Vũ Khúc tại Sửu → Tham Vũ `khop_du`, Vũ Khúc miếu viên `khong_khop`; `fact_reuse` báo đúng `fact_id` của Vũ Khúc dùng bởi cả 2 quy tắc.
+- **P3.TC-16** (Thiếu dữ liệu): không an sao → cả 8 quy tắc `chua_the_danh_gia`, đều có `dieu_kien_chua_kiem_tra`.
+- **P3.TC-17** (Thiếu dữ liệu): chỉ 11 cung → cả 8 quy tắc `chua_the_danh_gia`.
+- **P3.TC-18** (Hợp đồng): `check_rule_ids` nhận `rule_id` đã nhận diện; bỏ qua `MISSING`/mục cũ; chặn `rule_id` bịa.
+- **P3.TC-18b** (Hợp đồng): chặn `rule_id` có trong danh mục nhưng kết quả `khong_khop`.
+- **P3.TC-19** (Tích hợp): `generate_mock_reading` có khối `cach_cuc`, `ket_luan` mang `rule_ids` + `dieu_kien_chua_kiem_tra`; adapter P1 giữ nguyên `rule_ids` trong `can_cu`.
+- **P3.TC-20** (Prompt): prompt nêu tên + `rule_id` cách cục đã nhận diện và lệnh "không tự thêm".
+- **P3.TC-21** (Validator): `trang_thai_sao` với giá trị lạ (`"sai"`) → `CatalogError`.
+- **P3.TC-21b** (Validator): `trang_thai_sao` nêu sao ngoài danh sách `sao` của quy tắc → `CatalogError`.
+
+### Ranh giới & ghi chú
+
+- **Không** đổi bảng trạng thái sao hay bảng Tứ Hóa; P3 chỉ đọc `saoDacTinh`/`dac_tinh` qua `palace_relations.dac_tinh_in_palace`.
+- **Không tự duyệt**: kết quả giữ nguyên `trang_thai` của quy tắc (`chi_tham_khao`); `reviewer_role` vẫn `chua_chi_dinh`.
+- Quy tắc `la_so_goc` chỉ đọc sao gốc; sao lưu niên không bao giờ thoả quy tắc gốc (TC-10).
+- AI không được thêm cách cục: `rule_ids` chỉ hợp lệ khi có trong kết quả code và quy tắc `khop_du`/`khop_mot_phan`; prompt nêu rõ, validator chặn + retry.
+- `can_tuoi` là **điều kiện thuận** (lấy từ mục `ho_tro` nguồn), không phải điều kiện bắt buộc; `ho_tro`/`pha_cach` dạng văn bản ghi `chua_kiem_tra`, không tự diễn giải.
+- `cung_muc_tieu` chưa được dùng để neo; chỉ `cung_neo` xác định cung neo, không có neo thì tìm nhóm cung theo quan hệ.
+- Ngoài phạm vi (chỉ ghi nhận): title `horoscope_features.py:219` "Mệnh Cục Tị Hòa" (nội dung); frontend vẫn tự tính quan hệ cung — gom về `palace_relations` khi làm P5/P7.

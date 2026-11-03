@@ -21,6 +21,12 @@ from backend.app.core.evidence_types import (
 )
 from backend.app.services.horoscope_analysis import build_star_facts, palace_summary, strip_accents
 from backend.app.services.horoscope_annual import build_annual_report, validate_annual_report
+from backend.app.services.cach_cuc_detector import (
+    OUTCOME_FULL,
+    OUTCOME_PARTIAL,
+    check_rule_ids,
+    detect_cach_cuc,
+)
 from backend.app.schemas.annual_report import AnnualReport
 from backend.app.services.star_meanings_reference import select_meanings, format_meanings
 from backend.app.services.horoscope_confidence import (
@@ -162,6 +168,8 @@ def response_schema(include_annual: bool = True) -> dict:
             'phan_chung': {'type': 'string', 'minLength': 1},
             'fact_ids': {'type': 'array', 'items': {'type': 'string'}},
             'source_refs': {'type': 'array', 'items': {'type': 'integer'}},
+            'rule_ids': {'type': 'array', 'items': {'type': 'string'}},
+            'dieu_kien_chua_kiem_tra': {'type': 'array', 'items': {'type': 'string'}},
         }, 'required': ['nhan_dinh', 'gioi_han', 'muc_tin_cay', 'loi_chung_cu',
                         'phan_chung', 'fact_ids', 'source_refs'],
     }}
@@ -172,6 +180,8 @@ def response_schema(include_annual: bool = True) -> dict:
             'muc_tin_cay': {'type': 'string', 'enum': list(CONCLUSION_CONFIDENCE_LEVELS)},
             'fact_ids': {'type': 'array', 'items': {'type': 'string'}},
             'source_refs': {'type': 'array', 'items': {'type': 'integer'}},
+            'rule_ids': {'type': 'array', 'items': {'type': 'string'}},
+            'dieu_kien_chua_kiem_tra': {'type': 'array', 'items': {'type': 'string'}},
         }, 'required': ['nhan_dinh', 'giai_thich_thun_viet', 'gioi_han', 'muc_tin_cay', 'fact_ids', 'source_refs'],
     }}
     for key in ('luan_diem', 'ket_luan'):
@@ -205,13 +215,29 @@ def prompt_data(features: dict[str, Any]) -> dict[str, Any]:
     return _data_only({key: features[key] for key in PROMPT_KEYS if key in features})
 
 
-def build_horoscope_user_prompt(features: dict[str, Any], formatted_context: str, facts: list | None = None) -> str:
+def build_horoscope_user_prompt(features: dict[str, Any], formatted_context: str, facts: list | None = None,
+                                cach_cuc: dict[str, Any] | None = None) -> str:
     basic = features.get('thong_tin_co_ban', {})
     year = basic.get('nam_sinh', 'chưa có dữ liệu')
     annual = features.get('nam_xem', {})
     year_line = (
         f"- Năm xem: {annual.get('year', 'chưa có')} · Can chi: {annual.get('can_chi', 'chưa có')} "
         f"· Tuổi âm: {annual.get('tuoi_am', 'chưa có')}\n"
+    )
+    resolved_facts = facts if facts is not None else build_star_facts(features, {})
+    if cach_cuc is None:
+        cach_cuc = detect_cach_cuc(features, facts=resolved_facts)
+    matched = [
+        {'rule_id': r.get('rule_id'), 'ten': r.get('ten'), 'ket_qua': r.get('ket_qua'),
+         'fact_ids': r.get('fact_ids') or [],
+         'dieu_kien_chua_kiem_tra': r.get('dieu_kien_chua_kiem_tra') or [],
+         'trang_thai_noi_dung': r.get('trang_thai_noi_dung')}
+        for r in (cach_cuc.get('rules') or [])
+        if r.get('ket_qua') in (OUTCOME_FULL, OUTCOME_PARTIAL)
+    ]
+    cach_cuc_text = (
+        json.dumps(matched, ensure_ascii=False) if matched
+        else 'Chưa nhận diện được cách cục nào khớp đủ/khớp một phần.'
     )
     return (
         f"THÔNG TIN LÁ SỐ\n- Giới tính: {basic.get('gioi_tinh')} | Năm sinh can chi: {basic.get('can_chi_nam')} (Năm {year})\n"
@@ -220,9 +246,11 @@ def build_horoscope_user_prompt(features: dict[str, Any], formatted_context: str
         + year_line
         + json.dumps(prompt_data(features), ensure_ascii=False)
         + '\nDỮ KIỆN SAO, CUNG VÀ ĐIỀU KIỆN (fact_ids):\n'
-        + json.dumps(facts if facts is not None else build_star_facts(features, {}), ensure_ascii=False)
+        + json.dumps(resolved_facts, ensure_ascii=False)
         + format_meanings(features.get('_star_meaning_references') if '_star_meaning_references' in features
-                          else select_meanings(facts if facts is not None else build_star_facts(features, {})))
+                          else select_meanings(resolved_facts))
+        + '\nCÁCH CỤC ĐÃ NHẬN DIỆN BẰNG CODE (chỉ được dẫn các rule_id này, không tự thêm):\n'
+        + cach_cuc_text
         + '\nNGỮ CẢNH TRI THỨC TỪ SÁCH KINH ĐIỂN:\n' + (formatted_context or 'Chưa có nguồn sách.')
         + '\nYÊU CẦU ĐẦU RA JSON: theo schema; giữ năm xem, tên sao, cung và nguồn bên cạnh lập luận. '
           'Mỗi luận điểm dẫn fact_id khác nhau; phần vận trình nhắc đúng năm xem và can chi. '
@@ -230,6 +258,8 @@ def build_horoscope_user_prompt(features: dict[str, Any], formatted_context: str
           'Ghi loai_ket_luan=cau_truc hoặc thoi_diem; dữ liệu giờ sinh C/D chỉ được cau_truc. '
           'Mỗi mục luan_diem ghi "loi_chung_cu" (loại chứng cứ khớp kind của fact_id) và "phan_chung" '
           '(nêu phản chứng hoặc câu "Không ghi nhận phản chứng trong nguồn đã lấy"). '
+          'Chỉ nêu cách cục có trong khối CÁCH CỤC ĐÃ NHẬN DIỆN; không tự thêm cách cục ngoài kết quả code. '
+          'Nếu dẫn rule_id, chỉ dẫn quy tắc khớp đủ hoặc khớp một phần, kèm điều kiện còn thiếu. '
           'Không lặp các câu tài chính/tình cảm dùng cho mọi lá số.'
     )
 
@@ -433,6 +463,27 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
     palaces = {p['ten'].casefold(): p for p in features.get('palaces', [])}
     domains = features.get('cung_domains') or {}
     facts = build_star_facts(features, context or {})
+    detection = detect_cach_cuc(features, facts=facts, context=context or {})
+
+    def matched_rules(fact_ids: list[str]) -> list[str]:
+        wanted = set(fact_ids)
+        return sorted({
+            r['rule_id'] for r in detection['rules']
+            if r.get('ket_qua') in (OUTCOME_FULL, OUTCOME_PARTIAL)
+            and wanted.intersection(r.get('fact_ids') or [])
+        })
+
+    def unknown_conditions(fact_ids: list[str]) -> list[str]:
+        wanted = set(fact_ids)
+        values = []
+        for r in detection['rules']:
+            if r.get('ket_qua') not in (OUTCOME_FULL, OUTCOME_PARTIAL):
+                continue
+            if not wanted.intersection(r.get('fact_ids') or []):
+                continue
+            values.extend(r.get('dieu_kien_chua_kiem_tra') or [])
+        return sorted(set(values))
+
     def desc(name):
         return palace_summary(palaces.get(name.casefold()))
     def risk(name):
@@ -466,7 +517,8 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
         if not refs:
             gioi_han += ' Chưa có trích dẫn sách đối chiếu.'
         return {'nhan_dinh': nhan, 'giai_thich_thun_viet': giai, 'fact_ids': ids, 'loai_ket_luan': 'cau_truc',
-                'source_refs': refs, 'gioi_han': gioi_han,
+                'source_refs': refs, 'gioi_han': gioi_han, 'rule_ids': matched_rules(ids),
+                'dieu_kien_chua_kiem_tra': unknown_conditions(ids),
                 'muc_tin_cay': 'trung_binh' if (refs and ids) else 'yeu'}
 
     ket_luan = [pt for pt in (palace_point('Phu thê'), palace_point('Phụ mẫu'), palace_point('Mệnh')) if pt]
@@ -491,6 +543,8 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
             'phan_chung': NO_COUNTER_EVIDENCE,
             'fact_ids': [fact['fact_id']],
             'source_refs': fact['source_refs'][:1],
+            'rule_ids': matched_rules([fact['fact_id']]),
+            'dieu_kien_chua_kiem_tra': unknown_conditions([fact['fact_id']]),
         })
     return {
         'tieu_de': f"Dữ kiện lá số — {basic.get('can_chi_nam', '')}",
@@ -515,6 +569,7 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
                                'Phân biệt sao gốc tại cung tiểu hạn với lưu tinh theo năm.'],
         'luan_diem': luan_diem,
         'ket_luan': ket_luan,
+        'cach_cuc': detection,
     }
 
 
@@ -543,6 +598,7 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                         context: dict | None = None) -> dict[str, Any]:
     context = context or {}
     facts = build_star_facts(features, context)
+    detection = detect_cach_cuc(features, facts=facts, context=context)
     start = time.perf_counter()
     attempts = 0
     chain = _model_chain()
@@ -563,7 +619,7 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
     try:
         if not key:
             raise HoroscopeGenerationError('missing_key')
-        user_prompt = build_horoscope_user_prompt(features, formatted_context, facts)
+        user_prompt = build_horoscope_user_prompt(features, formatted_context, facts, cach_cuc=detection)
         for index, model in enumerate(chain):
             last_model = model
             attempts += 1
@@ -574,8 +630,9 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                 confidence_problem = check_input_confidence(reading, features)
                 conclusion_problem = check_conclusion_confidence(reading)
                 evidence_problem = check_evidence_labels(reading, facts)
+                rule_problem = check_rule_ids(reading, detection)
                 problem = (confidence_problem or conclusion_problem or evidence_problem
-                           or check_specificity(reading, features, context))
+                           or rule_problem or check_specificity(reading, features, context))
                 if problem:
                     attempts += 1
                     annual = features.get('nam_xem') or {}
@@ -598,6 +655,11 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                             f'và "phan_chung" không rỗng; nếu không có phản chứng thì ghi '
                             f'nguyên văn "{NO_COUNTER_EVIDENCE}". '
                         )
+                    if rule_problem:
+                        extra += (
+                            'Chỉ dẫn "rule_ids" có trong khối CÁCH CỤC ĐÃ NHẬN DIỆN và chỉ khi '
+                            'quy tắc khớp đủ hoặc khớp một phần; không tự thêm cách cục. '
+                        )
                     extra += (
                         f"Mỗi luận điểm phải dẫn fact_id khác nhau; "
                         f"phần vận trình phải nhắc năm xem {annual.get('year', '')} ({annual.get('can_chi', '')})."
@@ -607,9 +669,12 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                     validate_reading(reading, facts, context)
                     conclusion_problem = check_conclusion_confidence(reading)
                     evidence_problem = check_evidence_labels(reading, facts)
-                    if conclusion_problem or evidence_problem or check_input_confidence(reading, features):
+                    rule_problem = check_rule_ids(reading, detection)
+                    if conclusion_problem or evidence_problem or rule_problem or check_input_confidence(reading, features):
                         raise HoroscopeGenerationError('invalid_response')
-                    problem = check_input_confidence(reading, features) or check_specificity(reading, features, context)
+                    problem = (check_input_confidence(reading, features) or rule_problem
+                               or check_specificity(reading, features, context))
+                reading['cach_cuc'] = detection
                 reading['_generation'] = {'actual_provider': 'gemini', 'is_mock': False, 'reason': None,
                                           'model': model, 'primary_model': chain[0], 'attempts': attempts,
                                           'specificity_low': bool(problem), 'specificity_reason': problem,

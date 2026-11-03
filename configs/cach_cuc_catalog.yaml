@@ -568,6 +568,8 @@ rules:
     quan_he: ["dong_cung"]
     chi: ["Dần", "Thân"]
     can_tuoi: []
+    trang_thai_sao:
+      Thất Sát: "mieu"
     cung_neo: null
     cung_muc_tieu: []
     tang_thoi_gian: "la_so_goc"
@@ -596,6 +598,8 @@ rules:
     quan_he: ["dong_cung"]
     chi: ["Thìn", "Tuất"]
     can_tuoi: []
+    trang_thai_sao:
+      Vũ Khúc: "mieu"
     cung_neo: null
     cung_muc_tieu: []
     tang_thoi_gian: "la_so_goc"
@@ -624,6 +628,9 @@ rules:
     quan_he: ["dong_cung"]
     chi: ["Thìn", "Tuất", "Sửu", "Mùi"]
     can_tuoi: []
+    trang_thai_sao:
+      Kình Dương: "mieu"
+      Hỏa Tinh: "mieu"
     cung_neo: null
     cung_muc_tieu: []
     tang_thoi_gian: "la_so_goc"

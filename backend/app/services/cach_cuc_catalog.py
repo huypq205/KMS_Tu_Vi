@@ -20,6 +20,10 @@ Trạng thái (P2 §4.1/§4.3)
 rõ để bộ nhận diện (P3) thực thi — không còn điểm mơ hồ, đủ 3 ca kiểm thử.
 ``ung_vien_ban_dau``: tập con (<=8) đưa vào bản đầu của P3.
 
+Trường máy đọc bổ sung cho P3: ``trang_thai_sao`` (mapping tên sao -> một
+trong ``mieu/vuong/dac/binh/ham``) cho quy tắc yêu cầu trạng thái sao. Đây là
+khai báo điều kiện của quy tắc, **không** phải bảng miếu vượng mới.
+
 File: ``configs/cach_cuc_catalog.yaml``.
 """
 from __future__ import annotations
@@ -31,6 +35,7 @@ from pathlib import Path
 import yaml
 
 from backend.app.core.config import ROOT
+from backend.app.services.tu_hoa_tables import normalize_star
 
 CACH_CUC_CATALOG_PATH = ROOT / 'configs' / 'cach_cuc_catalog.yaml'
 
@@ -41,6 +46,7 @@ TIME_LAYERS = ('la_so_goc', 'dai_han', 'luu_nien')
 CAN_STEMS = ('Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý')
 CHI_BRANCHES = ('Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi',
                 'Thân', 'Dậu', 'Tuất', 'Hợi')
+DAC_TINH_STATES = ('mieu', 'vuong', 'dac', 'binh', 'ham')
 REVIEWER_UNSET = 'chua_chi_dinh'
 MAX_BATCH_CANDIDATES = 8
 
@@ -68,6 +74,7 @@ def _normalize_rule(rule: dict, index: int) -> dict:
     normalized = dict(rule)
     normalized.setdefault('cung_neo', None)
     normalized.setdefault('cung_muc_tieu', [])
+    normalized.setdefault('trang_thai_sao', {})
     normalized.setdefault('noi_dung_da_duyet', False)
     return normalized
 
@@ -107,6 +114,20 @@ def _validate(catalog: dict) -> None:
                                f'(được phép: {", ".join(RULE_STATUSES)}).')
         if not isinstance(normalized['sao'], list):
             raise CatalogError(f'rule "{rid}": sao phải là danh sách ([] nếu quy tắc không dựa trên sao).')
+        # P3: điều kiện trạng thái sao phải máy đọc được, không suy từ văn bản.
+        trang_thai_sao = normalized['trang_thai_sao']
+        if not isinstance(trang_thai_sao, dict):
+            raise CatalogError(f'rule "{rid}": trang_thai_sao phải là mapping tên sao -> trạng thái.')
+        rule_stars = {normalize_star(name) for name in normalized['sao'] if isinstance(name, str)}
+        for star_name, state in trang_thai_sao.items():
+            if not isinstance(star_name, str) or not star_name.strip():
+                raise CatalogError(f'rule "{rid}": trang_thai_sao có tên sao không hợp lệ.')
+            if normalize_star(star_name) not in rule_stars:
+                raise CatalogError(f'rule "{rid}": trang_thai_sao nêu sao "{star_name}" '
+                                   'không thuộc danh sách sao của quy tắc.')
+            if state not in DAC_TINH_STATES:
+                raise CatalogError(f'rule "{rid}": trạng thái sao "{state}" không hợp lệ '
+                                   f'(được phép: {", ".join(DAC_TINH_STATES)}).')
         dieu_kien = normalized['dieu_kien']
         if (not isinstance(dieu_kien, dict)
                 or not isinstance(dieu_kien.get('bat_buoc'), list) or not dieu_kien['bat_buoc']):
