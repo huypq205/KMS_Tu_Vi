@@ -1,60 +1,212 @@
-"""Side-effect-free 12-palace component shared by both Streamlit apps."""
+# -*- coding: utf-8 -*-
+"""P5 (Plan_Fix_Mai_Anh_v2 §8): Side-effect-free 12-palace component.
+
+Đặc điểm:
+- Danh mục cát/hung tinh dùng chung từ star_classification.
+- Chính tinh nổi bật kèm đắc tính (M/V/Đ/B/H).
+- Tứ Hóa có nhận diện riêng (không ép vào tốt/xấu).
+- Phụ tinh chia 2 cột cát tinh / hung tinh; có khu vực cho sao khác.
+- Thể hiện riêng Tuần, Triệt và dấu hiệu sao lưu niên.
+- Hỗ trợ cả 2 chế độ: Lưới 12 cung truyền thống 4x4 (desktop) và Danh sách từng cung rõ chữ (mobile).
+"""
+from __future__ import annotations
+
 from html import escape
+from typing import Any
+
+from backend.app.services.star_classification import (
+    CAT_TINH_IDS,
+    DAC_TINH_COLOR,
+    DAC_TINH_LABEL,
+    GROUP_CAT_TINH,
+    GROUP_CHINH_TINH,
+    GROUP_HUNG_TINH,
+    GROUP_KHAC,
+    GROUP_LUU_NIEN,
+    GROUP_TU_HOA,
+    HUNG_TINH_IDS,
+    TU_HOA_IDS,
+    partition_palace_stars,
+)
+
+# Re-export để tương thích ngược
+GOOD_SAOS = set(CAT_TINH_IDS) | {92, 93, 94}
+BAD_SAOS = set(HUNG_TINH_IDS) | {95}
 
 CHI_GRID_POS = {
     1: (3, 0), 2: (3, 1), 3: (0, 3), 4: (1, 3), 5: (2, 3),
     6: (0, 2), 7: (0, 1), 8: (0, 0), 9: (1, 0), 10: (2, 0),
     11: (3, 2), 12: (3, 3),
 }
-GOOD_SAOS = {92, 93, 94, 98, 59, 60, 57, 58, 67, 68, 71, 72, 24, 34, 80}
-BAD_SAOS = {51, 52, 53, 54, 55, 56, 95, 99, 104, 21, 36, 30, 69, 70}
-DAC_TINH_COLOR = {"M": "#1a7f37", "V": "#2da44e", "Đ": "#0969da", "B": "#57606a", "H": "#cf222e"}
 
 
-def sao_html(c: dict) -> str:
-    parts = []
-    for star in c.get("saos", []):
-        name = escape(str(star.get("saoTen", "—")))
-        if star.get("saoLoai", 2) == 1:
-            parts.append(f'<span class="sao chinh">{name}</span>')
-            dignity = star.get("saoDacTinh")
-            if dignity:
-                color = DAC_TINH_COLOR.get(dignity, "#57606a")
-                parts.append(f'<span class="qc" style="color:{color}">{escape(str(dignity))}</span>')
-        else:
-            sid = star.get("saoID")
-            cls = "tot" if sid in GOOD_SAOS else "hung" if sid in BAD_SAOS else ""
-            parts.append(f'<span class="sao phu {cls}">{name}</span>')
-    return " ".join(parts) or '<span class="sao phu">Chưa có sao</span>'
+def sao_html(c: dict[str, Any], luu_nien_saos: list[dict[str, Any]] | None = None) -> str:
+    """Render toàn bộ sao trong ô cung theo cấu trúc phân tầng rõ ràng."""
+    raw_saos = c.get("saos", [])
+    part = partition_palace_stars(raw_saos, luu_nien_saos=luu_nien_saos)
+
+    sections = []
+
+    # 1. Hàng chính tinh (Major stars) - Nổi bật
+    chinh_stars = part[GROUP_CHINH_TINH]
+    if chinh_stars:
+        chinh_spans = []
+        for s in chinh_stars:
+            name = escape(str(s.get("saoTen") or s.get("ten") or "—"))
+            dignity = s.get("saoDacTinh") or s.get("dac_tinh")
+            if dignity and dignity != "—":
+                color = DAC_TINH_COLOR.get(str(dignity), "#57606a")
+                dig_label = DAC_TINH_LABEL.get(str(dignity), str(dignity))
+                badge = f'<span class="qc" style="color:{color}" title="{escape(dig_label)}">{escape(str(dignity))}</span>'
+            else:
+                badge = ""
+            chinh_spans.append(f'<span class="sao chinh">{name}{badge}</span>')
+        sections.append(f'<div class="chinh-row">{" ".join(chinh_spans)}</div>')
+    else:
+        sections.append('<div class="chinh-row vcd"><span class="sao vcd">Vô chính diệu</span></div>')
+
+    # 2. Hàng Tứ Hóa - Nhận diện riêng
+    tu_hoa_stars = part[GROUP_TU_HOA]
+    if tu_hoa_stars:
+        th_spans = []
+        for s in tu_hoa_stars:
+            name = escape(str(s.get("saoTen") or s.get("ten") or "—"))
+            th_spans.append(f'<span class="sao tu-hoa">{name}</span>')
+        sections.append(f'<div class="tu-hoa-row">{" ".join(th_spans)}</div>')
+
+    # 3. Phụ tinh chia 2 cột: Cát tinh vs Hung tinh
+    cat_stars = part[GROUP_CAT_TINH]
+    hung_stars = part[GROUP_HUNG_TINH]
+    if cat_stars or hung_stars:
+        cat_spans = "".join(f'<div class="sao phu tot">{escape(str(s.get("saoTen") or s.get("ten") or "—"))}</div>' for s in cat_stars)
+        hung_spans = "".join(f'<div class="sao phu hung">{escape(str(s.get("saoTen") or s.get("ten") or "—"))}</div>' for s in hung_stars)
+        empty_cat = '<div class="sao empty">—</div>'
+        empty_hung = '<div class="sao empty">—</div>'
+        sections.append(
+            '<div class="substars-cols">'
+            f'<div class="sub-col cat-col">{cat_spans or empty_cat}</div>'
+            f'<div class="sub-col hung-col">{hung_spans or empty_hung}</div>'
+            '</div>'
+        )
+
+    # 4. Sao khác / chưa phân loại (vòng Tràng Sinh, Bác Sỹ trung tính)
+    other_stars = part[GROUP_KHAC]
+    if other_stars:
+        other_spans = " · ".join(escape(str(s.get("saoTen") or s.get("ten") or "—")) for s in other_stars)
+        sections.append(f'<div class="other-row"><span class="muted">{other_spans}</span></div>')
+
+    # 5. Sao lưu niên (nếu có)
+    ln_stars = part[GROUP_LUU_NIEN]
+    if ln_stars:
+        ln_spans = []
+        for s in ln_stars:
+            ten = s.get("sao") or s.get("ten") or s.get("saoTen") or ""
+            badge = f'<span class="sao luu-nien">L.{escape(str(ten))}</span>'
+            ln_spans.append(badge)
+        sections.append(f'<div class="luu-nien-row">{" ".join(ln_spans)}</div>')
+
+    return "".join(sections) or '<div class="sao phu">Chưa có sao</div>'
 
 
-def luoi_html(cacs_cung: list[dict]) -> str:
-    """Traditional 4×4 perimeter; CSS makes the same 12 cells a list on phones."""
+def _render_cell_content(
+    cung: dict[str, Any],
+    luu_nien_saos: list[dict[str, Any]] | None = None,
+) -> str:
+    """Tạo nội dung HTML cho một ô cung."""
+    chuan_ten = escape(str(cung.get("chuan_ten", "")))
+    hanh_cung = escape(str(cung.get("hanh_cung", "")))
+    ten_cung = escape(str(cung.get("ten_cung", "")))
+    is_than = bool(cung.get("co_thanh"))
+    title = f"{ten_cung} (Thân)" if is_than else ten_cung
+
+    # Badges Tuần / Triệt
+    badges = []
+    if cung.get("tuan_trung"):
+        badges.append('<span class="badge-tag tuan" title="Tuần Trung Không Vong">Tuần</span>')
+    if cung.get("triet_lo"):
+        badges.append('<span class="badge-tag triet" title="Triệt Lộ Không Vong">Triệt</span>')
+    badge_html = f'<div class="badges-row">{"".join(badges)}</div>' if badges else ""
+
+    # Meta đại hạn / tiểu hạn
+    meta_parts = []
+    age = cung.get("tu_dai_han")
+    if age is not None:
+        meta_parts.append(f"Đại hạn {age}–{age + 9}")
+    if cung.get("tieu_han_chi"):
+        meta_parts.append(f"Tiểu hạn: {escape(str(cung['tieu_han_chi']))}")
+
+    meta_html = f'<div class="meta">{escape(" · ".join(meta_parts))}</div>' if meta_parts else ""
+
+    return (
+        '<div class="cell-header">'
+        f'<div class="chi">{chuan_ten} · {hanh_cung}</div>'
+        f'{badge_html}'
+        '</div>'
+        f'<div class="ten">{title}</div>'
+        f'<div class="saos">{sao_html(cung, luu_nien_saos=luu_nien_saos)}</div>'
+        f'{meta_html}'
+    )
+
+
+def luoi_html(
+    cacs_cung: list[dict[str, Any]],
+    luu_nien_by_cung: dict[int, list[dict[str, Any]]] | None = None,
+) -> str:
+    """Bố cục lưới truyền thống 4x4; CSS giúp responsive trên desktop và tablet."""
     cells = {}
+    ln_map = luu_nien_by_cung or {}
+
     for cung in cacs_cung:
-        position = CHI_GRID_POS.get(cung.get("cung_so"))
+        cung_so = cung.get("cung_so")
+        position = CHI_GRID_POS.get(cung_so)
         if position is None:
             continue
-        meta = []
-        age = cung.get("tu_dai_han")
-        if age is not None:
-            meta.append(f"Đại hạn {age}–{age + 9}")
-        if cung.get("tieu_han_chi"):
-            meta.append(f"Tiểu hạn: {cung['tieu_han_chi']}")
-        if cung.get("tuan_trung"):
-            meta.append("Tuần")
-        if cung.get("triet_lo"):
-            meta.append("Triệt")
-        title = str(cung.get("ten_cung", "")) + (" (Thân)" if cung.get("co_thanh") else "")
+        cung_ln = ln_map.get(cung_so)
         cells[position] = (
-            '<div class="cell">'
-            f'<div class="chi">{escape(str(cung.get("chuan_ten", "")))} · {escape(str(cung.get("hanh_cung", "")))}</div>'
-            f'<div class="ten">{escape(title)}</div>'
-            f'<div class="saos">{sao_html(cung)}</div>'
-            f'<div class="meta">{escape(" · ".join(meta))}</div></div>'
+            f'<div class="cell" data-cung="{cung_so}">'
+            f'{_render_cell_content(cung, luu_nien_saos=cung_ln)}'
+            '</div>'
         )
+
     result = []
     for row in range(4):
         for col in range(4):
             result.append(cells.get((row, col), '<div class="cell center" aria-hidden="true"></div>'))
+
     return '<div class="grid">' + "".join(result) + '</div>'
+
+
+def danh_sach_html(
+    cacs_cung: list[dict[str, Any]],
+    luu_nien_by_cung: dict[int, list[dict[str, Any]]] | None = None,
+) -> str:
+    """Bố cục danh sách từng cung rõ chữ, tối ưu cho màn hình điện thoại (mobile)."""
+    ln_map = luu_nien_by_cung or {}
+    items = []
+
+    sorted_cungs = sorted(cacs_cung, key=lambda c: c.get("cung_so", 0))
+    for cung in sorted_cungs:
+        cung_so = cung.get("cung_so")
+        cung_ln = ln_map.get(cung_so)
+        items.append(
+            f'<div class="danh-sach-card" data-cung="{cung_so}">'
+            f'{_render_cell_content(cung, luu_nien_saos=cung_ln)}'
+            '</div>'
+        )
+
+    return '<div class="danh-sach">' + "".join(items) + '</div>'
+
+
+def render_laso(
+    cacs_cung: list[dict[str, Any]],
+    che_do: str = "luoi",
+    luu_nien_by_cung: dict[int, list[dict[str, Any]]] | None = None,
+) -> str:
+    """Renderer hợp nhất cho lá số 12 cung:
+
+    - che_do="luoi": Lưới truyền thống 4x4
+    - che_do="danh_sach": Danh sách thẻ từng cung rõ chữ
+    """
+    if che_do == "danh_sach":
+        return danh_sach_html(cacs_cung, luu_nien_by_cung=luu_nien_by_cung)
+    return luoi_html(cacs_cung, luu_nien_by_cung=luu_nien_by_cung)

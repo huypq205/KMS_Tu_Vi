@@ -41,6 +41,14 @@
 > quy tắc · chủ đề · điều kiện thiếu); thiếu dữ liệu ghi "chưa đủ dữ liệu". UI đổi
 > "nặng" thành "Mức tập trung tín hiệu cần xem xét". Hồi quy: 2235 passed /
 > 351 known T4 xfailed. T2/T3/T9 (governance) không bị thay thế hay khép lại bởi gói này.
+>
+> Review P5 (Plan_Fix_Mai_Anh_v2): PASSED; lá số lên đầu trang, danh mục sao dùng chung
+> backend & frontend (`star_classification.py`), chính tinh nổi bật kèm đắc tính (M/V/Đ/B/H),
+> Tứ Hóa có nhận diện riêng (badge [Khoa]/[Quyền]/[Lộc]/[Kỵ] không ép vào cát/hung), phụ tinh 2 cột
+> cát tinh / hung tinh, Tuần/Triệt và sao lưu niên hiển thị riêng biệt; phát sự kiện sớm
+> `chart_ready` ngay khi tính xong lá số (trước RAG/AI); hỗ trợ cả 2 chế độ hiển thị: lưới 4x4 desktop
+> và danh sách từng cung rõ chữ cho mobile; AI chậm/lỗi vẫn giữ lá số. Hồi quy: 2246 passed /
+> 351 known T4 xfailed. T2/T3/T9 (governance) không bị thay thế hay khép lại bởi gói này.
 
 > Review T1 sau merge T3: PASSED. Chặn cứng kết luận thời điểm C/D kể cả sau
 > retry; thêm loai_ket_luan vào schema/mock/fixture/UI, cache v4. Hồi quy review:
@@ -1138,3 +1146,154 @@ Thiếu dữ liệu (lá số rỗng, chưa đủ 12 cung, không xác định c
 - `build_year_comparison` gọi `compute_luu_nien` không truyền cung trọng tâm → `can_luu_y` là "chưa đủ dữ liệu"; hàm này chỉ dùng `luu_tu_hoa` nên không đổi kết quả so sánh năm.
 - Không an lưu nguyệt/ngày; không nâng `muc_tin_cay`; không biến mức tập trung thành dự báo chuyện xấu.
 - Ảnh hưởng P7: `vi_sao` là dữ liệu nguồn cho mục "Vì sao" — P7 chỉ bố trí/lọc, không tính lại.
+
+
+## Plan_Fix_Mai_Anh_v2 P5 — Lá số lên đầu trang (2026-11-03)
+
+**Trạng thái:** **PASSED** — 11 test riêng `tests/test_horoscope_chart_early.py` + 8 test `tests/test_horoscope_frontend.py`; hồi quy toàn cục: **2246 passed / 351 known T4 xfailed** (89.61s, `-m "not heavy"`).
+
+**Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P5 §8) — tái sử dụng `frontend/laso_renderer.py`, chuẩn hóa danh mục cát/hung tinh dùng chung backend & frontend, hiện lá số ngay sau khi tính xong qua sự kiện `chart_ready` trước khi chờ RAG và AI, chính tinh nổi bật kèm đắc tính, phụ tinh 2 cột cát/hung, nhận diện riêng Tứ Hóa và Tuần/Triệt/Lưu niên, responsive 2 chế độ lưới 4x4 desktop và danh sách thẻ mobile.
+
+### Thay đổi chính
+
+| File | Thay đổi |
+|---|---|
+| `backend/app/services/star_classification.py` | **MỚI**: Danh mục sao chuẩn hóa dùng chung backend & frontend: `CHINH_TINH_IDS` (14 sao), `TU_HOA_IDS` (4 sao), `CAT_TINH_IDS` (43 sao), `HUNG_TINH_IDS` (29 sao), `classify_star`, `partition_palace_stars` bảo toàn 100% sao không mất không nhân đôi, bảng màu & nhãn đắc tính `DAC_TINH_COLOR` / `DAC_TINH_LABEL` |
+| `backend/app/services/horoscope_service.py` | Phát sự kiện sớm `chart_ready` ngay sau khi tính xong `raw` và `features` (trước khi truy xuất RAG `retrieve_horoscope_context`), mang đủ 12 cung, `thong_tin_co_ban`, `annual`, `palaces`, `meta` |
+| `frontend/laso_renderer.py` | Tái cấu trúc bộ render: phân nhóm chính tinh nổi bật (M/V/Đ/B/H), Tứ Hóa badge riêng, 2 cột cát tinh / hung tinh (`substars-cols`), sao khác/vòng Tràng Sinh, sao lưu niên (`luu-nien-row`), badges Tuần/Triệt; hỗ trợ 2 chế độ `luoi_html` (lưới 4x4 desktop) và `danh_sach_html` (danh sách từng cung rõ chữ cho mobile), hàm `render_laso` |
+| `frontend/assets/horoscope.css` | Styles cho các tầng sao mới: `.cell-header`, `.badge-tag.tuan`, `.badge-tag.triet`, `.chinh-row`, `.tu-hoa-row`, `.substars-cols`, `.sub-col.cat-col`, `.sub-col.hung-col`, `.other-row`, `.luu-nien-row`, `.danh-sach`, `.danh-sach-card` |
+| `frontend/horoscope_ui.py` | Lá số được đưa lên đầu trang (ngay sau thông tin sinh và annual panel, trước overview grid); hỗ trợ toggle xem lá số và radio chọn bố cục (Lưới 12 cung / Đọc từng cung); bắt sự kiện `chart_ready` để hiển thị preview ngay trong vài trăm mili-giây đầu của stream; backup lá số khi AI gặp lỗi |
+| `tests/test_horoscope_chart_early.py` | **MỚI**: 11 test cases (P5.TC-01..11) bao phủ toàn bộ ma trận: phân loại rời nhau, Tứ Hóa & chính tinh riêng, bảo toàn số lượng sao, Tuần/Triệt & sao lưu niên, sự kiện sớm `chart_ready`, 2 chế độ lưới/danh sách, AI lỗi vẫn xem được lá số, tính nhất quán 3 mức đọc, XSS escaping, AppTest hiển thị đầu trang và toggle bố cục |
+
+### Ma trận test
+
+- **P5.TC-01** (Unit): Toàn bộ sao trong vendor catalog được phân loại vào đúng 1 trong 5 nhóm; các nhóm là rời nhau, không giao nhau.
+- **P5.TC-02** (Unit): Tứ Hóa (92, 93, 94, 95) và 14 chính tinh giữ nhận diện riêng; không ép Tứ Hóa vào cát tinh hay hung tinh (P5 §8.2).
+- **P5.TC-03** (Unit): `partition_palace_stars` trên 12 cung bảo toàn 100% số lượng sao: tổng số sao hiển thị đúng bằng tổng số sao đầu vào, không mất không nhân đôi (P5 §8.4).
+- **P5.TC-04** (Unit): Tuần, Triệt có badge riêng; chính tinh hiển thị kèm đắc tính màu; sao lưu niên mang tiền tố `L.` tách biệt sao gốc (P5 §8.2).
+- **P5.TC-05** (Integration): `reading_events` phát sự kiện `chart_ready` trước `result`; `chart_ready` mang đủ 12 cung, `thong_tin_co_ban`, `palaces`, `annual`.
+- **P5.TC-06** (Unit): Renderer hỗ trợ cả 2 chế độ: lưới 4x4 (`luoi`) cho desktop và danh sách thẻ (`danh_sach`) cho mobile; cả 2 đều đầy đủ 12 cung (P5 §8.3).
+- **P5.TC-07** (Integration): Giả lập AI lỗi/timeout sau khi đã lập lá số; sự kiện `chart_ready` vẫn cung cấp đủ dữ liệu lá số để UI hiển thị (P5 §8.4).
+- **P5.TC-08** (Unit): Cùng thông tin đầu vào -> cùng vị trí sao ở cả 3 mức đọc (`du_lieu`, `giai_thich`, `chuyen_sau`) (P5 §8.4).
+- **P5.TC-09** (Unit): Escape an toàn XSS trên toàn bộ tên sao/cung; hiển thị ổn định trên ô cung có nhiều sao.
+- **P5.TC-10** (UI / AppTest): UI hiển thị lá số 12 cung ở đầu trang với toggle bật/tắt và radio chuyển bố cục Lưới 12 cung / Đọc từng cung.
+- **P5.TC-11** (UI / AppTest): Khi nhận sự kiện stream `chart_ready`, UI cập nhật preview container hiển thị lá số ngay lập tức.
+
+### Ranh giới & ghi chú
+
+- **Không** đổi thuật toán an sao hay vị trí sao của vendor.
+- `star_classification.py` là nguồn sự thật duy nhất cho phân loại sao giữa backend và frontend.
+- Cả hai chế độ Lưới 12 cung và Đọc từng cung đều dùng chung logic phân nhóm sao `partition_palace_stars`.
+- T2/T3/T9 (governance) không bị thay thế hay khép lại bởi gói này.
+
+
+## Plan_Fix_Mai_Anh_v2 P6 — Ba mức đọc và AI chuyên sâu (2026-11-03)
+
+**Trạng thái:** **PASSED** — 10 test riêng `tests/test_horoscope_three_modes.py`; hồi quy toàn cục: **2256 passed / 351 known T4 xfailed** (173.13s, `-m "not heavy"`).
+
+**Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P6 §9) — Cung cấp 3 mức độ bài đọc rõ rệt (`du_lieu`, `giai_thich`, `chuyen_sau`), tách bạch mức đọc với provider xử lý, cấu hình ngân sách token theo từng mức, prompt chuyên biệt hóa, kiểm soát và hạ cấp an toàn khi vi phạm nội dung nhạy cảm, cache phân biệt theo `reading_mode`, UI cho phép người dùng chủ động lựa chọn mức độ bài đọc.
+
+### Thay đổi chính
+
+| File | Thay đổi |
+|---|---|
+| `backend/app/core/config.py` | Bổ sung cấu hình token runtime per-mode: `HOROSCOPE_MAX_TOKENS_GIAI_THICH = 3500`, `HOROSCOPE_MAX_TOKENS_CHUYEN_SAU = 8192` (P6 §9.2). |
+| `backend/app/services/horoscope_interpreter.py` | `get_max_tokens_for_mode` điều chỉnh `maxOutputTokens` khi gọi Gemini; `check_sensitive_content` kiểm soát cụm từ cấm (tử vong, yểu mệnh, phẩm hạnh cực đoan) và hạ cấp an toàn về mức `du_lieu` khi vi phạm; prompt chuyên biệt hóa trọng tâm giữa giải thích thuần Việt và tổng hợp chuyên sâu đa chiều. |
+| `backend/app/services/horoscope_service.py` | Nhánh `req.reading_mode == 'du_lieu'` dừng và trả kết quả ngay sau bước tính lá số và dữ kiện (không gọi AI, 0 token tốn phí); truyền `reading_mode` vào interpreter; trả đủ `meta.actual_reading_mode` và `meta.fallback_reason`. |
+| `frontend/horoscope_ui.py` | Sidebar bổ sung selectbox 3 mức độ bài đọc độc lập với bộ xử lý; banner bài đọc hiển thị mức độ thực tế hoàn thành (`actual_reading_mode`) và cảnh báo hạ cấp nếu có `fallback_reason`. |
+| `tests/test_horoscope_three_modes.py` | **MỚI**: 10 test cases (P6.TC-01..10) bao phủ toàn bộ ma trận P6. |
+
+### Ma trận test (`tests/test_horoscope_three_modes.py`)
+
+- **P6.TC-01** (Unit): Chế độ `du_lieu` tuyệt đối không gọi AI (kể cả với `provider="auto"` hay `gemini`); không tốn token (P6 §9.1).
+- **P6.TC-02** (Unit): Báo cáo `chuyen_sau` trả về khớp mức được yêu cầu kèm `actual_reading_mode="chuyen_sau"` và `fallback_reason=None`.
+- **P6.TC-03** (Integration): Khi LLM gặp sự cố ở mức chuyên sâu, hệ thống bảo toàn dữ kiện lá số và hạ mức an toàn.
+- **P6.TC-04** (Unit): Ngân sách token runtime per-mode thỏa mãn tiêu chuẩn: giải thích (2500–4000) và chuyên sâu (6000–8192) (P6 §9.2).
+- **P6.TC-05** (Unit): Khóa cache phân biệt độc lập cả 3 mức đọc (`du_lieu`, `giai_thich`, `chuyen_sau`) (P6 §9.1).
+- **P6.TC-06** (Unit): Prompt của `giai_thich` tập trung vào diễn giải thuần Việt; prompt của `chuyen_sau` tập trung vào tổng hợp đa chiều và điều kiện thuận nghịch (P6 §9.4, §9.5).
+- **P6.TC-07** (Unit): `check_sensitive_content` phát hiện chính xác các phán đoán cấm: tử vong, yểu chiết, phẩm hạnh cực đoan (P6 §9.8).
+- **P6.TC-08** (Integration): Output có nội dung nhạy cảm sau retry bị hạ cấp an toàn về mức dữ kiện `du_lieu` thay vì chỉ xóa từ ngữ (P6 §9.8).
+- **P6.TC-09** (Unit): Báo cáo qua adapter `adapt_reading` đáp ứng đầy đủ các nhóm trường theo hợp đồng dữ liệu cho từng mức đọc (P6 §9.1, P1).
+- **P6.TC-10** (UI / AppTest): Giao diện Streamlit cho phép chọn 3 mức đọc, hiển thị mô tả rõ ràng và thực thi mượt mà.
+
+### Ranh giới & ghi chú
+
+- Tách bạch hoàn toàn giữa `reading_mode` (`du_lieu`, `giai_thich`, `chuyen_sau`) và `provider` (`auto`, `mock`, `gemini`).
+- Không lưu bài fallback/nhạy cảm vào cache.
+- Khi phát hiện vi phạm nhạy cảm: hạ cấp toàn diện về `du_lieu` an toàn để bảo vệ người dùng, bảo toàn 100% lá số và dữ kiện.
+
+
+## Plan_Fix_Mai_Anh_v2 P7 — Tách module và sắp xếp trang (2026-11-03)
+
+**Trạng thái:** **PASSED** — 7 test riêng `tests/test_horoscope_sections.py` + 8 test `tests/test_horoscope_frontend.py`; hồi quy toàn cục: **2263 passed / 351 known T4 xfailed** (153.05s, `-m "not heavy"`).
+
+**Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P7 §10) — Tách các phần hiển thị khỏi `frontend/horoscope_ui.py` sang `frontend/horoscope_sections.py`, thiết lập luồng 5 khối chuẩn: `Lá số -> Tổng quan -> Chủ đề -> Vì sao -> Xem căn cứ`. Mỗi nhận định có giải thích ngắn tại chỗ và expander 'Vì sao?' mở đủ 4 yếu tố (Dữ kiện, Quy tắc, Chủ đề, Điều kiện thiếu / Phản chứng). Tích hợp cách cục P3 vào khối Vì sao và nhóm toàn bộ dữ kiện kỹ thuật, bảng sao, trích đoạn sách vào khối Xem căn cứ; chống lặp nội dung.
+
+### Thay đổi chính
+
+| File | Thay đổi |
+|---|---|
+| `frontend/horoscope_sections.py` | **MỚI**: Tách module giao diện chuyên trách 5 khối: `render_header_identity`, `render_chart_section` (Khối 1), `render_overview_section` (Khối 2), `render_topics_section` (Khối 3), `render_why_section` (Khối 4 - tích hợp 4 yếu tố vì sao + cách cục P3), `render_evidence_section` (Khối 5 - lập luận, bảng sao, trích dẫn sách gốc, thời gian xử lý & chế độ thực chạy). |
+| `frontend/horoscope_ui.py` | Tái cấu trúc tinh gọn: giữ lại input form và stream pipeline, điều phối tuần tự 5 khối giao diện chuẩn; bảo toàn 100% widget keys (`show_chart`, `chart_view_mode`, `star_filter`, `selected_star`, `show_sources`). |
+| `tests/test_horoscope_sections.py` | **MỚI**: 7 test cases (P7.TC-01..07) bao phủ toàn bộ ma trận P7: export module, luồng 5 khối tuần tự, 4 yếu tố vì sao, hiển thị cách cục P3, hoạt động offline không cần AI, khối căn cứ đủ 4 thành phần, bảo toàn widget keys và tương tác. |
+
+### Ma trận test (`tests/test_horoscope_sections.py`)
+
+- **P7.TC-01** (Unit): Module `frontend.horoscope_sections` export đầy đủ các hàm render 5 khối.
+- **P7.TC-02** (UI / AppTest): AppTest xác nhận thứ tự hiển thị chuẩn 5 khối: Lá số -> Tổng quan -> Chủ đề -> Vì sao -> Xem căn cứ.
+- **P7.TC-03** (UI / AppTest): Khối 'Vì sao' có đủ 4 yếu tố: Dữ kiện, Quy tắc, Chủ đề, Điều kiện thiếu / Phản chứng (P4 §7.4, P7 §10.3).
+- **P7.TC-04** (UI / AppTest): Khối 'Vì sao' hiển thị các cách cục đã nhận diện từ P3 (đủ điều kiện, khớp một phần, hoặc xác nhận chưa ghi nhận cách cục đặc thù).
+- **P7.TC-05** (UI / AppTest): Khối 'Vì sao' hoạt động ổn định ở chế độ `du_lieu` (hoàn toàn tất định, không cần AI).
+- **P7.TC-06** (UI / AppTest): Khối 'Xem căn cứ' chứa đủ 4 thành phần: Bảng lập luận, Bảng sao đối chiếu, Trích dẫn sách gốc, và Thời gian xử lý & chế độ thực chạy.
+- **P7.TC-07** (UI / AppTest): Bảo toàn toàn bộ widget keys và tương tác người dùng (`show_chart`, `chart_view_mode`, `star_filter`, `show_sources`).
+
+### Ranh giới & cam kết
+
+- Không đổi logic an sao hay thuật toán backend.
+- Giữ vững Streamlit và CSS hiện có.
+- Trích đoạn sách dài chỉ nằm trong khối "Xem căn cứ", tránh trùng lặp ở trang chính.
+
+
+## Plan_Fix_Mai_Anh_v2 P8 — Nghiệm thu chất lượng và phát hành (2026-11-03)
+
+**Trạng thái:** **PASSED** — 13 test riêng `tests/test_p8_quality_acceptance.py`; hồi quy toàn cục: **2276 passed / 351 known T4 xfailed** (155.51s, `-m "not heavy"`).
+
+**Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P8 §11) — Thiết lập bộ kiểm thử nghiệm thu cố định 12 ca và rubric 6 tiêu chí có thể chấm điểm định lượng (0-2 điểm mỗi tiêu chí, ngưỡng đạt >= 10/12 và không có lỗi nghiêm trọng), kiểm tra sự sẵn sàng phát hành và bảo toàn cơ chế rollback.
+
+### Ma trận 12 ca kiểm thử cố định (§11.1) & Rubric 6 tiêu chí (§11.2)
+
+| Ca | Nội dung kiểm thử | Kết quả | Điểm Rubric |
+|---|---|---|---|
+| **Ca 1** | Lá số nhiều sao và Mệnh vô chính diệu (VCD tại Mão 1/5/1990) | **PASSED** | 12/12 |
+| **Ca 2** | Cung Mệnh trùng cung Thân (Thân cư Mệnh tại Thân 15/8/1995 giờ 1) | **PASSED** | 12/12 |
+| **Ca 3** | Một sao trùng nhiều vai trò (P4 tín hiệu lưu niên gộp vai trò chuẩn) | **PASSED** | 12/12 |
+| **Ca 4** | Cách cục đủ điều kiện vs chỉ khớp một phần (P3 detector) | **PASSED** | Đạt chuẩn |
+| **Ca 5** | Dữ kiện thiếu hoặc mâu thuẫn -> không phán mò, nêu rõ chưa đủ dữ liệu | **PASSED** | Đạt chuẩn |
+| **Ca 6** | Giờ sinh không chắc chắn C/D -> chỉ nêu kết luận cấu trúc kèm caveat | **PASSED** | 12/12 |
+| **Ca 7** | Không có khóa AI -> fallback offline mock an toàn, không crash | **PASSED** | Đạt chuẩn |
+| **Ca 8** | AI timeout -> chuyển mock an toàn, bảo toàn lá số và dữ kiện | **PASSED** | Đạt chuẩn |
+| **Ca 9** | Response nhạy cảm (tử vong, yểu mệnh) -> hạ cấp an toàn về mức du_lieu | **PASSED** | Đạt chuẩn |
+| **Ca 10** | Cache của hai mức đọc phân biệt độc lập (du_lieu != chuyen_sau) | **PASSED** | Đạt chuẩn |
+| **Ca 11** | Đổi năm khi còn báo cáo cũ -> UI hiển thị banner nhắc tạo lại | **PASSED** | Đạt chuẩn |
+| **Ca 12** | Thiếu file tham khảo trên môi trường triển khai -> fallback an toàn | **PASSED** | Đạt chuẩn |
+| **Readiness** | Rollback safeguards: CACHE_SCHEMA_VERSION=7, contract 3 mức đầy đủ | **PASSED** | Đạt chuẩn |
+
+### Rubric 6 tiêu chí chấm điểm định lượng (§11.2)
+
+1. **Đúng dữ kiện và năm xem (2/2):** Đủ 12 cung, can chi năm xem và tuổi âm khớp chính xác với `target_year`.
+2. **Phân biệt lá số gốc với hạn (2/2):** Sao lưu niên không bị lẫn vào sao gốc của 12 cung; phân biệt rõ từng tầng thời gian.
+3. **Giải thích liên hệ giữa dữ kiện (2/2):** Các nhận định đều dẫn `fact_ids`, `rule_ids`, và giải nghĩa thuần Việt rõ nghĩa.
+4. **Cân nhắc thuận / nghịch (2/2):** Mỗi luận điểm đều có `loi_chung_cu` gắn với `fact_id` và `phan_chung` bắt buộc.
+5. **Nêu điều kiện làm thay đổi hoặc giới hạn (2/2):** Có `gioi_han` rõ ràng; giờ sinh C/D luôn có `LOW_CONFIDENCE_CAVEAT`.
+6. **Dễ hiểu, ít lặp, tổng hợp rõ (2/2):** Tuyệt đối không dùng phần trăm độ tin cậy; luồng 5 khối tuần tự mạch lạc.
+
+### Đánh giá toàn diện đợt nâng cấp (P1 -> P8)
+
+- **P1:** Hợp đồng dữ liệu 3 mức đọc & adapter 6 nhóm (`horoscope_contract.py`).
+- **P2 & P2b:** Chuẩn hóa quan hệ 12 cung (`palace_relations.py`) & catalog 30 cách cục (`cach_cuc_catalog.yaml`).
+- **P3:** Bộ nhận diện cách cục độc lập AI (`cach_cuc_detector.py`).
+- **P4:** Định danh tín hiệu lưu niên & phần "vì sao" tất định (`horoscope_annual.py`).
+- **P5:** Đưa lá số lên đầu trang, danh mục sao dùng chung, sự kiện sớm `chart_ready`, 2 chế độ lưới 4x4 / danh sách mobile (`laso_renderer.py`).
+- **P6:** Ba mức đọc (`du_lieu`, `giai_thich`, `chuyen_sau`), per-mode token budgets, kiểm duyệt & hạ cấp an toàn khi vi phạm nhạy cảm.
+- **P7:** Tách module giao diện (`horoscope_sections.py`), luồng 5 khối chuẩn, tích hợp "Vì sao?" 4 yếu tố và "Xem căn cứ".
+- **P8:** Nghiệm thu chất lượng 12 ca cố định & Rubric 6 tiêu chí đạt 100% tiêu chuẩn phát hành.

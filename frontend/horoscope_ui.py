@@ -16,7 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import importlib
-for _mod in ('frontend.horoscope_view', 'frontend.horoscope_transport', 'frontend.horoscope_ask', 'frontend.laso_renderer'):
+for _mod in ('frontend.horoscope_view', 'frontend.horoscope_sections', 'frontend.horoscope_transport', 'frontend.horoscope_ask', 'frontend.laso_renderer'):
     if _mod in sys.modules:
         try:
             importlib.reload(sys.modules[_mod])
@@ -26,9 +26,17 @@ for _mod in ('frontend.horoscope_view', 'frontend.horoscope_transport', 'fronten
 from frontend.horoscope_view import (BOOKS, HOURS, TOPICS, content,
                                     palace_preview, panel, text, topic_panel, validate_birth_date,
                                     annual_panel, star_table, confidence_badge, evidence_table)
-from frontend.laso_renderer import luoi_html
+from frontend.laso_renderer import luoi_html, render_laso
 from frontend.horoscope_transport import reading_events
 from frontend.horoscope_ask import ask_box
+from frontend.horoscope_sections import (
+    render_header_identity,
+    render_chart_section,
+    render_overview_section,
+    render_topics_section,
+    render_why_section,
+    render_evidence_section,
+)
 
 st.set_page_config(page_title="Tử Vi · Bản đồ bản thân", layout="wide", initial_sidebar_state="auto")
 style = (ROOT / "frontend/assets/horoscope.css").read_text(encoding="utf-8")
@@ -78,6 +86,38 @@ def _is_in_container() -> bool:
 PROD_FALLBACK = "onrender.com" in API_BASE and not os.getenv("KMS_API_BASE") and not _is_in_container()
 
 
+
+def _luu_nien_by_cung_map(luu_nien: dict | None, thap_ni_cung: list[dict]) -> dict[int, list[dict]]:
+    if not isinstance(luu_nien, dict):
+        return {}
+    mapping: dict[int, list[dict]] = {}
+    chi_to_cung = {str(c.get("chuan_ten", "")): c.get("cung_so") for c in thap_ni_cung if c.get("cung_so")}
+
+    tt = luu_nien.get("thai_tue")
+    if isinstance(tt, dict) and tt.get("dia_chi") in chi_to_cung:
+        c_so = chi_to_cung[tt["dia_chi"]]
+        mapping.setdefault(c_so, []).append({"sao": "Thái Tuế", "dia_chi": tt["dia_chi"], "loai": "hung"})
+
+    for name, s_info in (luu_nien.get("vong_thai_tue") or {}).items():
+        if isinstance(s_info, dict):
+            d_chi = s_info.get("dia_chi")
+            if d_chi in chi_to_cung:
+                c_so = chi_to_cung[d_chi]
+                mapping.setdefault(c_so, []).append({"sao": s_info.get("ten", name), "dia_chi": d_chi, "loai": s_info.get("loai")})
+
+    for lth in (luu_nien.get("luu_tu_hoa") or []):
+        if isinstance(lth, dict):
+            c_ten = lth.get("cung_ten")
+            for c in thap_ni_cung:
+                if c.get("ten_cung") == c_ten or c.get("chuan_ten") == c_ten:
+                    c_so = c.get("cung_so")
+                    if c_so:
+                        code_label = {"HOA_LOC": "Lộc", "HOA_QUYEN": "Quyền", "HOA_KHOA": "Khoa", "HOA_KY": "Kỵ"}.get(lth.get("code"), "")
+                        label = f"Hóa {code_label} ({lth.get('ten_sao')})" if code_label else str(lth.get("ten_sao"))
+                        mapping.setdefault(c_so, []).append({"sao": label, "loai": "tu_hoa"})
+                    break
+    return mapping
+
 with st.sidebar:
     st.markdown('<div class="brand"><span class="brand-mark" aria-hidden="true">田</span><strong>KMS Tử Vi</strong></div>', unsafe_allow_html=True)
     st.markdown("### Thông tin của bạn")
@@ -111,7 +151,23 @@ with st.sidebar:
                                       help="Chọn năm Can Chi để xem tiểu hạn, vòng Thái Tuế và lưu Tứ Hóa. Đổi năm sẽ hiện nhắc tạo lại báo cáo.")
         priorities = st.pills("Chủ đề muốn đọc trước", list(TOPICS), selection_mode="multi", format_func=TOPICS.get, key="birth_topics",
                               help="Các chủ đề đã chọn được đặt trước trong báo cáo; tổng quan luôn được giữ lại.")
-        mode = st.selectbox("Bản luận giải", ["auto", "mock"], format_func=lambda v: "Luận giải thông minh · tự động" if v == "auto" else "Chỉ dữ kiện lá số · không dùng AI", key="birth_provider")
+        reading_mode = st.selectbox(
+            "Mức độ bài đọc",
+            ["du_lieu", "giai_thich", "chuyen_sau"],
+            index=2,
+            format_func={
+                "du_lieu": "Lá số & dữ kiện · không gọi AI",
+                "giai_thich": "AI giải thích · giải nghĩa thuật ngữ",
+                "chuyen_sau": "AI chuyên sâu · phân tích tổng hợp",
+            }.get,
+            key="reading_mode",
+            help="du_lieu: chỉ hiển thị lá số và dữ kiện; giai_thich: AI giải thích thuật ngữ; chuyen_sau: AI luận giải chuyên sâu đa chiều.",
+        )
+        mode = st.selectbox(
+            "Bộ xử lý", ["auto", "mock"],
+            format_func=lambda v: "Tự động (Gemini / dự phòng)" if v == "auto" else "Chế độ kiểm thử (Mock)",
+            key="birth_provider",
+        )
     submitted = st.button("Tạo bản luận giải", type="primary", use_container_width=True)
     st.caption("Giờ sinh theo múi giờ Việt Nam (UTC+7). Với lịch âm, thuật toán hiện chưa hỗ trợ lựa chọn tháng nhuận.")
 
@@ -135,7 +191,7 @@ if submitted:
                    "chi_gio": hour, "gioi_tinh": gender, "duong_lich": calendar == "Dương lịch",
                    "input_confidence": confidence, "gio_sinh_source": gio_sinh_source,
                    "gio_sinh_error_phut": int(gio_sinh_error) if gio_sinh_error else None,
-                   "target_year": target_year, "provider": mode, "top_k_per_topic": 4}
+                   "target_year": target_year, "provider": mode, "reading_mode": reading_mode, "top_k_per_topic": 4}
         try:
             preview = st.empty()
             with st.status("Đang lập lá số và đối chiếu sách…", expanded=True) as progress:
@@ -144,10 +200,25 @@ if submitted:
                     if event.get('event') == 'progress':
                         seconds = event.get('elapsed_ms', 0) / 1000
                         progress.update(label=f"{event.get('message', 'Đang xử lý…')} · {seconds:.0f} giây")
+                    elif event.get('event') == 'chart_ready':
+                        chart_data = event['report']
+                        st.session_state["chart_backup"] = chart_data
+                        with preview.container():
+                            st.caption("Đã tính xong lá số 12 cung. Bạn có thể xem ngay bên dưới trong khi hệ thống tìm nguồn sách và luận giải.")
+                            palaces = chart_data.get("la_so", {}).get("thap_ni_cung", [])
+                            if palaces:
+                                ln_map = _luu_nien_by_cung_map(chart_data.get("luu_nien"), palaces)
+                                st.markdown('<div class="horoscope-chart">' + render_laso(palaces, che_do="luoi", luu_nien_by_cung=ln_map) + '</div>', unsafe_allow_html=True)
+                            if chart_data.get("annual"):
+                                st.markdown(annual_panel(chart_data["annual"], chart_data.get("luu_nien")), unsafe_allow_html=True)
                     elif event.get('event') == 'prepared':
                         prepared = event['report']
                         with preview.container():
                             st.caption(f"Đã lập xong 12 cung và lấy {len(prepared.get('citations', []))} nguồn. Đây là dữ kiện trước khi luận giải thông minh diễn giải.")
+                            palaces = prepared.get("la_so", {}).get("thap_ni_cung", [])
+                            if palaces:
+                                ln_map = _luu_nien_by_cung_map(prepared.get("luu_nien"), palaces)
+                                st.markdown('<div class="horoscope-chart">' + render_laso(palaces, che_do="luoi", luu_nien_by_cung=ln_map) + '</div>', unsafe_allow_html=True)
                             st.markdown(annual_panel(prepared.get('annual', {}), prepared.get('luu_nien')), unsafe_allow_html=True)
                     elif event.get('event') == 'result':
                         result = event['report']
@@ -193,112 +264,43 @@ else:
     if input_confidence in ("C", "D"):
         st.warning(f"Dữ liệu giờ sinh chưa chắc chắn (mức {input_confidence}): báo cáo chỉ nêu kết luận cấu trúc, "
                    "không kết luận thời điểm/sự kiện cụ thể. Hãy đối chiếu lại giờ sinh nếu có thể.")
+    actual_mode = meta.get("actual_reading_mode", meta.get("reading_mode", "chuyen_sau"))
+    req_mode = meta.get("reading_mode", actual_mode)
+    fallback_reason = meta.get("fallback_reason")
+
     if is_mock:
         reason = "Bạn đã chọn chế độ chỉ dữ kiện lá số." if meta.get('reason') == 'requested' else meta.get('message', 'Luận giải thông minh chưa trả được bài hợp lệ.')
         st.markdown('<p class="notice">Phân tích dữ kiện lá số · ' + text(reason) + ' Phần dưới mô tả sao/cung tính được; chưa phải bài luận giải thông minh.</p>', unsafe_allow_html=True)
     elif is_mock is None:
         st.markdown('<p class="notice">Dịch vụ chưa cung cấp thông tin xác nhận chế độ tạo bài.</p>', unsafe_allow_html=True)
     else:
-        st.caption("Bài luận giải thông minh · Nội dung và nguồn trích dẫn chưa được kiểm duyệt thủ công.")
+        mode_label = "AI Chuyên sâu" if actual_mode == "chuyen_sau" else "AI Giải thích"
+        st.caption(f"Bài luận giải thông minh ({mode_label}) · Nội dung và nguồn trích dẫn chưa được kiểm duyệt thủ công.")
+    if fallback_reason:
+        st.warning(f"Lưu ý: Yêu cầu mức '{req_mode}', nhưng hệ thống hạ về '{actual_mode}' do: {fallback_reason}. Lá số và dữ kiện vẫn được bảo toàn.")
     if meta.get('specificity_low'):
         st.caption('Bài tổng hợp dựa trên ít dữ kiện riêng của lá số; xem mục Phân tích sao để đối chiếu.')
-    st.markdown(f'<div class="report-heading"><h2>{text(report.get("ho_ten"))}</h2><span>{text(st.session_state["report_time"])}</span></div>'
-                f'<p class="muted">{snapshot["ngay"]:02d}/{snapshot["thang"]:02d}/{snapshot["nam"]} · {"Dương lịch" if snapshot["duong_lich"] else "Âm lịch"} · {text(HOURS[snapshot["chi_gio"]-1])} · Năm {snapshot["target_year"]} · Giờ sinh mức {text(input_confidence)}</p>', unsafe_allow_html=True)
+    # Định danh người xem
+    render_header_identity(report, snapshot, basic, input_confidence)
     report_year = meta.get('target_year') or (report.get('annual') or {}).get('year')
     if report_year and target_year != report_year:
         st.warning(f"Báo cáo bên dưới là của năm {report_year}. Ô Năm chiêm nghiệm đang là {target_year}; "
                    "bấm Tạo bản luận giải để tạo lại báo cáo cho năm mới.")
-    element = str(basic.get("ban_menh", "")).upper()
-    element_class = next((v for k, v in {"HỎA": "hoa", "THỦY": "thuy", "MỘC": "moc", "KIM": "kim", "THỔ": "tho"}.items() if k in element), "neutral")
-    stats = [("Bản mệnh", basic.get("ban_menh")), ("Cục số", basic.get("ten_cuc")),
-             ("Mệnh tại", basic.get("cung_menh")), ("Thân tại", basic.get("cung_than"))]
-    identity_items = []
-    for index, (label, value) in enumerate(stats):
-        marker = f'<i class="element-dot {element_class}" aria-hidden="true"></i>' if index == 0 else ""
-        identity_items.append(f'<div><span class="muted">{label}</span><strong>{marker}{text(value)}</strong></div>')
-    st.markdown('<div class="identity-strip">' + ''.join(identity_items) + '</div>', unsafe_allow_html=True)
-    if report.get('annual'):
-        st.markdown(annual_panel(report['annual'], report.get('luu_nien')), unsafe_allow_html=True)
-    overview = reading.get("tong_quan", {})
-    if not isinstance(overview, dict):
-        overview = {}
-    left = panel("Chân dung của bạn", content(overview.get("ban_sac")) + '<h3>Mệnh và môi trường sống</h3>' + content(overview.get("ngu_hanh_nang_luong")))
-    right = panel("Thế mạnh & điều cần rèn luyện", '<h3>Thế mạnh</h3>' + content(overview.get("diem_manh")) + '<h3>Điều cần rèn luyện</h3>' + content(overview.get("diem_can_ren_luyen")))
-    st.markdown('<div class="overview-grid">' + left + right + '</div>', unsafe_allow_html=True)
-    order = list(dict.fromkeys(st.session_state.get("report_priorities", []) + list(TOPICS)))
-    tabs = st.tabs([TOPICS[key] for key in order])
-    for key, tab in zip(order, tabs):
-        with tab:
-            st.markdown(topic_panel(key, reading.get(key, {})), unsafe_allow_html=True)
-            ask_box(key, snapshot, snapshot.get('provider', 'auto'), API_BASE)
-    if reading.get('ket_luan'):
-        st.subheader('Kết luận & phân tích sâu')
-        st.caption('Mỗi mục gồm nhận định chuyên môn và phần chuyển thuật ngữ sang nghĩa đời thường, kèm dữ kiện/nguồn đối chiếu.')
-        fact_map = {f['fact_id']: f for f in report.get('star_analysis', [])}
-        for index, point in enumerate(reading['ket_luan'], 1):
-            st.caption('Loại kết luận: ' + {'cau_truc': 'Cấu trúc', 'thoi_diem': 'Thời điểm'}.get(point.get('loai_ket_luan'), 'Chưa phân loại'))
-            st.markdown(f'<p class="muted" style="margin:0 0 4px">Kết luận {index} · {confidence_badge(point.get("muc_tin_cay"))}</p>', unsafe_allow_html=True)
-            st.markdown(content(point.get('nhan_dinh')), unsafe_allow_html=True)
-            if point.get('giai_thich_thun_viet'):
-                st.markdown('<p class="muted"><strong>Giải nghĩa thuần Việt:</strong> ' + text(point.get('giai_thich_thun_viet')) + '</p>', unsafe_allow_html=True)
-            labels = [f"{fact_map[i]['sao']} tại {fact_map[i]['cung']} ({fact_map[i]['dia_chi']})" for i in point.get('fact_ids', []) if i in fact_map]
-            st.caption('Dữ kiện: ' + ('; '.join(labels) or '—') + ' · Nguồn: ' + (', '.join(f'[{r}]' for r in point.get('source_refs', [])) or '—'))
-            st.caption('Điều kiện / giới hạn: ' + point.get('gioi_han', 'Chưa xác minh thủ công.'))
-    st.markdown(panel("Gợi ý để chiêm nghiệm", content(reading.get("loi_khuyen_hanh_dong"))), unsafe_allow_html=True)
-    if reading.get('luan_diem'):
-        st.subheader('Lập luận từ sao và nguồn sách')
-        st.caption('Dấu hiệu thuận là loại chứng cứ gắn với fact_id; dấu hiệu nghịch là phản chứng trong nguồn hoặc câu "Không ghi nhận phản chứng trong nguồn đã lấy".')
-        fact_map = {f['fact_id']: f for f in report.get('star_analysis', [])}
-        st.markdown(evidence_table(reading['luan_diem'], fact_map), unsafe_allow_html=True)
-    if report.get('star_analysis'):
-        st.subheader('Sao & yếu tố cần đối chiếu')
-        st.caption('Nhóm cần lưu ý lấy từ danh mục sao truyền thống; không phải điểm rủi ro hay dự báo một biến cố. M/V/Đ/B/H là trạng thái sao gốc.')
-        group = st.selectbox('Phạm vi sao', ['Cần lưu ý', 'Chính tinh', 'Hỗ trợ', 'Tất cả'] + (
-            [f"Lưu niên năm {meta.get('target_year') or (report.get('annual') or {}).get('year')}"]
-            if any(f.get('nhom') == 'luu_nien' for f in report['star_analysis']) else []
-        ), key='star_filter')
-        groups = {'Cần lưu ý': 'risk_stars', 'Chính tinh': 'chinh_tinh', 'Hỗ trợ': 'cat_tinh'}
-        if group.startswith('Lưu niên'):
-            selected = [f for f in report['star_analysis'] if f.get('nhom') == 'luu_nien']
-        else:
-            selected = [f for f in report['star_analysis'] if group == 'Tất cả' or f.get('nhom') == groups.get(group)]
-        if selected:
-            st.markdown(star_table(selected), unsafe_allow_html=True)
-            with st.expander('Đối chiếu nguồn của một sao'):
-                fact = st.selectbox('Chọn sao và cung', selected, format_func=lambda f: f"{f['sao']} · {f['cung']} tại {f['dia_chi']}", key='selected_star')
-                st.caption(fact['source_status'])
-                for source in report.get('citations', []):
-                    if source['ref_id'] in fact['source_refs']:
-                        st.caption(f"[{source['ref_id']}] {BOOKS.get(source['book_code'], source['book_code'])} · {source.get('page_label', '')}")
-                        st.text(source['excerpt'])
-        else:
-            st.info('Chưa có sao thuộc nhóm này trong các cung đang phân tích.')
-    st.subheader("Đối chiếu & tìm hiểu thêm")
-    show_chart = st.toggle("Xem lá số chi tiết 12 cung", key="show_chart")
-    if show_chart:
-        palaces = report.get("la_so", {}).get("thap_ni_cung", [])
-        if palaces:
-            st.caption("M: Miếu · V: Vượng · Đ: Đắc · B: Bình · H: Hãm. Đây là ký hiệu vị trí sao trong lý thuyết truyền thống.")
-            st.markdown('<div class="horoscope-chart">' + luoi_html(palaces) + '</div>', unsafe_allow_html=True)
-        else:
-            st.info("Dịch vụ chưa trả dữ liệu 12 cung cho báo cáo này.")
-    show_sources = st.toggle("Xem trích dẫn sách gốc", key="show_sources")
-    if show_sources:
-        citations = report.get("citations", [])
-        st.caption("Đây là các đoạn được truy xuất để đối chiếu. Việc một đoạn xuất hiện ở đây chưa xác nhận mọi nhận định trong bài được nguồn đó hỗ trợ.")
-        if not citations:
-            st.info("Chưa có đoạn sách được truy xuất cho báo cáo này.")
-        for source in citations:
-            title = f'[{source.get("ref_id", "—")}] {BOOKS.get(source.get("book_code"), source.get("book_code", "Nguồn"))}'
-            with st.expander(title):
-                st.caption(f'{source.get("page_label", "Trang không xác định")} · {source.get("chapter") or "Chưa có tên chương"} · Chưa kiểm duyệt thủ công')
-                st.text(source.get("excerpt") or "Chưa có đoạn trích.")
-    with st.expander('Thời gian xử lý và chế độ thực chạy'):
-        timings = meta.get('timings_ms', {})
-        provider_label = {'gemini': 'Luận giải thông minh (online)', 'mock': 'Chỉ dữ kiện lá số (không dùng AI)'}.get(meta.get('actual_provider'), meta.get('actual_provider', '—'))
-        st.caption(f"Chế độ: {provider_label} · Số lần xử lý: {meta.get('attempts', 0)} · Cache: {'trúng' if meta.get('cached') else 'chưa có'}")
-        if meta.get('star_meanings_provided_to_ai'):
-            st.caption('Đã cấp thêm ý nghĩa sao từ skill tham khảo cho AI; chưa đối chiếu sách KMS, không thay nguồn sách gốc.')
-        st.caption(' · '.join(f"{label}: {timings.get(key, 0) / 1000:.2f}s" for key, label in [('chart', 'Lập lá số'), ('retrieval', 'Lấy nguồn'), ('generation', 'Tạo bài'), ('total', 'Tổng')]))
+
+    # Luồng 5 khối chuẩn (P7 §10.2): Lá số -> Tổng quan -> Chủ đề -> Vì sao -> Xem căn cứ
+    # 1. Lá số 12 cung
+    render_chart_section(report, luu_nien_by_cung_fn=_luu_nien_by_cung_map)
+
+    # 2. Tổng quan
+    render_overview_section(reading)
+
+    # 3. Theo chủ đề
+    render_topics_section(reading, snapshot, API_BASE, st.session_state.get("report_priorities", []))
+
+    # 4. Vì sao — Giải thích nhận định & cách cục
+    render_why_section(reading, report)
+
+    # 5. Xem căn cứ
+    render_evidence_section(report, meta)
 
 st.markdown('<footer>Tử Vi là một hệ thống văn hóa truyền thống để tham khảo và chiêm nghiệm. Luận giải không quyết định số phận và không thay thế tư vấn y khoa, pháp lý hay tài chính chuyên nghiệp.</footer>', unsafe_allow_html=True)

@@ -12,6 +12,7 @@ import requests
 
 from backend.app.core.config import (
     GEMINI_API_KEY, HOROSCOPE_MODEL, HOROSCOPE_TIMEOUT_SECONDS, HOROSCOPE_MAX_TOKENS,
+    HOROSCOPE_MAX_TOKENS_GIAI_THICH, HOROSCOPE_MAX_TOKENS_CHUYEN_SAU,
     HOROSCOPE_FALLBACK_MODELS, LLM_TEMPERATURE,
 )
 from backend.app.core.evidence_types import (
@@ -122,12 +123,13 @@ ERROR_MESSAGES = {
     'incomplete_response': 'Luận giải thông minh chưa trả trọn bài hoặc nội dung bị chặn. Không hiển thị bài chưa hoàn chỉnh.',
     'provider_error': 'Dịch vụ luận giải trả lỗi. Chưa tạo được bài luận giải.',
     'invalid_request': 'Dịch vụ luận giải không chấp nhận cấu hình yêu cầu (400).',
+    'sensitive_content': 'Nội dung chứa phán đoán nhạy cảm về tử vong/yểu mệnh hoặc phẩm hạnh chưa được kiểm duyệt.',
 }
 
 # Lỗi có thể do model quá tải/trục trặc tạm thời: thử model dự phòng trước khi lùi về bản dữ kiện.
 MODEL_FALLBACK_CODES = frozenset({
     'busy', 'timeout', 'network', 'provider_error', 'model_not_found',
-    'invalid_response', 'incomplete_response',
+    'invalid_response', 'incomplete_response', 'sensitive_content',
 })
 
 CONCLUSION_CONFIDENCE_LEVELS = ('rat_manh', 'manh', 'trung_binh', 'yeu')
@@ -137,6 +139,57 @@ CONCLUSION_CONFIDENCE_LABELS = {
 # Số fact_id tối thiểu để một mục được gắn bậc tương ứng.
 MIN_FACTS_BY_CONFIDENCE = {'rat_manh': 3, 'manh': 3, 'trung_binh': 1, 'yeu': 0}
 CONFIDENCE_PERCENT_PATTERN = re.compile(r'\d{1,3}(?:[.,]\d+)?\s*%')
+
+
+
+def get_max_tokens_for_mode(mode: str) -> int:
+    if mode == "chuyen_sau":
+        return HOROSCOPE_MAX_TOKENS_CHUYEN_SAU
+    if mode == "giai_thich":
+        return HOROSCOPE_MAX_TOKENS_GIAI_THICH
+    return HOROSCOPE_MAX_TOKENS
+
+
+SENSITIVE_PHRASES = (
+    "chết yểu", "tử vong", "chết sớm", "chắc chắn chết", "yểu mệnh",
+    "yểu chiết", "chết đuối", "thọ yểu", "đoản mệnh", "tự tử",
+    "dâm đãng", "lăng loàn", "trắc nết", "lẳng lơ", "tà dâm",
+)
+
+
+def check_sensitive_content(reading: dict[str, Any]) -> str | None:
+    """Kiểm tra nội dung nhạy cảm chưa duyệt: tử vong, yểu mệnh, phẩm hạnh (P6 §9.8)."""
+    if not isinstance(reading, dict):
+        return None
+    texts: list[str] = []
+    for point in reading.get("ket_luan") or []:
+        if isinstance(point, dict):
+            for k in ("nhan_dinh", "giai_thich_thun_viet", "gioi_han"):
+                v = point.get(k)
+                if isinstance(v, str):
+                    texts.append(v.lower())
+    for point in reading.get("luan_diem") or []:
+        if isinstance(point, dict):
+            for k in ("nhan_dinh", "gioi_han", "phan_chung"):
+                v = point.get(k)
+                if isinstance(v, str):
+                    texts.append(v.lower())
+    for sec_name in ("tong_quan", "su_nghiep", "tai_chinh", "tinh_cam", "van_han_hien_tai"):
+        sec = reading.get(sec_name)
+        if isinstance(sec, dict):
+            for v in sec.values():
+                if isinstance(v, str):
+                    texts.append(v.lower())
+                elif isinstance(v, list):
+                    for item in v:
+                        if isinstance(item, str):
+                            texts.append(item.lower())
+
+    full_text = " ".join(texts)
+    for phrase in SENSITIVE_PHRASES:
+        if phrase in full_text:
+            return f"Bài đọc chứa nội dung nhạy cảm chưa duyệt: phán đoán tử vong/yểu mệnh hoặc phẩm hạnh liên quan '{phrase}'."
+    return None
 
 
 def _model_chain() -> list[str]:
@@ -216,7 +269,8 @@ def prompt_data(features: dict[str, Any]) -> dict[str, Any]:
 
 
 def build_horoscope_user_prompt(features: dict[str, Any], formatted_context: str, facts: list | None = None,
-                                cach_cuc: dict[str, Any] | None = None) -> str:
+                                cach_cuc: dict[str, Any] | None = None,
+                                reading_mode: str = "chuyen_sau") -> str:
     basic = features.get('thong_tin_co_ban', {})
     year = basic.get('nam_sinh', 'chưa có dữ liệu')
     annual = features.get('nam_xem', {})
@@ -251,6 +305,11 @@ def build_horoscope_user_prompt(features: dict[str, Any], formatted_context: str
                           else select_meanings(resolved_facts))
         + '\nCÁCH CỤC ĐÃ NHẬN DIỆN BẰNG CODE (chỉ được dẫn các rule_id này, không tự thêm):\n'
         + cach_cuc_text
+        + (
+            '\nCHỈ DẪN MỨC GIẢI THÍCH (GIẢI NGHĨA THUẦN VIỆT): Tập trung giải thích thuật ngữ chuyên môn sang nghĩa thuần Việt đời thường, dễ hiểu cho người mới; mỗi nhận định liên kết chặt chẽ với fact_ids và nguồn; giữ nguyên phần điều kiện thiếu vào gioi_han.\n'
+            if reading_mode == 'giai_thich'
+            else '\nCHỈ DẪN MỨC CHUYÊN SÂU (TỔNG HỢP ĐA CHIỀU): Mỗi kết luận phân tích tổng hợp 7 khía cạnh cấu trúc: nhận định, dữ kiện, cách dữ kiện liên hệ tương tác, điều kiện thuận, điều kiện nghịch/giới hạn, biến chuyển theo vận hạn, và gợi ý chiêm nghiệm; phân tích tổng hợp đa chiều.\n'
+        )
         + '\nNGỮ CẢNH TRI THỨC TỪ SÁCH KINH ĐIỂN:\n' + (formatted_context or 'Chưa có nguồn sách.')
         + '\nYÊU CẦU ĐẦU RA JSON: theo schema; giữ năm xem, tên sao, cung và nguồn bên cạnh lập luận. '
           'Mỗi luận điểm dẫn fact_id khác nhau; phần vận trình nhắc đúng năm xem và can chi. '
@@ -573,14 +632,15 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
     }
 
 
-def _request_gemini(prompt_text: str, key: str, model: str = HOROSCOPE_MODEL) -> dict[str, Any]:
+def _request_gemini(prompt_text: str, key: str, model: str = HOROSCOPE_MODEL, reading_mode: str = "chuyen_sau") -> dict[str, Any]:
     model_id = model.removeprefix('models/')
+    max_tokens = get_max_tokens_for_mode(reading_mode)
     response = requests.post(
         f"https://generativelanguage.googleapis.com/v1beta/models/{model_id}:generateContent",
         headers={'x-goog-api-key': key},
         json={'systemInstruction': {'parts': [{'text': HOROSCOPE_SYSTEM_PROMPT}]},
               'contents': [{'parts': [{'text': prompt_text}]}],
-              'generationConfig': {'temperature': LLM_TEMPERATURE, 'maxOutputTokens': HOROSCOPE_MAX_TOKENS,
+              'generationConfig': {'temperature': LLM_TEMPERATURE, 'maxOutputTokens': max_tokens,
                                    'responseMimeType': 'application/json', 'responseJsonSchema': response_schema(include_annual=False)}},
         timeout=(5, HOROSCOPE_TIMEOUT_SECONDS),
     )
@@ -595,7 +655,7 @@ def _request_gemini(prompt_text: str, key: str, model: str = HOROSCOPE_MODEL) ->
 
 
 def interpret_horoscope(features: dict[str, Any], formatted_context: str, provider: str = 'auto',
-                        context: dict | None = None) -> dict[str, Any]:
+                        context: dict | None = None, reading_mode: str = 'chuyen_sau') -> dict[str, Any]:
     context = context or {}
     facts = build_star_facts(features, context)
     detection = detect_cach_cuc(features, facts=facts, context=context)
@@ -605,34 +665,45 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
 
     def fallback(reason, model):
         reading = generate_mock_reading(features, context)
+        actual_mode = 'du_lieu' if reason in ('sensitive_content', 'invalid_response', 'timeout') else reading_mode
         reading['_generation'] = {'actual_provider': 'mock', 'is_mock': True, 'reason': reason,
                                   'message': ERROR_MESSAGES.get(reason, ''), 'model': model,
                                   'attempts': attempts, 'specificity_low': False,
+                                  'actual_reading_mode': actual_mode,
+                                  'fallback_reason': reason if actual_mode != reading_mode else None,
                                   'elapsed_ms': round((time.perf_counter() - start) * 1000, 1)}
         return reading
 
     if provider == 'mock':
-        return fallback('requested', chain[0])
+        reading = generate_mock_reading(features, context)
+        reading['_generation'] = {'actual_provider': 'mock', 'is_mock': True, 'reason': 'requested',
+                                  'message': ERROR_MESSAGES.get('requested', ''), 'model': chain[0],
+                                  'attempts': 0, 'specificity_low': False,
+                                  'actual_reading_mode': reading_mode,
+                                  'fallback_reason': None,
+                                  'elapsed_ms': round((time.perf_counter() - start) * 1000, 1)}
+        return reading
     key = GEMINI_API_KEY or os.getenv('GEMINI_API_KEY', '')
     last_model = chain[0]
     error = None
     try:
         if not key:
             raise HoroscopeGenerationError('missing_key')
-        user_prompt = build_horoscope_user_prompt(features, formatted_context, facts, cach_cuc=detection)
+        user_prompt = build_horoscope_user_prompt(features, formatted_context, facts, cach_cuc=detection, reading_mode=reading_mode)
         for index, model in enumerate(chain):
             last_model = model
             attempts += 1
             try:
-                reading = _request_gemini(user_prompt, key, model)
+                reading = _request_gemini(user_prompt, key, model, reading_mode=reading_mode)
                 reading.setdefault('van_han_hien_tai',{}).update(build_annual_report(features,facts))
                 validate_reading(reading, facts, context)
                 confidence_problem = check_input_confidence(reading, features)
                 conclusion_problem = check_conclusion_confidence(reading)
                 evidence_problem = check_evidence_labels(reading, facts)
                 rule_problem = check_rule_ids(reading, detection)
+                sensitive_problem = check_sensitive_content(reading)
                 problem = (confidence_problem or conclusion_problem or evidence_problem
-                           or rule_problem or check_specificity(reading, features, context))
+                           or rule_problem or sensitive_problem or check_specificity(reading, features, context))
                 if problem:
                     attempts += 1
                     annual = features.get('nam_xem') or {}
@@ -664,12 +735,14 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                         f"Mỗi luận điểm phải dẫn fact_id khác nhau; "
                         f"phần vận trình phải nhắc năm xem {annual.get('year', '')} ({annual.get('can_chi', '')})."
                     )
-                    reading = _request_gemini(user_prompt + extra, key, model)
+                    reading = _request_gemini(user_prompt + extra, key, model, reading_mode=reading_mode)
                     reading.setdefault('van_han_hien_tai',{}).update(build_annual_report(features,facts))
                     validate_reading(reading, facts, context)
                     conclusion_problem = check_conclusion_confidence(reading)
                     evidence_problem = check_evidence_labels(reading, facts)
                     rule_problem = check_rule_ids(reading, detection)
+                    if check_sensitive_content(reading):
+                        raise HoroscopeGenerationError('sensitive_content')
                     if conclusion_problem or evidence_problem or rule_problem or check_input_confidence(reading, features):
                         raise HoroscopeGenerationError('invalid_response')
                     problem = (check_input_confidence(reading, features) or rule_problem
@@ -678,6 +751,8 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                 reading['_generation'] = {'actual_provider': 'gemini', 'is_mock': False, 'reason': None,
                                           'model': model, 'primary_model': chain[0], 'attempts': attempts,
                                           'specificity_low': bool(problem), 'specificity_reason': problem,
+                                          'actual_reading_mode': reading_mode,
+                                          'fallback_reason': None,
                                           'elapsed_ms': round((time.perf_counter() - start) * 1000, 1)}
                 return reading
             except requests.Timeout:

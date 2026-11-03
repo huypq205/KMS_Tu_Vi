@@ -87,13 +87,36 @@ button:focus-visible, input:focus-visible, [role="tab"]:focus-visible {outline: 
 .reading-field h3 {margin-top: 16px;}
 .reading-field:first-of-type h3 {margin-top: 0;}
 .horoscope-chart .grid {display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;}
-.horoscope-chart .cell {background: var(--raised); border: 1px solid var(--border); padding: 12px; border-radius: 6px; min-width: 0; overflow-wrap: anywhere;}
+.horoscope-chart .cell {background: var(--raised); border: 1px solid var(--border); padding: 10px 12px; border-radius: 6px; min-width: 0; overflow-wrap: anywhere;}
 .horoscope-chart .cell.center {background: none; border: 0;}
+.horoscope-chart .cell-header {display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px;}
+.horoscope-chart .badges-row {display: flex; gap: 3px;}
+.horoscope-chart .badge-tag {font-size: 10px; font-weight: 600; padding: 1px 4px; border-radius: 3px; line-height: 1.2;}
+.horoscope-chart .badge-tag.tuan {background: #24292f; color: #ffffff;}
+.horoscope-chart .badge-tag.triet {background: #cf222e; color: #ffffff;}
 .horoscope-chart .chi, .horoscope-chart .meta {font-size: 12px; color: var(--muted);}
-.horoscope-chart .ten {font-size: 14px; font-weight: 600; margin: 6px 0 10px;}
-.horoscope-chart .sao {display: inline-block; margin: 0 6px 4px 0; font-size: 12px;}
-.horoscope-chart .chinh {color: var(--accent); font-weight: 600;}
-.horoscope-chart .qc {font-size: 12px; margin-right: 6px; color: var(--muted) !important;}
+.horoscope-chart .ten {font-size: 14px; font-weight: 600; margin: 4px 0 8px;}
+.horoscope-chart .sao {display: inline-block; margin: 0 4px 3px 0; font-size: 12px;}
+.horoscope-chart .chinh-row {margin: 4px 0 6px; font-weight: 600;}
+.horoscope-chart .chinh-row .sao.chinh {font-size: 13px; color: var(--accent);}
+.horoscope-chart .chinh-row.vcd {color: var(--muted); font-style: italic; font-size: 12px;}
+.horoscope-chart .qc {font-size: 11px; margin-left: 2px; font-weight: 600;}
+.horoscope-chart .tu-hoa-row {margin-bottom: 6px;}
+.horoscope-chart .sao.tu-hoa {display: inline-block; font-size: 11px; font-weight: 500; padding: 1px 5px; border-radius: 3px; background: #e7f2f5; color: #1b6c80; border: 1px solid #bfdde5; margin: 0 4px 3px 0;}
+.horoscope-chart .substars-cols {display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 11px; margin-bottom: 6px; line-height: 1.4;}
+.horoscope-chart .sub-col.cat-col {border-right: 1px dashed var(--border); padding-right: 4px;}
+.horoscope-chart .sub-col.hung-col {padding-left: 2px;}
+.horoscope-chart .sao.phu.tot {color: #1a7f37; margin-bottom: 2px;}
+.horoscope-chart .sao.phu.hung {color: #cf222e; margin-bottom: 2px;}
+.horoscope-chart .sao.empty {color: var(--control);}
+.horoscope-chart .other-row {font-size: 11px; color: var(--muted); border-top: 1px dotted var(--border); padding-top: 4px; margin-bottom: 4px;}
+.horoscope-chart .luu-nien-row {margin-top: 4px;}
+.horoscope-chart .sao.luu-nien {display: inline-block; font-size: 11px; font-weight: 500; padding: 1px 5px; border-radius: 3px; background: #fbf7eb; color: #715013; border: 1px solid #e7d9b5; margin: 0 4px 3px 0;}
+.horoscope-chart .danh-sach {display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px;}
+.horoscope-chart .danh-sach-card {background: var(--raised); border: 1px solid var(--border); border-radius: 8px; padding: 14px;}
+.horoscope-chart .danh-sach-card .cell-header {display: flex; justify-content: space-between; align-items: baseline;}
+.horoscope-chart .danh-sach-card .ten {font-size: 16px; font-weight: 600; color: var(--accent); margin: 4px 0 8px;}
+.horoscope-chart .danh-sach-card .substars-cols {font-size: 13px; gap: 16px;}
 footer {font-size: 12px; line-height: 1.7; padding-top: 24px; border-top: 1px solid var(--border); margin-top: 8px;}
 .star-table-wrap {max-height: 420px; overflow: auto; border: 1px solid var(--border); border-radius: 6px;}
 .star-table {width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.5;}

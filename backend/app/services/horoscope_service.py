@@ -36,6 +36,22 @@ def reading_events(req: HoroscopeRequest):
             raw, req.target_year, req.input_confidence, req.gio_sinh_source, req.gio_sinh_error_phut,
         )
         timings['chart'] = round((time.perf_counter() - mark) * 1000, 1)
+        chart_report = {
+            'status': 'chart_ready',
+            'ho_ten': req.ho_ten or 'Người Xem',
+            'thong_tin_co_ban': features['thong_tin_co_ban'],
+            'la_so': {'thap_ni_cung': raw['thap_ni_cung']},
+            'annual': features['nam_xem'],
+            'luu_nien': features.get('luu_nien'),
+            'palaces': features['palaces'],
+            'meta': {
+                'request_id': request_id,
+                'target_year': features['nam_xem']['year'],
+                'reading_mode': req.reading_mode,
+                'contract_version': CONTRACT_VERSION,
+            },
+        }
+        yield {'event': 'chart_ready', 'report': chart_report}
         yield progress('retrieval', 'Đã lập lá số. Đang tìm nguồn theo tên sao và tổ hợp…')
         mark = time.perf_counter()
         context = retrieve_horoscope_context(features, req.top_k_per_topic)
@@ -65,6 +81,24 @@ def reading_events(req: HoroscopeRequest):
                      'total_chunks_retrieved': len(citations), 'queries_evaluated': context['query_count']},
         }
         yield {'event': 'prepared', 'report': report}
+
+        if req.reading_mode == 'du_lieu':
+            from backend.app.services.horoscope_interpreter import generate_mock_reading
+            reading = generate_mock_reading(features, context)
+            timings['generation'] = 0.0
+            timings['total'] = round((time.perf_counter() - started) * 1000, 1)
+            generation = {
+                'actual_provider': 'mock', 'is_mock': True, 'reason': 'requested',
+                'actual_reading_mode': 'du_lieu', 'fallback_reason': None, 'elapsed_ms': 0.0,
+            }
+            report = {
+                **report, 'reading': reading,
+                'meta': {**report['meta'], **generation, 'timings_ms': timings,
+                         'reading_mode': 'du_lieu', 'actual_reading_mode': 'du_lieu', 'fallback_reason': None,
+                         'star_meanings_provided_to_ai': False},
+            }
+            yield {'event': 'result', 'report': report}
+            return
 
         birth = {
             'ngay': req.ngay, 'thang': req.thang, 'nam': req.nam, 'chi_gio': req.chi_gio,
@@ -96,7 +130,7 @@ def reading_events(req: HoroscopeRequest):
         mark = time.perf_counter()
         # Heartbeats report real elapsed time while the single bounded request runs.
         with ThreadPoolExecutor(max_workers=1) as pool:
-            future = pool.submit(interpret_horoscope, features, format_context_for_prompt(context), req.provider, context)
+            future = pool.submit(interpret_horoscope, features, format_context_for_prompt(context), req.provider, context, req.reading_mode)
             while True:
                 try:
                     reading = future.result(timeout=1)
@@ -111,8 +145,13 @@ def reading_events(req: HoroscopeRequest):
                 cache_key, horoscope_cache.hash_payload(birth), features['nam_xem']['year'],
                 HOROSCOPE_MODEL, reading, generation,
             )
+        actual_mode = generation.get('actual_reading_mode', req.reading_mode)
+        fallback_reason = generation.get('fallback_reason')
         report = {**report, 'reading': reading,
                   'meta': {**report['meta'], **generation, 'timings_ms': timings,
+                           'reading_mode': req.reading_mode,
+                           'actual_reading_mode': actual_mode,
+                           'fallback_reason': fallback_reason,
                            'star_meanings_provided_to_ai':generation.get('actual_provider')=='gemini' and bool(meaning_references)}}
         logger.info('horoscope_read request_id=%s provider=%s reason=%s timings_ms=%s',
                     request_id, generation['actual_provider'], generation['reason'], timings)
@@ -132,5 +171,6 @@ def read_horoscope(req: HoroscopeRequest) -> dict:
             return {'status': 'error', 'error_code': event['code'], 'detail': event['message'],
                     'ho_ten': req.ho_ten or '', 'thong_tin_co_ban': {}, 'reading': {},
                     'meta': {'request_id': event['request_id'], 'reading_mode': req.reading_mode,
+                             'actual_reading_mode': 'du_lieu', 'fallback_reason': event['code'],
                              'contract_version': CONTRACT_VERSION}}
     raise RuntimeError('Reading stream ended without a terminal event.')
