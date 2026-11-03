@@ -9,6 +9,10 @@
 > >=3, trung bình >=1, yếu >=0; thay ngưỡng mạnh 2 của triển khai ban đầu cho đúng
 > plan. Cache v5, hồi quy 2092 passed / 351 known T4 xfailed.
 
+> Review T7 dữ liệu thật: PASSED trên workbook Final/TuVi_KMS_3Books_CANONICAL_MASTER_DEDUP_v1.0.xlsx:
+> 10456 bản ghi kiểm tra như mới không lỗi; cùng 10456 ID có trong kms.db. CSV
+> cùng tên là bảng Indicator/Value/Explanation, không phải thư mục tuvi_import.
+
 - **Ngày lập:** 2026-11-01
 - **Người lập kế hoạch (Planner):** Claude (QA & Test Architect)
 - **Người triển khai code (Coder):** Gemini (Antigravity IDE)

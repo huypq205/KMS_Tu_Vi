@@ -1,5 +1,12 @@
 # Changelog tri thức KMS Tử Vi
 
+## 2026-11-03 — T7 review trên workbook thật
+
+- Xác định workbook trong thư mục Final; CSV cùng tên chỉ chứa chỉ số tổng hợp,
+  không phải bộ REPO exports. Gate kiểm tra 10456 bản ghi như mới: không lỗi.
+- Đối chiếu DB baseline: 10456 checked, 0 new, 0 errors; đủ ba sách hiện hành.
+  Không import/build lại DB; không đưa workbook lên Git.
+
 ## 2026-11-03 — T2 review: số fact độc lập theo ID
 
 - Trước → sau: đếm độ dài danh sách (có thể lặp ID) → đếm fact_id khác nhau.

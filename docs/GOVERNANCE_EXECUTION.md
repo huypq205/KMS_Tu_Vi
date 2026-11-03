@@ -35,6 +35,9 @@ task to origin/main. Do not publish private input workbooks or CSV summaries.
 - Real input discovered at
   D:/FPT/2026/FA26/KMS301/Project_TuVi/Final/TuVi_KMS_3Books_CANONICAL_MASTER_DEDUP_v1.0.xlsx.
   Gate passed all 10456 records as new with zero errors, no source-D rows.
+- T7 real-data review also passed against existing DB: 10456 checked, zero new
+  ids, zero errors. Workbook SHA256 27901de589ec69959b43a80c3d108b83f5ebbc4c53489795b3301cf31ae72f40.
+  Source distribution matches NPL 2191, BD 4450, DAU 3815. No production import run.
 - Same-name CSV (1559 bytes) contains Indicator/Value/Explanation, not knowledge
   exports. `tuvi_import/` is a hypothetical export directory, not that CSV.
 - Frontend skill: design-taste-frontend has been read; app-screens reference is

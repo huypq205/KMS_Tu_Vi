@@ -163,3 +163,25 @@ Quy trình và mẫu đề xuất được diễn giải cho KMS từ repo MIT
 [research_rule.yml](https://github.com/duandigi/tu-vi-dau-so-research/blob/91f8a06f1bca2fb271791785937265ea78d7f858/.github/ISSUE_TEMPLATE/research_rule.yml).
 Code gate được viết riêng cho schema CSV/Excel của KMS; ngưỡng ít nhất một yếu tố
 thực hiện theo T7 trong plan dự án.
+
+## Review dữ liệu thật sau khi tìm lại nguồn
+
+Đã tìm và kiểm tra read-only workbook tại
+`D:/FPT/2026/FA26/KMS301/Project_TuVi/Final/TuVi_KMS_3Books_CANONICAL_MASTER_DEDUP_v1.0.xlsx`
+(9.369.217 byte). Chạy validator trên toàn bộ ID như mới: **10.456 checked,
+10.456 new, 0 quarantined, 0 errors — PASSED**. Không chạy import hoặc build index.
+
+CSV cùng tên chỉ có 1.559 byte, header `Indicator,Value,Explanation`, là bảng chỉ số
+tổng hợp; không phải export knowledge. `tuvi_import/` trong plan là thư mục dự kiến
+chứa các CSV `REPO_*`; nó không đồng nhất với CSV chỉ số này. Không cần tạo CSV
+trung gian vì validator đã đọc trực tiếp workbook thật. Giữ workbook ngoài Git.
+
+SHA-256 workbook: `27901de589ec69959b43a80c3d108b83f5ebbc4c53489795b3301cf31ae72f40`.
+Khi đối chiếu baseline `kms.db`: checked=10.456, new=0, errors=0. Số bản ghi theo
+sách khớp DB hiện hành: NPL 2.191, BD 4.450, DAU 3.815. SHA của file workbook
+khác SHA workbook từng ghi trong data dictionary; các ID hiện hành khớp, chưa vì
+vậy khẳng định hai file Excel giống nhau từng byte.
+
+```powershell
+python scripts/validate_knowledge_import.py "D:/FPT/2026/FA26/KMS301/Project_TuVi/Final/TuVi_KMS_3Books_CANONICAL_MASTER_DEDUP_v1.0.xlsx" --json
+```
