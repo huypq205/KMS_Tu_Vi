@@ -120,7 +120,7 @@ CONCLUSION_CONFIDENCE_LABELS = {
     'rat_manh': 'Rất mạnh', 'manh': 'Mạnh', 'trung_binh': 'Trung bình', 'yeu': 'Yếu',
 }
 # Số fact_id tối thiểu để một mục được gắn bậc tương ứng.
-MIN_FACTS_BY_CONFIDENCE = {'rat_manh': 3, 'manh': 2, 'trung_binh': 1, 'yeu': 0}
+MIN_FACTS_BY_CONFIDENCE = {'rat_manh': 3, 'manh': 3, 'trung_binh': 1, 'yeu': 0}
 CONFIDENCE_PERCENT_PATTERN = re.compile(r'\d{1,3}(?:[.,]\d+)?\s*%')
 
 
@@ -320,8 +320,9 @@ def check_conclusion_confidence(reading: dict) -> str | None:
                         f'{", ".join(CONCLUSION_CONFIDENCE_LEVELS)}.')
             needed = MIN_FACTS_BY_CONFIDENCE[level]
             ids = point.get('fact_ids') or []
-            if len(ids) < needed:
-                return (f'Mức {level} cần ít nhất {needed} fact_id nhưng chỉ có {len(ids)}; '
+            distinct = len(set(ids))
+            if distinct < needed:
+                return (f'Mức {level} cần ít nhất {needed} fact_id khác nhau nhưng chỉ có {distinct}; '
                         'hạ bậc tin cậy hoặc bổ sung dẫn chứng.')
     for text in _iter_reading_text(reading):
         if CONFIDENCE_PERCENT_PATTERN.search(text):

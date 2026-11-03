@@ -1,5 +1,13 @@
 # Changelog tri thức KMS Tử Vi
 
+## 2026-11-03 — T2 review: số fact độc lập theo ID
+
+- Trước → sau: đếm độ dài danh sách (có thể lặp ID) → đếm fact_id khác nhau.
+- Mức mạnh cần >=3 fact theo plan T2; rất mạnh >=3, trung bình >=1, yếu >=0.
+  Cache schema 4 → 5 để không trả lại bài theo ngưỡng cũ.
+- Review có test tái hiện lặp ID và hai fact cho mức mạnh; hồi quy 2092 passed,
+  351 known T4 xfailed. Các bậc không phải tỷ lệ xác suất nghiệm lý.
+
 ## 2026-11-03 — T1 review: giới hạn C/D được chặn sau retry
 
 - Trước → sau: retry vẫn có thể trả kết luận thời điểm với specificity_low →

@@ -21,6 +21,10 @@ task to origin/main. Do not publish private input workbooks or CSV summaries.
 - T3 merged, reviewed and pushed to origin/main at 5b5d508 (2089 passed, 351 known T4 xfailed).
 - T1 review fixed final-retry leakage for C/D, added conclusion classification
   across schema/UI/fixture. Regression: 2091 passed, 351 known T4 xfailed.
+- T1 review pushed at bd428c3. T2 review fixed duplicate-id inflation and aligned
+  strong minimum to three distinct facts; cache v5. Regression 2092 passed,
+  351 known T4 xfailed. T4/T5 reviewed through integration plus existing vectors
+  and 40-entry comparison; mismatches remain in issue #1, no vendor edits.
 - Test suite modifies the tracked kms.db cache; do not stage that generated DB
   change. Preserve a backup before cleaning it at the end.
 - T3 initial integration regression: 2087 passed, 351 known T4 xfailed.

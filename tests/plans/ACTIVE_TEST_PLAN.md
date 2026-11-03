@@ -5,6 +5,10 @@
 > 2091 passed, 351 known T4 xfailed. Ghi chú cũ về trả specificity_low cho vi phạm
 > C/D bên dưới là lịch sử, đã được sửa bởi review này.
 
+> Review T2: PASSED; chỉ đếm fact_id khác nhau. Ngưỡng hiện hành rất mạnh/mạnh
+> >=3, trung bình >=1, yếu >=0; thay ngưỡng mạnh 2 của triển khai ban đầu cho đúng
+> plan. Cache v5, hồi quy 2092 passed / 351 known T4 xfailed.
+
 - **Ngày lập:** 2026-11-01
 - **Người lập kế hoạch (Planner):** Claude (QA & Test Architect)
 - **Người triển khai code (Coder):** Gemini (Antigravity IDE)

@@ -76,6 +76,17 @@ def test_confidence_level_must_match_fact_count():
     assert check_conclusion_confidence(reading) is None
 
 
+def test_confidence_counts_distinct_facts_and_strong_requires_three():
+    reading, facts, _ = _reading(make_features(2026))
+    point = reading['luan_diem'][0]
+    point.update(muc_tin_cay='rat_manh', fact_ids=[facts[0]['fact_id']] * 3)
+    assert check_conclusion_confidence(reading)
+    point.update(muc_tin_cay='manh', fact_ids=[f['fact_id'] for f in facts[:2]])
+    assert check_conclusion_confidence(reading)
+    point['fact_ids'] = [f['fact_id'] for f in facts[:3]]
+    assert check_conclusion_confidence(reading) is None
+
+
 def test_percent_confidence_is_rejected():
     reading, _, _ = _reading(make_features(2026))
     for text in ("Có 85% khả năng thuận lợi.", "Có 85 % khả năng thuận lợi.", "Có 12,5% khả năng."):
