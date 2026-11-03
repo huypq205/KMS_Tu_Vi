@@ -89,3 +89,16 @@ states, errors, immutability, API/UI integration and publication status.
 - Validator detects duplicate YAML, >=500 lines, broken files/anchors and repo
   escapes; CI runs it. 13 targeted passed, KMS and skill-creator validators pass.
 - Regression all tests: 2134 passed / 351 known T4 xfailed (57.41s).
+
+## Final CI review finding
+
+- GitHub run 41567301223 (e051f0b) passed both gates but failed three legacy
+  singleton tests: missing optional qdrant_client/sentence_transformers in the
+  intentionally light backend environment. This was not visible in the full
+  local environment.
+- Kept singleton tests meaningful with an isolated counting vector-store factory
+  rather than opening production Qdrant files; lazy-import the optional model
+  only when EmbeddingAdapter is instantiated. Added a subprocess regression
+  that explicitly blocks sentence_transformers import.
+- RED reproduced, then 6 singleton tests passed. Global: 2135 passed / 351 known
+  T4 xfailed (55.73s). Awaiting remote CI before final acceptance.

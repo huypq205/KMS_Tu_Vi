@@ -8,7 +8,6 @@ import threading
 from pathlib import Path
 
 import numpy as np
-from sentence_transformers import SentenceTransformer
 
 from backend.app.core.config import EMBEDDING_MODEL, EMBEDDING_DIM
 from backend.app.db.models import Chunk
@@ -17,6 +16,8 @@ from backend.app.services.vector_store import get_vector_store
 
 class EmbeddingAdapter:
     def __init__(self):
+        # Optional model package is needed only when dense retrieval is used.
+        from sentence_transformers import SentenceTransformer
         self.model = SentenceTransformer(EMBEDDING_MODEL, device="cpu")
         self.store = get_vector_store()
 
