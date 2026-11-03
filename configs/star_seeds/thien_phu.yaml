@@ -1,0 +1,13 @@
+name: Thiên Phủ
+source: "Toàn Tập (bản dịch Quách Ngọc Bội) — nguồn gián tiếp do repo tham khảo gán, chưa xác minh"
+slots:
+  core_function:
+    text: "Gợi chủ đề gìn giữ, tích lũy và quản lý những nguồn lực đang có."
+    source: "Toàn Tập (bản dịch Quách Ngọc Bội) — nguồn gián tiếp do repo tham khảo gán, chưa xác minh"
+    reference: "https://github.com/hung-ngm/tu-vi-dau-so/blob/d0238e9ee9f1a8a1603f5ff1328b18bf6e4635b7/tu-vi-dau-so/skills/tu-vi-dau-so/references/star_meanings.md"
+    status: seed_unverified
+  yin_yang_five_element:
+    text: "Thuộc hành Thổ theo tài liệu tham khảo."
+    source: "Toàn Tập (bản dịch Quách Ngọc Bội) — nguồn gián tiếp do repo tham khảo gán, chưa xác minh"
+    reference: "https://github.com/hung-ngm/tu-vi-dau-so/blob/d0238e9ee9f1a8a1603f5ff1328b18bf6e4635b7/tu-vi-dau-so/skills/tu-vi-dau-so/references/star_meanings.md"
+    status: seed_unverified

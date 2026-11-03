@@ -1,0 +1,18 @@
+/* KMS research screens: existing IBM Plex typography and source-focused rows. */
+[data-testid="stSidebar"] {min-width:230px;max-width:230px;}
+[data-testid="stMainBlockContainer"] {margin-top:24px;border-radius:8px;}
+[data-testid="stExpandSidebarButton"]::after {content:'KMS Tử Vi';}
+button, input, select {min-height:44px;}
+.stCaption, .stCaption p, [data-testid="stCaptionContainer"] p {
+  color:var(--muted)!important;opacity:1!important;
+}
+[data-testid="stCaptionContainer"] {opacity:1!important;}
+[data-testid="stMarkdownContainer"] p, blockquote, blockquote p {color:var(--text)!important;}
+blockquote {opacity:1!important;}
+[data-testid*="Caption"] p {color:var(--muted)!important;}
+button[kind="primary"] [data-testid="stMarkdownContainer"] p,
+button[kind="primaryFormSubmit"] [data-testid="stMarkdownContainer"] p {color:white!important;}
+@media (max-width:1100px) {
+  [data-testid="stHorizontalBlock"] {flex-direction:column;}
+  [data-testid="stColumn"] {width:100%;flex:1 1 100%;}
+}

@@ -745,3 +745,11 @@ nguồn video không ghi đè tên/định danh sách đã có khi dùng chung B
 `python scripts/validate_knowledge_import.py tuvi_import/` hiện trả lỗi input thiếu;
 đây không phải bằng chứng kho import thực tế đã pass. Workbook gốc cũng vắng mặt.
 Chưa import dữ liệu thật hoặc chạy build index; các bài test tích hợp dùng DB tạm.
+
+## Governance T6 — Hồ sơ sao (2026-11-03)
+
+**PASSED**: 8 test riêng; hồi quy 2100 passed / 351 known T4 xfailed.
+Review API alias/auth/503/404, 14 nhóm, nguồn sách tách biệt, trang dẫn thật,
+20 seed qua gate, ưu tiên canonical và cấu hình tắt seed phía server.
+Review UI thực tế 1440/768/390px và trạng thái Streamlit.
+Chi tiết: [STAR_DOSSIER.md](../../docs/STAR_DOSSIER.md).

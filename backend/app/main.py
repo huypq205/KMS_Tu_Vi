@@ -93,7 +93,7 @@ def _rate_limited(ip: str, now: float) -> bool:
 @app.middleware("http")
 async def security_middleware(request, call_next):
     path = request.url.path
-    if path.startswith("/api/v1/") and not path.endswith("/health"):
+    if path.startswith(("/api/v1/", "/api/stars/")) and not path.endswith("/health"):
         if _API_KEY and request.headers.get("X-API-Key", "") != _API_KEY:
             return JSONResponse(status_code=401, content={"detail": "Thiếu hoặc sai X-API-Key."})
         if _RATE_LIMIT_PER_MIN > 0 and path.startswith("/api/v1/horoscope"):
@@ -298,3 +298,7 @@ def horoscope_read_stream(req: HoroscopeRequest):
             yield json.dumps(event, ensure_ascii=False) + '\n'
     return StreamingResponse(stream(), media_type='application/x-ndjson',
                              headers={'Cache-Control': 'no-cache', 'X-Accel-Buffering': 'no'})
+
+
+from backend.app.api.governance import router as governance_router
+app.include_router(governance_router)

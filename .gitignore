@@ -75,3 +75,6 @@ frontend/build/
 Thumbs.db
 .vscode/
 .idea/
+
+# Local rendered design review artifacts
+.taste-skill/governance/

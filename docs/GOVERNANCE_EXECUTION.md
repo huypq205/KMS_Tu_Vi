@@ -43,8 +43,17 @@ task to origin/main. Do not publish private input workbooks or CSV summaries.
 - Frontend skill: design-taste-frontend has been read; app-screens reference is
   being read before new screens. Keep existing Streamlit shell and design.
 
+## T6 review
+
+- Implemented 14 source-aware slots, 20 gated and explicitly unverified seeds,
+  read-only API aliases, API-key/error paths and Streamlit navigation.
+- Review: separate books/citations, no invented missing data, seed toggle on
+  both client/server. Real corpus checked for Vũ Khúc and Cự Môn.
+- Tests: 8 targeted passed; regression 2100 passed / 351 known T4 xfailed.
+- Browser review: desktop/tablet/mobile; existing typography/palette retained.
+
 ## Remaining implementation
 
-T6, T8, T9, T10, final T11; legacy T1/T2 acceptance review. No task should be marked
+T8, T9, T10, final T11. T1/T2 acceptance reviews were completed above. No task should be marked
 complete merely from its test count: review contracts, source attribution, empty
 states, errors, immutability, API/UI integration and publication status.

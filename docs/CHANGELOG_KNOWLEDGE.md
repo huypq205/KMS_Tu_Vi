@@ -1,5 +1,15 @@
 # Changelog tri thức KMS Tử Vi
 
+## 2026-11-03 — T6: hồ sơ sao có nguồn và seed tách biệt
+
+- Trước → sau: chỉ tra cứu qua bài luận → API và UI hồ sơ 14 nhóm, giữ riêng
+  NPL/DAU/BD với knowledge_id và trang dẫn. Mục thiếu được công khai.
+- 20 YAML diễn giải ý từ repo 2, luôn seed_unverified, qua T7 gate, chỉ lấp nhóm
+  thiếu và chỉ xuất hiện khi người dùng bật. Không nhập seed vào canonical/RAG.
+- Ảnh hưởng: thêm luồng đọc độc lập, không thay bài luận hay bảng an sao.
+- Review API, ưu tiên nguồn, nhãn, lỗi và UI ba kích thước; 8 test riêng passed,
+  hồi quy 2100 passed / 351 known T4 xfailed. Xem STAR_DOSSIER.md.
+
 ## 2026-11-03 — T7 review trên workbook thật
 
 - Xác định workbook trong thư mục Final; CSV cùng tên chỉ chứa chỉ số tổng hợp,
