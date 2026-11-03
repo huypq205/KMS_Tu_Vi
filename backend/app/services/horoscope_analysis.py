@@ -4,10 +4,13 @@ from __future__ import annotations
 import unicodedata
 from typing import Any
 
+from backend.app.core.evidence_types import EvidenceType
 from backend.app.services.horoscope_annual import tu_hoa_stars_for_can
 from backend.app.services.tu_hoa_tables import normalize_star
 
 NATAL_GROUPS = ("chinh_tinh", "risk_stars", "cat_tinh")
+CHI_ORDER = ("Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi")
+TU_HOA_MARKERS = frozenset({"hóa lộc", "hóa quyền", "hóa khoa", "hóa kỵ"})
 
 
 def strip_accents(s: str) -> str:
@@ -67,6 +70,34 @@ def _matching_refs(star_name: str, ref_list: list[dict[str, Any]]) -> list[int]:
     return matching
 
 
+def _palace_evidence_kind(dia_chi: str, tam_phuong: dict[str, Any] | None) -> str:
+    """Loại chứng cứ của một sao theo vị trí cung so với cung Mệnh.
+
+    - Cung Mệnh: tọa thủ.
+    - Đối cung Mệnh: xung chiếu.
+    - Cung tam hợp với Mệnh: tam hợp.
+    - Cung kế cận Mệnh: giáp cung.
+    - Các cung còn lại: vẫn là sao tọa thủ tại cung của nó.
+    """
+    tam_phuong = tam_phuong or {}
+    dia_chi = dia_chi.replace("Tị", "Tỵ")
+    anchor = (tam_phuong.get("chinh_cung") or "").replace("Tị", "Tỵ")
+    if not anchor or not dia_chi or dia_chi == anchor:
+        return EvidenceType.TOA_THU.value
+    if dia_chi == (tam_phuong.get("doi_cung") or "").replace("Tị", "Tỵ"):
+        return EvidenceType.XUNG_CHIEU.value
+    if dia_chi in [c.replace("Tị", "Tỵ") for c in (tam_phuong.get("tam_hop") or [])]:
+        return EvidenceType.TAM_HOP.value
+    try:
+        index = CHI_ORDER.index(anchor)
+        neighbours = {CHI_ORDER[(index - 1) % 12], CHI_ORDER[(index + 1) % 12]}
+        if dia_chi in neighbours:
+            return EvidenceType.GIAP_CUNG.value
+    except ValueError:
+        pass
+    return EvidenceType.TOA_THU.value
+
+
 def _make_fact(
     fact_id: int,
     star_name: str,
@@ -79,6 +110,7 @@ def _make_fact(
     triet: bool,
     ref_list: list[dict[str, Any]],
     match_name: str | None = None,
+    kind: str = EvidenceType.TOA_THU.value,
 ) -> dict[str, Any]:
     matching = _matching_refs(match_name or star_name, ref_list)
     status_text = (
@@ -98,6 +130,7 @@ def _make_fact(
         "tuan": tuan,
         "triet": triet,
         "ngu_hanh": "—",
+        "kind": kind,
         "source_status": status_text,
         "source_refs": matching,
     }
@@ -108,7 +141,7 @@ def build_star_facts(features: dict[str, Any], context: dict[str, Any] | None = 
 
     Schema fact thống nhất cho lá số gốc và sao lưu niên:
     fact_id, sao, cung, dia_chi, dac_tinh, nhom, roles, tuan, triet, ngu_hanh,
-    source_status, source_refs.
+    kind, source_status, source_refs.
     """
     context = context or {}
     ref_list = context.get("reference_list", [])
@@ -120,6 +153,7 @@ def build_star_facts(features: dict[str, Any], context: dict[str, Any] | None = 
     birth_can = (basic.get("can_chi_nam") or "").split(" ")[0]
     table_id = (basic.get("tu_hoa_table") or {}).get("id")
     tu_hoa_names = {normalize_star(name) for name in tu_hoa_stars_for_can(birth_can, table_id).values()}
+    tam_phuong = features.get("tam_phuong_tu_chinh_menh") or {}
 
     palaces = features.get("palaces", [])
     for p in palaces:
@@ -133,10 +167,15 @@ def build_star_facts(features: dict[str, Any], context: dict[str, Any] | None = 
                 star_name = s.get("ten", "")
                 if not star_name:
                     continue
-                roles = ["Tứ hóa"] if normalize_star(star_name) in tu_hoa_names else []
+                norm = normalize_star(star_name)
+                is_tu_hoa = norm in tu_hoa_names or star_name.casefold() in TU_HOA_MARKERS
+                roles = ["Tứ hóa"] if norm in tu_hoa_names else []
+                kind = (EvidenceType.TU_HOA.value if is_tu_hoa
+                        else _palace_evidence_kind(dia_chi, tam_phuong))
                 facts.append(_make_fact(
                     fact_id, star_name, cung_ten, dia_chi, group_key,
                     s.get("dac_tinh") or "—", roles, tuan, triet, ref_list,
+                    kind=kind,
                 ))
                 fact_id += 1
 
@@ -149,6 +188,7 @@ def build_star_facts(features: dict[str, Any], context: dict[str, Any] | None = 
             fact_id, entry.get("ten", ""), entry.get("cung_ten", ""), entry.get("dia_chi", ""),
             "luu_nien", "—", ["Lưu niên"], bool(palace.get("tuan_trung")),
             bool(palace.get("triet_lo")), ref_list,
+            kind=EvidenceType.VAN_HAN.value,
         ))
         fact_id += 1
 
@@ -159,6 +199,7 @@ def build_star_facts(features: dict[str, Any], context: dict[str, Any] | None = 
             fact_id, display, entry.get("cung_ten", ""), entry.get("dia_chi", ""),
             "luu_nien", "—", ["Lưu niên"], bool(palace.get("tuan_trung")),
             bool(palace.get("triet_lo")), ref_list, match_name=entry.get("ten_sao", ""),
+            kind=EvidenceType.TU_HOA.value,
         ))
         fact_id += 1
 

@@ -10,7 +10,7 @@ from tests.horoscope_support import make_features, make_request
 
 REQUIRED = {
     "fact_id", "sao", "cung", "dia_chi", "dac_tinh", "nhom", "roles",
-    "tuan", "triet", "ngu_hanh", "source_status", "source_refs",
+    "tuan", "triet", "ngu_hanh", "kind", "source_status", "source_refs",
 }
 
 

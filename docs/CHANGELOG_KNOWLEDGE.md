@@ -1,5 +1,16 @@
 # Changelog tri thức KMS Tử Vi
 
+## 2026-11-03 — T3: merge và review loại chứng cứ
+
+- Trước → sau: facts chưa có loại → từ điển 10 loại, `kind`, luận điểm có
+  `loi_chung_cu` và `phan_chung`; UI hiển thị dấu hiệu thuận/nghịch.
+- Merge nhánh `feature/t3-evidence-labels` (aaa0951) cùng T7 trên main.
+- Review sửa việc nhận thêm nhãn nghiệm lý không có trong fact dẫn và chuẩn hóa
+  Tị/Tỵ khi xác định giáp cung. Suy luận có nhãn riêng, không giả làm nghiệm lý.
+- Kết luận bị ảnh hưởng: luận điểm của mọi bài đọc mới; cache schema được nâng
+  bởi T3 để bài cũ thiếu trường tự miss. Không nhập tri thức canonical mới.
+- Kiểm chứng sau review: 2089 passed, 351 known T4 xfailed (62.37s).
+
 ## 2026-11-03 — T7: cổng import tri thức v1.0
 
 - **Trước → sau:** import canonical chưa có gate → validator CSV/Excel độc lập

@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 from unittest.mock import Mock
 
+from backend.app.core.evidence_types import NO_COUNTER_EVIDENCE
 from backend.app.schemas.horoscope import HoroscopeRequest
 
 BIRTH = {"ngay": 15, "thang": 8, "nam": 1995, "chi_gio": 5, "gioi_tinh": 1}
@@ -37,6 +38,8 @@ def valid_reading(facts: list[dict], year_text: str = "2026 Bính Ngọ",
         "nhan_dinh": f"{f['sao']} tại {f['cung']} ({f['dia_chi']}) cần đối chiếu điều kiện trong nguồn.",
         "gioi_han": "Chỉ nêu điều kiện đã có trong dữ kiện lá số.",
         "muc_tin_cay": "trung_binh",
+        "loi_chung_cu": [f["kind"]],
+        "phan_chung": NO_COUNTER_EVIDENCE,
         "fact_ids": [f["fact_id"]],
         "source_refs": [f["source_refs"][0]],
     } for f in usable]

@@ -111,6 +111,8 @@ def test_busy_primary_model_falls_back_before_mock():
     reading = interpreter.generate_mock_reading(f)
     reading['luan_diem'] = [{'nhan_dinh': 'Một nhận định có điều kiện.', 'gioi_han': 'Cần kiểm tra tổ hợp.',
                              'muc_tin_cay': 'trung_binh',
+                             'loi_chung_cu': [fact.get('kind', 'toa_thu')],
+                             'phan_chung': 'Không ghi nhận phản chứng trong nguồn đã lấy.',
                              'fact_ids': [fact['fact_id']], 'source_refs': fact['source_refs'][:1]}]
     busy = Mock(status_code=503)
     busy.json.return_value = {'error': {'message': 'busy'}}
@@ -143,6 +145,8 @@ def test_complete_ai_response_requires_real_fact_and_source_links():
     reading = interpreter.generate_mock_reading(f)
     reading['luan_diem'] = [{'nhan_dinh': 'Một nhận định có điều kiện.', 'gioi_han': 'Cần kiểm tra tổ hợp.',
                              'muc_tin_cay': 'trung_binh',
+                             'loi_chung_cu': [fact.get('kind', 'toa_thu')],
+                             'phan_chung': 'Không ghi nhận phản chứng trong nguồn đã lấy.',
                              'fact_ids': [fact['fact_id']], 'source_refs': fact['source_refs'][:1]}]
     interpreter.validate_reading(reading, facts, context)
     response = Mock(status_code=200)

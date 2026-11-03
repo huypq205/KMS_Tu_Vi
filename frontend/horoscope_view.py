@@ -76,6 +76,52 @@ def confidence_badge(level) -> str:
     return f'<span class="conf-badge {css}">Tin cậy: {text(label)}</span>'
 
 
+EVIDENCE_LABELS = {
+    "toa_thu": "Tọa thủ", "tam_hop": "Tam hợp", "xung_chieu": "Xung chiếu",
+    "giap_cung": "Giáp cung", "tu_hoa": "Tứ hóa", "menh_cuc": "Mệnh – Cục",
+    "van_han": "Vận hạn", "nghiem_ly": "Nghiệm lý", "truong_phai": "Trường phái",
+    "suy_luan": "Suy luận",
+}
+
+
+def evidence_label(value) -> str:
+    return EVIDENCE_LABELS.get(str(value or ""), "Chưa rõ loại")
+
+
+def evidence_table(points, fact_map=None) -> str:
+    """Bảng luận điểm 3 cột: luận điểm · dấu hiệu thuận · dấu hiệu nghịch."""
+    fact_map = fact_map or {}
+    rows = []
+    for point in points or []:
+        chips = "".join(
+            f'<span class="evidence-chip">{text(evidence_label(label))}</span>'
+            for label in point.get("loi_chung_cu") or []
+        ) or '<span class="muted">—</span>'
+        facts = [
+            f"{fact_map[i]['sao']} tại {fact_map[i]['cung']}"
+            for i in (point.get("fact_ids") or []) if i in fact_map
+        ]
+        refs = ", ".join(f"[{r}]" for r in (point.get("source_refs") or []))
+        support = chips
+        if facts:
+            support += '<p class="evidence-facts">' + text("; ".join(facts)) + '</p>'
+        if refs:
+            support += '<p class="evidence-facts">Nguồn: ' + text(refs) + '</p>'
+        counter = text(point.get("phan_chung") or "—")
+        rows.append(
+            '<tr>'
+            f'<td>{confidence_badge(point.get("muc_tin_cay"))}'
+            f'<p>{text(point.get("nhan_dinh"))}</p>'
+            f'<p class="muted">Điều kiện / giới hạn: {text(point.get("gioi_han"))}</p></td>'
+            f'<td>{support}</td>'
+            f'<td>{counter}</td>'
+            '</tr>'
+        )
+    return ('<table class="evidence-table"><thead><tr>'
+            '<th>Luận điểm</th><th>Dấu hiệu thuận</th><th>Dấu hiệu nghịch</th>'
+            '</tr></thead><tbody>' + "".join(rows) + '</tbody></table>')
+
+
 def topic_panel(key: str, value: dict) -> str:
     if not isinstance(value, dict) or not value:
         return panel(TOPICS[key], '<p class="muted">Chưa có luận giải cho chủ đề này.</p>')
