@@ -1,5 +1,18 @@
 # Changelog tri thức KMS Tử Vi
 
+## 2026-11-03 — T9: báo cáo năm bốn tầng, cache v6
+
+- Trước → sau: vận trình chỉ có bốn đoạn lời → thêm bảng ba chủ đề với lá số
+  gốc/đại hạn/lưu niên/lưu nguyệt, phản chứng và mức tin cậy; so năm ±1 và mục
+  chưa đủ căn cứ. Dữ kiện được ghép phía server, không lấy bảng do LLM bịa.
+- Lưu nguyệt luôn thiếu; bảng giữ mức yếu/chỉ cấu trúc. So năm giữ bảng Tứ Hóa
+  đã chọn, không an 1899/2101; request năm ngoài 1900–2100 bị từ chối.
+- Cache schema 5 → 6; mock, schema, prompt, validator và UI đồng bộ. Không nhập
+  tri thức mới. Năm trong bảng không thay được yêu cầu lời luận bám năm xem.
+- Review sửa fallback thiếu năm và nối đại hạn bằng địa chi; thêm test tái hiện.
+  10 test T9 passed; hồi quy phạm vi đến T9: 2121 passed / 351 known T4 xfailed.
+- Chi tiết, nguồn Mẫu D và giới hạn: [ANNUAL_REPORT.md](ANNUAL_REPORT.md).
+
 ## 2026-11-03 — T8: nghiệm lý có khóa và lịch sử bất biến
 
 - Trước → sau: chưa có kho nghiệm lý → ba bảng bổ sung, API và trang nhật ký

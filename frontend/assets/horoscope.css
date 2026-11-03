@@ -4,6 +4,10 @@
   --border: #e4eae7; --control: #c6cfcb; --primary: #172c29;
   --gap: 24px; --font: 'IBM Plex Sans', sans-serif;
 }
+.annual-activation {border-bottom:1px solid var(--border);padding:12px 0;}
+.annual-activation summary {cursor:pointer;min-height:44px;font-weight:500;}
+.annual-activation dt {font-weight:600;margin-top:12px;}
+.annual-activation dd {margin:4px 0 12px;overflow-wrap:anywhere;}
 html, body, [data-testid="stApp"], input, textarea, button, select,
 [data-testid="stApp"] [data-testid="stMarkdownContainer"],
 [data-testid="stApp"] [data-baseweb] {font-family: var(--font); color: var(--text);}

@@ -20,6 +20,8 @@ from backend.app.core.evidence_types import (
     evidence_label,
 )
 from backend.app.services.horoscope_analysis import build_star_facts, palace_summary, strip_accents
+from backend.app.services.horoscope_annual import build_annual_report, validate_annual_report
+from backend.app.schemas.annual_report import AnnualReport
 from backend.app.services.horoscope_confidence import (
     LOW_CONFIDENCE_CAVEAT,
     check_input_confidence,
@@ -49,7 +51,7 @@ Mức tin cậy giờ sinh (input_confidence A–D) nằm trong DỮ KIỆN:
   "dữ liệu giờ sinh chưa chắc chắn (mức C/D)".
 Bậc tin cậy cho từng mục luan_diem và ket_luan (trường "muc_tin_cay", bắt buộc):
 - rat_manh: ≥3 fact_id/tầng độc lập, không có phản chứng lớn trong nguồn đã lấy.
-- manh: 2–3 tầng hoặc nguồn, phản chứng (nếu có) đã được giải thích.
+- manh: ≥3 fact_id khác nhau, nhiều tầng hoặc nguồn, phản chứng (nếu có) đã được giải thích.
 - trung_binh: thiếu điều kiện hoặc chỉ dựa vào một sách.
 - yeu: chỉ 1 dấu hiệu hoặc dữ liệu đầu vào yếu.
 Không viết phần trăm độ tin cậy (ví dụ "85% khả năng") trong bất kỳ trường nào.
@@ -68,6 +70,10 @@ Chỉ ghi loại khớp với "kind" của các fact_id đã dẫn. Trường "p
 nêu dấu hiệu hoặc đoạn sách trái chiều; nếu nguồn đã lấy không có thì ghi nguyên văn
 "Không ghi nhận phản chứng trong nguồn đã lấy."
 Không đủ căn cứ thì ghi 'Chưa đủ căn cứ từ nguồn đã lấy', không tự bổ sung kiến thức ngoài nguồn.
+Vận năm theo Mẫu D: bối cảnh đại vận, ba chủ đề năm, cơ hội, điều cần quản trị,
+khung thời gian tương đối, so năm trước/sau và việc chưa đủ căn cứ. Không tự an
+lưu nguyệt. Bảng kích hoạt bốn tầng và so sánh năm do KMS ghép từ dữ kiện server;
+chỉ diễn giải các dữ kiện đó, không bịa tháng/ngày hoặc nâng chúng thành dự báo.
 Chỉ trả JSON theo schema, ngắn gọn: mỗi trường 1–2 câu. Tạo 3–5 luận điểm, gồm cung tiểu hạn
 năm được chọn và yếu tố cần lưu ý nếu có nguồn; không ép kết luận khi thiếu nguồn.
 Mỗi luận điểm phải dẫn fact_id của sao/cung cụ thể trong DỮ KIỆN; phần vận trình phải nhắc
@@ -133,12 +139,17 @@ def _model_chain() -> list[str]:
     return chain
 
 
-def response_schema() -> dict:
+def response_schema(include_annual: bool = True) -> dict:
     def field_schema(kind):
         return {'type': 'array', 'items': {'type': 'string'}} if kind is list else {'type': 'string'}
     properties = {'tieu_de': {'type': 'string'}, 'loi_khuyen_hanh_dong': field_schema(list)}
     for section, fields in READING_FIELDS.items():
         properties[section] = {'type': 'object', 'properties': {k: field_schema(v) for k, v in fields.items()}, 'required': list(fields)}
+    annual_schema=AnnualReport.model_json_schema()
+    if include_annual:
+        block=properties['van_han_hien_tai']
+        block['properties'].update(annual_schema['properties'])
+        block['required']+=annual_schema['required']
     properties['luan_diem'] = {'type': 'array', 'maxItems': 6, 'items': {
         'type': 'object', 'properties': {
             'nhan_dinh': {'type': 'string'}, 'gioi_han': {'type': 'string'},
@@ -164,12 +175,14 @@ def response_schema() -> dict:
         item = properties[key]['items']
         item['properties']['loai_ket_luan'] = {'type': 'string', 'enum': ['cau_truc', 'thoi_diem']}
         item['required'].append('loai_ket_luan')
-    return {'type': 'object', 'properties': properties, 'required': list(properties)}
+    result={'type': 'object', 'properties': properties, 'required': list(properties)}
+    if include_annual: result['$defs']=annual_schema['$defs']
+    return result
 
 
 PROMPT_KEYS = (
     'thong_tin_co_ban', 'cung_domains', 'menh_cuc', 'star_group', 'dai_han_hien_tai', 'tu_hoa',
-    'cung_chinh', 'nam_xem', 'luu_nien', 'tam_phuong_tu_chinh_menh',
+    'cung_chinh', 'nam_xem', 'luu_nien', 'annual_comparison', 'tam_phuong_tu_chinh_menh',
 )
 
 
@@ -244,6 +257,11 @@ def validate_reading(reading: dict, facts: list, context: dict) -> None:
                 raise HoroscopeGenerationError('invalid_response')
             if kind is list and not all(isinstance(s, str) for s in value):
                 raise HoroscopeGenerationError('invalid_response')
+    try:
+        validate_annual_report({k:reading['van_han_hien_tai'][k] for k in
+            ('bang_kich_hoat','so_sanh_nam','viec_chua_du_can_cu')},facts)
+    except (ValueError,KeyError,TypeError) as exc:
+        raise HoroscopeGenerationError('invalid_response') from exc
     if (not isinstance(reading.get('tieu_de'), str)
             or not isinstance(reading.get('loi_khuyen_hanh_dong'), list)
             or not all(isinstance(s, str) for s in reading['loi_khuyen_hanh_dong'])):
@@ -393,7 +411,9 @@ def check_specificity(reading: dict, features: dict[str, Any], context: dict | N
     annual = features.get('nam_xem') or {}
     year = str(annual.get('year') or '')
     can_chi = annual.get('can_chi') or ''
-    annual_text = json.dumps(reading.get('van_han_hien_tai') or {}, ensure_ascii=False)
+    annual_block=reading.get('van_han_hien_tai') or {}
+    # Server-generated factual tables must not satisfy the narrative-specificity check.
+    annual_text = json.dumps({k:annual_block.get(k) for k in READING_FIELDS['van_han_hien_tai']}, ensure_ascii=False)
     year_named = bool(year) and year in annual_text
     can_chi_named = bool(can_chi) and strip_accents(can_chi) in strip_accents(annual_text)
     if not (year_named or can_chi_named):
@@ -482,6 +502,7 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
         'tinh_cam': {'xu_huong_tinh_cam': desc('Phu thê'), 'mau_nguoi_tuong_hop': 'Chưa đủ căn cứ để kết luận người tương hợp.',
                     'bi_quyet_hoa_hop': risk('Phu thê')},
         'van_han_hien_tai': {'giai_doan': period, 'chu_de_trong_tam': 'Cung tiểu hạn năm được chọn: ' + palace_summary(annual.get('tieu_han')),
+                            **build_annual_report(features,facts),
                             'co_hoi_nen_nam_bat': 'Cần đọc cùng đại hạn và các điều kiện trong sách; chưa suy ra sự kiện trong năm.',
                             'thach_thuc_can_can_trong': limitations},
         'loi_khuyen_hanh_dong': ['Đọc tên sao, cung và trạng thái trước khi đối chiếu các nhận định trong sách.',
@@ -500,7 +521,7 @@ def _request_gemini(prompt_text: str, key: str, model: str = HOROSCOPE_MODEL) ->
         json={'systemInstruction': {'parts': [{'text': HOROSCOPE_SYSTEM_PROMPT}]},
               'contents': [{'parts': [{'text': prompt_text}]}],
               'generationConfig': {'temperature': LLM_TEMPERATURE, 'maxOutputTokens': HOROSCOPE_MAX_TOKENS,
-                                   'responseMimeType': 'application/json', 'responseJsonSchema': response_schema()}},
+                                   'responseMimeType': 'application/json', 'responseJsonSchema': response_schema(include_annual=False)}},
         timeout=(5, HOROSCOPE_TIMEOUT_SECONDS),
     )
     if response.status_code != 200:
@@ -543,6 +564,7 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
             attempts += 1
             try:
                 reading = _request_gemini(user_prompt, key, model)
+                reading.setdefault('van_han_hien_tai',{}).update(build_annual_report(features,facts))
                 validate_reading(reading, facts, context)
                 confidence_problem = check_input_confidence(reading, features)
                 conclusion_problem = check_conclusion_confidence(reading)
@@ -576,6 +598,7 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                         f"phần vận trình phải nhắc năm xem {annual.get('year', '')} ({annual.get('can_chi', '')})."
                     )
                     reading = _request_gemini(user_prompt + extra, key, model)
+                    reading.setdefault('van_han_hien_tai',{}).update(build_annual_report(features,facts))
                     validate_reading(reading, facts, context)
                     conclusion_problem = check_conclusion_confidence(reading)
                     evidence_problem = check_evidence_labels(reading, facts)

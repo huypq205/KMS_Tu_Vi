@@ -128,7 +128,23 @@ def topic_panel(key: str, value: dict) -> str:
         return panel(TOPICS[key], '<p class="muted">Chưa có luận giải cho chủ đề này.</p>')
     body = "".join(f'<div class="reading-field"><h3>{label}</h3>{content(value.get(field))}</div>'
                    for field, label in FIELDS[key].items())
+    if key=='van_han_hien_tai' and value.get('bang_kich_hoat'):
+        body+=annual_activation_panel(value)
     return panel(TOPICS[key], body)
+
+
+def annual_activation_panel(value: dict) -> str:
+    body='<h3>Bảng kích hoạt bốn tầng</h3><p class="muted">Dữ kiện theo năm âm lịch; chưa phải kết luận sự kiện.</p>'
+    for row in value.get('bang_kich_hoat',[]):
+        layers=''
+        for key,label in [('la_so_goc','Lá số gốc'),('dai_han','Đại hạn'),('luu_nien','Lưu niên'),('luu_nguyet','Lưu nguyệt')]:
+            layer=row.get(key,{})
+            layers+=f'<dt>{label}</dt><dd>{text(layer.get("noi_dung"))}<p class="muted">Fact: {text(", ".join(layer.get("fact_ids",[])) or "Chưa có")}</p></dd>'
+        body+=f'<details class="annual-activation"><summary>{text(row.get("chu_de"))} · {confidence_badge(row.get("muc_tin_cay"))}</summary><dl>{layers}</dl><p>Phản chứng / giới hạn: {text(row.get("phan_chung"))}</p></details>'
+    body+='<h3>So sánh năm trước / năm xem / năm sau</h3>'
+    for year in value.get('so_sanh_nam',[]):
+        body+=f'<details class="annual-activation"><summary>{text(year.get("year"))} · {text(year.get("can_chi") or "Ngoài phạm vi")}</summary><p>Đại hạn: {text(year.get("dai_han"))}</p><p>Tiểu hạn: {text(year.get("tieu_han"))}</p>{content(year.get("luu_tu_hoa"))}<p class="muted">{text(year.get("gioi_han"))}</p></details>'
+    return body+'<h3>Chưa đủ căn cứ để kết luận</h3>'+content(value.get('viec_chua_du_can_cu'))
 
 
 def palace_preview() -> str:

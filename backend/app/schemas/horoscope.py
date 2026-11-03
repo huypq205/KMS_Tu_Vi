@@ -22,7 +22,7 @@ class HoroscopeRequest(BaseModel):
     )
     gio_sinh_source: GioSinhSource = Field("memory", description="Nguồn giờ sinh: document, memory, estimate, unknown")
     gio_sinh_error_phut: int | None = Field(None, ge=0, description="Sai số ước tính của giờ sinh (phút)")
-    target_year: int | None = Field(None, description="Năm xem chiêm nghiệm")
+    target_year: int | None = Field(None, ge=1900, le=2100, description="Năm xem chiêm nghiệm")
     provider: str = Field("auto", description="Chế độ luận giải: 'auto' (luận giải thông minh) hoặc 'mock' (Dữ kiện thuần)")
     top_k_per_topic: int = Field(2, ge=1, le=10, description="Số đoạn trích dẫn mỗi chủ đề")
 
@@ -44,7 +44,7 @@ class HoroscopeAskRequest(BaseModel):
     )
     gio_sinh_source: GioSinhSource = Field("memory", description="Nguồn giờ sinh: document, memory, estimate, unknown")
     gio_sinh_error_phut: int | None = Field(None, ge=0, description="Sai số ước tính của giờ sinh (phút)")
-    target_year: int | None = Field(None, description="Năm xem chiêm nghiệm")
+    target_year: int | None = Field(None, ge=1900, le=2100, description="Năm xem chiêm nghiệm")
     topic: str = Field("tong_quan", description=f"Chủ đề hỏi: một trong {ASK_TOPICS} (hoặc 'van_han_hien_tai')")
     question: str = Field(..., min_length=1, max_length=300, description="Câu hỏi ngắn theo chủ đề")
     provider: str = Field("auto", description="'auto' (luận giải thông minh) hoặc 'mock' (chỉ dữ kiện lá số)")

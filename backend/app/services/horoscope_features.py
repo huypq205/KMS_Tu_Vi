@@ -560,7 +560,9 @@ def extract_horoscope_features(
                 "cat_tinh": [s["ten"] for s in cat["cat_tinh"]],
             })
 
+    from backend.app.services.horoscope_annual import build_year_comparison
     return {
+        "annual_comparison": build_year_comparison(raw_laso,current_year),
         "thong_tin_co_ban": {
             "nam_sinh": raw_laso["nam_sinh"],
             "nam_sinh_am": nam_sinh,

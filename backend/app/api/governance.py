@@ -2,8 +2,25 @@
 from fastapi import APIRouter, HTTPException
 import sqlite3
 from backend.app.services.star_dossier import get_star_dossier, UnknownStar
+from backend.app.schemas.horoscope import HoroscopeRequest
 
 router = APIRouter()
+
+
+@router.post('/api/v1/horoscope/annual')
+def annual_report(data: HoroscopeRequest):
+    from backend.app.services.horoscope_features import generate_raw_horoscope, extract_horoscope_features
+    from backend.app.services.horoscope_analysis import build_star_facts
+    from backend.app.services.horoscope_annual import build_annual_report
+    try:
+        raw=generate_raw_horoscope(data.ngay,data.thang,data.nam,data.chi_gio,data.gioi_tinh,data.duong_lich)
+        features=extract_horoscope_features(raw,data.target_year,data.input_confidence,
+                                           data.gio_sinh_source,data.gio_sinh_error_phut)
+        facts=build_star_facts(features)
+        return {'annual_report':build_annual_report(features,facts),'facts':facts,
+                'input_confidence':data.input_confidence,'source_status':'Dữ kiện an sao; chưa truy xuất diễn giải từ sách.'}
+    except (ValueError,KeyError,TypeError) as exc:
+        raise HTTPException(422,detail='Dữ liệu lịch hoặc lá số chưa hợp lệ.') from exc
 
 
 @router.get('/api/stars/{name}/dossier')

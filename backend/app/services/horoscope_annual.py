@@ -14,6 +14,9 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 from typing import Any
+import json
+import unicodedata
+from backend.app.schemas.annual_report import AnnualReport
 
 ROOT = Path(__file__).resolve().parents[3]
 VENDOR_PATH = ROOT / "vendor"
@@ -61,6 +64,92 @@ LIMITATIONS = (
     "Chỉ an vòng Thái Tuế và lưu Tứ Hóa; chưa an các lưu tinh khác. "
     "Dùng để tham khảo và chiêm nghiệm, không phải dự báo sự kiện."
 )
+
+
+def build_year_comparison(raw: dict, year: int) -> list[dict]:
+    """Compute each valid neighbor independently, preserving the selected table."""
+    from backend.app.services.horoscope_features import analyze_year, find_current_dai_han
+    cungs=raw['thap_ni_cung']
+    table_id=(raw.get('tu_hoa_table') or {}).get('id','lasotuvi')
+    birth_year=raw.get('nam_sinh_am',raw['nam_sinh'])
+    rows=[]
+    for target in (year-1,year,year+1):
+        row={'year':target,'status':'out_of_range','can_chi':None,'dai_han':'Chưa tính',
+             'tieu_han':'Chưa tính','luu_tu_hoa':[],'tu_hoa_table':None,
+             'gioi_han':'Ngoài phạm vi năm 1900–2100; không thực hiện an sao.'}
+        if 1900<=target<=2100:
+            annual=analyze_year(cungs,target,birth_year)
+            decade=find_current_dai_han(cungs,target-birth_year+1) or {}
+            minor=annual.get('tieu_han') or {}
+            moving=compute_luu_nien(cungs,target,tu_hoa_table_id=table_id)
+            row.update(status='available',can_chi=annual['can_chi'],
+                dai_han=(f"{decade.get('tu_tuoi')}–{decade.get('den_tuoi')} tuổi · {decade.get('cung_ten')}"
+                         if decade else 'Chưa xác định đại hạn ở tuổi này'),
+                tieu_han=minor.get('ten','Chưa xác định'),
+                luu_tu_hoa=[f"{e['ten_sao']} {e['ten']} · {e['cung_ten']}" for e in moving['luu_tu_hoa']],
+                tu_hoa_table=table_id,gioi_han='So sánh dữ kiện theo năm âm lịch; không suy ra sự kiện hoặc thời điểm tháng/ngày.')
+        rows.append(row)
+    return rows
+
+
+def _norm(value):
+    return ''.join(c for c in unicodedata.normalize('NFD',value.lower()) if unicodedata.category(c)!='Mn')
+
+
+def build_annual_report(features: dict, facts: list[dict]) -> dict:
+    """Assemble locked factual layers server-side; the LLM cannot fill gaps."""
+    year=(features.get('nam_xem') or {}).get('year')
+    decade=features.get('dai_han_hien_tai') or {}
+    decade_branch=decade.get('cung_ten','')
+    def layer(items,prefix):
+        return {'status':'available' if items else 'missing','noi_dung':prefix+(
+            '; '.join(f"{f['sao']} tại {f['cung']} ({f['dia_chi']})" for f in items)
+            if items else 'Chưa có dữ kiện phù hợp.'), 'fact_ids':[str(f['fact_id']) for f in items]}
+    rows=[]
+    for topic,names in [('Sự nghiệp',('Quan lộc','Thiên di','Mệnh')),
+                        ('Tài chính',('Tài bạch','Điền trạch','Quan lộc')),
+                        ('Tình cảm',('Phu thê','Phúc đức','Mệnh'))]:
+        matching=[f for f in facts if _norm(f.get('cung','')) in {_norm(n) for n in names}]
+        natal=[f for f in matching if f.get('nhom')!='luu_nien'][:4]
+        moving=[f for f in matching if f.get('nhom')=='luu_nien'][:4]
+        decadal=[f for f in facts if decade_branch and _norm(f.get('dia_chi',''))==_norm(decade_branch)
+                 and f.get('nhom')!='luu_nien'][:3]
+        rows.append({'chu_de':topic,'la_so_goc':layer(natal,'Sao gốc: '),
+            'dai_han':layer(decadal,f"Đại hạn {decade.get('tu_tuoi','—')}–{decade.get('den_tuoi','—')} tuổi tại {decade.get('ten_linh_vuc','—')} ({decade_branch or '—'}); sao gốc tại cung hạn: "),
+            'luu_nien':layer(moving,f'Lưu niên {year}: '),
+            'luu_nguyet':{'status':'missing','noi_dung':'Chưa an lưu nguyệt; không kết luận theo tháng.','fact_ids':[]},
+            'phan_chung':'Chưa đối chiếu đầy đủ điều kiện thuận/nghịch trong từng sách; sao cùng cung chưa chứng minh một sự kiện.',
+            'muc_tin_cay':'yeu','loai_ket_luan':'cau_truc'})
+    comparison=features.get('annual_comparison') or [
+        {'year':y,'status':'missing','can_chi':None,'dai_han':'Chưa có dữ liệu',
+         'tieu_han':'Chưa có dữ liệu','luu_tu_hoa':[],'tu_hoa_table':None,
+         'gioi_han':'Chưa có dữ kiện gốc để tính so sánh.'} for y in
+        ((year-1,year,year+1) if isinstance(year,int) else (None,None,None))]
+    missing=['Chưa an lưu nguyệt hoặc khung ngày/tháng.',
+             'Chưa đủ căn cứ để khẳng định sự kiện, thu nhập, hôn nhân hoặc sức khỏe.',
+             'Chưa có phản chứng đã đối chiếu đầy đủ theo từng sách hoặc mẫu nghiệm lý đủ đại diện.']
+    if (features.get('thong_tin_co_ban') or {}).get('input_confidence') in ('C','D'):
+        missing.append('Dữ liệu giờ sinh chưa chắc chắn (mức C/D); chỉ kết luận cấu trúc, không kết luận thời điểm/sự kiện.')
+    return AnnualReport.model_validate({'bang_kich_hoat':rows,'so_sanh_nam':comparison,
+                                       'viec_chua_du_can_cu':missing}).model_dump()
+
+
+def validate_annual_report(report: dict, facts: list[dict]):
+    checked=AnnualReport.model_validate(report)
+    fact_map={str(f['fact_id']):f for f in facts}
+    for row in checked.bang_kich_hoat:
+        if row.luu_nguyet.status!='missing' or row.luu_nguyet.fact_ids:
+            raise ValueError('Chưa hỗ trợ lưu nguyệt.')
+        for key in ('la_so_goc','dai_han','luu_nien','luu_nguyet'):
+            layer=getattr(row,key)
+            if any(i not in fact_map for i in layer.fact_ids): raise ValueError('fact_id không hợp lệ.')
+            if layer.status=='missing' and layer.fact_ids: raise ValueError('Mục thiếu không có fact.')
+            for fid in layer.fact_ids:
+                if (fact_map[fid].get('nhom')=='luu_nien') != (key=='luu_nien'):
+                    raise ValueError('Sai tầng dữ kiện.')
+        if row.muc_tin_cay!='yeu': raise ValueError('Bảng dữ kiện chưa đủ điều kiện tăng mức tin cậy.')
+    if '%' in json.dumps(report,ensure_ascii=False): raise ValueError('Không dùng phần trăm.')
+    return checked
 
 
 def can_chi_of_year(year: int) -> tuple[str, str]:

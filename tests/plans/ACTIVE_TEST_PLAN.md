@@ -762,3 +762,13 @@ chứng cứ, thời điểm server, cross-case và chống chấm phiên bản 
 29 ca đã chấm và 30 ca trống chưa mở thống kê; 30 ca đã chấm mới mở số lượt.
 Browser review ba kích thước không FAIL/WARN. Test dùng DB tạm.
 Chi tiết: [CASE_VALIDATION.md](../../docs/CASE_VALIDATION.md).
+
+## Governance T9 — Báo cáo vận năm (2026-11-03)
+
+**PASSED**: 10 test riêng. Hồi quy đến T9: 2121 passed / 351 known T4 xfailed.
+Lệnh hồi quy dùng `--ignore=tests/test_skill_validation.py` cho test T10 đang
+triển khai, không bỏ test T1–T9. Review bốn tầng, dữ kiện server, năm ±1,
+1900/2100, C/D, ID bịa, tháng thiếu, bảng Tứ Hóa, escaping và API.
+Sửa thiếu năm fallback và khóa nối địa chi đại hạn sau review; cache v6.
+Ảnh đóng/mở ba kích thước, lint/inspector không FAIL/WARN.
+Chi tiết: [ANNUAL_REPORT.md](../../docs/ANNUAL_REPORT.md).

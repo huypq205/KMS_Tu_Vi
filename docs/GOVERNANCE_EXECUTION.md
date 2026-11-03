@@ -54,7 +54,7 @@ task to origin/main. Do not publish private input workbooks or CSV summaries.
 
 ## Remaining implementation
 
-T9, T10, final T11. T1/T2 acceptance reviews were completed above. No task should be marked
+T10, final T11. T1/T2 acceptance reviews were completed above. No task should be marked
 complete merely from its test count: review contracts, source attribution, empty
 states, errors, immutability, API/UI integration and publication status.
 
@@ -66,3 +66,14 @@ states, errors, immutability, API/UI integration and publication status.
 - API + Streamlit implemented; no production cases invented or written in review.
 - Tests 11 passed; global 2111 passed, 351 known T4 xfailed (56.52s).
 - Browser 1440/768/390px: no findings; source notes in CASE_VALIDATION.md.
+
+## T9 review
+
+- Server-derived four-layer matrix, adjacent-year comparison, missing-basis
+  section and read-only annual API; model text cannot fill monthly gaps.
+- Reviewed C/D, confidence, selected table, boundaries, escaping and missing year.
+- Screenshot review caught branch/domain mismatch for decade facts; fixed and
+  covered with a regression. Narrative specificity ignores server matrix years.
+- 10 T9 tests passed; global through T9: 2121 passed / 351 known T4 xfailed
+  (87.14s; pending T10 validator tests excluded from this scope).
+- Cache v6; browser review closed/open rows at 1440/768/390px.

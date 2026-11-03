@@ -6,6 +6,7 @@ from unittest.mock import Mock
 
 from backend.app.core.evidence_types import NO_COUNTER_EVIDENCE
 from backend.app.schemas.horoscope import HoroscopeRequest
+from backend.app.services.horoscope_annual import build_annual_report
 
 BIRTH = {"ngay": 15, "thang": 8, "nam": 1995, "chi_gio": 5, "gioi_tinh": 1}
 # Additive T5 response contract; make_features() derives these from the selected
@@ -65,6 +66,7 @@ def valid_reading(facts: list[dict], year_text: str = "2026 Bính Ngọ",
             "bi_quyet_hoa_hop": "Thử.",
         },
         "van_han_hien_tai": {
+            **build_annual_report(make_features(int(year_text[:4])),facts),
             "giai_doan": period, "chu_de_trong_tam": "Thử.",
             "co_hoi_nen_nam_bat": "Thử.", "thach_thuc_can_can_trong": "Thử.",
         },
