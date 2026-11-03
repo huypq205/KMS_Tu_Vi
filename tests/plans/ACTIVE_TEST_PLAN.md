@@ -705,8 +705,8 @@ Lịch sử thay đổi: [CHANGELOG_KNOWLEDGE.md](../../docs/CHANGELOG_KNOWLEDGE
 
 ## Governance T7 — Cổng kiểm duyệt nhập tri thức (2026-11-03)
 
-- **Trạng thái: PASSED** — kiểm thử và tích hợp cục bộ; chưa có dữ liệu import
-  thực tế trong workspace để xác nhận gate cho kho đó.
+- **Trạng thái: PASSED** — kiểm thử, tích hợp và review workbook thực tế:
+  10.456 checked, 0 errors; đối chiếu baseline 0 new IDs. Xem cập nhật T11 bên dưới.
 - Validator read-only: `scripts/validate_knowledge_import.py`; nhận CSV export
   `REPO_*` và workbook canonical, có `--json` để chỉ rõ file/sheet, dòng, ID, mã lỗi.
 - Knowledge mới phải có >=1: nguồn+trang hợp lệ; trường phái/Author_Stances;
@@ -742,9 +742,10 @@ nguồn video không ghi đè tên/định danh sách đã có khi dùng chung B
 # 2072 passed, 351 xfailed in 49.73s
 ```
 
-`python scripts/validate_knowledge_import.py tuvi_import/` hiện trả lỗi input thiếu;
-đây không phải bằng chứng kho import thực tế đã pass. Workbook gốc cũng vắng mặt.
-Chưa import dữ liệu thật hoặc chạy build index; các bài test tích hợp dùng DB tạm.
+Trong lần triển khai ban đầu, `tuvi_import/` và workbook chưa có trong workspace.
+Review sau đó tìm thấy workbook ở thư mục Final và kiểm tra read-only đủ 10.456
+bản ghi; không lỗi, 0 ID mới so DB. Không import/build index lại; test tích hợp
+dùng DB tạm. CSV cùng tên là bảng chỉ số, không phải REPO exports.
 
 ## Governance T6 — Hồ sơ sao (2026-11-03)
 
@@ -781,3 +782,17 @@ Review frontmatter, tên, thiếu/trùng key, <500 dòng, link/anchor, traversal
 review API thật cho ASK, dossier, annual và hai giờ sinh (provider mock, C/D).
 CI bổ sung bước validate skill. Gói [tu-vi-kms](../../skills/tu-vi-kms/SKILL.md)
 giữ tại repo, dùng tham chiếu tới docs KMS; chưa cài vào thư mục skill cá nhân.
+
+## Governance T11 — Review và nghiệm thu toàn bộ (2026-11-03)
+
+**PASSED**: hồi quy cuối `pytest tests/ -q`: **2135 passed, 351 known T4 xfailed**
+(55.73s). Không ignore task nào trong lần cuối. Hai gate, script so bảng và
+review UI/API/DB hoàn tất. T4 đáp ứng DoD document + issue, chưa phân xử bằng sách.
+
+CI phát hiện ba test singleton cũ phụ thuộc model không cài trong backend nhẹ.
+Đã tái hiện bằng subprocess chặn package, sửa lazy import/factory test cô lập,
+6 test singleton pass; không skip chúng. [CI bc497f9 đã xanh](https://github.com/huypq205/KMS_Tu_Vi/actions/runs/41567801027).
+
+Changelog/plan được cập nhật; workbook thật pass gate và khớp ID corpus. DB chỉ
+thay cache test/bảng nhật ký rỗng, đã backup và khôi phục, không commit dữ liệu.
+[Bảng nghiệm thu và giới hạn](../../docs/GOVERNANCE_ACCEPTANCE.md).

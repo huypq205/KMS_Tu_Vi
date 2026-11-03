@@ -153,8 +153,9 @@ bản ghi được index hoặc được duyệt phát hành.
 CI luôn chạy gate trên fixture hợp lệ và toàn bộ test âm tính/tích hợp. Khi có
 `tuvi_import/`, chạy thêm gate trên CSV thực tế; thư mục tồn tại nhưng rỗng là lỗi.
 Nếu thư mục vắng mặt, CI ghi rõ `SKIPPED actual CSV validation`, không coi dữ liệu
-thật đã pass. Workspace triển khai T7 hiện chưa có thư mục này hoặc workbook gốc,
-nên chỉ có kết quả fixture và test tích hợp; chưa xác nhận kho import thực tế.
+thật đã pass. Khi triển khai T7 ban đầu, workspace chưa có thư mục/workbook này.
+Review sau đã tìm workbook ở Final và kiểm chứng đủ 10.456 bản ghi như phần dưới;
+CI vẫn không có workbook riêng tư, vì vậy tiếp tục ghi SKIPPED cho CSV thực tế.
 
 Quy trình và mẫu đề xuất được diễn giải cho KMS từ repo MIT
 `duandigi/tu-vi-dau-so-research`, commit `91f8a06f1bca2fb271791785937265ea78d7f858`:

@@ -1,8 +1,19 @@
 # KẾ HOẠCH IMPLEMENT — Áp dụng pattern quản trị tri thức từ 2 repo Tử Vi vào KMS_Tu_Vi
 
-**Phiên bản:** v1.0 (draft) — 2026
-**Trạng thái:** DRAFT — chờ chuyển sang agent implement
+**Phiên bản:** v1.1 — nghiệm thu triển khai 2026-11-03
+**Trạng thái:** IMPLEMENTED & REVIEWED — T1–T11; các bất đồng T4 giữ document + issue theo DoD
 **Người lập:** Claude (QA/Test Architect) theo AGENTS.md
+
+**Kết quả triển khai:** [Bảng nghiệm thu T1–T11](docs/GOVERNANCE_ACCEPTANCE.md),
+[changelog](docs/CHANGELOG_KNOWLEDGE.md), [nhật ký review/commit](docs/GOVERNANCE_EXECUTION.md).
+Hồi quy cuối: **2135 passed, 351 known T4 xfailed**; CI xanh sau sửa phụ thuộc
+test singleton (`bc497f9`). T6/T8/T9 đã review giao diện ba kích thước; không sửa vendor.
+
+**Điều chỉnh rõ khi triển khai:** enum yếu dùng `yeu` (sửa typo `yieu` bên dưới);
+mạnh/rất mạnh cần tối thiểu ba fact_id khác nhau. Mẫu D gốc có ba tầng, KMS thêm
+tầng lưu nguyệt theo plan nhưng khai báo thiếu vì chưa an tháng. Ca nghiệm lý
+đầu tiên khóa/chấm được kiểm chứng trong DB tạm; không tạo ca thật giả hoặc
+ngụy tạo 30 mẫu để mở thống kê. Nội dung dưới giữ làm đặc tả gốc.
 
 ## 0. Đầu vào và nguồn tham khảo
 

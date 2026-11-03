@@ -3,7 +3,7 @@
 User authorization: finish T1–T11, review each task, commit and push each completed
 task to origin/main. Do not publish private input workbooks or CSV summaries.
 
-## Current sequence
+## Execution sequence (completed)
 
 1. Merge origin/feature/t3-evidence-labels (aaa0951), review and push.
 2. Review T1/T2 and correct any remaining acceptance gaps.
@@ -25,12 +25,12 @@ task to origin/main. Do not publish private input workbooks or CSV summaries.
   strong minimum to three distinct facts; cache v5. Regression 2092 passed,
   351 known T4 xfailed. T4/T5 reviewed through integration plus existing vectors
   and 40-entry comparison; mismatches remain in issue #1, no vendor edits.
-- Test suite modifies the tracked kms.db cache; do not stage that generated DB
-  change. Preserve a backup before cleaning it at the end.
+- Test suite modified tracked kms.db cache; this generated DB change was not
+  committed. Final backup/fingerprint review and restoration are recorded below.
 - T3 initial integration regression: 2087 passed, 351 known T4 xfailed.
 - T3 review reproductions found uncited evidence labels accepted and Tị/Tỵ
-  inconsistent in adjacent-palace classification. Regression tests added; fixes
-  under review. `suy_luan` may accompany a cited kind, but an uncited empirical
+  inconsistent in adjacent-palace classification. Regression tests and fixes
+  were reviewed and pushed in 5b5d508. `suy_luan` may accompany a cited kind, but an uncited empirical
   kind must not be accepted.
 - Real input discovered at
   D:/FPT/2026/FA26/KMS301/Project_TuVi/Final/TuVi_KMS_3Books_CANONICAL_MASTER_DEDUP_v1.0.xlsx.
@@ -40,8 +40,8 @@ task to origin/main. Do not publish private input workbooks or CSV summaries.
   Source distribution matches NPL 2191, BD 4450, DAU 3815. No production import run.
 - Same-name CSV (1559 bytes) contains Indicator/Value/Explanation, not knowledge
   exports. `tuvi_import/` is a hypothetical export directory, not that CSV.
-- Frontend skill: design-taste-frontend has been read; app-screens reference is
-  being read before new screens. Keep existing Streamlit shell and design.
+- Frontend skill and full app-screens reference were read before new screens;
+  existing Streamlit shell, palette and typography were retained.
 
 ## T6 review
 
@@ -52,11 +52,11 @@ task to origin/main. Do not publish private input workbooks or CSV summaries.
 - Tests: 8 targeted passed; regression 2100 passed / 351 known T4 xfailed.
 - Browser review: desktop/tablet/mobile; existing typography/palette retained.
 
-## Remaining implementation
+## Completion criteria
 
-Final T11. T1/T2 acceptance reviews were completed above. No task should be marked
-complete merely from its test count: review contracts, source attribution, empty
-states, errors, immutability, API/UI integration and publication status.
+All T1–T11 implemented/reviewed. Reviewed contracts, source attribution, empty
+states, errors, immutability, API/UI integration and publication in addition to
+test counts. See GOVERNANCE_ACCEPTANCE.md for the final task matrix and limits.
 
 ## T8 review
 
@@ -101,4 +101,16 @@ states, errors, immutability, API/UI integration and publication status.
   only when EmbeddingAdapter is instantiated. Added a subprocess regression
   that explicitly blocks sentence_transformers import.
 - RED reproduced, then 6 singleton tests passed. Global: 2135 passed / 351 known
-  T4 xfailed (55.73s). Awaiting remote CI before final acceptance.
+  T4 xfailed (55.73s). Remote CI PASSED on bc497f9, run 41567801027.
+
+## Final T11 review
+
+- Changelog covers all task changes, source attribution and affected conclusions;
+  plan updated from draft to implemented/reviewed with explicit T4 limitations.
+- T4 issue #1 remains open, consistent with the allowed document+issue DoD.
+- DB fingerprints: only original horoscope_cache row removed by tests and three
+  new empty journal tables; every original knowledge/evidence/chunk table unchanged.
+- Full SQLite backup at .pytest_cache/kms-after-governance-tests.db, preview
+  servers stopped, WAL checkpointed and tracked DB restored; no user cases lost.
+- No private workbook, CSV summary, production journal rows or screenshot binary
+  was staged. Individual task commits pushed to origin/main.

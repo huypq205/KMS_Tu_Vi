@@ -1,5 +1,33 @@
 # Changelog tri thức KMS Tử Vi
 
+## 2026-11-03 — T11: chốt phiên bản và review tích hợp
+
+- Trước → sau: plan draft và ghi chép rời → trạng thái triển khai/review đủ
+  T1–T11, bảng nghiệm thu có commit, bằng chứng và giới hạn. Changelog ghi
+  thay đổi schema/prompt/bảng an sao xuyên suốt từng task.
+- Phiên bản hiện hành: cache schema v6, bảng Tứ Hóa config v1, skill v1.0.
+  Không đổi tri thức canonical; 20 seed vẫn seed_unverified ngoài RAG.
+- Review CI phát hiện ba test singleton cũ phụ thuộc gói model tùy chọn. Sửa
+  factory test cô lập và lazy import model (`bc497f9`), thêm test tái hiện;
+  runtime chỉ cần model khi thực sự tạo adapter dense, không đổi kết luận.
+- Kiểm chứng: 2135 passed, 351 known T4 xfailed; GitHub Actions xanh tại
+  [run 41567801027](https://github.com/huypq205/KMS_Tu_Vi/actions/runs/41567801027).
+- So fingerprint DB: tri thức/evidence/chunk không đổi; backup cache test và
+  bảng nhật ký rỗng rồi khôi phục DB tracked. Không đẩy workbook hay ca cá nhân.
+- Chi tiết phạm vi/nguồn và vấn đề còn mở: [nghiệm thu](GOVERNANCE_ACCEPTANCE.md).
+
+## 2026-11-03 — T4: đối chiếu độc lập và sai khác có kiểm soát
+
+- Trước → sau: phụ thuộc output vendor → 44 vector kỳ vọng độc lập từ tài liệu
+  tham khảo, 1.784 trường đối chiếu, không nhập vendor để dựng expected.
+- Dữ kiện mới: 351 trường khác trong bốn nhóm Tử Vi/Khôi Việt/Hỏa Linh/Tứ Hóa;
+  12/44 vector khớp trọn các kỳ vọng có đủ tài liệu. Không biến số này thành
+  tỷ lệ đúng của thuật luận. Giữ known mismatch dạng strict xfail.
+- Lý do: phát hiện bất đồng tài liệu/trường phái trước khi sửa hệ an sao.
+  Kết luận hiện hành không đổi, vendor không sửa. T5 nhận bàn giao ba mục Tứ Hóa.
+- Review lại cùng T1–T11; [issue #1](https://github.com/huypq205/KMS_Tu_Vi/issues/1)
+  còn mở để xác minh bằng sách KMS. [Nguồn và phạm vi](LASOTUVI_CROSSCHECK.md).
+
 ## 2026-11-03 — T10: skill KMS v1.0
 
 - Trước → sau: chưa có gói hướng dẫn agent → `skills/tu-vi-kms` với bốn chế độ
