@@ -54,7 +54,7 @@ task to origin/main. Do not publish private input workbooks or CSV summaries.
 
 ## Remaining implementation
 
-T10, final T11. T1/T2 acceptance reviews were completed above. No task should be marked
+Final T11. T1/T2 acceptance reviews were completed above. No task should be marked
 complete merely from its test count: review contracts, source attribution, empty
 states, errors, immutability, API/UI integration and publication status.
 
@@ -77,3 +77,15 @@ states, errors, immutability, API/UI integration and publication status.
 - 10 T9 tests passed; global through T9: 2121 passed / 351 known T4 xfailed
   (87.14s; pending T10 validator tests excluded from this scope).
 - Cache v6; browser review closed/open rows at 1440/768/390px.
+
+## T10 review
+
+- Skill version 1.0 uses KMS APIs for four modes, with 14 principal-star triggers,
+  scoped references and MIT attribution. Kept in the requested repo location;
+  not installed into global Codex configuration.
+- Reviewed realistic star/ask/annual/two-hour crosscheck requests against actual
+  TestClient endpoints, no external LLM calls. Missing inputs/errors cannot be
+  substituted with an invented chart. Corpus/book licensing remains separate.
+- Validator detects duplicate YAML, >=500 lines, broken files/anchors and repo
+  escapes; CI runs it. 13 targeted passed, KMS and skill-creator validators pass.
+- Regression all tests: 2134 passed / 351 known T4 xfailed (57.41s).

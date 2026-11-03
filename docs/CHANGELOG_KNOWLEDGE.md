@@ -1,5 +1,18 @@
 # Changelog tri thức KMS Tử Vi
 
+## 2026-11-03 — T10: skill KMS v1.0
+
+- Trước → sau: chưa có gói hướng dẫn agent → `skills/tu-vi-kms` với bốn chế độ
+  ASK/STAR_DOSSIER/CROSSCHECK/ANNUAL; lấy dữ kiện bằng API KMS, không tự an sao.
+- Tham chiếu progressive disclosure tới gate/data dictionary/từ điển chứng cứ.
+  Từ điển ghi rõ các quan hệ fact hiện lấy Mệnh làm mốc, không đổi nghĩa khi luận
+  một chủ đề khác. Mã/hướng dẫn skill theo MIT; không cấp lại quyền nội dung sách.
+- Validator offline và CI: frontmatter/name/duplicate keys, <500 dòng, links và
+  anchors trong skill/repo; không duyệt mạng hay đọc đường dẫn ngoài repo.
+- Review bốn tình huống bằng API thật ở chế độ mock, kiểm tra hai giờ giả thiết,
+  C/D, nguồn dossier và tháng thiếu. 13 test riêng passed; hai validator pass;
+  hồi quy 2134 passed / 351 known T4 xfailed. Không thay response schema ở T10.
+
 ## 2026-11-03 — T9: báo cáo năm bốn tầng, cache v6
 
 - Trước → sau: vận trình chỉ có bốn đoạn lời → thêm bảng ba chủ đề với lá số

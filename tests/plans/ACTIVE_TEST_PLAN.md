@@ -772,3 +772,12 @@ triển khai, không bỏ test T1–T9. Review bốn tầng, dữ kiện server,
 Sửa thiếu năm fallback và khóa nối địa chi đại hạn sau review; cache v6.
 Ảnh đóng/mở ba kích thước, lint/inspector không FAIL/WARN.
 Chi tiết: [ANNUAL_REPORT.md](../../docs/ANNUAL_REPORT.md).
+
+## Governance T10 — Skill KMS (2026-11-03)
+
+**PASSED**: 13 test riêng; hồi quy 2134 passed / 351 known T4 xfailed.
+`scripts/validate_skill.py` và quick_validate của skill-creator đều pass.
+Review frontmatter, tên, thiếu/trùng key, <500 dòng, link/anchor, traversal;
+review API thật cho ASK, dossier, annual và hai giờ sinh (provider mock, C/D).
+CI bổ sung bước validate skill. Gói [tu-vi-kms](../../skills/tu-vi-kms/SKILL.md)
+giữ tại repo, dùng tham chiếu tới docs KMS; chưa cài vào thư mục skill cá nhân.

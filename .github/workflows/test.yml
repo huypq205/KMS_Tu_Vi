@@ -26,6 +26,9 @@ jobs:
       - name: Validate knowledge import fixture
         run: python scripts/validate_knowledge_import.py tests/fixtures/knowledge_gate/valid/
 
+      - name: Validate KMS skill
+        run: python scripts/validate_skill.py skills/tu-vi-kms
+
       - name: Validate available knowledge CSV exports
         shell: bash
         run: |
