@@ -65,6 +65,121 @@ LIMITATIONS = (
     "Dùng để tham khảo và chiêm nghiệm, không phải dự báo sự kiện."
 )
 
+# P4: phân mức tín hiệu là một quy tắc riêng, có phiên bản và điều kiện code
+# truy được. Đổi ngưỡng phải tăng phiên bản và cập nhật test tương ứng.
+ACTIVATION_RULE_VERSION = 2
+ACTIVATION_LEVELS = ("nhan", "vua", "nang", "chua_du_du_lieu")
+ACTIVATION_LEVEL_LABELS = {
+    "nhan": "Thấp",
+    "vua": "Vừa",
+    "nang": "Cao",
+    "chua_du_du_lieu": "Chưa đủ dữ liệu",
+}
+ACTIVATION_THRESHOLD = (
+    "Có vai trò Mệnh/Thân hoặc từ 2 tín hiệu khác nhau trở lên → Cao; "
+    "1 tín hiệu chỉ ở đại hạn/tiểu hạn → Vừa; 0 tín hiệu → Thấp."
+)
+ACTIVATION_CAVEAT = (
+    "Đây là mức tập trung tín hiệu cần xem xét, không phải mức độ xấu hay "
+    "độ chắc chắn của dự báo."
+)
+
+ROLE_LABELS = {
+    "menh": "Mệnh",
+    "than": "Thân",
+    "dai_han": "Đại hạn",
+    "tieu_han": "Tiểu hạn",
+}
+ROLE_TOPICS = {
+    "menh": "Bản thân",
+    "than": "Thân và hành động",
+    "dai_han": "Vận đại hạn",
+    "tieu_han": "Vận tiểu hạn",
+}
+
+SIGNAL_RULES = {
+    "vong_thai_tue": {
+        "id": "luu_nien.vong_thai_tue_trung_cung",
+        "mo_ta": "Sao thuộc vòng Thái Tuế trùng cung trọng tâm của năm đang xem.",
+    },
+    "luu_ky": {
+        "id": "luu_nien.luu_ky_trung_cung",
+        "mo_ta": "Sao gốc nhận Hóa Kỵ theo can năm, tọa tại cung trọng tâm của năm đang xem.",
+    },
+}
+SIGNAL_MISSING = (
+    "Chưa an lưu nguyệt/ngày; không kết luận thời điểm.",
+    "Chưa có nguồn luận giải đã duyệt cho tín hiệu lưu niên.",
+)
+
+
+def _unique(values: list[str]) -> list[str]:
+    seen: set[str] = set()
+    result: list[str] = []
+    for value in values:
+        if value not in seen:
+            seen.add(value)
+            result.append(value)
+    return result
+
+
+def classify_activation(
+    signals: list[dict[str, Any]] | None,
+    missing_reasons: list[str] | None = None,
+) -> dict[str, Any]:
+    """Xếp mức tập trung tín hiệu theo **số tín hiệu**, không theo số vai trò.
+
+    Tín hiệu là đơn vị vật lý đã định danh (sao + cung + tầng thời gian + năm);
+    một tín hiệu có thể mang nhiều vai trò. Trùng vai trò không tạo thêm tín
+    hiệu, nên không đẩy mức tập trung lên như nhiều chứng cứ độc lập.
+
+    Hiệu chỉnh #1 của plan: một tín hiệu đơn tại Mệnh/Thân **vẫn** giữ mức Cao;
+    việc gộp trùng không tự động hạ nhãn. Trùng đại hạn/tiểu hạn trên cùng một
+    tín hiệu thì không còn tự đẩy từ Vừa lên Cao.
+    """
+    signals = list(signals or [])
+    missing = [reason for reason in (missing_reasons or []) if reason]
+    count = len(signals)
+    role_count = sum(len(signal.get("vai_tro") or []) for signal in signals)
+    co_menh_than = any(
+        {"menh", "than"} & set(signal.get("vai_tro") or []) for signal in signals
+    )
+    basis = {
+        "so_tin_hieu": count,
+        "so_vai_tro": role_count,
+        "co_menh_than": co_menh_than,
+        "nguong": ACTIVATION_THRESHOLD,
+    }
+
+    if missing:
+        level = "chua_du_du_lieu"
+        reason = ("Chưa thể phân mức vì thiếu dữ kiện: " + " ".join(missing)
+                  + " " + ACTIVATION_CAVEAT)
+    elif not signals:
+        level = "nhan"
+        reason = (f"Không có tín hiệu lưu niên nào trùng cung trọng tâm, theo quy tắc "
+                  f"v{ACTIVATION_RULE_VERSION}. " + ACTIVATION_CAVEAT)
+    elif co_menh_than:
+        level = "nang"
+        reason = (f"Có tín hiệu lưu niên trùng cung Mệnh/Thân, theo quy tắc "
+                  f"v{ACTIVATION_RULE_VERSION}. " + ACTIVATION_CAVEAT)
+    elif count >= 2:
+        level = "nang"
+        reason = (f"Có {count} tín hiệu lưu niên khác nhau cùng trùng cung trọng tâm, "
+                  f"theo quy tắc v{ACTIVATION_RULE_VERSION}. " + ACTIVATION_CAVEAT)
+    else:
+        level = "vua"
+        reason = (f"Chỉ có 1 tín hiệu lưu niên và không trùng cung Mệnh/Thân, "
+                  f"theo quy tắc v{ACTIVATION_RULE_VERSION}. " + ACTIVATION_CAVEAT)
+
+    return {
+        "level": level,
+        "level_label": ACTIVATION_LEVEL_LABELS[level],
+        "level_reason": reason,
+        "level_rule_version": ACTIVATION_RULE_VERSION,
+        "level_basis": basis,
+    }
+
 
 def build_year_comparison(raw: dict, year: int) -> list[dict]:
     """Compute each valid neighbor independently, preserving the selected table."""
@@ -187,6 +302,88 @@ def _palace_brief(cung: dict[str, Any] | None, star_name: str) -> dict[str, Any]
     }
 
 
+def _signal_id(year: int, source: str, star: str, cung_so: int) -> str:
+    slug = _norm(star).replace(" ", "-")
+    return f"ln-{year}-{source.replace('_', '-')}-{slug}-{cung_so}"
+
+
+def _make_signal(
+    display_name: str,
+    root_name: str,
+    entry: dict[str, Any],
+    vai_tro: list[str],
+    source: str,
+    year: int,
+    can: str,
+    can_chi: str,
+) -> dict[str, Any]:
+    return {
+        "tin_hieu_id": _signal_id(year, source, display_name, entry["cung_so"]),
+        "sao": display_name,
+        "sao_goc": root_name,
+        "loai_tin_hieu": source,
+        "loai": entry.get("loai", "hung"),
+        "cung_so": entry.get("cung_so"),
+        "cung_ten": entry.get("cung_ten", ""),
+        "dia_chi": entry.get("dia_chi", ""),
+        "tang_thoi_gian": "luu_nien",
+        "nam": year,
+        "can": can,
+        "can_chi": can_chi,
+        "vai_tro": list(vai_tro),
+        "so_vai_tro": len(vai_tro),
+    }
+
+
+def _enrich_signal(signal: dict[str, Any], others: list[dict[str, Any]]) -> None:
+    """Gắn phần "vì sao" tất định: dữ kiện · quy tắc · chủ đề · điều kiện thiếu."""
+    rule = SIGNAL_RULES[signal["loai_tin_hieu"]]
+    role_labels = [ROLE_LABELS[role] for role in signal["vai_tro"]]
+    topics = _unique(
+        [ROLE_TOPICS[role] for role in signal["vai_tro"]] + [signal["cung_ten"]]
+    )
+    if signal["loai_tin_hieu"] == "luu_ky":
+        start = (
+            f"{signal['sao_goc']} nhận Hóa Kỵ theo can {signal['can']} của năm "
+            f"{signal['can_chi']}; đây là tín hiệu lưu niên gắn với sao gốc, tọa tại "
+            f"cung {signal['cung_ten']} ({signal['dia_chi']})."
+        )
+    else:
+        start = (
+            f"{signal['sao']} là sao thuộc vòng lưu niên của năm {signal['can_chi']}, "
+            f"tọa tại cung {signal['cung_ten']} ({signal['dia_chi']})."
+        )
+    explanation = (
+        start
+        + f" Hệ thống xếp vào nhóm cần xem xét vì vị trí trùng cung "
+          f"{', '.join(role_labels)} theo quy tắc {rule['id']}."
+    )
+    if others:
+        explanation += (
+            " Cùng cung còn " + ", ".join(other["sao"] for other in others)
+            + "; đây là tín hiệu khác, cùng thuộc tầng lưu niên — "
+              "không phải hai tầng xác nhận."
+        )
+    explanation += " Riêng tín hiệu này chưa đủ để kết luận một sự kiện cụ thể."
+    signal["vi_sao"] = {
+        "du_kien": {
+            "sao": signal["sao"],
+            "sao_goc": signal["sao_goc"],
+            "cung_so": signal["cung_so"],
+            "cung_ten": signal["cung_ten"],
+            "dia_chi": signal["dia_chi"],
+            "tang_thoi_gian": signal["tang_thoi_gian"],
+            "nam": signal["nam"],
+            "can_chi": signal["can_chi"],
+        },
+        "quy_tac": dict(rule),
+        "chu_de": topics,
+        "dieu_kien_thieu": list(SIGNAL_MISSING),
+        "tin_hieu_cung_cung": [other["tin_hieu_id"] for other in others],
+        "giai_thich": explanation,
+    }
+
+
 def compute_luu_nien(
     thap_ni_cung: list[dict[str, Any]],
     year: int,
@@ -196,10 +393,14 @@ def compute_luu_nien(
     tieu_han_cung_so: int | None = None,
     tu_hoa_table_id: str | None = None,
 ) -> dict[str, Any]:
-    """An lưu niên cho một năm: Can Chi, vòng Thái Tuế, lưu Tứ Hóa và cờ cần lưu ý."""
+    """An lưu niên cho một năm: Can Chi, vòng Thái Tuế, lưu Tứ Hóa và tín hiệu."""
     can, chi = can_chi_of_year(year)
     table = get_tu_hoa_table(tu_hoa_table_id)
-    method = f"{METHOD} Bảng Tứ Hóa: {table['school']}."
+    method = (
+        f"{METHOD} Bảng Tứ Hóa: {table['school']}. Phân mức tín hiệu theo quy tắc "
+        f"v{ACTIVATION_RULE_VERSION}, dựa trên số tín hiệu đã định danh (không phải "
+        "số vai trò trùng khớp)."
+    )
     by_cung_so = {c.get("cung_so"): c for c in thap_ni_cung}
     thai_tue_cung = next((c for c in thap_ni_cung if c.get("chuan_ten") == chi), None)
 
@@ -229,37 +430,56 @@ def compute_luu_nien(
     if tieu_han_cung_so:
         roles.append(("tieu_han", tieu_han_cung_so))
 
-    hits: list[dict[str, Any]] = []
-    seen: set[tuple[str, str]] = set()
+    signals: list[dict[str, Any]] = []
 
-    def add_hit(star: str, cung_so: int | None, role: str, cung_ten: str) -> None:
-        key = (star, role)
-        if cung_so is None or key in seen:
+    def add_signal(display_name: str, root_name: str, entry: dict[str, Any],
+                   source: str) -> None:
+        cung_so = entry.get("cung_so")
+        if cung_so is None:
             return
-        seen.add(key)
-        hits.append({"sao": star, "cung_ten": cung_ten, "don_vai": role})
+        vai_tro = [role for role, role_cung_so in roles if role_cung_so == cung_so]
+        if not vai_tro:
+            return
+        signals.append(_make_signal(
+            display_name, root_name, entry, vai_tro, source, year, can, f"{can} {chi}",
+        ))
 
     for star_name in CAUTION_STARS:
         entry = vong.get(star_name)
-        if not entry:
-            continue
-        for role, cung_so in roles:
-            if entry.get("cung_so") == cung_so:
-                add_hit(star_name, cung_so, role, entry.get("cung_ten", ""))
+        if entry:
+            add_signal(star_name, star_name, entry, "vong_thai_tue")
 
     for entry in luu_tu_hoa:
         if entry["code"] != "HOA_KY":
             continue
-        for role, cung_so in roles:
-            if entry.get("cung_so") == cung_so:
-                add_hit(f"{entry['ten_sao']} lưu Kỵ", cung_so, role, entry.get("cung_ten", ""))
+        add_signal(f"{entry['ten_sao']} lưu Kỵ", entry["ten_sao"], entry, "luu_ky")
 
-    if not hits:
-        level = "nhan"
-    elif len(hits) >= 2 or any(hit["don_vai"] in ("menh", "than") for hit in hits):
-        level = "nang"
-    else:
-        level = "vua"
+    by_palace: dict[int, list[dict[str, Any]]] = {}
+    for signal in signals:
+        by_palace.setdefault(signal["cung_so"], []).append(signal)
+    for signal in signals:
+        others = [other for other in by_palace[signal["cung_so"]] if other is not signal]
+        _enrich_signal(signal, others)
+
+    missing: list[str] = []
+    valid_palaces = {
+        c.get("cung_so") for c in thap_ni_cung
+        if isinstance(c, dict) and type(c.get("cung_so")) is int
+    }
+    if len(valid_palaces) < 12:
+        missing.append("Dữ liệu lá số chưa đủ 12 cung; kết quả an lưu niên có thể thiếu.")
+    if not thai_tue_cung:
+        missing.append(
+            f"Chưa xác định được cung Thái Tuế theo chi {chi} của năm {year}; "
+            "không đủ dữ liệu an vòng lưu niên."
+        )
+    if not roles:
+        missing.append(
+            "Chưa có cung trọng tâm (Mệnh/Thân/đại hạn/tiểu hạn) để đối chiếu tín hiệu."
+        )
+
+    activation = classify_activation(signals, missing)
+    role_count = sum(signal["so_vai_tro"] for signal in signals)
 
     return {
         "year": year,
@@ -270,9 +490,16 @@ def compute_luu_nien(
         "vong_thai_tue": vong,
         "luu_tu_hoa": luu_tu_hoa,
         "can_luu_y": {
-            "count": len(hits),
-            "level": level,
-            "hits": hits,
+            "count": len(signals),
+            "role_count": role_count,
+            "signals": signals,
+            "level": activation["level"],
+            "level_label": activation["level_label"],
+            "level_reason": activation["level_reason"],
+            "level_rule_version": activation["level_rule_version"],
+            "level_basis": activation["level_basis"],
+            "pham_vi_doi_chieu": [role for role, _ in roles],
+            "dieu_kien_thieu": missing,
             "method": method,
             "limitations": LIMITATIONS,
         },

@@ -32,6 +32,15 @@
 > thuận/nghịch; AI bị chặn dẫn `rule_ids` ngoài kết quả nhận diện. Quy tắc vẫn giữ
 > `chi_tham_khao` (không tự duyệt). Hồi quy: 2225 passed / 351 known T4 xfailed.
 > T2/T3/T9 (governance) không bị thay thế hay khép lại bởi gói này.
+>
+> Review P4 (Plan_Fix_Mai_Anh_v2): PASSED; tín hiệu lưu niên định danh theo sao + cung +
+> tầng thời gian + năm, gộp vai trò Mệnh/Thân/đại hạn/tiểu hạn vào **một danh sách**
+> (không nhân bản chứng cứ), tách `count` (số tín hiệu) khỏi `role_count` (số vai trò);
+> phân mức bằng hàm riêng có phiên bản v2 — một tín hiệu tại Mệnh/Thân vẫn giữ mức Cao,
+> trùng đại hạn/tiểu hạn không còn tự đẩy lên Cao; mỗi tín hiệu có `vi_sao` (dữ kiện ·
+> quy tắc · chủ đề · điều kiện thiếu); thiếu dữ liệu ghi "chưa đủ dữ liệu". UI đổi
+> "nặng" thành "Mức tập trung tín hiệu cần xem xét". Hồi quy: 2235 passed /
+> 351 known T4 xfailed. T2/T3/T9 (governance) không bị thay thế hay khép lại bởi gói này.
 
 > Review T1 sau merge T3: PASSED. Chặn cứng kết luận thời điểm C/D kể cả sau
 > retry; thêm loai_ket_luan vào schema/mock/fixture/UI, cache v4. Hồi quy review:
@@ -1064,3 +1073,68 @@ Ngoài phạm vi gói này (chỉ ghi nhận, không sửa):
 - `can_tuoi` là **điều kiện thuận** (lấy từ mục `ho_tro` nguồn), không phải điều kiện bắt buộc; `ho_tro`/`pha_cach` dạng văn bản ghi `chua_kiem_tra`, không tự diễn giải.
 - `cung_muc_tieu` chưa được dùng để neo; chỉ `cung_neo` xác định cung neo, không có neo thì tìm nhóm cung theo quan hệ.
 - Ngoài phạm vi (chỉ ghi nhận): title `horoscope_features.py:219` "Mệnh Cục Tị Hòa" (nội dung); frontend vẫn tự tính quan hệ cung — gom về `palace_relations` khi làm P5/P7.
+
+## Plan_Fix_Mai_Anh_v2 P4 — Tín hiệu lưu niên và phần "vì sao" (2026-11-03)
+
+**Trạng thái:** **PASSED** — 10 test riêng `tests/test_luu_nien_signals.py`; hồi quy toàn cục: **2235 passed / 351 known T4 xfailed** (77.58s, `-m "not heavy"`).
+
+**Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P4 §7) — tách bốn việc: (1) định danh tín hiệu theo sao + cung + tầng thời gian + năm, (2) giữ vai trò Mệnh/Thân/đại hạn/tiểu hạn thành danh sách trên một tín hiệu, (3) tách số tín hiệu khỏi số vai trò trùng khớp, (4) tách quy tắc phân mức thành hàm riêng có phiên bản. Đổi nhãn "nặng" thành "mức tập trung tín hiệu cần xem xét" và bổ sung phần "vì sao" chạy được không cần AI.
+
+### Thay đổi chính
+
+| File | Thay đổi |
+|---|---|
+| `backend/app/services/horoscope_annual.py` | **P4**: `ACTIVATION_RULE_VERSION=2`, `ACTIVATION_LEVEL_LABELS`, `classify_activation` (hàm phân mức riêng); `compute_luu_nien` trả `can_luu_y.signals` (mỗi tín hiệu có `tin_hieu_id`, `sao`, `sao_goc`, `cung_so`, `cung_ten`, `dia_chi`, `tang_thoi_gian`, `nam`, `vai_tro[]`, `so_vai_tro`, `vi_sao`); `count` = số tín hiệu, `role_count` = số vai trò; thiếu dữ liệu → `chua_du_du_lieu` |
+| `frontend/horoscope_view.py` | `annual_panel`: hiển thị "Mức tập trung tín hiệu cần xem xét: Thấp/Vừa/Cao", lý do code, từng tín hiệu với vai trò + lời giải thích + quy tắc/chủ đề/điều kiện thiếu; bỏ nhãn "nặng" |
+| `tests/test_luu_nien_signals.py` | **MỚI**: P4.TC-01…09 |
+
+### Định danh tín hiệu & phân mức (P4 §7.1–7.3)
+
+- `tin_hieu_id = "ln-<năm>-<nguồn>-<sao không dấu>-<cung_so>"`, ví dụ `ln-2026-vong-thai-tue-tang-mon-9`.
+- Một tín hiệu vật lý = **sao + cung + tầng thời gian + năm**; `vai_tro` là danh sách nên một sao tại cung vừa là Mệnh vừa là Thân chỉ tạo **một** tín hiệu với 2 vai trò.
+- `count` đếm tín hiệu đã định danh; `role_count` đếm vai trò trùng khớp. Không dùng `role_count` để kết luận có nhiều chứng cứ độc lập.
+- Ngưỡng v2 (ghi trong `level_basis.nguong`):
+
+| Điều kiện | `level` | Nhãn hiển thị |
+|---|---|---|
+| Không có tín hiệu | `nhan` | Thấp |
+| 1 tín hiệu, chỉ ở đại hạn/tiểu hạn | `vua` | Vừa |
+| Có ít nhất 1 tín hiệu mang vai trò Mệnh/Thân, **hoặc** ≥2 tín hiệu khác nhau | `nang` | Cao |
+| Thiếu dữ liệu an sao/cung trọng tâm | `chua_du_du_lieu` | Chưa đủ dữ liệu |
+
+- **Hiệu chỉnh #1:** một tín hiệu đơn tại Mệnh/Thân **vẫn** giữ mức Cao; gộp trùng không tự động hạ nhãn. Điểm sửa là trùng đại hạn/tiểu hạn trên **cùng một tín hiệu** không còn tự đẩy từ Vừa lên Cao (trước đây `(sao, vai_tro)` được đếm thành 2 hit).
+- `level_basis` gồm `so_tin_hieu`, `so_vai_tro`, `co_menh_than`, `nguong`; `level_rule_version=2`. Đổi ngưỡng phải tăng phiên bản và cập nhật test.
+- Nhãn chỉ là **mức tập trung tín hiệu**, không phải mức độ xấu, độ chắc chắn hay dự báo sự kiện (`level_reason` nêu rõ).
+
+### Phần "vì sao" (P4 §7.4–7.5)
+
+Mỗi tín hiệu mang `vi_sao` gồm đúng bốn nhóm:
+
+- `du_kien`: sao, sao gốc, cung số/tên, địa chi, tầng thời gian, năm, can chi.
+- `quy_tac`: `id` + mô tả (`luu_nien.vong_thai_tue_trung_cung` hoặc `luu_nien.luu_ky_trung_cung`).
+- `chu_de`: chủ đề theo vai trò (Bản thân / Thân và hành động / Vận đại hạn / Vận tiểu hạn) + tên cung.
+- `dieu_kien_thieu`: chưa an lưu nguyệt/ngày; chưa có nguồn luận giải đã duyệt cho tín hiệu lưu niên.
+
+Kèm `giai_thich` tất định (không gọi AI) và `tin_hieu_cung_cung`. Khi hai tín hiệu khác nhau cùng cung (ví dụ Tang Môn + Liêm Trinh lưu Kỵ), mỗi lời giải thích nêu rõ: **"đây là tín hiệu khác, cùng thuộc tầng lưu niên — không phải hai tầng xác nhận"**. Với lưu Kỵ, lời giải thích nói rõ đó là sao gốc nhận Hóa Kỵ theo can năm, không phải một sao lưu niên độc lập.
+
+Thiếu dữ liệu (lá số rỗng, chưa đủ 12 cung, không xác định cung Thái Tuế, không truyền cung trọng tâm) → `chua_du_du_lieu` kèm lý do trong `dieu_kien_thieu`; không mặc định "Thấp" và không đoán.
+
+### Ma trận test
+
+- **P4.TC-01** (Unit): một Tang Môn tại cung đồng thời là Mệnh + Thân + đại hạn + tiểu hạn → đúng **1** tín hiệu, `vai_tro` đủ 4, `count=1`, `role_count=4`; `tin_hieu_id` duy nhất, đúng năm/tầng.
+- **P4.TC-02** (Ranh giới): cùng tín hiệu chỉ trùng đại hạn + tiểu hạn → `count=1`, `role_count=2`, mức **Vừa** (không còn tự lên Cao như cách đếm `(sao, vai_tro)` cũ).
+- **P4.TC-03** (Hiệu chỉnh #1): tín hiệu đơn tại Mệnh → mức **Cao**, `co_menh_than=True` (gộp trùng không hạ nhãn).
+- **P4.TC-04** (Ngưỡng): 0 tín hiệu → Thấp; 1 tín hiệu đại hạn → Vừa; 2 tín hiệu khác nhau → Cao.
+- **P4.TC-05** (Truy vết): `ACTIVATION_RULE_VERSION=2`; `level_basis` đúng cấu trúc; lý do nêu "quy tắc v2" và "không phải mức độ xấu".
+- **P4.TC-06** (Vì sao): mọi tín hiệu trên fixture thật có đủ `du_kien`/`quy_tac`/`chu_de`/`dieu_kien_thieu`/`giai_thich`; quy tắc bắt đầu `luu_nien.`; câu kết nêu chưa đủ kết luận sự kiện.
+- **P4.TC-07** (Cùng cung): dựng Liêm Trinh tại Thân để trùng Tang Môn năm Bính Ngọ → 2 tín hiệu khác nhau; mỗi giải thích nêu "tín hiệu khác", "cùng thuộc tầng lưu niên", "không phải hai tầng xác nhận"; `tin_hieu_cung_cung` trỏ nhau.
+- **P4.TC-08** (Thiếu dữ liệu): `compute_luu_nien([], 2026)` → `chua_du_du_lieu`, lý do nêu Thái Tuế, có `dieu_kien_thieu`; không có cung trọng tâm cũng ghi "chưa đủ dữ liệu" thay vì Thấp.
+- **P4.TC-09** (UI): `annual_panel` hiển thị "Mức tập trung tín hiệu cần xem xét", lý do, quy tắc/chủ đề/còn thiếu, vai trò; không còn "Mức cần lưu ý: nặng".
+
+### Ranh giới & ghi chú
+
+- **Không** gọi AI ở P4; toàn bộ định danh, phân mức và "vì sao" là code tất định.
+- Đổi ngữ nghĩa `count`: trước là số `(sao, vai_tro)`; nay là số **tín hiệu** đã định danh. `hits`/`don_vai` được thay bằng `signals`/`vai_tro`; frontend đã cập nhật (UI còn đọc được `don_vai` cũ nếu gặp payload cũ).
+- `build_year_comparison` gọi `compute_luu_nien` không truyền cung trọng tâm → `can_luu_y` là "chưa đủ dữ liệu"; hàm này chỉ dùng `luu_tu_hoa` nên không đổi kết quả so sánh năm.
+- Không an lưu nguyệt/ngày; không nâng `muc_tin_cay`; không biến mức tập trung thành dự báo chuyện xấu.
+- Ảnh hưởng P7: `vi_sao` là dữ liệu nguồn cho mục "Vì sao" — P7 chỉ bố trí/lọc, không tính lại.

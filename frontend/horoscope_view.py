@@ -190,13 +190,36 @@ def annual_panel(annual: dict, luu_nien: dict | None = None) -> str:
         ) or 'Chưa xác định'
         body.append(f"<p>Lưu Tứ Hóa theo can năm: {text(hoa_text)}.</p>")
         can_luu_y = luu_nien.get('can_luu_y') or {}
-        level = {'nhan': 'nhẹ', 'vua': 'vừa', 'nang': 'nặng'}.get(can_luu_y.get('level'), '—')
-        roles = {'menh': 'Mệnh', 'than': 'Thân', 'dai_han': 'đại hạn', 'tieu_han': 'tiểu hạn'}
-        hits = '; '.join(
-            f"{hit.get('sao', '')} tại {hit.get('cung_ten', '')} ({roles.get(hit.get('don_vai'), hit.get('don_vai'))})"
-            for hit in can_luu_y.get('hits', [])
-        ) or 'không có sao lưu niên trùng cung trọng tâm'
-        body.append(f"<p>Mức cần lưu ý: <strong>{text(level)}</strong> · {text(hits)}.</p>")
+        if can_luu_y:
+            level = can_luu_y.get('level_label') or {
+                'nhan': 'Thấp', 'vua': 'Vừa', 'nang': 'Cao', 'chua_du_du_lieu': 'Chưa đủ dữ liệu',
+            }.get(can_luu_y.get('level'), '—')
+            reason = can_luu_y.get('level_reason') or ''
+            body.append(
+                f"<p>Mức tập trung tín hiệu cần xem xét: <strong>{text(level)}</strong>."
+                + (f" {text(reason)}" if reason else '') + "</p>"
+            )
+            roles = {'menh': 'Mệnh', 'than': 'Thân', 'dai_han': 'Đại hạn', 'tieu_han': 'Tiểu hạn'}
+            rows = []
+            for signal in can_luu_y.get('signals') or []:
+                signal_roles = signal.get('vai_tro') or (
+                    [signal.get('don_vai')] if signal.get('don_vai') else []
+                )
+                role_text = ', '.join(roles.get(role, role) for role in signal_roles) or '—'
+                why = signal.get('vi_sao') or {}
+                rule = why.get('quy_tac') or {}
+                topics = ', '.join(why.get('chu_de') or []) or '—'
+                missing = ' '.join(why.get('dieu_kien_thieu') or []) or '—'
+                rows.append(
+                    f"<details class='annual-signal'><summary>{text(signal.get('sao'))} tại "
+                    f"{text(signal.get('cung_ten'))} · vai trò: {text(role_text)}</summary>"
+                    f"<p>{text(why.get('giai_thich'))}</p>"
+                    f"<p class='muted'>Quy tắc: {text(rule.get('id') or '—')} · "
+                    f"Chủ đề: {text(topics)}</p>"
+                    f"<p class='muted'>Còn thiếu: {text(missing)}</p></details>"
+                )
+            body.append(''.join(rows) if rows else
+                        "<p class='muted'>Không có tín hiệu lưu niên trùng cung trọng tâm.</p>")
         body.append(f"<p class='muted'>{text(luu_nien.get('limitations'))}</p>")
     body.append(f"<p class='muted'>{text(annual.get('limitations'))}</p>")
     return panel(f"Năm {annual.get('year', '—')} · {annual.get('can_chi', '')}", ''.join(body))
