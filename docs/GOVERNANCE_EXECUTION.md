@@ -114,3 +114,5 @@ test counts. See GOVERNANCE_ACCEPTANCE.md for the final task matrix and limits.
   servers stopped, WAL checkpointed and tracked DB restored; no user cases lost.
 - No private workbook, CSV summary, production journal rows or screenshot binary
   was staged. Individual task commits pushed to origin/main.
+- Launch-guide follow-up: RUN_HOROSCOPE.md now uses app.py like run_local.bat,
+  so the documented command exposes both new research pages.

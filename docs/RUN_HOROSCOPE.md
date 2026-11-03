@@ -33,11 +33,22 @@ Terminal thứ nhất:
 Terminal thứ hai:
 
 ```powershell
-./.venv/Scripts/python.exe -m streamlit run frontend/horoscope_ui.py --server.address 127.0.0.1 --server.port 8502 --browser.gatherUsageStats false
+./.venv/Scripts/python.exe -m streamlit run app.py --server.address 127.0.0.1 --server.port 8502 --browser.gatherUsageStats false
 ```
 
-Mở <http://127.0.0.1:8502>. Trên màn hình nhỏ, chọn **Nhập ngày sinh** ở đầu trang.
-Nhập thông tin, rồi chọn **Tạo bản luận giải**.
+Mở <http://127.0.0.1:8502>, chọn **Luận giải lá số** trong điều hướng. Trên màn
+hình nhỏ, mở thanh bên để chọn trang và nhập thông tin, rồi chọn **Tạo bản luận giải**.
+`run_local.bat` cũng chạy entrypoint `app.py` này (cổng frontend mặc định 8501).
+
+Hai trang bổ sung:
+
+- **Hồ sơ sao**: tra cứu 14 nhóm theo từng sách/trang; tham khảo seed phải chủ động
+  bật, hoặc tắt toàn bộ trên server với `KMS_STAR_SEEDS_ENABLED=0`.
+- **Nhật ký nghiệm lý**: ca ẩn danh tự nguyện, cố định lá số, khóa nhận định rồi
+  đối chiếu. Đọc [quy trình và dữ liệu](CASE_VALIDATION.md) trước khi ghi ca.
+
+Phần Vận trình có [bảng bốn tầng và so năm trước/sau](ANNUAL_REPORT.md).
+Kết quả review toàn bộ: [T1–T11](GOVERNANCE_ACCEPTANCE.md).
 
 Trong **Tùy chọn bài đọc**, có thể chọn năm chiêm nghiệm, chủ đề đọc trước và chế độ:
 
@@ -69,7 +80,8 @@ Thay `.env` cần khởi động lại backend. Xem [chi tiết bản sửa](HOR
 
 Mở/đóng lá số hoặc nguồn sách không gọi lại API. Nếu tạo lại thất bại, báo cáo thành công
 gần nhất được giữ lại. Dữ liệu form/báo cáo nằm trong phiên Streamlit; tải lại trang có thể
-mất phiên. Không tạo chức năng lưu hồ sơ hay xuất dữ liệu cá nhân.
+mất phiên. Nhật ký nghiệm lý là luồng lưu riêng, chỉ nhận bản chụp ẩn danh và
+ghi chú do người dùng chủ động tạo; không tự lưu hồ sơ khi xem lá số.
 
 Nếu backend chạy ở cổng khác, đặt trước khi mở Streamlit:
 
