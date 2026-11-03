@@ -796,3 +796,20 @@ CI phát hiện ba test singleton cũ phụ thuộc model không cài trong back
 Changelog/plan được cập nhật; workbook thật pass gate và khớp ID corpus. DB chỉ
 thay cache test/bảng nhật ký rỗng, đã backup và khôi phục, không commit dữ liệu.
 [Bảng nghiệm thu và giới hạn](../../docs/GOVERNANCE_ACCEPTANCE.md).
+
+## Skill local — computation và star_meanings (2026-11-03)
+
+**PASSED — phạm vi tích hợp tham khảo.** Chưa xử lý các khoảng trống T2/T3/T9.
+
+- computation local có Git blob trùng fixture T4; không có engine thực thi và
+  thiếu bảng nhất quán. Không thay bộ an sao hiện tại. Chạy lại cross-check:
+  1873 passed / 351 known xfailed, so 40 mục Tứ Hóa vẫn ba khác biệt.
+- 11 test mới cho loader/reference/nguồn, nhóm/alias, lỗi file/tắt, lọc nội dung,
+  context, cache snapshot, UI, mock/Gemini provenance và an sao không đổi.
+- Hồi quy: **2146 passed / 351 known T4 xfailed** (48.85s).
+- Review giao diện desktop/tablet/mobile, không FAIL; một WARN khoảng trống
+  desktop hiện hữu, chưa làm đợt redesign. Không gọi Gemini thật trong test.
+- Tài liệu người dùng thêm giữ local; server khác phải cung cấp file hoặc cấu
+  hình đường dẫn. Test CI dùng fixture, không cần công bố nguyên văn tài liệu.
+
+Chi tiết: [LOCAL_TUVI_SKILL_INTEGRATION.md](../../docs/LOCAL_TUVI_SKILL_INTEGRATION.md).

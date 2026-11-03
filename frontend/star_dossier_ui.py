@@ -37,6 +37,15 @@ if result:
                + (', '.join(result['books']) or 'Chưa có bản ghi có trang dẫn'))
     st.caption('Các đoạn dưới là lời ghi của từng nguồn truyền thống, chưa phải kết luận cho cá nhân.')
     tabs = st.tabs(['Từng sách và trang dẫn','Ý nghĩa và điều kiện','Tổ hợp và Tứ Hóa','Nghiệm lý'])
+    reference=result.get('reference_meaning')
+    if reference:
+        with tabs[1]:
+            with st.expander('Ý nghĩa sao từ skill tham khảo',expanded=True):
+                st.caption(reference['source'])
+                st.caption('Mục trong tài liệu: '+reference['group_heading'])
+                st.text(reference['text'])
+                if reference.get('omitted_lines'):
+                    st.caption('Đã lược các dòng định mệnh, nhạy cảm hoặc không phù hợp.')
     groups = [['school_differences','source_citations'],list(result['slots'])[:6],
               list(result['slots'])[6:11],['case_notes']]
     for tab, keys in zip(tabs,groups):

@@ -15,6 +15,7 @@ from backend.app.services.horoscope_rag_bridge import retrieve_horoscope_context
 from backend.app.services.horoscope_analysis import build_star_facts
 from backend.app.services.horoscope_interpreter import interpret_horoscope, HoroscopeGenerationError
 from backend.app.services.pages import format_page_label
+from backend.app.services.star_meanings_reference import select_meanings
 
 logger = logging.getLogger(__name__)
 
@@ -38,6 +39,9 @@ def reading_events(req: HoroscopeRequest):
         mark = time.perf_counter()
         context = retrieve_horoscope_context(features, req.top_k_per_topic)
         facts = build_star_facts(features, context)
+        meaning_references=select_meanings(facts)
+        features['_star_meaning_references']=meaning_references
+        context['star_meaning_references']=meaning_references
         timings['retrieval'] = round((time.perf_counter() - mark) * 1000, 1)
         citations = [{
             'ref_id': s['ref_id'], 'chunk_id': s['chunk_id'], 'book_code': s['book_code'],
@@ -52,6 +56,7 @@ def reading_events(req: HoroscopeRequest):
             'thong_tin_co_ban': features['thong_tin_co_ban'], 'reading': {},
             'la_so': {'thap_ni_cung': raw['thap_ni_cung']}, 'citations': citations,
             'star_analysis': facts, 'annual': features['nam_xem'],
+            'star_meaning_references':meaning_references,
             'luu_nien': features.get('luu_nien'), 'palaces': features['palaces'],
             'meta': {'request_id': request_id, 'provider': req.provider, 'cached': False,
                      'target_year': features['nam_xem']['year'],
@@ -80,7 +85,8 @@ def reading_events(req: HoroscopeRequest):
             logger.info('horoscope_read request_id=%s cache_hit=True timings_ms=%s', request_id, timings)
             yield {'event': 'result', 'report': {
                 **report, 'reading': cached.get('reading', {}),
-                'meta': {**report['meta'], **generation, 'timings_ms': timings},
+                'meta': {**report['meta'], **generation, 'timings_ms': timings,
+                         'star_meanings_provided_to_ai':bool(meaning_references)},
             }}
             return
 
@@ -104,7 +110,8 @@ def reading_events(req: HoroscopeRequest):
                 HOROSCOPE_MODEL, reading, generation,
             )
         report = {**report, 'reading': reading,
-                  'meta': {**report['meta'], **generation, 'timings_ms': timings}}
+                  'meta': {**report['meta'], **generation, 'timings_ms': timings,
+                           'star_meanings_provided_to_ai':generation.get('actual_provider')=='gemini' and bool(meaning_references)}}
         logger.info('horoscope_read request_id=%s provider=%s reason=%s timings_ms=%s',
                     request_id, generation['actual_provider'], generation['reason'], timings)
         yield {'event': 'result', 'report': report}

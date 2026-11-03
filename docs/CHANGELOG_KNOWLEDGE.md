@@ -1,5 +1,20 @@
 # Changelog tri thức KMS Tử Vi
 
+## 2026-11-03 — Skill local: kiểm tra engine và bổ sung ý nghĩa sao
+
+- Trước → sau: 20 seed diễn giải ngắn chỉ dùng hồ sơ sao → thêm loader đọc
+  star_meanings.md người dùng cung cấp, hiện có 34 sao; cấp ngữ cảnh riêng cho
+  cả bài luận/hỏi đáp AI và mục tham khảo trong hồ sơ sao.
+- Giữ nguồn gián tiếp/chưa xác minh, SHA256 và nhóm; lọc dòng nhạy cảm/chỉ thị,
+  không lấy phần luận tuổi thọ/số con. Không nhập toàn bộ tài liệu vào canonical
+  hoặc chỉ mục. Source refs/trang của ba sách không bị gán cho nguồn skill.
+- Khóa cache thêm snapshot tham khảo; bật/tắt/đổi tài liệu làm đổi ngữ cảnh.
+  Mock không tự nhận đã dùng AI. Không sửa quy tắc T2/T3/T9 trong đợt này.
+- computation local trùng blob nguồn T4; Markdown chưa là engine thực thi,
+  bảng Tử Vi có mâu thuẫn/thiếu dữ liệu. Chưa đủ điều kiện thay vendor.
+- Review 11 test mới, 2146 passed / 351 known T4 xfailed toàn bộ. Nguồn gốc,
+  cách bật và giới hạn triển khai: [tích hợp skill local](LOCAL_TUVI_SKILL_INTEGRATION.md).
+
 ## 2026-11-03 — T11: chốt phiên bản và review tích hợp
 
 - Trước → sau: plan draft và ghi chép rời → trạng thái triển khai/review đủ

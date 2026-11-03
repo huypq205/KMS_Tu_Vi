@@ -19,6 +19,7 @@ from sqlalchemy import delete, select, update
 from backend.app.core.config import ENABLE_HOROSCOPE_CACHE
 from backend.app.db.models import HoroscopeCache
 from backend.app.db.session import init_db, session_scope
+from backend.app.services.star_meanings_reference import reference_signature
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +35,11 @@ def _utcnow() -> datetime:
 def context_hash(context: dict[str, Any] | None) -> str:
     """Hash thứ tự chunk_id đã truy xuất, để đổi nguồn là đổi khóa cache."""
     ids = [str(hit.get('chunk_id', '')) for hit in (context or {}).get('reference_list', [])]
-    return hashlib.sha256('|'.join(ids).encode('utf-8')).hexdigest()[:32]
+    # Use the exact reference snapshot passed to generation when available.
+    reference=(context['star_meaning_references'] if context is not None and 'star_meaning_references' in context
+               else reference_signature())
+    blob=json.dumps({'chunks':ids,'star_meanings':reference},sort_keys=True,ensure_ascii=False)
+    return hashlib.sha256(blob.encode('utf-8')).hexdigest()[:32]
 
 
 def compute_key(birth: dict[str, Any], provider: str, model: str, ctx_hash: str,

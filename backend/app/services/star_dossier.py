@@ -9,6 +9,7 @@ import yaml
 from backend.app.core.config import DB_PATH, ROOT
 from backend.app.services.horoscope_rag_bridge import STAR_NAMES, normalized, search_fts_sqlite
 from backend.app.services.knowledge_gate import validate_records
+from backend.app.services.star_meanings_reference import get_meaning
 
 SLOTS = {
     'core_function': 'Bản chất và ý nghĩa biểu tượng',
@@ -156,6 +157,7 @@ def get_star_dossier(name: str, *, db_path: Path | str | None = None, include_se
             if not slots[key]['entries']:
                 slots[key].update(status='seed_unverified',message=SEED_MESSAGE,entries=[dict(entry)])
     return {'name':name, 'slots':slots,'canonical_records':len(records),
+            'reference_meaning':get_meaning(name) if include_seeds and enabled else None,
             'books':[b for b in ('NPL','DAU','BD') if any(r['book_code']==b for r in records)], 'seed_enabled':bool(include_seeds and enabled),
             'tin_cay':[{'book_code':b, 'trust_tiers':sorted({r['trust_tier'] for r in records if r['book_code']==b}),
                         'label':'Đối chiếu theo nguồn; chưa xác minh toàn bộ điều kiện hoặc trang thủ công.'}

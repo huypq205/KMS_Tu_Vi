@@ -297,6 +297,8 @@ else:
         timings = meta.get('timings_ms', {})
         provider_label = {'gemini': 'Luận giải thông minh (online)', 'mock': 'Chỉ dữ kiện lá số (không dùng AI)'}.get(meta.get('actual_provider'), meta.get('actual_provider', '—'))
         st.caption(f"Chế độ: {provider_label} · Số lần xử lý: {meta.get('attempts', 0)} · Cache: {'trúng' if meta.get('cached') else 'chưa có'}")
+        if meta.get('star_meanings_provided_to_ai'):
+            st.caption('Đã cấp thêm ý nghĩa sao từ skill tham khảo cho AI; chưa đối chiếu sách KMS, không thay nguồn sách gốc.')
         st.caption(' · '.join(f"{label}: {timings.get(key, 0) / 1000:.2f}s" for key, label in [('chart', 'Lập lá số'), ('retrieval', 'Lấy nguồn'), ('generation', 'Tạo bài'), ('total', 'Tổng')]))
 
 st.markdown('<footer>Tử Vi là một hệ thống văn hóa truyền thống để tham khảo và chiêm nghiệm. Luận giải không quyết định số phận và không thay thế tư vấn y khoa, pháp lý hay tài chính chuyên nghiệp.</footer>', unsafe_allow_html=True)

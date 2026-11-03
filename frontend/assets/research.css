@@ -3,6 +3,9 @@
 [data-testid="stMainBlockContainer"] {margin-top:24px;border-radius:8px;}
 [data-testid="stExpandSidebarButton"]::after {content:'KMS Tử Vi';}
 button, input, select {min-height:44px;}
+.stText, [data-testid="stText"], [data-testid="stText"] * {font-family:var(--font)!important;}
+[data-testid="stExpander"] details {border:1px solid var(--border)!important;}
+[data-testid="stExpander"] details summary {border-color:var(--border)!important;}
 .stCaption, .stCaption p, [data-testid="stCaptionContainer"] p {
   color:var(--muted)!important;opacity:1!important;
 }
