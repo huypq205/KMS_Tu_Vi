@@ -24,6 +24,7 @@ from backend.app.services.horoscope_confidence import (
     DEFAULT_INPUT_CONFIDENCE,
     normalize_level,
 )
+from backend.app.services.palace_relations import tam_phuong
 
 ROOT = Path(__file__).resolve().parents[3]
 VENDOR_PATH = ROOT / "vendor"
@@ -261,26 +262,22 @@ def analyze_menh_cuc(ban_menh_str: str, cuc_str: str) -> dict[str, Any]:
 def get_tam_phuong_tu_chinh(
     cung_so: int, cung_data: dict[int, dict] | list[dict]
 ) -> dict[str, Any]:
-    """Trích xuất 4 cung cấu thành Tam phương Tứ chính của một cung (chính diện, đối xung, 2 tam hợp)."""
+    """Trích xuất 4 cung cấu thành Tam phương Tứ chính của một cung (chính diện, đối xung, 2 tam hợp).
+
+    P2b: phép tính vị trí nằm ở ``palace_relations.tam_phuong``; hàm này chỉ
+    ánh xạ kết quả sang dữ liệu cung và giữ nguyên khóa trả về cũ.
+    """
     if isinstance(cung_data, list):
         cung_map = {c["cung_so"]: c for c in cung_data}
     else:
         cung_map = cung_data
 
-    chinh = cung_map.get(cung_so, {})
-    doi_so = (cung_so + 6 - 1) % 12 + 1
-    doi = cung_map.get(doi_so, {})
-
-    th1_so = (cung_so + 4 - 1) % 12 + 1
-    th2_so = (cung_so + 8 - 1) % 12 + 1
-    th1 = cung_map.get(th1_so, {})
-    th2 = cung_map.get(th2_so, {})
-
+    quan_he = tam_phuong(cung_so)
     return {
-        "chinh_cung": chinh,
-        "doi_cung": doi,
-        "tam_hop": [th1, th2],
-        "all_cung_sos": [cung_so, doi_so, th1_so, th2_so],
+        "chinh_cung": cung_map.get(quan_he["chinh_cung"], {}),
+        "doi_cung": cung_map.get(quan_he["doi_cung"], {}),
+        "tam_hop": [cung_map.get(so, {}) for so in quan_he["tam_hop"]],
+        "all_cung_sos": list(quan_he["all_cung_sos"]),
     }
 
 

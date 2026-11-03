@@ -6,6 +6,7 @@ from typing import Any
 
 from backend.app.core.evidence_types import EvidenceType
 from backend.app.services.horoscope_annual import tu_hoa_stars_for_can
+from backend.app.services.palace_relations import evidence_kind
 from backend.app.services.tu_hoa_tables import normalize_star
 
 NATAL_GROUPS = ("chinh_tinh", "risk_stars", "cat_tinh")
@@ -78,24 +79,12 @@ def _palace_evidence_kind(dia_chi: str, tam_phuong: dict[str, Any] | None) -> st
     - Cung tam hợp với Mệnh: tam hợp.
     - Cung kế cận Mệnh: giáp cung.
     - Các cung còn lại: vẫn là sao tọa thủ tại cung của nó.
+
+    P2b: phép tính nằm ở ``palace_relations.evidence_kind``; tên chi được
+    chuẩn hóa (bỏ dấu/hoa-thường, "Tị" = "Tỵ") thay vì so sánh chuỗi có dấu.
     """
     tam_phuong = tam_phuong or {}
-    dia_chi = dia_chi.replace("Tị", "Tỵ")
-    anchor = (tam_phuong.get("chinh_cung") or "").replace("Tị", "Tỵ")
-    if not anchor or not dia_chi or dia_chi == anchor:
-        return EvidenceType.TOA_THU.value
-    if dia_chi == (tam_phuong.get("doi_cung") or "").replace("Tị", "Tỵ"):
-        return EvidenceType.XUNG_CHIEU.value
-    if dia_chi in [c.replace("Tị", "Tỵ") for c in (tam_phuong.get("tam_hop") or [])]:
-        return EvidenceType.TAM_HOP.value
-    try:
-        index = CHI_ORDER.index(anchor)
-        neighbours = {CHI_ORDER[(index - 1) % 12], CHI_ORDER[(index + 1) % 12]}
-        if dia_chi in neighbours:
-            return EvidenceType.GIAP_CUNG.value
-    except ValueError:
-        pass
-    return EvidenceType.TOA_THU.value
+    return evidence_kind(tam_phuong.get("chinh_cung") or "", dia_chi)
 
 
 def _make_fact(

@@ -12,6 +12,12 @@
 > thành `configs/cach_cuc_catalog.yaml` (4 trạng thái + sẵn sàng thực thi + 8 ứng viên
 > bản đầu + 4 rule nhạy cảm bị chặn); loader/validator với bất biến duyệt nguồn, không
 > tự duyệt (reviewer_role='chua_chi_dinh'). Hồi quy: 2175 passed / 351 known T4 xfailed.
+>
+> Review P2b (Plan_Fix_Mai_Anh_v2): PASSED; tách quan hệ cung thành module dùng chung
+> `palace_relations` (đồng cung / xung chiếu / 2 tam hợp / 2 giáp, cung neo nêu rõ, chuẩn
+> hóa tên chi-cung không đoán khi mơ hồ, đọc miếu/vượng từ `saoDacTinh`, thiếu trả
+> "thieu"); `get_tam_phuong_tu_chinh` và `_palace_evidence_kind` giữ nguyên hành vi.
+> Không đổi bảng trạng thái sao / bảng Tứ Hóa. Hồi quy: 2196 passed / 351 known T4 xfailed.
 
 > Review T1 sau merge T3: PASSED. Chặn cứng kết luận thời điểm C/D kể cả sau
 > retry; thêm loai_ket_luan vào schema/mock/fixture/UI, cache v4. Hồi quy review:
@@ -903,3 +909,49 @@ Chi tiết: [LOCAL_TUVI_SKILL_INTEGRATION.md](../../docs/LOCAL_TUVI_SKILL_INTEGR
 - 30 quy tắc: 16 đủ rõ (`san_sang_thuc_thi=true`), 14 còn điểm mơ hồ/mâu thuẫn (`can_doi_chieu`).
 - 4 quy tắc nội dung nhạy cảm (tử vong/tuổi thọ): Linh Xương Đà Vũ, Cự Hỏa Kình Dương, Mã đầu đới kiếm, Mệnh vô chính diệu — bị chặn khỏi bản đầu.
 - Bản đầu P3: 8 quy tắc ứng viên (`ung_vien_ban_dau`), đúng trần plan ("khoảng 5–8").
+
+## Plan_Fix_Mai_Anh_v2 P2b — Chuẩn hóa quan hệ cung (2026-11-03)
+
+**Trạng thái:** **PASSED** — 21 test riêng `tests/test_palace_relations.py`; hồi quy toàn cục: **2196 passed / 351 known T4 xfailed** (94.22s, `-m "not heavy"`).
+
+**Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P2b §5) — tách quan hệ cung thành module dùng chung; đồng cung, 2 tam hợp, đối cung/xung chiếu, 2 giáp; cung neo nêu rõ; chuẩn hóa tên/mã cung; đọc miếu/vượng/đắc/bình/hãm từ `saoDacTinh`, thiếu trả "thiếu"; test đủ 12 cung, đặc biệt vòng qua Tý/Hợi.
+
+### Thay đổi chính
+
+| File | Thay đổi |
+|---|---|
+| `backend/app/services/palace_relations.py` | **MỚI**: phép tính quan hệ cung trên `cung_so` 1..12 (1 = Tý … 12 = Hợi); `doi_cung`, `tam_hop`, `giap_cung`, `tam_phuong`, `quan_he`, `cac_cung_lien_quan`; chuẩn hóa `CHI_NAMES` + mã cung (`normalize_palace_role`, `palace_so_by_role`, `resolve_anchor`); `evidence_kind`; `dac_tinh_in_palace` đọc `saoDacTinh`/`dac_tinh` |
+| `backend/app/services/horoscope_features.py` | `get_tam_phuong_tu_chinh` **ủy thác** cho `palace_relations.tam_phuong`, giữ nguyên khóa `chinh_cung`/`doi_cung`/`tam_hop`/`all_cung_sos` và thứ tự cung |
+| `backend/app/services/horoscope_analysis.py` | `_palace_evidence_kind` **ủy thác** cho `palace_relations.evidence_kind`; bỏ so sánh chuỗi có dấu `"Tị"/"Tỵ"` (nay chuẩn hóa tên chi), giữ nguyên kết quả đầu ra |
+| `tests/test_palace_relations.py` | **MỚI**: P2b.TC-01…11 |
+
+### API chính (P3/P5 dùng lại)
+
+- `quan_he(a, b) -> "dong_cung" | "tam_hop" | "xung_chieu" | "giap_cung" | "khong"` — mã trùng `rule["quan_he"]` của danh mục P2 (P3 so khớp trực tiếp).
+- `tam_phuong(cung_so)` — 4 cung Tam phương Tứ chính, kèm `giap_cung` (không có trong kết quả cũ).
+- `resolve_anchor(palaces, "Mệnh" | "Quan Lộc" | "Tý" | cung_so)` — cung neo được nêu rõ, raise `ValueError` nếu không xác định (không mặc định về Mệnh).
+- `dac_tinh_in_palace(palace, "Tử Vi") -> "mieu"|"vuong"|"dac"|"binh"|"ham"|MISSING` — chỉ đọc, không suy.
+- `MISSING = "thieu"` của hợp đồng P1 dùng chung khi thiếu dữ liệu.
+
+### Ma trận test
+
+- **P2b.TC-01** (Unit): `doi_cung` đủ 12 cung, đối xứng (2 lần trả về gốc), không tự trỏ; wrap Tý(1)↔Ngọ(7), Tỵ(6)↔Hợi(12).
+- **P2b.TC-02** (Unit): `tam_hop` tạo đúng 4 nhóm rời nhau phủ kín 12 cung; quan hệ 2 chiều giữa 3 cung trong nhóm; Hợi(12) → Mão(4), Mùi(8).
+- **P2b.TC-03** (Unit): `giap_cung` đủ 12 cung; `giap_cung(1) == (12, 2)`, `giap_cung(12) == (11, 1)`; quan hệ giáp đối xứng; không trùng chính nó/đối cung.
+- **P2b.TC-04** (Unit): `quan_he` đối xứng toàn ma trận 12×12; mỗi cung đúng `{dong_cung:1, xung_chieu:1, tam_hop:2, giap_cung:2, khong:6}`; mã quan hệ dùng được với `RELATIONSHIPS` của P2.
+- **P2b.TC-05** (Unit): `tam_phuong` trả 4 cung duy nhất, `all_cung_sos` đúng thứ tự `[chính, đối, +4, +8]`; wrap Hợi → `[12, 6, 4, 8]`; `get_tam_phuong_tu_chinh` giữ nguyên shape, nhận cả list lẫn map, cung thiếu trả `{}`.
+- **P2b.TC-06** (Unit): chuẩn hóa tên chi — đúng 12 tên, `"Tị"→"Tỵ"` (biến thể cũ), khác hoa/thường và bỏ dấu khi không mơ hồ; `"ty"` mơ hồ Tý/Tỵ → `None` (không đoán); tên cung `"Quan Lộc"` → mã `quan_loc`; `resolve_anchor` nhận số cung/tên chi/tên cung và raise khi thiếu.
+- **P2b.TC-07** (Unit): `evidence_kind` đủ 12×12 khớp `quan_he`; `"Tị"`/`"Tỵ"` cho cùng kết quả giáp cung; tên mơ hồ/không hợp lệ → `toa_thu`; `_palace_evidence_kind` giữ kết quả cũ.
+- **P2b.TC-08** (Unit): `cac_cung_lien_quan` phân nhóm đủ 12 cung, không trùng, không sót.
+- **P2b.TC-09** (Unit): đọc đúng 5 mã `M/V/Đ/B/H` từ `saoDacTinh`; khớp tên sao không phân biệt hoa/thường/dấu; đọc được cả dạng `describe_palace` (`chinh_tinh[].dac_tinh`).
+- **P2b.TC-09b** (Unit): thiếu cung/sao/`saoDacTinh`/mã lạ → `MISSING`; sao không nằm trong cung → `MISSING` (không lấy từ cung khác).
+- **P2b.TC-10** (Unit): `dac_tinh_in_palace` không sửa dữ liệu gốc; module chỉ có đúng 5 mã vendor, không thêm bảng miếu/vượng mới.
+- **P2b.TC-11** (Unit): `cung_so` 0, 13, -1, 12.5, "1", None, True/False đều raise `ValueError` (kể cả qua `get_tam_phuong_tu_chinh`).
+
+### Ranh giới & ghi chú
+
+- **Không** đổi bảng trạng thái sao (`Sao.anDacTinh`) hay bảng Tứ Hóa (`configs/tu_hoa_tables.yaml`, `tu_hoa_tables.py`) — đúng P2b §5.3.
+- `cung_so` là nguồn chuẩn duy nhất; tên chi/cung chỉ dùng để nhập liệu và hiển thị, luôn chuẩn hóa trước khi so sánh.
+- `"ty"` không dấu là mơ hồ giữa Tý (1) và Tỵ (6) → trả `None`; muốn chỉ định phải viết có dấu.
+- `quan_he` trả `"khong"` khi hai cung không liên hệ; `"khong"` không nằm trong danh mục quy tắc P2 (quy tắc chỉ dùng 4 quan hệ).
+- P3 sẽ dùng `quan_he`/`resolve_anchor`/`dac_tinh_in_palace`; P5 dùng cùng module để vẽ/đánh dấu quan hệ cung.
