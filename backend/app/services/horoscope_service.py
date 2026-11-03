@@ -131,5 +131,6 @@ def read_horoscope(req: HoroscopeRequest) -> dict:
         if event['event'] == 'error':
             return {'status': 'error', 'error_code': event['code'], 'detail': event['message'],
                     'ho_ten': req.ho_ten or '', 'thong_tin_co_ban': {}, 'reading': {},
-                    'meta': {'request_id': event['request_id']}}
+                    'meta': {'request_id': event['request_id'], 'reading_mode': req.reading_mode,
+                             'contract_version': CONTRACT_VERSION}}
     raise RuntimeError('Reading stream ended without a terminal event.')

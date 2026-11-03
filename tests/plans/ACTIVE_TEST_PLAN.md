@@ -3,7 +3,9 @@
 > Review P1 (Plan_Fix_Mai_Anh_v2): PASSED; hợp đồng ba mức đọc — thêm
 > `reading_mode` (tách khỏi provider) vào request + meta, `CACHE_SCHEMA_VERSION`
 > 6→7 (thêm chiều mức đọc vào key), adapter 6 nhóm cho báo cáo cũ (trường thiếu
-> hiển thị là thiếu, không suy đoán). Hồi quy: 2160 passed / 351 known T4 xfailed.
+> hiển thị là thiếu, không suy đoán). Review code P1: sửa item hỏng giữ cấu trúc
+> lồng nhau + meta đường lỗi đủ trường hợp đồng. Hồi quy: 2163 passed /
+> 351 known T4 xfailed.
 > T2/T3/T9 (governance) không bị thay thế hay khép lại bởi gói này.
 
 > Review T1 sau merge T3: PASSED. Chặn cứng kết luận thời điểm C/D kể cả sau
@@ -822,7 +824,9 @@ Chi tiết: [LOCAL_TUVI_SKILL_INTEGRATION.md](../../docs/LOCAL_TUVI_SKILL_INTEGR
 
 ## Plan_Fix_Mai_Anh_v2 P1 — Hợp đồng dữ liệu ba mức đọc (2026-11-03)
 
-**Trạng thái:** **PASSED** — 14 test riêng `tests/test_horoscope_contract.py`; hồi quy toàn cục: **2160 passed / 351 known T4 xfailed** (84.42s, `-m "not heavy"`).
+**Trạng thái:** **PASSED** — 17 test riêng `tests/test_horoscope_contract.py` (kèm 3 test review-fix TC-10…12: item hỏng giữ cấu trúc lồng nhau, meta đường lỗi đủ trường hợp đồng, chốt `GROUPS_REQUIRED_BY_MODE`); hồi quy toàn cục: **2163 passed / 351 known T4 xfailed** (68.11s, `-m "not heavy"`).
+
+**Review code P1 (2026-11-03):** sửa 2 điểm — `adapt_point` cho item không phải dict trước đó trả cấu trúc phẳng (consumer truy trường lồng nhau gặp TypeError); meta của báo cáo lỗi (`provider=gemini` thiếu khóa) thiếu `reading_mode`/`contract_version` → đã chốt cả 3 đường ok/cached/error. Không đổi: `HoroscopeAskRequest` (phạm vi P6), `dieu_kien.thun` map từ `loi_chung_cu` là xấp xỉ adapter P1, P3/P6 thay bằng điều kiện có cấu trúc.
 
 **Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P1 §3) — tách `reading_mode` khỏi `provider`, hợp đồng nhận định 6 nhóm, adapter báo cáo cũ, chiều cache mới.
 
@@ -847,6 +851,9 @@ Chi tiết: [LOCAL_TUVI_SKILL_INTEGRATION.md](../../docs/LOCAL_TUVI_SKILL_INTEGR
 - **P1.TC-07** (Unit): báo cáo cũ rất cũ (thiếu cả trường T2/T3) vẫn qua adapter, nhóm thiếu đều là `MISSING`.
 - **P1.TC-08** (Unit): bài fallback có `_generation` (mock, timeout) không làm adapter rơi KeyError.
 - **P1.TC-09** (Unit): response mẫu 3 mức — `sample_response` giữ report gốc nguyên vẹn + khối `contract` đúng số item theo mức.
+- **P1.TC-10** (Unit, review-fix): item không phải dict vẫn trả đúng cấu trúc lồng nhau, mọi lá `MISSING` (không TypeError khi truy `can_cu.rule_ids`).
+- **P1.TC-11** (Integration, review-fix): báo cáo lỗi (`provider=gemini` thiếu khóa, không fallback) — `meta` vẫn mang `reading_mode` + `contract_version`.
+- **P1.TC-12** (Unit, review-fix): chốt hình dạng `GROUPS_REQUIRED_BY_MODE` (du_lieu không cần nhóm giai_thich).
 
 ### Ghi chú ranh giới
 

@@ -8,11 +8,15 @@
 """
 from __future__ import annotations
 
+from unittest.mock import patch
+
 import pytest
 from pydantic import ValidationError
 
 from backend.app.schemas.horoscope_contract import (
+    CONTRACT_GROUPS,
     CONTRACT_VERSION,
+    GROUPS_REQUIRED_BY_MODE,
     MISSING,
     READING_MODES,
     adapt_point,
@@ -20,6 +24,7 @@ from backend.app.schemas.horoscope_contract import (
     sample_response,
 )
 from backend.app.services import horoscope_cache
+from backend.app.services import horoscope_interpreter as interpreter
 from backend.app.services.horoscope_service import read_horoscope
 from tests.horoscope_support import make_request
 
@@ -204,3 +209,40 @@ def test_sample_response_for_three_modes():
             assert len(response["contract"]["items"]) == 2
     # Reading gốc vẫn giữ đủ hai khối sau khi tạo response mẫu.
     assert "ket_luan" in base_report["reading"]
+
+
+# --- P1.TC-10: item hỏng (không phải dict) vẫn giữ cấu trúc lồng nhau ---
+def test_adapt_point_malformed_keeps_nested_shape():
+    item = adapt_point("không-phải-dict", source="luan_diem")
+    assert item["nguyen_nhan"] == "luan_diem"
+    # Consumer truy cập trường lồng nhau không gặp KeyError/TypeError.
+    assert item["can_cu"]["rule_ids"] is MISSING
+    assert item["dieu_kien"]["chua_kiem_tra"] is MISSING
+    assert item["pham_vi"]["chu_de"] is MISSING
+    assert item["nhan_dinh"] is MISSING
+    assert item["muc_can_cu"] is MISSING
+
+
+# --- P1.TC-11: meta đường lỗi vẫn mang đủ trường hợp đồng ---
+def test_error_report_meta_carries_reading_mode_and_contract_version():
+    request = make_request(provider="gemini", target_year=2026, reading_mode="giai_thich")
+    # provider='gemini' + thiếu khóa -> lỗi cứng (không fallback), không gọi mạng.
+    with patch.object(interpreter, "GEMINI_API_KEY", ""), patch.object(
+        interpreter, "HOROSCOPE_FALLBACK_MODELS", ()
+    ), patch.dict(interpreter.os.environ, {"GEMINI_API_KEY": ""}):
+        report = read_horoscope(request)
+    assert report["status"] == "error"
+    assert report["error_code"] == "missing_key"
+    assert report["meta"]["reading_mode"] == "giai_thich"
+    assert report["meta"]["contract_version"] == CONTRACT_VERSION
+
+
+# --- P1.TC-12: chốt hình dạng nhóm bắt buộc theo mức đọc ---
+def test_groups_required_by_mode_shape():
+    # Mức du_lieu không cần nhóm giai_thich (không có khối AI).
+    assert GROUPS_REQUIRED_BY_MODE["du_lieu"] == (
+        "nhan_dinh", "can_cu", "dieu_kien", "pham_vi", "muc_can_cu"
+    )
+    assert "giai_thich" not in GROUPS_REQUIRED_BY_MODE["du_lieu"]
+    for mode in ("giai_thich", "chuyen_sau"):
+        assert GROUPS_REQUIRED_BY_MODE[mode] == CONTRACT_GROUPS

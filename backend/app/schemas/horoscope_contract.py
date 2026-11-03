@@ -65,6 +65,20 @@ def _present(point: dict[str, Any], key: str) -> Any:
     return MISSING if value is None else value
 
 
+def _empty_item(source: str) -> dict[str, Any]:
+    """Item hỏng (không phải dict): giữ đúng cấu trúc tổ hợp của item hợp lệ,
+    mọi lá để MISSING — consumer truy cập trường lồng nhau an toàn, không KeyError/TypeError."""
+    return {
+        "nguyen_nhan": source,
+        "nhan_dinh": MISSING,
+        "giai_thich": MISSING,
+        "can_cu": {"fact_ids": MISSING, "source_refs": MISSING, "rule_ids": MISSING},
+        "dieu_kien": {"thun": MISSING, "nghich": MISSING, "chua_kiem_tra": MISSING},
+        "pham_vi": {"loai_ket_luan": MISSING, "chu_de": MISSING, "gioi_han": MISSING},
+        "muc_can_cu": MISSING,
+    }
+
+
 def adapt_point(point: dict[str, Any], source: str = "ket_luan") -> dict[str, Any]:
     """Map một mục ``luan_diem``/``ket_luan`` (schema cũ hoặc mới) sang hợp đồng 6 nhóm.
 
@@ -76,9 +90,11 @@ def adapt_point(point: dict[str, Any], source: str = "ket_luan") -> dict[str, An
     - ``dieu_kien.chua_kiem_tra``: trường mới do P3 điền; báo cáo cũ là MISSING.
     - ``can_cu.rule_ids``: trường mới do P3 điền; báo cáo cũ là MISSING.
     - Danh rỗng giữ nguyên (đã kiểm tra, không tìm thấy).
+    - Item không phải dict (dữ liệu hỏng) vẫn trả đúng cấu trúc lồng nhau,
+      mọi lá MISSING — hợp đồng không phụ thuộc hình dạng của mục đầu vào.
     """
     if not isinstance(point, dict):
-        return {"nguyen_nhan": source, **{group: MISSING for group in CONTRACT_GROUPS}}
+        return _empty_item(source)
     return {
         "nguyen_nhan": source,
         "nhan_dinh": _present(point, "nhan_dinh"),
