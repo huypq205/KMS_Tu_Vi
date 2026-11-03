@@ -5,6 +5,8 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
+from backend.app.schemas.horoscope_contract import ReadingMode, READING_MODE_DEFAULT
+
 InputConfidence = Literal["A", "B", "C", "D"]
 GioSinhSource = Literal["document", "memory", "estimate", "unknown"]
 
@@ -24,6 +26,12 @@ class HoroscopeRequest(BaseModel):
     gio_sinh_error_phut: int | None = Field(None, ge=0, description="Sai số ước tính của giờ sinh (phút)")
     target_year: int | None = Field(None, ge=1900, le=2100, description="Năm xem chiêm nghiệm")
     provider: str = Field("auto", description="Chế độ luận giải: 'auto' (luận giải thông minh) hoặc 'mock' (Dữ kiện thuần)")
+    reading_mode: ReadingMode = Field(
+        READING_MODE_DEFAULT,
+        description="Mức đọc (lựa chọn của người dùng), tách khỏi provider: "
+        "'du_lieu' (lá số + dữ kiện, không AI), 'giai_thich' (AI giải thích), "
+        "'chuyen_sau' (AI luận giải chuyên sâu). P1 chốt hợp đồng; hành vi pipeline do P6.",
+    )
     top_k_per_topic: int = Field(2, ge=1, le=10, description="Số đoạn trích dẫn mỗi chủ đề")
 
 

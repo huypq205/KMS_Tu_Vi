@@ -7,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor, TimeoutError as FutureTimeout
 from uuid import uuid4
 
 from backend.app.schemas.horoscope import HoroscopeRequest
+from backend.app.schemas.horoscope_contract import CONTRACT_VERSION
 from backend.app.core.config import HOROSCOPE_TIMEOUT_SECONDS, HOROSCOPE_MODEL
 from backend.app.services import horoscope_cache
 from backend.app.services.cache import get_index_version
@@ -59,6 +60,7 @@ def reading_events(req: HoroscopeRequest):
             'star_meaning_references':meaning_references,
             'luu_nien': features.get('luu_nien'), 'palaces': features['palaces'],
             'meta': {'request_id': request_id, 'provider': req.provider, 'cached': False,
+                     'reading_mode': req.reading_mode, 'contract_version': CONTRACT_VERSION,
                      'target_year': features['nam_xem']['year'],
                      'total_chunks_retrieved': len(citations), 'queries_evaluated': context['query_count']},
         }
@@ -74,7 +76,7 @@ def reading_events(req: HoroscopeRequest):
         }
         cache_key = horoscope_cache.compute_key(
             birth, req.provider, HOROSCOPE_MODEL, horoscope_cache.context_hash(context),
-            get_index_version(),
+            get_index_version(), req.reading_mode,
         )
         cached = horoscope_cache.lookup(cache_key) if req.provider != 'mock' else None
         if cached:

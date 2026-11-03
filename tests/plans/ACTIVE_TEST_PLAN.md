@@ -1,5 +1,11 @@
 # TEST PLAN: Horoscope — Khắc phục 4 điểm feedback giảng viên + baseline facts schema
 
+> Review P1 (Plan_Fix_Mai_Anh_v2): PASSED; hợp đồng ba mức đọc — thêm
+> `reading_mode` (tách khỏi provider) vào request + meta, `CACHE_SCHEMA_VERSION`
+> 6→7 (thêm chiều mức đọc vào key), adapter 6 nhóm cho báo cáo cũ (trường thiếu
+> hiển thị là thiếu, không suy đoán). Hồi quy: 2160 passed / 351 known T4 xfailed.
+> T2/T3/T9 (governance) không bị thay thế hay khép lại bởi gói này.
+
 > Review T1 sau merge T3: PASSED. Chặn cứng kết luận thời điểm C/D kể cả sau
 > retry; thêm loai_ket_luan vào schema/mock/fixture/UI, cache v4. Hồi quy review:
 > 2091 passed, 351 known T4 xfailed. Ghi chú cũ về trả specificity_low cho vi phạm
@@ -813,3 +819,37 @@ thay cache test/bảng nhật ký rỗng, đã backup và khôi phục, không c
   hình đường dẫn. Test CI dùng fixture, không cần công bố nguyên văn tài liệu.
 
 Chi tiết: [LOCAL_TUVI_SKILL_INTEGRATION.md](../../docs/LOCAL_TUVI_SKILL_INTEGRATION.md).
+
+## Plan_Fix_Mai_Anh_v2 P1 — Hợp đồng dữ liệu ba mức đọc (2026-11-03)
+
+**Trạng thái:** **PASSED** — 14 test riêng `tests/test_horoscope_contract.py`; hồi quy toàn cục: **2160 passed / 351 known T4 xfailed** (84.42s, `-m "not heavy"`).
+
+**Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P1 §3) — tách `reading_mode` khỏi `provider`, hợp đồng nhận định 6 nhóm, adapter báo cáo cũ, chiều cache mới.
+
+### Thay đổi chính
+
+| File | Thay đổi |
+|---|---|
+| `backend/app/schemas/horoscope_contract.py` | **MỚI**: `ReadingMode` (du_lieu/giai_thich/chuyen_sau), `CONTRACT_VERSION=1`, `MISSING="thieu"`, `adapt_point`/`adapt_reading`/`sample_response`; mapping 6 nhóm cho cả hai cấu trúc `luan_diem` và `ket_luan` (giai_thich_thun_viet thuộc ket_luan) |
+| `backend/app/schemas/horoscope.py` | `HoroscopeRequest.reading_mode` (mặc định `chuyen_sau`, giữ hành vi hiện hành); field mới, tương thích ngược với client cũ |
+| `backend/app/services/horoscope_cache.py` | `CACHE_SCHEMA_VERSION` 6→7; `compute_key` nhận chiều `reading_mode` (trị số cũ không truyền vẫn hoạt động, mặc định `chuyen_sau`) |
+| `backend/app/services/horoscope_service.py` | `meta` thêm `reading_mode` + `contract_version`; cache key truyền `req.reading_mode` |
+| `tests/test_horoscope_contract.py` | **MỚI**: P1.TC-01…09 |
+
+### Ma trận test
+
+- **P1.TC-01** (Unit): `reading_mode` mặc định + 3 giá trị hợp lệ; giá trị lạ bị `ValidationError`; `reading_mode` độc lập với `provider`.
+- **P1.TC-02** (Unit): cache key khác nhau theo `reading_mode`; cùng mức → cùng key; `CACHE_SCHEMA_VERSION == 7`.
+- **P1.TC-03** (Integration): `read_horoscope(provider="mock", reading_mode="du_lieu")` (fallback không gọi AI) trả `meta.reading_mode` + `meta.contract_version`, `cached=False`, `actual_provider="mock"`.
+- **P1.TC-04** (Unit): adapter mục `luan_diem` — trường thiếu (`giai_thich`, `rule_ids`, `chu_de`, `chua_kiem_tra`) là `MISSING`, không suy đoán; `loi_chung_cu`→dieu_kien.thun, `phan_chung`→dieu_kien.nghich.
+- **P1.TC-05** (Unit): adapter mục `ket_luan` — `giai_thich_thun_viet` map đúng; `source_refs=[]` giữ `[]` (đã kiểm tra, không trích dẫn), khác `MISSING`.
+- **P1.TC-06** (Unit): `du_lieu` chỉ lấy khối `luan_diem`; `giai_thich`/`chuyen_sau` lấy cả hai; mode lạ → `ValueError`.
+- **P1.TC-07** (Unit): báo cáo cũ rất cũ (thiếu cả trường T2/T3) vẫn qua adapter, nhóm thiếu đều là `MISSING`.
+- **P1.TC-08** (Unit): bài fallback có `_generation` (mock, timeout) không làm adapter rơi KeyError.
+- **P1.TC-09** (Unit): response mẫu 3 mức — `sample_response` giữ report gốc nguyên vẹn + khối `contract` đúng số item theo mức.
+
+### Ghi chú ranh giới
+
+- P1 chỉ chốt **hợp đồng + tương thích + ca kiểm thử**; hành vi pipeline ba mức (prompt, ngân sách token, fallback nội dung) thuộc P6.
+- `rule_ids` hiện luôn `MISSING` — P3 (nhận diện cách cục) sẽ điền; UI (P7) hiển thị "chưa có quy tắc".
+- Cache bump v7 làm toàn bộ cache cũ tự miss một lần (đúng thiết kế, không sửa data).

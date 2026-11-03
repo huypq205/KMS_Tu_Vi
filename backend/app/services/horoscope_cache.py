@@ -19,13 +19,14 @@ from sqlalchemy import delete, select, update
 from backend.app.core.config import ENABLE_HOROSCOPE_CACHE
 from backend.app.db.models import HoroscopeCache
 from backend.app.db.session import init_db, session_scope
+from backend.app.schemas.horoscope_contract import READING_MODE_DEFAULT
 from backend.app.services.star_meanings_reference import reference_signature
 
 logger = logging.getLogger(__name__)
 
 # Tăng khi cấu trúc bài đọc đổi (ví dụ thêm muc_tin_cay, loi_chung_cu) để cache
 # cũ tự miss, tránh trả bài thiếu trường mới cho UI.
-CACHE_SCHEMA_VERSION = 6
+CACHE_SCHEMA_VERSION = 7
 
 
 def _utcnow() -> datetime:
@@ -43,15 +44,18 @@ def context_hash(context: dict[str, Any] | None) -> str:
 
 
 def compute_key(birth: dict[str, Any], provider: str, model: str, ctx_hash: str,
-                index_version: str) -> str:
+                index_version: str, reading_mode: str = READING_MODE_DEFAULT) -> str:
     """SHA-256 của toàn bộ ngữ cảnh quyết định nội dung bài đọc.
 
     ``index_version`` lấy từ manifest sách: khi re-index, mọi cache cũ tự miss
-    dù câu hỏi/năm xem không đổi.
+    dù câu hỏi/năm xem không đổi. ``reading_mode`` là chiều mới (P1): cùng lá
+    số, cùng provider nhưng đổi mức đọc phải cache miss vì cấu trúc bài trả
+    về khác nhau giữa ba mức.
     """
     blob = json.dumps(
         {'birth': birth, 'provider': provider, 'model': model, 'context': ctx_hash,
-         'index_version': index_version, 'schema_version': CACHE_SCHEMA_VERSION},
+         'index_version': index_version, 'reading_mode': reading_mode,
+         'schema_version': CACHE_SCHEMA_VERSION},
         sort_keys=True, ensure_ascii=False,
     )
     return hashlib.sha256(blob.encode('utf-8')).hexdigest()
