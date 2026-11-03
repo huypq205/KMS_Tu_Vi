@@ -272,12 +272,12 @@ def get_tam_phuong_tu_chinh(
     else:
         cung_map = cung_data
 
-    quan_he = tam_phuong(cung_so)
+    tptc = tam_phuong(cung_so)
     return {
-        "chinh_cung": cung_map.get(quan_he["chinh_cung"], {}),
-        "doi_cung": cung_map.get(quan_he["doi_cung"], {}),
-        "tam_hop": [cung_map.get(so, {}) for so in quan_he["tam_hop"]],
-        "all_cung_sos": list(quan_he["all_cung_sos"]),
+        "chinh_cung": cung_map.get(tptc["chinh_cung"], {}),
+        "doi_cung": cung_map.get(tptc["doi_cung"], {}),
+        "tam_hop": [cung_map.get(so, {}) for so in tptc["tam_hop"]],
+        "all_cung_sos": list(tptc["all_cung_sos"]),
     }
 
 

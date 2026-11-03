@@ -18,6 +18,13 @@
 > hóa tên chi-cung không đoán khi mơ hồ, đọc miếu/vượng từ `saoDacTinh`, thiếu trả
 > "thieu"); `get_tam_phuong_tu_chinh` và `_palace_evidence_kind` giữ nguyên hành vi.
 > Không đổi bảng trạng thái sao / bảng Tứ Hóa. Hồi quy: 2196 passed / 351 known T4 xfailed.
+>
+> Review P2+P2b (2026-11-03): PASSED; sửa 3 chỗ "Tị"→"Tỵ" trong text catalog, harden
+> validator P2 (cờ boolean dạng string bị chặn; bất biến I3/I5 + thiếu trường được kiểm
+> chứng *chặn thật* qua P2.TC-10…13), `CHI_ORDER` re-export từ `palace_relations`
+> (một nguồn sự thật địa chi), thêm P2b.TC-09c (nhãn tiếng Việt 5 trạng thái sao).
+> Hồi quy: 2202 passed / 351 known T4 xfailed. T2/T3/T9 (governance) không bị thay thế hay
+> khép lại bởi gói này.
 
 > Review T1 sau merge T3: PASSED. Chặn cứng kết luận thời điểm C/D kể cả sau
 > retry; thêm loai_ket_luan vào schema/mock/fixture/UI, cache v4. Hồi quy review:
@@ -874,7 +881,7 @@ Chi tiết: [LOCAL_TUVI_SKILL_INTEGRATION.md](../../docs/LOCAL_TUVI_SKILL_INTEGR
 
 ## Plan_Fix_Mai_Anh_v2 P2 — Kiểm kê và duyệt nguồn cách cục (2026-11-03)
 
-**Trạng thái:** **PASSED** — 12 test riêng `tests/test_cach_cuc_catalog.py`; hồi quy toàn cục: **2175 passed / 351 known T4 xfailed** (63.52s, `-m "not heavy"`).
+**Trạng thái:** **PASSED** — 17 test riêng `tests/test_cach_cuc_catalog.py`; hồi quy toàn cục: **2175 passed / 351 known T4 xfailed** (63.52s, `-m "not heavy"`).
 
 **Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P2 §4) — danh mục quy tắc có trạng thái và người duyệt; không tự duyệt; nội dung nhạy cảm bị chặn; file nguồn thiếu phải nhận diện đúng.
 
@@ -897,6 +904,10 @@ Chi tiết: [LOCAL_TUVI_SKILL_INTEGRATION.md](../../docs/LOCAL_TUVI_SKILL_INTEGR
 - **P2.TC-07** (Unit): `catalog_signature` ổn định theo nội dung (P6 dùng cho cache key, truy ngược nguồn).
 - **P2.TC-08** (Unit): validator chặn trạng thái sai, id trùng, **tự duyệt khi reviewer chưa chỉ định**, `duyet_dung` thiếu người duyệt + mốc.
 - **P2.TC-09** (Unit): file nguồn không tồn tại → `CatalogError` rõ (không chạy im lặng).
+- **P2.TC-10** (Unit, thêm ở review 2026-11-03): I3 kiểm chứng *chặn thật* — rule nhạy cảm gán `chua_ho_tro` (bên ngoài tham khảo/đối chiếu) raise; ngược lại `noi_dung_da_duyet=true` thì I3 không chặn.
+- **P2.TC-11** (Unit, thêm ở review): I5 kiểm chứng trần — đẩy bản đầu lên 9 ứng viên raise `CatalogError`.
+- **P2.TC-12** (Unit, thêm ở review): thiếu trường bắt buộc của rule (vd. xóa `ca_kiem_thu`) raise `CatalogError`.
+- **P2.TC-13** (Unit, thêm ở review): cờ boolean trong YAML viết dạng string (`noi_dung_nhay_cam: "false"`) bị chặn — không ngầm coi chuỗi "false" là `True`/`False` sai nghĩa.
 
 ### Phân công & nhãn (P2 §4.2)
 
@@ -912,7 +923,7 @@ Chi tiết: [LOCAL_TUVI_SKILL_INTEGRATION.md](../../docs/LOCAL_TUVI_SKILL_INTEGR
 
 ## Plan_Fix_Mai_Anh_v2 P2b — Chuẩn hóa quan hệ cung (2026-11-03)
 
-**Trạng thái:** **PASSED** — 21 test riêng `tests/test_palace_relations.py`; hồi quy toàn cục: **2196 passed / 351 known T4 xfailed** (94.22s, `-m "not heavy"`).
+**Trạng thái:** **PASSED** — 22 test riêng `tests/test_palace_relations.py`; hồi quy toàn cục: **2196 passed / 351 known T4 xfailed** (94.22s, `-m "not heavy"`).
 
 **Nguồn plan:** `Plan_Fix_Mai_Anh_v2.md` (P2b §5) — tách quan hệ cung thành module dùng chung; đồng cung, 2 tam hợp, đối cung/xung chiếu, 2 giáp; cung neo nêu rõ; chuẩn hóa tên/mã cung; đọc miếu/vượng/đắc/bình/hãm từ `saoDacTinh`, thiếu trả "thiếu"; test đủ 12 cung, đặc biệt vòng qua Tý/Hợi.
 
@@ -944,9 +955,27 @@ Chi tiết: [LOCAL_TUVI_SKILL_INTEGRATION.md](../../docs/LOCAL_TUVI_SKILL_INTEGR
 - **P2b.TC-07** (Unit): `evidence_kind` đủ 12×12 khớp `quan_he`; `"Tị"`/`"Tỵ"` cho cùng kết quả giáp cung; tên mơ hồ/không hợp lệ → `toa_thu`; `_palace_evidence_kind` giữ kết quả cũ.
 - **P2b.TC-08** (Unit): `cac_cung_lien_quan` phân nhóm đủ 12 cung, không trùng, không sót.
 - **P2b.TC-09** (Unit): đọc đúng 5 mã `M/V/Đ/B/H` từ `saoDacTinh`; khớp tên sao không phân biệt hoa/thường/dấu; đọc được cả dạng `describe_palace` (`chinh_tinh[].dac_tinh`).
+- **P2b.TC-09c** (Unit, thêm ở review): nhận cả nhãn tiếng Việt của 5 trạng thái sao (`Miếu`/`VƯỢNG`/`ĐẮC`/`bình`/`hãm` → mã chuẩn); nhãn không tồn tại (vd. "Đa") vẫn là `MISSING`.
 - **P2b.TC-09b** (Unit): thiếu cung/sao/`saoDacTinh`/mã lạ → `MISSING`; sao không nằm trong cung → `MISSING` (không lấy từ cung khác).
 - **P2b.TC-10** (Unit): `dac_tinh_in_palace` không sửa dữ liệu gốc; module chỉ có đúng 5 mã vendor, không thêm bảng miếu/vượng mới.
 - **P2b.TC-11** (Unit): `cung_so` 0, 13, -1, 12.5, "1", None, True/False đều raise `ValueError` (kể cả qua `get_tam_phuong_tu_chinh`).
+
+### Review P2 + P2b (2026-11-03, sau khi commit `a202b7a` + `371558e`)
+
+Kiểm tra chéo hai gói, phát hiện và sửa:
+
+| # | Phát hiện | Gói | Xử lý |
+|---|---|---|---|
+| R1 | 3 chỗ text tự do trong YAML ghi "Tị" thay vì "Tỵ" (validator chỉ kiểm trường `chi` có cấu trúc nên không bắt) | P2 | Sửa 3 dòng thành "Tỵ" cho nhất quán |
+| R2 | Bất biến I3 (nhạy cảm chưa duyệt) và I5 (trần 8 ứng viên) chỉ được kiểm chứng bằng dữ liệu hiện có, chưa có test kiểm chứng validator *thật sự chặn* | P2 | Thêm P2.TC-10…13: rule nhạy cảm vượt trần trạng thái raise; `noi_dung_da_duyet=true` thì I3 không chặn; 9 ứng viên raise; thiếu `ca_kiem_thu` raise; cờ boolean dạng string ("false") raise |
+| R3 | `horoscope_analysis.CHI_ORDER` là bản sao của chuỗi chi trong `palace_relations` (2 nguồn sự thật) | P2b | `CHI_ORDER = CHI_NAMES` re-export từ `palace_relations`; test import sẵn có không đổi |
+| R4 | Biến cục bộ đặt tên `quan_he` trong `get_tam_phuong_tu_chinh` dễ nhầm với mã quan hệ P2 | P2b | Đổi tên thành `tptc` |
+| R5 | (đã loại) nghi ngờ nhãn "Đắc" fold thành "da" → MISSING; probe theo codepoint xác nhận nhãn trong module là "Đắc" (U+0110+U+1EAF) fold đúng "dac" | P2b | Không cần sửa; ghi test P2b.TC-09c để đóng băng hành vi |
+
+Ngoài phạm vi gói này (chỉ ghi nhận, không sửa):
+- `horoscope_features.py:219` — title "Mệnh Cục Tị Hòa" (nghi ngờ chính tả nội dung "Tị" vs "Hòa" chuẩn; thuộc duyệt nội dung T9/plan, cần chủ nội dung chốt từ ngữ).
+- Frontend vẫn giữ phép tính quan hệ riêng (`frontend/laso_renderer.py`…) — gom về `palace_relations` khi làm P5/P7.
+- `catalog_signature` chỉ chứa `version/source_file/rules`: đúng thiết kế (P3/P6 phụ thuộc nội dung rules; đổi `reviewer_role` thuần túy không đổi kết quả P3 nên cache vẫn hợp lệ).
 
 ### Ranh giới & ghi chú
 

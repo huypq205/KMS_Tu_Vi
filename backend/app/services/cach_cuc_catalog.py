@@ -123,6 +123,12 @@ def _validate(catalog: dict) -> None:
         for stem in normalized['can_tuoi']:
             if stem not in CAN_STEMS:
                 raise CatalogError(f'rule "{rid}": can tuổi "{stem}" không hợp lệ.')
+        # Trạng thái boolean phải đúng kiểu (YAML "false" dạng string không được ngầm coi là dùng).
+        for flag in ('san_sang_thuc_thi', 'noi_dung_nhay_cam', 'ung_vien_ban_dau', 'noi_dung_da_duyet'):
+            if not isinstance(normalized[flag], bool):
+                raise CatalogError(f'rule "{rid}": {flag} phải là true/false, nhận {normalized[flag]!r}.')
+        if not isinstance(normalized['diem_mo_ho'], list):
+            raise CatalogError(f'rule "{rid}": diem_mo_ho phải là danh sách.')
         if normalized['tang_thoi_gian'] not in TIME_LAYERS:
             raise CatalogError(f'rule "{rid}": tang_thoi_gian phải thuộc {TIME_LAYERS}.')
         ca = normalized['ca_kiem_thu']

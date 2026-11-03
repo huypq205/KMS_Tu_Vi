@@ -222,13 +222,13 @@ rules:
     diem_mo_ho:
       - "'Tứ Sát' chưa định nghĩa danh sách"
       - "'Kiếp Không' chưa định nghĩa (Địa Kiếp + Thiên Không?)"
-      - "cùng cách cục nhưng 3 mức kết quả theo chi (Dần/Thân/Tị Hợi) - cần tách theo từng chi"
+      - "cùng cách cục nhưng 3 mức kết quả theo chi (Dần/Thân/Tỵ Hợi) - cần tách theo từng chi"
     noi_dung_nhay_cam: false
     ca_kiem_thu:
       duong: "Cự Nhật đồng cung tại Dần, Mệnh thủ tại cung đó, không Kiếp Không/Tứ Sát."
       am: "Cự Nhật đồng cung tại Tỵ (mức 'không đẹp')."
       thieu: "Chưa an được Cự Môn/Thái Dương."
-    diem_giai_trinh: "\"Quan phong tam đại\" thượng cách; tại Thân thứ cách; Tị Hợi không đẹp (luận nguồn, chưa đối chiếu KMS)."
+    diem_giai_trinh: "\"Quan phong tam đại\" thượng cách; tại Thân thứ cách; Tỵ Hợi không đẹp (luận nguồn, chưa đối chiếu KMS)."
     san_sang_thuc_thi: false
     ung_vien_ban_dau: false
     trang_thai: "can_doi_chieu"
@@ -708,7 +708,7 @@ rules:
     sao: ["Kình Dương"]
     dieu_kien:
       bat_buoc:
-        - "Kình Dương tại cung Thiên Mã (tứ mã: Dần, Thân, Tị, Hợi)"
+        - "Kình Dương tại cung Thiên Mã (tứ mã: Dần, Thân, Tỵ, Hợi)"
       ho_tro: []
       pha_cach: []
     quan_he: ["dong_cung"]

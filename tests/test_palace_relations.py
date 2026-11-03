@@ -317,6 +317,24 @@ def test_tc09b_thieu_du_lieu_tra_thieu_khong_suy():
     assert dac_tinh_in_palace(described, "Tử Vi") == "mieu"
 
 
+def test_tc09c_nhan_luu_tinh_viet_trang_thai_sao():
+    # Nhãn tiếng Việt của 5 mã vendor (miếu/vượng/đắc/bình/hãm) được đọc đúng,
+    # không phân biệt hoa/thường; chỉ mã/nhãn lạ mới rơi vào MISSING.
+    cases = [
+        ({"ten": "Tử Vi", "dac_tinh": "Miếu"}, "mieu"),
+        ({"ten": "Thiên Cơ", "dac_tinh": "VƯỢNG"}, "vuong"),
+        ({"ten": "Vũ Khúc", "dac_tinh": "ĐẮC"}, "dac"),
+        ({"ten": "Thiên Đồng", "dac_tinh": "bình"}, "binh"),
+        ({"ten": "Cự Môn", "dac_tinh": "hãm"}, "ham"),
+    ]
+    for star, expected in cases:
+        palace = {"cung_so": 1, "chinh_tinh": [star]}
+        assert dac_tinh_in_palace(palace, star["ten"]) == expected, star
+    # Nhãn không tồn tại vẫn phải là MISSING, không được gần đúng.
+    bogus = {"cung_so": 1, "chinh_tinh": [{"ten": "Tử Vi", "dac_tinh": "Đa"}]}
+    assert dac_tinh_in_palace(bogus, "Tử Vi") == MISSING
+
+
 # --- P2b.TC-10: không sửa dữ liệu gốc / bảng trạng thái trong gói này -----
 def test_tc10_khong_sua_du_lieu_goc():
     palace = _palace_with_stars()

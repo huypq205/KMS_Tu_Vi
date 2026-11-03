@@ -6,11 +6,12 @@ from typing import Any
 
 from backend.app.core.evidence_types import EvidenceType
 from backend.app.services.horoscope_annual import tu_hoa_stars_for_can
-from backend.app.services.palace_relations import evidence_kind
+from backend.app.services.palace_relations import CHI_NAMES, evidence_kind
 from backend.app.services.tu_hoa_tables import normalize_star
 
 NATAL_GROUPS = ("chinh_tinh", "risk_stars", "cat_tinh")
-CHI_ORDER = ("Tý", "Sửu", "Dần", "Mão", "Thìn", "Tỵ", "Ngọ", "Mùi", "Thân", "Dậu", "Tuất", "Hợi")
+# P2b: thứ tự địa chi duy nhất nằm ở palace_relations; giữ tên cũ cho import sẵn có.
+CHI_ORDER = CHI_NAMES
 TU_HOA_MARKERS = frozenset({"hóa lộc", "hóa quyền", "hóa khoa", "hóa kỵ"})
 
 

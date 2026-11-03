@@ -182,3 +182,64 @@ def test_missing_source_file_is_explicit(tmp_path: Path):
     path.write_text(_dump(catalog), encoding="utf-8")
     with pytest.raises(CatalogError):
         load_catalog(path)
+
+
+# --- P2.TC-10: nội dung nhạy cảm chưa duyệt không được vào trạng thái "dùng" (I3) ---
+def test_sensitive_rule_blocked_from_active_statuses(tmp_path: Path):
+    catalog = load_catalog()
+    rule = next(r for r in catalog["rules"] if r["noi_dung_nhay_cam"])
+    rule["noi_dung_da_duyet"] = False
+    rule["trang_thai"] = "chua_ho_tro"
+    path = tmp_path / "sensitive_active.yaml"
+    path.write_text(_dump(catalog), encoding="utf-8")
+    with pytest.raises(CatalogError):
+        load_catalog(path)
+
+
+def test_sensitive_rule_with_content_approval_passes_i3(tmp_path: Path):
+    # I3 chỉ chặn khi chưa duyệt nội dung; khi noi_dung_da_duyet=True,
+    # trạng thái "chua_ho_tro" (không phải duyet_dung) được phép.
+    catalog = load_catalog()
+    rule = next(r for r in catalog["rules"] if r["noi_dung_nhay_cam"])
+    rule["noi_dung_da_duyet"] = True
+    rule["trang_thai"] = "chua_ho_tro"
+    path = tmp_path / "sensitive_approved.yaml"
+    path.write_text(_dump(catalog), encoding="utf-8")
+    loaded = load_catalog(path)
+    assert get_rule(loaded, rule["id"])["noi_dung_da_duyet"] is True
+
+
+# --- P2.TC-11: trần 8 ứng viên bản đầu được thực thi (I5) ---
+def test_batch_candidates_cap_is_enforced(tmp_path: Path):
+    catalog = load_catalog()
+    assert len(batch_candidates(catalog)) == 8
+    for rule in catalog["rules"]:
+        if rule["san_sang_thuc_thi"] and not rule["noi_dung_nhay_cam"] and not rule["ung_vien_ban_dau"]:
+            rule["ung_vien_ban_dau"] = True
+            break
+    else:
+        pytest.fail("Không tìm được rule để đẩy bản đầu vượt trần 8")
+    path = tmp_path / "batch_overflow.yaml"
+    path.write_text(_dump(catalog), encoding="utf-8")
+    with pytest.raises(CatalogError):
+        load_catalog(path)
+
+
+# --- P2.TC-12: thiếu trường bắt buộc của rule phải bị chặn ---
+def test_missing_required_rule_field_rejected(tmp_path: Path):
+    catalog = load_catalog()
+    del catalog["rules"][0]["ca_kiem_thu"]
+    path = tmp_path / "missing_field.yaml"
+    path.write_text(_dump(catalog), encoding="utf-8")
+    with pytest.raises(CatalogError):
+        load_catalog(path)
+
+
+# --- P2.TC-13: cờ boolean viết dạng string trong YAML phải bị chặn ---
+def test_non_boolean_flag_rejected(tmp_path: Path):
+    catalog = load_catalog()
+    catalog["rules"][0]["noi_dung_nhay_cam"] = "false"
+    path = tmp_path / "string_flag.yaml"
+    path.write_text(_dump(catalog), encoding="utf-8")
+    with pytest.raises(CatalogError):
+        load_catalog(path)
