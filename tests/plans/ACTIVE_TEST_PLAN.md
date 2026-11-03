@@ -753,3 +753,12 @@ Review API alias/auth/503/404, 14 nhóm, nguồn sách tách biệt, trang dẫn
 20 seed qua gate, ưu tiên canonical và cấu hình tắt seed phía server.
 Review UI thực tế 1440/768/390px và trạng thái Streamlit.
 Chi tiết: [STAR_DOSSIER.md](../../docs/STAR_DOSSIER.md).
+
+## Governance T8 — Nhật ký nghiệm lý (2026-11-03)
+
+**PASSED**: 11 test riêng, hồi quy 2111 passed / 351 known T4 xfailed.
+Review SQL freeze (prediction/snapshot/events), revision có lý do, enum, C/D,
+chứng cứ, thời điểm server, cross-case và chống chấm phiên bản sau tiết lộ.
+29 ca đã chấm và 30 ca trống chưa mở thống kê; 30 ca đã chấm mới mở số lượt.
+Browser review ba kích thước không FAIL/WARN. Test dùng DB tạm.
+Chi tiết: [CASE_VALIDATION.md](../../docs/CASE_VALIDATION.md).

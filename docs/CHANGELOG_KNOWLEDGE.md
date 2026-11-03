@@ -1,5 +1,17 @@
 # Changelog tri thức KMS Tử Vi
 
+## 2026-11-03 — T8: nghiệm lý có khóa và lịch sử bất biến
+
+- Trước → sau: chưa có kho nghiệm lý → ba bảng bổ sung, API và trang nhật ký
+  ẩn danh độc lập. Snapshot, dự đoán đã khóa và kết quả được bảo vệ bằng trigger.
+- Thay đổi nhận định tạo row mới kèm lý do; giữ kết quả sai, ngăn đối chiếu
+  phiên bản khóa sau khi đã biết sự kiện cùng ca/năm. Không đổi dữ liệu an sao.
+- Đầu vào C/D không được lách nhãn cấu trúc để ghi khẳng định thời điểm.
+- Thống kê số lượt chỉ mở từ 30 ca đã đối chiếu, không dùng phần trăm.
+  Không tạo ca thật giả để đạt ngưỡng. API/UI kế thừa bảo vệ key hiện hữu.
+- Review 11 test riêng và ảnh ba kích thước; hồi quy 2111 passed / 351 known
+  T4 xfailed. Nguồn và giới hạn: [CASE_VALIDATION.md](CASE_VALIDATION.md).
+
 ## 2026-11-03 — T6: hồ sơ sao có nguồn và seed tách biệt
 
 - Trước → sau: chỉ tra cứu qua bài luận → API và UI hồ sơ 14 nhóm, giữ riêng

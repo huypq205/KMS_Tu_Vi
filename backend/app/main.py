@@ -302,3 +302,5 @@ def horoscope_read_stream(req: HoroscopeRequest):
 
 from backend.app.api.governance import router as governance_router
 app.include_router(governance_router)
+from backend.app.api.case_validation import router as case_validation_router
+app.include_router(case_validation_router)

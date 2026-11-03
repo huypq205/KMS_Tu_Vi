@@ -54,6 +54,15 @@ task to origin/main. Do not publish private input workbooks or CSV summaries.
 
 ## Remaining implementation
 
-T8, T9, T10, final T11. T1/T2 acceptance reviews were completed above. No task should be marked
+T9, T10, final T11. T1/T2 acceptance reviews were completed above. No task should be marked
 complete merely from its test count: review contracts, source attribution, empty
 states, errors, immutability, API/UI integration and publication status.
+
+## T8 review
+
+- Append-only anonymous cases/predictions/events; freeze enforced by SQLite.
+- Reviewed lock/revision/failed results, same-case links, no hindsight grading,
+  input confidence, distinct facts, server timestamps and 29/30 eligible cases.
+- API + Streamlit implemented; no production cases invented or written in review.
+- Tests 11 passed; global 2111 passed, 351 known T4 xfailed (56.52s).
+- Browser 1440/768/390px: no findings; source notes in CASE_VALIDATION.md.

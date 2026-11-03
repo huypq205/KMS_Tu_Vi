@@ -14,5 +14,6 @@ import streamlit as st
 st.navigation([
     st.Page('frontend/horoscope_ui.py', title='Luận giải lá số', default=True),
     st.Page('frontend/star_dossier_ui.py', title='Hồ sơ sao', url_path='ho-so-sao'),
+    st.Page('frontend/case_validation_ui.py', title='Nhật ký nghiệm lý', url_path='nghiem-ly'),
 ]).run()
 

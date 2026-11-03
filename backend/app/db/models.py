@@ -249,3 +249,39 @@ class HoroscopeCache(Base):
     hit_count: Mapped[int] = mapped_column(Integer, default=1)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
     last_hit_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+
+
+class ValidationCase(Base):
+    __tablename__ = 'validation_cases'
+    case_id: Mapped[str] = mapped_column(String(11), primary_key=True)
+    chart_snapshot: Mapped[str] = mapped_column(Text)
+    input_confidence: Mapped[str] = mapped_column(String(1))
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+
+
+class Prediction(Base):
+    __tablename__ = 'predictions'
+    prediction_id: Mapped[str] = mapped_column(String(32), primary_key=True)
+    case_id: Mapped[str] = mapped_column(ForeignKey('validation_cases.case_id'), index=True)
+    noi_dung: Mapped[str] = mapped_column(Text)
+    khoa_thoi_gian: Mapped[str] = mapped_column(String(16))
+    muc_tin_cay: Mapped[str] = mapped_column(String(16))
+    loai_ket_luan: Mapped[str] = mapped_column(String(16))
+    chung_cu_ids: Mapped[str] = mapped_column(Text)
+    phan_chung: Mapped[str] = mapped_column(Text)
+    supersedes: Mapped[str | None] = mapped_column(ForeignKey('predictions.prediction_id'))
+    revision_reason: Mapped[str | None] = mapped_column(Text)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
+    locked_at: Mapped[datetime | None] = mapped_column(DateTime)
+
+
+class ValidationEvent(Base):
+    __tablename__ = 'events'
+    event_id: Mapped[str] = mapped_column(String(32), primary_key=True)
+    case_id: Mapped[str] = mapped_column(ForeignKey('validation_cases.case_id'), index=True)
+    prediction_id: Mapped[str] = mapped_column(ForeignKey('predictions.prediction_id'), unique=True)
+    year: Mapped[int] = mapped_column(Integer)
+    category: Mapped[str] = mapped_column(String(16))
+    mo_ta: Mapped[str] = mapped_column(Text)
+    prediction_result: Mapped[str] = mapped_column(String(24))
+    revealed_at: Mapped[datetime] = mapped_column(DateTime, default=utcnow)
