@@ -90,7 +90,7 @@ def test_cache_key_differs_per_reading_mode():
 
 
 def test_cache_schema_version_bumped_for_contract():
-    assert horoscope_cache.CACHE_SCHEMA_VERSION == 7
+    assert horoscope_cache.CACHE_SCHEMA_VERSION >= 8
 
 
 # --- P1.TC-03: meta response mang reading_mode + contract_version (trường hợp fallback/mock) ---

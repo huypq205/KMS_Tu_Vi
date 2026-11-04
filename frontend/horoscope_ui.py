@@ -30,11 +30,14 @@ from frontend.laso_renderer import luoi_html, render_laso
 from frontend.horoscope_transport import reading_events
 from frontend.horoscope_sections import (
     render_header_identity,
+    render_annual_overview_section,
     render_chart_section,
     render_overview_section,
     render_topics_section,
+    render_action_advice_section,
     render_why_section,
     render_evidence_section,
+    render_evidence_and_specialist_section,
 )
 
 st.set_page_config(page_title="Tử Vi · Bản đồ bản thân", layout="wide", initial_sidebar_state="auto")
@@ -260,8 +263,7 @@ else:
     is_mock = meta.get("is_mock")
     input_confidence = str(basic.get("input_confidence") or "A").upper()
     if input_confidence in ("C", "D"):
-        st.warning(f"Dữ liệu giờ sinh chưa chắc chắn (mức {input_confidence}): báo cáo chỉ nêu kết luận cấu trúc, "
-                   "không kết luận thời điểm/sự kiện cụ thể. Hãy đối chiếu lại giờ sinh nếu có thể.")
+        st.warning("Giờ sinh cần được đối chiếu thêm; nội dung về thời điểm được hạn chế.")
     actual_mode = meta.get("actual_reading_mode", meta.get("reading_mode", "chuyen_sau"))
     req_mode = meta.get("reading_mode", actual_mode)
     fallback_reason = meta.get("fallback_reason")
@@ -285,20 +287,23 @@ else:
         st.warning(f"Báo cáo bên dưới là của năm {report_year}. Ô Năm chiêm nghiệm đang là {target_year}; "
                    "bấm Tạo bản luận giải để tạo lại báo cáo cho năm mới.")
 
-    # Luồng 5 khối chuẩn (P7 §10.2): Lá số -> Tổng quan -> Chủ đề -> Vì sao -> Xem căn cứ
-    # 1. Lá số 12 cung
+    # Luồng hiển thị mới:
+    # 2. Tổng quan năm
+    render_annual_overview_section(reading, report, report_year)
+
+    # 3. Lá số 12 cung
     render_chart_section(report, luu_nien_by_cung_fn=_luu_nien_by_cung_map)
 
-    # 2. Tổng quan
+    # 4. Chân dung, thế mạnh và điều cần rèn luyện
     render_overview_section(reading)
 
-    # 3. Theo chủ đề
+    # 5. Theo chủ đề
     render_topics_section(reading, snapshot, API_BASE, st.session_state.get("report_priorities", []))
 
-    # 4. Vì sao — Giải thích nhận định & cách cục
-    render_why_section(reading, report)
+    # 6. Gợi ý hành động
+    render_action_advice_section(reading)
 
-    # 5. Xem căn cứ
-    render_evidence_section(report, meta)
+    # 7. Căn cứ và thông tin chuyên môn (mặc định đóng)
+    render_evidence_and_specialist_section(report, meta)
 
 st.markdown('<footer>Tử Vi là một hệ thống văn hóa truyền thống để tham khảo và chiêm nghiệm. Luận giải không quyết định số phận và không thay thế tư vấn y khoa, pháp lý hay tài chính chuyên nghiệp.</footer>', unsafe_allow_html=True)

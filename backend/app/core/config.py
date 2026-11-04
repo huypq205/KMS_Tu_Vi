@@ -48,9 +48,9 @@ ENABLE_QUERY_CACHE = os.getenv("KMS_ENABLE_QUERY_CACHE", "true").lower() in ("tr
 # Horoscope uses a separate model and bounded request, leaving the KMS chat setting intact.
 HOROSCOPE_MODEL = os.getenv("KMS_HOROSCOPE_MODEL", "gemini-3.5-flash-lite")
 HOROSCOPE_TIMEOUT_SECONDS = min(60.0, max(5.0, float(os.getenv("KMS_HOROSCOPE_TIMEOUT_SECONDS", "45"))))
-HOROSCOPE_MAX_TOKENS = int(os.getenv("KMS_HOROSCOPE_MAX_TOKENS", "2500"))
-HOROSCOPE_MAX_TOKENS_GIAI_THICH = int(os.getenv("KMS_HOROSCOPE_MAX_TOKENS_GIAI_THICH", "3500"))
-HOROSCOPE_MAX_TOKENS_CHUYEN_SAU = int(os.getenv("KMS_HOROSCOPE_MAX_TOKENS_CHUYEN_SAU", "8192"))
+HOROSCOPE_MAX_TOKENS = int(os.getenv("KMS_HOROSCOPE_MAX_TOKENS", "12288"))
+HOROSCOPE_MAX_TOKENS_GIAI_THICH = int(os.getenv("KMS_HOROSCOPE_MAX_TOKENS_GIAI_THICH", "12288"))
+HOROSCOPE_MAX_TOKENS_CHUYEN_SAU = int(os.getenv("KMS_HOROSCOPE_MAX_TOKENS_CHUYEN_SAU", "12288"))
 # Model dự phòng, thử lần lượt khi model chính quá tải/lỗi tạm thời (phân tách bằng dấu phẩy).
 HOROSCOPE_FALLBACK_MODELS = tuple(
     model.strip() for model in os.getenv("KMS_HOROSCOPE_FALLBACK_MODELS", "").split(",") if model.strip()

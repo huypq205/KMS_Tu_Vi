@@ -1,5 +1,12 @@
 # TEST PLAN: Horoscope — Khắc phục 4 điểm feedback giảng viên + baseline facts schema
 
+> Review Plan Cải thiện nội dung báo cáo Tử Vi cho người xem phổ thông (Gói 1–4, 2026-11-04): PASSED.
+> - **Gói 1 (Nguồn kiến thức):** Mở rộng `star_meanings_reference.py` nạp và chọn lọc từ `star_meanings.md` và `cach_cuc_luan_giai.md`. Nguồn hiển thị "Tử Vi Đẩu Số Toàn Tập", ghi chú tham khảo, không số trang. Bộ lọc nội dung nhạy cảm, lọc theo từng chủ đề.
+> - **Gói 2 (Hợp đồng và luận giải):** Bổ sung `reading.tom_tat_nam` (3 đoạn 150–220 từ), `reading.can_cu_noi_dung`, `reference_ids`, `knowledge_references`. Tăng token budget mặc định lên 12288. Cập nhật prompt tiếng Việt đời thường. Bump `CONTRACT_VERSION = 2`, `CACHE_SCHEMA_VERSION = 8`.
+> - **Gói 3 (Giao diện):** Đổi thứ tự hiển thị: Thông tin -> Tổng quan năm -> Lá số -> Chân dung/Thế mạnh -> Chủ đề -> Gợi ý hành động -> Căn cứ chuyên môn thu gọn. Ẩn toàn bộ badge tin cậy, nhãn độ nặng, mã giờ sinh C/D.
+> - **Gói 4 (Tích hợp & Kiểm thử hồi quy):** Toàn bộ test suite liên quan (`test_knowledge_references`, `test_star_meanings_reference`, `test_horoscope_contract_g2`, `test_horoscope_contract`, `test_horoscope_sections_g3`, `test_horoscope_sections`, `test_horoscope_integration_g4`, `test_horoscope_cache`, `test_horoscope_annual`, `test_p8_quality_acceptance`) đều **PASSED 100%**.
+>
+
 > Review P1 (Plan_Fix_Mai_Anh_v2): PASSED; hợp đồng ba mức đọc — thêm
 > `reading_mode` (tách khỏi provider) vào request + meta, `CACHE_SCHEMA_VERSION`
 > 6→7 (thêm chiều mức đọc vào key), adapter 6 nhóm cho báo cáo cũ (trường thiếu

@@ -57,6 +57,12 @@ def reading_events(req: HoroscopeRequest):
         context = retrieve_horoscope_context(features, req.top_k_per_topic)
         facts = build_star_facts(features, context)
         meaning_references=select_meanings(facts)
+        from backend.app.services.cach_cuc_detector import detect_cach_cuc
+        from backend.app.services.star_meanings_reference import select_all_references_for_chart
+        detection = detect_cach_cuc(features, facts=facts, context=context)
+        knowledge_references = select_all_references_for_chart(features, facts, cach_cuc=detection)
+        features['_knowledge_references'] = knowledge_references
+        context['knowledge_references'] = knowledge_references
         features['_star_meaning_references']=meaning_references
         context['star_meaning_references']=meaning_references
         timings['retrieval'] = round((time.perf_counter() - mark) * 1000, 1)
@@ -73,7 +79,8 @@ def reading_events(req: HoroscopeRequest):
             'thong_tin_co_ban': features['thong_tin_co_ban'], 'reading': {},
             'la_so': {'thap_ni_cung': raw['thap_ni_cung']}, 'citations': citations,
             'star_analysis': facts, 'annual': features['nam_xem'],
-            'star_meaning_references':meaning_references,
+            'star_meaning_references': meaning_references,
+            'knowledge_references': knowledge_references,
             'luu_nien': features.get('luu_nien'), 'palaces': features['palaces'],
             'meta': {'request_id': request_id, 'provider': req.provider, 'cached': False,
                      'reading_mode': req.reading_mode, 'contract_version': CONTRACT_VERSION,

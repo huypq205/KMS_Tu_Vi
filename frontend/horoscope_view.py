@@ -73,7 +73,7 @@ CONFIDENCE_LABELS = {
 def confidence_badge(level) -> str:
     """Nhãn bậc tin cậy per kết luận; bậc lạ hiển thị trung tính, không đoán."""
     label, css = CONFIDENCE_LABELS.get(str(level or ""), ("Chưa rõ bậc", "conf-yeu"))
-    return f'<span class="conf-badge {css}">Tin cậy: {text(label)}</span>'
+    return ""
 
 
 EVIDENCE_LABELS = {
@@ -196,8 +196,8 @@ def annual_panel(annual: dict, luu_nien: dict | None = None) -> str:
             }.get(can_luu_y.get('level'), '—')
             reason = can_luu_y.get('level_reason') or ''
             body.append(
-                f"<p>Mức tập trung tín hiệu cần xem xét: <strong>{text(level)}</strong>."
-                + (f" {text(reason)}" if reason else '') + "</p>"
+                (f"<p class='muted'>{text(reason)}</p>" if reason else "")
+
             )
             roles = {'menh': 'Mệnh', 'than': 'Thân', 'dai_han': 'Đại hạn', 'tieu_han': 'Tiểu hạn'}
             rows = []

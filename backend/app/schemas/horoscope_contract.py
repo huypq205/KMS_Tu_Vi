@@ -35,7 +35,7 @@ READING_MODES: tuple[str, ...] = ("du_lieu", "giai_thich", "chuyen_sau")
 READING_MODE_DEFAULT: str = "chuyen_sau"
 
 # Bump khi hợp đồng đổi để client và cache biết mình đang đọc phiên bản nào.
-CONTRACT_VERSION: int = 1
+CONTRACT_VERSION: int = 2
 
 # Đánh dấu "chưa có dữ liệu để kiểm tra" — khác danh rỗng (đã kiểm tra, không thấy).
 MISSING: str = "thieu"
@@ -72,7 +72,7 @@ def _empty_item(source: str) -> dict[str, Any]:
         "nguyen_nhan": source,
         "nhan_dinh": MISSING,
         "giai_thich": MISSING,
-        "can_cu": {"fact_ids": MISSING, "source_refs": MISSING, "rule_ids": MISSING},
+        "can_cu": {"fact_ids": MISSING, "source_refs": MISSING, "rule_ids": MISSING, "reference_ids": MISSING},
         "dieu_kien": {"thun": MISSING, "nghich": MISSING, "chua_kiem_tra": MISSING},
         "pham_vi": {"loai_ket_luan": MISSING, "chu_de": MISSING, "gioi_han": MISSING},
         "muc_can_cu": MISSING,
@@ -103,6 +103,7 @@ def adapt_point(point: dict[str, Any], source: str = "ket_luan") -> dict[str, An
             "fact_ids": _present(point, "fact_ids"),
             "source_refs": _present(point, "source_refs"),
             "rule_ids": _present(point, "rule_ids"),
+            "reference_ids": _present(point, "reference_ids"),
         },
         "dieu_kien": {
             "thun": _present(point, "loi_chung_cu"),
@@ -134,7 +135,12 @@ def adapt_reading(reading: dict[str, Any], mode: str = READING_MODE_DEFAULT) -> 
     for source in _ITEM_SOURCES_BY_MODE[mode]:
         for point in reading.get(source) or []:
             items.append(adapt_point(point, source=source))
-    return {"mode": mode, "contract_version": CONTRACT_VERSION, "items": items}
+    res: dict[str, Any] = {"mode": mode, "contract_version": CONTRACT_VERSION, "items": items}
+    if "tom_tat_nam" in reading:
+        res["tom_tat_nam"] = reading.get("tom_tat_nam")
+    if "can_cu_noi_dung" in reading:
+        res["can_cu_noi_dung"] = reading.get("can_cu_noi_dung")
+    return res
 
 
 def sample_response(mode: str, report: dict[str, Any]) -> dict[str, Any]:
