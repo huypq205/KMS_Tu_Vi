@@ -239,7 +239,8 @@ def test_cache_does_not_mix_confidence_levels():
 
 # 8. UI ---------------------------------------------------------------------
 
-def test_ui_sends_confidence_and_shows_cd_warning():
+def test_ui_no_longer_sends_confidence_and_shows_no_cd_warning():
+    """UI đã bỏ mục độ tin cậy giờ sinh; payload chỉ còn dữ liệu sinh cơ bản."""
     from streamlit.testing.v1 import AppTest
     from backend.app.main import horoscope_read
 
@@ -247,14 +248,10 @@ def test_ui_sends_confidence_and_shows_cd_warning():
         Path(__file__).resolve().parents[1] / "frontend/horoscope_ui.py", default_timeout=20,
     ).run()
     assert not app.exception
+    assert "input_confidence" not in [sb.key for sb in app.sidebar.selectbox]
+    assert "birth_provider" not in [sb.key for sb in app.sidebar.selectbox]
 
-    app.selectbox(key="input_confidence").set_value("C")
-    app.selectbox(key="gio_sinh_source").set_value("estimate")
-    app.number_input(key="gio_sinh_error").set_value(90)
-
-    payload = horoscope_read(make_request(
-        provider="mock", input_confidence="C", gio_sinh_source="estimate", gio_sinh_error_phut=90,
-    ))
+    payload = horoscope_read(make_request(provider="mock", target_year=2026))
     payload["ho_ten"] = "Lê An"
     response = Mock()
     response.iter_lines.return_value = iter([
@@ -266,9 +263,10 @@ def test_ui_sends_confidence_and_shows_cd_warning():
         assert post.call_count == 1
         sent = post.call_args.kwargs["json"]
 
-    assert sent["input_confidence"] == "C"
-    assert sent["gio_sinh_source"] == "estimate"
-    assert sent["gio_sinh_error_phut"] == 90
+    assert sent["provider"] == "auto"
+    assert "input_confidence" not in sent
+    assert "gio_sinh_source" not in sent
+    assert "gio_sinh_error_phut" not in sent
     warnings = " ".join(item.value for item in app.warning)
-    assert "Dữ liệu giờ sinh chưa chắc chắn (mức C)" in warnings
+    assert "Dữ liệu giờ sinh chưa chắc chắn" not in warnings
     assert not app.exception

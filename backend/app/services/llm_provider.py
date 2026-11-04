@@ -17,8 +17,14 @@ from dataclasses import dataclass
 from typing import Any
 
 from backend.app.core.config import (
+    DEEPSEEK_API_KEY,
+    DEEPSEEK_BASE_URL,
+    DEEPSEEK_MODEL,
     GEMINI_API_KEY,
     GEMINI_MODEL,
+    GROQ_API_KEY,
+    GROQ_BASE_URL,
+    GROQ_MODEL,
     LLM_MAX_TOKENS,
     LLM_PROVIDER,
     LLM_TEMPERATURE,
@@ -187,6 +193,116 @@ class GeminiLLMProvider(LLMProvider):
         )
 
 
+class DeepSeekLLMProvider(LLMProvider):
+    """Provider DeepSeek (OpenAI-compatible). Cần DEEPSEEK_API_KEY trong .env."""
+
+    name = "deepseek"
+
+    def __init__(
+        self,
+        api_key: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
+    ):
+        self.api_key = api_key or DEEPSEEK_API_KEY
+        self.model = model or DEEPSEEK_MODEL
+        self.base_url = base_url or DEEPSEEK_BASE_URL
+        if not self.api_key:
+            raise LLMError("Chưa cấu hình DEEPSEEK_API_KEY trong .env")
+
+    def generate(self, system_prompt: str, user_prompt: str) -> LLMResponse:
+        import requests
+
+        url = f"{self.base_url.rstrip('/')}/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            "temperature": LLM_TEMPERATURE,
+            "max_tokens": LLM_MAX_TOKENS,
+        }
+        try:
+            resp = requests.post(url, headers=headers, json=payload, timeout=60)
+            if resp.status_code == 402:
+                raise LLMError("Tài khoản DeepSeek chưa đủ số dư (402 Insufficient Balance). Vui lòng nạp tiền tại platform.deepseek.com.")
+            if resp.status_code != 200:
+                raise LLMError(f"Lỗi DeepSeek API ({resp.status_code}): {resp.text}")
+            data = resp.json()
+            text = data["choices"][0]["message"]["content"]
+            usage = data.get("usage", {})
+            return LLMResponse(
+                text=text,
+                provider=self.name,
+                model=self.model,
+                prompt_tokens=usage.get("prompt_tokens", 0),
+                completion_tokens=usage.get("completion_tokens", 0),
+            )
+        except LLMError:
+            raise
+        except Exception as exc:
+            raise LLMError(f"Lỗi kết nối DeepSeek: {exc}") from exc
+
+
+class GroqLLMProvider(LLMProvider):
+    """Provider Groq (OpenAI-compatible). Cần GROQ_API_KEY trong .env."""
+
+    name = "groq"
+
+    def __init__(
+        self,
+        api_key: str | None = None,
+        model: str | None = None,
+        base_url: str | None = None,
+    ):
+        self.api_key = api_key or GROQ_API_KEY
+        self.model = model or GROQ_MODEL
+        self.base_url = base_url or GROQ_BASE_URL
+        if not self.api_key:
+            raise LLMError("Chưa cấu hình GROQ_API_KEY trong .env")
+
+    def generate(self, system_prompt: str, user_prompt: str) -> LLMResponse:
+        import requests
+
+        url = f"{self.base_url.rstrip('/')}/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        payload = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt},
+            ],
+            "temperature": LLM_TEMPERATURE,
+            "max_tokens": LLM_MAX_TOKENS,
+        }
+        try:
+            resp = requests.post(url, headers=headers, json=payload, timeout=60)
+            if resp.status_code != 200:
+                raise LLMError(f"Lỗi Groq API ({resp.status_code}): {resp.text}")
+            data = resp.json()
+            text = data["choices"][0]["message"]["content"]
+            usage = data.get("usage", {})
+            return LLMResponse(
+                text=text,
+                provider=self.name,
+                model=self.model,
+                prompt_tokens=usage.get("prompt_tokens", 0),
+                completion_tokens=usage.get("completion_tokens", 0),
+            )
+        except LLMError:
+            raise
+        except Exception as exc:
+            raise LLMError(f"Lỗi kết nối Groq: {exc}") from exc
+
+
 def get_llm_provider(provider: str | None = None) -> LLMProvider:
     """Trả provider theo cấu hình (KMS_LLM_PROVIDER trong .env)."""
     name = (provider or LLM_PROVIDER or "mock").lower()
@@ -194,4 +310,8 @@ def get_llm_provider(provider: str | None = None) -> LLMProvider:
         return MockLLMProvider()
     if name == "gemini":
         return GeminiLLMProvider()
+    if name == "deepseek":
+        return DeepSeekLLMProvider()
+    if name == "groq":
+        return GroqLLMProvider()
     raise LLMError(f"LLM provider không hỗ trợ: {name}")

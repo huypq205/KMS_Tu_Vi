@@ -1,0 +1,2270 @@
+{
+  "tv_danh_muc": [
+    {
+      "id": 76,
+      "count": 14,
+      "description": "Tra cứu 14 chính tinh trong Tử Vi Đẩu Số, gồm đặc tính, ngũ hành, ý nghĩa và vai trò của từng sao đối với tính cách, vận mệnh và cuộc đời.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/danh-muc/chinh-tinh/",
+      "name": "Chính tinh",
+      "slug": "chinh-tinh",
+      "taxonomy": "tv_danh_muc",
+      "parent": 0,
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_danh_muc/76",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_danh_muc"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_danh_muc"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_danh_muc=76"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 77,
+      "count": 82,
+      "description": "Tra cứu hệ thống phụ tinh trong Tử Vi Đẩu Số, tìm hiểu đặc tính, ngũ hành, ý nghĩa và ảnh hưởng của từng sao đến lá số và vận mệnh.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/danh-muc/phu-tinh/",
+      "name": "Phụ tinh",
+      "slug": "phu-tinh",
+      "taxonomy": "tv_danh_muc",
+      "parent": 0,
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_danh_muc/77",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_danh_muc"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_danh_muc"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_danh_muc=77"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    }
+  ],
+  "tv_nhom": [
+    {
+      "id": 46,
+      "count": 8,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"85\" data-end=\"232\">Tra cứu các sao thuộc chòm Thiên Phủ trong Tử Vi Đẩu Số, tìm hiểu đặc tính, ngũ hành, ý nghĩa và ảnh hưởng của từng sao trong lá số.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom/chom-thien-phu/",
+      "name": "Chòm Thiên Phủ",
+      "slug": "chom-thien-phu",
+      "taxonomy": "tv_nhom",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom/46",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom=46"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 45,
+      "count": 6,
+      "description": "Khám phá các sao thuộc chòm Tử Vi, đặc tính, ngũ hành và ý nghĩa của từng sao, giúp bạn hiểu rõ vai trò của chúng trong lá số Tử Vi Đẩu Số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom/chom-tu-vi/",
+      "name": "Chòm Tử Vi",
+      "slug": "chom-tu-vi",
+      "taxonomy": "tv_nhom",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom/45",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom=45"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 53,
+      "count": 41,
+      "description": "Tra cứu các sao và nhóm sao khác trong Tử Vi Đẩu Số, bao gồm đặc tính, ngũ hành, ý nghĩa và tác động của từng sao đối với lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom/khac/",
+      "name": "Khác",
+      "slug": "khac",
+      "taxonomy": "tv_nhom",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom/53",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom=53"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 52,
+      "count": 4,
+      "description": "Tìm hiểu Tứ Hóa gồm Hóa Lộc, Hóa Quyền, Hóa Khoa và Hóa Kỵ, cách an sao, ý nghĩa và ảnh hưởng của từng hóa tinh trong lá số Tử Vi.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom/tu-hoa/",
+      "name": "Nhóm Tứ Hoá",
+      "slug": "tu-hoa",
+      "taxonomy": "tv_nhom",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom/52",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom=52"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 47,
+      "count": 12,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"1020\" data-end=\"1170\">Tra cứu 12 sao thuộc vòng Bác Sĩ, tìm hiểu cách an sao, đặc tính, ý nghĩa và ảnh hưởng của từng sao đến sức khỏe, công danh và vận hạn.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom/vong-bac-si/",
+      "name": "Vòng Bác Sĩ",
+      "slug": "vong-bac-si",
+      "taxonomy": "tv_nhom",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom/47",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom=47"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 49,
+      "count": 5,
+      "description": "Tìm hiểu các sao thuộc vòng Lộc Tồn, cách an sao, đặc tính và ý nghĩa đối với tài lộc, công danh, phúc họa và diễn biến vận hạn trong lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom/vong-loc-ton/",
+      "name": "Vòng Lộc Tồn",
+      "slug": "vong-loc-ton",
+      "taxonomy": "tv_nhom",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom/49",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom=49"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 48,
+      "count": 12,
+      "description": "Tra cứu 12 sao thuộc vòng Thái Tuế, cách an sao, ý nghĩa và ảnh hưởng của từng sao đến tính cách, hoàn cảnh, quan hệ và vận hạn.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom/vong-thai-tue/",
+      "name": "Vòng Thái Tuế",
+      "slug": "vong-thai-tue",
+      "taxonomy": "tv_nhom",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom/48",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom=48"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 51,
+      "count": 4,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"1744\" data-end=\"1897\">Tìm hiểu các sao thuộc vòng Thiên Trường, đặc tính, cách an sao và ý nghĩa của từng sao trong việc luận giải tính cách và vận trình lá số.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom/vong-thien-truong/",
+      "name": "Vòng Thiên trượng",
+      "slug": "vong-thien-truong",
+      "taxonomy": "tv_nhom",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom/51",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom=51"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 50,
+      "count": 4,
+      "description": "Tra cứu các sao thuộc vòng Tướng Tinh, tìm hiểu cách an sao, đặc tính và ảnh hưởng của từng sao đến năng lực, hành động và vận thế trong lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom/vong-tuong-tinh/",
+      "name": "Vòng Tướng tinh",
+      "slug": "vong-tuong-tinh",
+      "taxonomy": "tv_nhom",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom/50",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom=50"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    }
+  ],
+  "tv_an_theo": [
+    {
+      "id": 63,
+      "count": 4,
+      "description": "Tra cứu các sao được an cố định trong Tử Vi Đẩu Số, tìm hiểu vị trí, đặc tính, ý nghĩa và ảnh hưởng của từng sao trong quá trình luận giải lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/an-theo/co-dinh/",
+      "name": "Cố định",
+      "slug": "co-dinh",
+      "taxonomy": "tv_an_theo",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo/63",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_an_theo"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_an_theo=63"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 56,
+      "count": 14,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"320\" data-end=\"458\">Tìm hiểu cách an sao theo cục số trong Tử Vi Đẩu Số, gồm Thủy Nhị Cục, Mộc Tam Cục, Kim Tứ Cục, Thổ Ngũ Cục và Hỏa Lục Cục.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/an-theo/cuc-so/",
+      "name": "Cục số",
+      "slug": "cuc-so",
+      "taxonomy": "tv_an_theo",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo/56",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_an_theo"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_an_theo=56"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 55,
+      "count": 32,
+      "description": "Tra cứu các sao được an theo 12 địa chi trong Tử Vi Đẩu Số, cùng cách xác định vị trí và ý nghĩa của từng sao khi luận giải lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/an-theo/dia-chi/",
+      "name": "Địa chi",
+      "slug": "dia-chi",
+      "taxonomy": "tv_an_theo",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo/55",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_an_theo"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_an_theo=55"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 60,
+      "count": 11,
+      "description": "Tìm hiểu các sao được an theo giờ sinh, cách xác định vị trí trên lá số và ảnh hưởng của giờ sinh đến tính cách, vận hạn và cuộc đời.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/an-theo/gio-sinh/",
+      "name": "Giờ sinh",
+      "slug": "gio-sinh",
+      "taxonomy": "tv_an_theo",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo/60",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_an_theo"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_an_theo=60"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 61,
+      "count": 15,
+      "description": "Tra cứu cách an sao theo giới tính trong Tử Vi Đẩu Số, giúp xác định chiều vận hành và vị trí các sao chính xác khi lập, luận giải lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/an-theo/gioi-tinh/",
+      "name": "Giới tính",
+      "slug": "gioi-tinh",
+      "taxonomy": "tv_an_theo",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo/61",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_an_theo"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_an_theo=61"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 57,
+      "count": 2,
+      "description": "Tìm hiểu các sao được an theo năm sinh, cách xác định vị trí trong lá số và ý nghĩa của từng sao đối với vận mệnh, công danh và tài lộc.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/an-theo/nam-sinh/",
+      "name": "Năm sinh",
+      "slug": "nam-sinh",
+      "taxonomy": "tv_an_theo",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo/57",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_an_theo"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_an_theo=57"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 59,
+      "count": 20,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"1481\" data-end=\"1632\">Tra cứu các sao được an theo ngày sinh trong Tử Vi Đẩu Số, cùng phương pháp xác định vị trí và vai trò của từng sao khi luận giải lá số.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/an-theo/ngay-sinh/",
+      "name": "Ngày sinh",
+      "slug": "ngay-sinh",
+      "taxonomy": "tv_an_theo",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo/59",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_an_theo"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_an_theo=59"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 62,
+      "count": 4,
+      "description": "Tổng hợp các sao được an theo những phương pháp khác trong Tử Vi Đẩu Số, kèm cách xác định vị trí, đặc tính và ý nghĩa trong lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/an-theo/sao-khac/",
+      "name": "Sao khác",
+      "slug": "sao-khac",
+      "taxonomy": "tv_an_theo",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo/62",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_an_theo"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_an_theo=62"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 58,
+      "count": 11,
+      "description": "Tìm hiểu các sao được an theo tháng sinh trong Tử Vi Đẩu Số, cách xác định vị trí và ảnh hưởng của từng sao đến tính cách, vận trình.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/an-theo/thang-sinh/",
+      "name": "Tháng sinh",
+      "slug": "thang-sinh",
+      "taxonomy": "tv_an_theo",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo/58",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_an_theo"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_an_theo=58"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 54,
+      "count": 28,
+      "description": "Tra cứu cách an sao theo 10 thiên can trong Tử Vi Đẩu Số, tìm hiểu vị trí, đặc tính và ảnh hưởng của từng sao đối với lá số và vận hạn",
+      "link": "https://tuvisonkhiem.vn/thu-vien/an-theo/thien-can/",
+      "name": "Thiên can",
+      "slug": "thien-can",
+      "taxonomy": "tv_an_theo",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo/54",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_an_theo"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_an_theo"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_an_theo=54"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    }
+  ],
+  "tv_nhom_tinh_chat": [
+    {
+      "id": 74,
+      "count": 8,
+      "description": "Tra cứu các bại tinh trong Tử Vi Đẩu Số, tìm hiểu đặc tính, ý nghĩa và ảnh hưởng của từng sao đến trở ngại, thất bại và biến động trong lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/bai-tinh/",
+      "name": "Bại tinh",
+      "slug": "bai-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/74",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=74"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 69,
+      "count": 9,
+      "description": "Tìm hiểu nhóm đài các tinh trong Tử Vi Đẩu Số, ý nghĩa về học vấn, danh tiếng, phẩm chất thanh cao và khả năng được quý nhân nâng đỡ.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/dai-cac-tinh/",
+      "name": "Đài các tinh",
+      "slug": "dai-cac-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/69",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=69"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 71,
+      "count": 3,
+      "description": "Tra cứu các sao đào hoa trong Tử Vi Đẩu Số, tìm hiểu sức hút, tình duyên, nhân duyên và ảnh hưởng của từng sao đến các mối quan hệ.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/dao-hoa-tinh/",
+      "name": "Đào hoa tinh",
+      "slug": "dao-hoa-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/71",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=71"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 73,
+      "count": 12,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"792\" data-end=\"948\">Tìm hiểu các hao tinh trong Tử Vi Đẩu Số, đặc tính và ảnh hưởng của từng sao đến tiền bạc, tài sản, sự tiêu hao và biến động trong cuộc sống.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/hao-tinh/",
+      "name": "Hao tinh",
+      "slug": "hao-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/73",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=73"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 75,
+      "count": 4,
+      "description": "Tra cứu các hung tinh trong Tử Vi Đẩu Số, tìm hiểu tính chất, mức độ tác động và ảnh hưởng của từng sao đến khó khăn, tai họa và vận hạn.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/hung-tinh/",
+      "name": "Hung tinh",
+      "slug": "hung-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/75",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=75"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 67,
+      "count": 18,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"1276\" data-end=\"1418\">Khám phá các phúc tinh trong Tử Vi Đẩu Số, ý nghĩa về may mắn, phúc đức, sự che chở và khả năng hóa giải khó khăn của từng sao.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/phuc-tinh/",
+      "name": "Phúc tinh",
+      "slug": "phuc-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/67",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=67"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 66,
+      "count": 8,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"1504\" data-end=\"1652\">Tra cứu các quý tinh trong Tử Vi Đẩu Số, tìm hiểu ý nghĩa về quý nhân, danh vị, cơ hội và sự hỗ trợ mà từng sao mang lại trong lá số.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/quy-tinh/",
+      "name": "Quý tinh",
+      "slug": "quy-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/66",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=66"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 72,
+      "count": 11,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"1738\" data-end=\"1880\">Tìm hiểu các sát tinh trong Tử Vi Đẩu Số, đặc tính, mức độ ảnh hưởng và tác động của từng sao đến xung đột, biến cố và vận hạn.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/sat-tinh/",
+      "name": "Sát tinh",
+      "slug": "sat-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/72",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=72"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 68,
+      "count": 3,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"1966\" data-end=\"2121\">Tra cứu các tài tinh trong Tử Vi Đẩu Số, tìm hiểu ý nghĩa của từng sao đối với tiền bạc, tài sản, khả năng kinh doanh và tích lũy tài chính.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/tai-tinh/",
+      "name": "Tài tinh",
+      "slug": "tai-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/68",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=68"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 70,
+      "count": 3,
+      "description": "Tìm hiểu các trợ tinh trong Tử Vi Đẩu Số, vai trò hỗ trợ, bổ trợ và gia tăng ảnh hưởng cho các sao khác trong quá trình luận giải lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/tro-tinh/",
+      "name": "Trợ tinh",
+      "slug": "tro-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/70",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=70"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 64,
+      "count": 18,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"2446\" data-end=\"2589\">Tra cứu các văn tinh trong Tử Vi Đẩu Số, tìm hiểu ý nghĩa về học vấn, tư duy, tài năng, thi cử, danh tiếng và khả năng sáng tạo.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/van-tinh/",
+      "name": "Văn tinh",
+      "slug": "van-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/64",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=64"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 65,
+      "count": 17,
+      "description": "Tìm hiểu các võ tinh trong Tử Vi Đẩu Số, đặc tính về hành động, quyết đoán, quyền lực, năng lực lãnh đạo và khả năng ứng biến.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-tinh-chat/vo-tinh/",
+      "name": "Võ tinh",
+      "slug": "vo-tinh",
+      "taxonomy": "tv_nhom_tinh_chat",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat/65",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_tinh_chat"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_tinh_chat"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sao?tv_nhom_tinh_chat=65"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    }
+  ],
+  "tv_chu_de": [
+    {
+      "id": 78,
+      "count": 10,
+      "description": "Tra cứu kiến thức an sao, cách lập lá số và các kỹ thuật nền tảng trong Tử Vi Đẩu Số, giúp bạn hiểu đúng phương pháp luận giải.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/chu-de/an-sao-ky-thuat/",
+      "name": "An sao/kỹ thuật",
+      "slug": "an-sao-ky-thuat",
+      "taxonomy": "tv_chu_de",
+      "parent": 0,
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de/78",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_chu_de"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_thuat_ngu?tv_chu_de=78"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 83,
+      "count": 21,
+      "description": "Tìm hiểu ý nghĩa 12 cung trong Tử Vi Đẩu Số, vai trò của từng cung và cách phân tích các phương diện quan trọng trong cuộc đời.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/chu-de/cung/",
+      "name": "Cung",
+      "slug": "cung",
+      "taxonomy": "tv_chu_de",
+      "parent": 0,
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de/83",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_chu_de"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_thuat_ngu?tv_chu_de=83"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 79,
+      "count": 29,
+      "description": "Tổng hợp kiến thức nền tảng về âm dương, ngũ hành, thiên can, địa chi, mệnh, cục và các khái niệm quan trọng trong Tử Vi Đẩu Số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/chu-de/nen-tang/",
+      "name": "Nền tảng",
+      "slug": "nen-tang",
+      "taxonomy": "tv_chu_de",
+      "parent": 0,
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de/79",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_chu_de"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_thuat_ngu?tv_chu_de=79"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 80,
+      "count": 6,
+      "description": "Tìm hiểu các mối quan hệ giữa cung trong lá số Tử Vi như tam hợp, xung chiếu, giáp cung và cách vận dụng khi luận giải.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/chu-de/quan-he-cung/",
+      "name": "Quan hệ cung",
+      "slug": "quan-he-cung",
+      "taxonomy": "tv_chu_de",
+      "parent": 0,
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de/80",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_chu_de"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_thuat_ngu?tv_chu_de=80"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 82,
+      "count": 10,
+      "description": "Tra cứu các trạng thái của sao trong Tử Vi Đẩu Số như miếu, vượng, đắc, bình, hãm và ảnh hưởng của chúng khi luận giải lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/chu-de/trang-thai-sao/",
+      "name": "Trạng thái sao",
+      "slug": "trang-thai-sao",
+      "taxonomy": "tv_chu_de",
+      "parent": 0,
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de/82",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_chu_de"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_thuat_ngu?tv_chu_de=82"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 81,
+      "count": 8,
+      "description": "Tìm hiểu các trường phái Tử Vi Đẩu Số, phương pháp tiếp cận, nguyên tắc luận giải và những điểm khác biệt trong cách xem lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/chu-de/truong-phai/",
+      "name": "Trường phái",
+      "slug": "truong-phai",
+      "taxonomy": "tv_chu_de",
+      "parent": 0,
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de/81",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_chu_de"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_thuat_ngu?tv_chu_de=81"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 85,
+      "count": 4,
+      "description": "Tra cứu kiến thức về Tứ Hóa, Phi Tinh, cách xác định Hóa Lộc, Hóa Quyền, Hóa Khoa, Hóa Kỵ và ứng dụng trong luận giải lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/chu-de/tu-hoa-phi-tinh/",
+      "name": "Tứ Hóa/Phi tinh",
+      "slug": "tu-hoa-phi-tinh",
+      "taxonomy": "tv_chu_de",
+      "parent": 0,
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de/85",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_chu_de"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_thuat_ngu?tv_chu_de=85"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 84,
+      "count": 9,
+      "description": "Tìm hiểu cách xem đại hạn, tiểu hạn, lưu niên và các yếu tố ảnh hưởng đến vận trình từng giai đoạn trong Tử Vi Đẩu Số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/chu-de/van-han/",
+      "name": "Vận hạn",
+      "slug": "van-han",
+      "taxonomy": "tv_chu_de",
+      "parent": 0,
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de/84",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_chu_de"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_chu_de"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_thuat_ngu?tv_chu_de=84"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    }
+  ],
+  "tv_phai": [
+    {
+      "id": 88,
+      "count": 1,
+      "description": "Khám phá sách Tử Vi phái Phi Tinh, tập trung vào sự vận động của tinh diệu, Tứ Hóa và các mối liên hệ giữa cung vị khi luận giải lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/phai/phi-tinh/",
+      "name": "Phi Tinh",
+      "slug": "phi-tinh",
+      "taxonomy": "tv_phai",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_phai/88",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_phai"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_phai"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sach?tv_phai=88"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 89,
+      "count": 2,
+      "description": "Tổng hợp sách Tử Vi phái Trung Châu với hệ thống kiến thức về tinh diệu, cung vị, cách cục và phương pháp luận giải lá số chuyên sâu.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/phai/trung-chau/",
+      "name": "Trung Châu",
+      "slug": "trung-chau",
+      "taxonomy": "tv_phai",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_phai/89",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_phai"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_phai"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sach?tv_phai=89"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 87,
+      "count": 1,
+      "description": "Tra cứu sách về Tứ Hóa Phi Tinh, gồm Hóa Lộc, Hóa Quyền, Hóa Khoa, Hóa Kỵ và cách ứng dụng phi hóa trong phân tích lá số Tử Vi.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/phai/tu-hoa-phi-tinh/",
+      "name": "Tứ Hóa/Phi Tinh",
+      "slug": "tu-hoa-phi-tinh",
+      "taxonomy": "tv_phai",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_phai/87",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_phai"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_phai"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sach?tv_phai=87"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 86,
+      "count": 2,
+      "description": "Khám phá sách Tử Vi phái Tử Vân Tứ Hóa Đài, tìm hiểu phương pháp phi hóa, luận cung và phân tích vận hạn theo hệ thống Tứ Hóa.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/phai/tu-van-tu-hoa-dai/",
+      "name": "Tử Vân (Tứ Hóa Đài)",
+      "slug": "tu-van-tu-hoa-dai",
+      "taxonomy": "tv_phai",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_phai/86",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_phai"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_phai"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_sach?tv_phai=86"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    }
+  ],
+  "tv_nhom_cach": [
+    {
+      "id": 90,
+      "count": 18,
+      "description": "Tra cứu các cách cục hình thành từ vị trí của tinh diệu trong lá số Tử Vi, giúp nhận diện đặc điểm, ý nghĩa và mức độ ảnh hưởng của từng cách.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-cach/n1-tinh-vi/",
+      "name": "N1 · Tinh–vị",
+      "slug": "n1-tinh-vi",
+      "taxonomy": "tv_nhom_cach",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach/90",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_cach"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_cach_cuc?tv_nhom_cach=90"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 94,
+      "count": 2,
+      "description": "Tìm hiểu các cách cục khi sao đơn thủ kết hợp Hóa Lộc, Hóa Quyền, Hóa Khoa, Hóa Kỵ và ảnh hưởng của từng tổ hợp trong lá số Tử Vi.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-cach/n2-don-thu-hoa/",
+      "name": "N2 · Đơn thủ + Hóa",
+      "slug": "n2-don-thu-hoa",
+      "taxonomy": "tv_nhom_cach",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach/94",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_cach"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_cach_cuc?tv_nhom_cach=94"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 91,
+      "count": 15,
+      "description": "Tra cứu các cách cục hình thành qua quan hệ tam phương tứ chính, hội chiếu tinh diệu và tác động tổng hợp giữa các cung trong lá số Tử Vi.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-cach/n3-hoi-chieu-tptc/",
+      "name": "N3 · Hội chiếu TPTC",
+      "slug": "n3-hoi-chieu-tptc",
+      "taxonomy": "tv_nhom_cach",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach/91",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_cach"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_cach_cuc?tv_nhom_cach=91"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 93,
+      "count": 7,
+      "description": "Tìm hiểu các cách cục giáp cung trong Tử Vi Đẩu Số, cách hai cung lân cận tác động đến cung chính và ảnh hưởng đến quá trình luận giải lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-cach/n4-giap-cung/",
+      "name": "N4 · Giáp cung",
+      "slug": "n4-giap-cung",
+      "taxonomy": "tv_nhom_cach",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach/93",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_cach"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_cach_cuc?tv_nhom_cach=93"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 95,
+      "count": 1,
+      "description": "<p class=\"PDq2pG_selectionAnchorContainer\" data-start=\"1109\" data-end=\"1258\">Tra cứu các cách cục liên cung trong Tử Vi Đẩu Số, tìm hiểu mối liên hệ giữa nhiều cung và tác động tổng hợp đến tính cách, vận trình.</p>",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-cach/n5-lien-cung/",
+      "name": "N5 · Liên cung",
+      "slug": "n5-lien-cung",
+      "taxonomy": "tv_nhom_cach",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach/95",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_cach"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_cach_cuc?tv_nhom_cach=95"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    },
+    {
+      "id": 92,
+      "count": 10,
+      "description": "Tìm hiểu hiện tượng phá cách trong Tử Vi Đẩu Số, nguyên nhân khiến cách cục suy giảm hoặc biến đổi và cách đánh giá khi luận giải lá số.",
+      "link": "https://tuvisonkhiem.vn/thu-vien/nhom-cach/pha-cach/",
+      "name": "Phá cách",
+      "slug": "pha-cach",
+      "taxonomy": "tv_nhom_cach",
+      "meta": [],
+      "_links": {
+        "self": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach/92",
+            "targetHints": {
+              "allow": [
+                "GET"
+              ]
+            }
+          }
+        ],
+        "collection": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_nhom_cach"
+          }
+        ],
+        "about": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/taxonomies/tv_nhom_cach"
+          }
+        ],
+        "wp:post_type": [
+          {
+            "href": "https://tuvisonkhiem.vn/wp-json/wp/v2/tv_cach_cuc?tv_nhom_cach=92"
+          }
+        ],
+        "curies": [
+          {
+            "name": "wp",
+            "href": "https://api.w.org/{rel}",
+            "templated": true
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -38,6 +38,7 @@ from frontend.horoscope_sections import (
     render_why_section,
     render_evidence_section,
     render_evidence_and_specialist_section,
+    chart_viewer_general,
 )
 
 st.set_page_config(page_title="Tử Vi · Bản đồ bản thân", layout="wide", initial_sidebar_state="auto")
@@ -63,19 +64,6 @@ def _resolve_api_base() -> str:
 
 API_BASE = _resolve_api_base()
 year_now = datetime.now(ZoneInfo("Asia/Bangkok")).year
-
-CONFIDENCE_OPTIONS = {
-    "A": "A · Giờ sinh rõ, không sát ranh giới giờ",
-    "B": "B · Sai số nhỏ, không sát ranh giới giờ",
-    "C": "C · Sát ranh giới giờ hoặc chỉ nhớ gần đúng",
-    "D": "D · Thiếu dữ liệu giờ sinh cốt lõi",
-}
-CONFIDENCE_SOURCES = {
-    "document": "Giấy tờ/hồ sơ ghi rõ",
-    "memory": "Nhớ lại từ gia đình",
-    "estimate": "Ước lượng",
-    "unknown": "Không rõ",
-}
 
 
 def _is_in_container() -> bool:
@@ -131,22 +119,6 @@ with st.sidebar:
     year = st.number_input("Năm sinh", min_value=1900, max_value=min(year_now, 2100), value=1995, step=1, key="birth_year")
     hour = st.selectbox("Giờ sinh", range(1, 13), index=4, format_func=lambda n: HOURS[n-1], key="birth_hour")
     gender = st.radio("Giới tính theo lá số", [1, 2], format_func=lambda n: "Nam" if n == 1 else "Nữ", horizontal=True, key="birth_gender")
-    with st.expander("Độ tin cậy dữ liệu giờ sinh", expanded=False):
-        confidence = st.selectbox(
-            "Độ tin cậy giờ sinh", list(CONFIDENCE_OPTIONS), index=0,
-            format_func=CONFIDENCE_OPTIONS.get, key="input_confidence",
-            help="C/D nghĩa là giờ sinh sát ranh giới hoặc thiếu dữ liệu; báo cáo chỉ nêu kết luận cấu trúc, không kết luận thời điểm/sự kiện.",
-        )
-        gio_sinh_source = st.selectbox(
-            "Nguồn giờ sinh", list(CONFIDENCE_SOURCES), index=1,
-            format_func=CONFIDENCE_SOURCES.get, key="gio_sinh_source",
-        )
-        gio_sinh_error = st.number_input(
-            "Sai số ước tính (phút, 0 = không rõ)", min_value=0, max_value=720, value=0, step=5,
-            key="gio_sinh_error",
-        )
-        if confidence in ("C", "D"):
-            st.warning("Mức C/D: báo cáo chỉ nêu kết luận cấu trúc và ghi rõ giới hạn; không kết luận thời điểm/sự kiện cụ thể.")
     with st.expander("Tùy chọn bài đọc", expanded=True):
         target_year = st.number_input("Năm chiêm nghiệm (âm lịch)", min_value=1900, max_value=2200, value=year_now, step=1, key="target_year",
                                       help="Chọn năm Can Chi để xem tiểu hạn, vòng Thái Tuế và lưu Tứ Hóa. Đổi năm sẽ hiện nhắc tạo lại báo cáo.")
@@ -154,20 +126,14 @@ with st.sidebar:
                               help="Các chủ đề đã chọn được đặt trước trong báo cáo; tổng quan luôn được giữ lại.")
         reading_mode = st.selectbox(
             "Mức độ bài đọc",
-            ["du_lieu", "giai_thich", "chuyen_sau"],
-            index=2,
+            ["du_lieu", "chuyen_sau"],
+            index=1,
             format_func={
                 "du_lieu": "Lá số & dữ kiện · không gọi AI",
-                "giai_thich": "AI giải thích · giải nghĩa thuật ngữ",
                 "chuyen_sau": "AI chuyên sâu · phân tích tổng hợp",
             }.get,
             key="reading_mode",
-            help="du_lieu: chỉ hiển thị lá số và dữ kiện; giai_thich: AI giải thích thuật ngữ; chuyen_sau: AI luận giải chuyên sâu đa chiều.",
-        )
-        mode = st.selectbox(
-            "Bộ xử lý", ["auto", "mock"],
-            format_func=lambda v: "Tự động (Gemini / dự phòng)" if v == "auto" else "Chế độ kiểm thử (Mock)",
-            key="birth_provider",
+            help="du_lieu: chỉ hiển thị lá số và dữ kiện; chuyen_sau: AI luận giải chuyên sâu đa chiều.",
         )
     submitted = st.button("Tạo bản luận giải", type="primary", use_container_width=True)
     st.caption("Giờ sinh theo múi giờ Việt Nam (UTC+7). Với lịch âm, thuật toán hiện chưa hỗ trợ lựa chọn tháng nhuận.")
@@ -181,18 +147,20 @@ if PROD_FALLBACK:
         f"({API_BASE}). Chạy run_server.py, hoặc đặt biến môi trường KMS_API_BASE nếu muốn dùng backend khác."
     )
 
-if submitted:
-    validation = validate_birth_date(day, month, year, calendar == "Dương lịch")
-    if target_year < year:
-        validation = "Năm chiêm nghiệm cần từ năm sinh trở đi."
+retry_payload = st.session_state.pop("retry_ai_payload", None)
+if submitted or retry_payload is not None:
+    if retry_payload is None:
+        validation = validate_birth_date(day, month, year, calendar == "Dương lịch")
+        if target_year < year:
+            validation = "Năm chiêm nghiệm cần từ năm sinh trở đi."
+    else:
+        validation = None
     if validation:
         st.error(validation)
     else:
-        payload = {"ho_ten": name.strip(), "ngay": day, "thang": month, "nam": year,
+        payload = retry_payload or {"ho_ten": name.strip(), "ngay": day, "thang": month, "nam": year,
                    "chi_gio": hour, "gioi_tinh": gender, "duong_lich": calendar == "Dương lịch",
-                   "input_confidence": confidence, "gio_sinh_source": gio_sinh_source,
-                   "gio_sinh_error_phut": int(gio_sinh_error) if gio_sinh_error else None,
-                   "target_year": target_year, "provider": mode, "reading_mode": reading_mode, "top_k_per_topic": 4}
+                   "target_year": target_year, "provider": "auto", "reading_mode": reading_mode, "top_k_per_topic": 4}
         try:
             preview = st.empty()
             with st.status("Đang lập lá số và đối chiếu sách…", expanded=True) as progress:
@@ -209,7 +177,9 @@ if submitted:
                             palaces = chart_data.get("la_so", {}).get("thap_ni_cung", [])
                             if palaces:
                                 ln_map = _luu_nien_by_cung_map(chart_data.get("luu_nien"), palaces)
-                                st.markdown('<div class="horoscope-chart">' + render_laso(palaces, che_do="luoi", luu_nien_by_cung=ln_map) + '</div>', unsafe_allow_html=True)
+                                ho_ten = chart_data.get("ho_ten") or "Chủ Mệnh"
+                                thien_ban = {"ho_ten": ho_ten, "general": chart_viewer_general(chart_data, ho_ten)}
+                                st.markdown('<div class="horoscope-chart">' + render_laso(palaces, che_do="luoi", luu_nien_by_cung=ln_map, thien_ban=thien_ban) + '</div>', unsafe_allow_html=True)
                             if chart_data.get("annual"):
                                 st.markdown(annual_panel(chart_data["annual"], chart_data.get("luu_nien")), unsafe_allow_html=True)
                     elif event.get('event') == 'prepared':
@@ -219,7 +189,9 @@ if submitted:
                             palaces = prepared.get("la_so", {}).get("thap_ni_cung", [])
                             if palaces:
                                 ln_map = _luu_nien_by_cung_map(prepared.get("luu_nien"), palaces)
-                                st.markdown('<div class="horoscope-chart">' + render_laso(palaces, che_do="luoi", luu_nien_by_cung=ln_map) + '</div>', unsafe_allow_html=True)
+                                ho_ten = prepared.get("ho_ten") or "Chủ Mệnh"
+                                thien_ban = {"ho_ten": ho_ten, "general": chart_viewer_general(prepared, ho_ten)}
+                                st.markdown('<div class="horoscope-chart">' + render_laso(palaces, che_do="luoi", luu_nien_by_cung=ln_map, thien_ban=thien_ban) + '</div>', unsafe_allow_html=True)
                             st.markdown(annual_panel(prepared.get('annual', {}), prepared.get('luu_nien')), unsafe_allow_html=True)
                     elif event.get('event') == 'result':
                         result = event['report']
@@ -261,9 +233,6 @@ else:
     meta = report.get("meta", {})
     snapshot = st.session_state["report_input"]
     is_mock = meta.get("is_mock")
-    input_confidence = str(basic.get("input_confidence") or "A").upper()
-    if input_confidence in ("C", "D"):
-        st.warning("Giờ sinh cần được đối chiếu thêm; nội dung về thời điểm được hạn chế.")
     actual_mode = meta.get("actual_reading_mode", meta.get("reading_mode", "chuyen_sau"))
     req_mode = meta.get("reading_mode", actual_mode)
     fallback_reason = meta.get("fallback_reason")
@@ -281,7 +250,7 @@ else:
     if meta.get('specificity_low'):
         st.caption('Bài tổng hợp dựa trên ít dữ kiện riêng của lá số; xem mục Phân tích sao để đối chiếu.')
     # Định danh người xem
-    render_header_identity(report, snapshot, basic, input_confidence)
+    render_header_identity(report, snapshot, basic)
     report_year = meta.get('target_year') or (report.get('annual') or {}).get('year')
     if report_year and target_year != report_year:
         st.warning(f"Báo cáo bên dưới là của năm {report_year}. Ô Năm chiêm nghiệm đang là {target_year}; "

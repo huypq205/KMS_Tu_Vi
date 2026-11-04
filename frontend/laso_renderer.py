@@ -177,28 +177,114 @@ def luoi_html(
     # Dựng Thiên Bàn trung tâm (2x2: chiếm ô 1-2 trên hàng và cột)
     tb = thien_ban or {}
     ho_ten = escape(str(tb.get("ho_ten") or "Bản Đồ Tử Vi"))
-    birth_time = escape(str(tb.get("birth_time") or ""))
-    menh_cuc = escape(str(tb.get("menh_cuc") or ""))
-    cung_info = escape(str(tb.get("cung_info") or ""))
+    general = tb.get("general") or {}
+    if general:
+        def _text(value: Any) -> str:
+            return escape(str(value)) if value not in (None, "") else "—"
 
-    tb_html_parts = [
-        '<div class="cell center thien-ban" id="thien-ban-panel">',
-        '<div class="thien-ban-default">',
-        '<div class="tb-seal"><span class="seal-stamp">KMS<br>TỬ VI</span></div>',
-        f'<div class="tb-name">{ho_ten}</div>',
-    ]
-    if birth_time:
-        tb_html_parts.append(f'<div class="tb-meta">{birth_time}</div>')
-    if menh_cuc:
-        tb_html_parts.append(f'<div class="tb-stat"><strong>Mệnh Cục:</strong> {menh_cuc}</div>')
-    if cung_info:
-        tb_html_parts.append(f'<div class="tb-stat"><strong>Mệnh/Thân:</strong> {cung_info}</div>')
-    tb_html_parts.append(
-        '<div class="tb-hint">✦ Bấm vào ô cung để xem Tam hợp · Xung chiếu · Nhị hợp ✦</div>'
-        '</div>'
-        '</div>'
-    )
-    thien_ban_cell = "".join(tb_html_parts)
+        def _date_row(label: str, value: Any, lunar: Any, extra: Any, note: str = "") -> str:
+            lunar_html = (
+                f'<span class="tb-gen-lunar" title="Âm lịch">{escape(str(lunar))}</span>'
+                if lunar not in (None, "") else ""
+            )
+            note_html = f'<span class="tb-gen-note">{escape(note)}</span>' if note else ""
+            return (
+                '<div class="tb-gen-row">'
+                f'<span class="tb-gen-label">{escape(label)}</span>'
+                f'<span class="tb-gen-value">{_text(value)}{lunar_html}{note_html}</span>'
+                f'<span class="tb-gen-extra">{_text(extra)}</span>'
+                '</div>'
+            )
+
+        def _group_row(label: str, primary: Any, notes: list[Any] | tuple[Any, ...] = ()) -> str:
+            notes_html = "".join(
+                f'<span class="tb-gen-sub">{escape(str(note))}</span>'
+                for note in notes if note not in (None, "")
+            )
+            return (
+                '<div class="tb-gen-row tb-gen-group">'
+                f'<span class="tb-gen-label">{escape(label)}</span>'
+                f'<span class="tb-gen-value tb-gen-span">{_text(primary)}{notes_html}</span>'
+                '</div>'
+            )
+
+        show_lunar = bool(general.get("show_lunar"))
+        general_rows = "".join([
+            '<div class="tb-gen-row tb-gen-name-row">'
+            '<span class="tb-gen-label">Họ tên</span>'
+            f'<span class="tb-gen-value tb-gen-name">{_text(general.get("ho_ten"))}</span>'
+            '</div>',
+            _date_row("Năm", general.get("nam_sinh"), None, general.get("can_chi_nam")),
+            _date_row("Tháng", general.get("thang_sinh"),
+                      general.get("thang_am") if show_lunar else None,
+                      general.get("can_chi_thang")),
+            _date_row("Ngày", general.get("ngay_sinh"),
+                      general.get("ngay_am") if show_lunar else None,
+                      general.get("can_chi_ngay")),
+            _date_row("Giờ", general.get("gio_chi"), None, general.get("can_chi_gio"),
+                      note=str(general.get("gio_range") or "")),
+            _date_row("Năm xem", general.get("nam_xem"), None, general.get("can_chi_nam_xem")),
+        ])
+
+        tuoi_am = general.get("tuoi_am")
+        if tuoi_am:
+            general_rows += (
+                '<div class="tb-gen-row tb-gen-age">'
+                '<span></span><span></span>'
+                f'<span class="tb-gen-extra">{escape(str(tuoi_am))} tuổi</span>'
+                '</div>'
+            )
+
+        cach_items = general.get("cach") or []
+        cach_html = "".join(
+            f'<span class="tb-gen-sub tb-gen-cach">{escape(str(item))}</span>'
+            for item in cach_items
+        ) or '<span class="tb-gen-sub tb-gen-empty">Chưa nhận diện cách cục nổi bật</span>'
+
+        tb_html_parts = [
+            '<div class="cell center thien-ban" id="thien-ban-panel">',
+            '<div class="thien-ban-default tb-general">',
+            f'<div class="tb-gen-calendar">{escape(str(general.get("calendar") or ""))}</div>',
+            '<div class="tb-gen-table">' + general_rows + '</div>',
+            _group_row("Âm Dương", general.get("am_duong"), [general.get("am_duong_ly")]),
+            _group_row("Mệnh", general.get("menh")),
+            _group_row("Cục", general.get("cuc"), general.get("cuc_notes") or []),
+            '<div class="tb-gen-row tb-gen-group">'
+            '<span class="tb-gen-label">Cách</span>'
+            f'<span class="tb-gen-value tb-gen-span">{cach_html}</span>'
+            '</div>',
+        ]
+        hint = escape(str(tb.get("hint") or "✦ Bấm vào ô cung để xem Tam hợp · Xung chiếu · Nhị hợp ✦"))
+        tb_html_parts.append(
+            f'<div class="tb-hint">{hint}</div>'
+            '<button type="button" class="tb-reset-btn" id="tb-reset-btn">☯ Về Thiên Bàn chung</button>'
+            '</div>'
+            '</div>'
+        )
+        thien_ban_cell = "".join(tb_html_parts)
+    else:
+        birth_time = escape(str(tb.get("birth_time") or ""))
+        menh_cuc = escape(str(tb.get("menh_cuc") or ""))
+        cung_info = escape(str(tb.get("cung_info") or ""))
+
+        tb_html_parts = [
+            '<div class="cell center thien-ban" id="thien-ban-panel">',
+            '<div class="thien-ban-default">',
+            '<div class="tb-seal"><span class="seal-stamp">KMS<br>TỬ VI</span></div>',
+            f'<div class="tb-name">{ho_ten}</div>',
+        ]
+        if birth_time:
+            tb_html_parts.append(f'<div class="tb-meta">{birth_time}</div>')
+        if menh_cuc:
+            tb_html_parts.append(f'<div class="tb-stat"><strong>Mệnh Cục:</strong> {menh_cuc}</div>')
+        if cung_info:
+            tb_html_parts.append(f'<div class="tb-stat"><strong>Mệnh/Thân:</strong> {cung_info}</div>')
+        tb_html_parts.append(
+            '<div class="tb-hint">✦ Bấm vào ô cung để xem Tam hợp · Xung chiếu · Nhị hợp ✦</div>'
+            '</div>'
+            '</div>'
+        )
+        thien_ban_cell = "".join(tb_html_parts)
 
     result = []
     for row in range(4):

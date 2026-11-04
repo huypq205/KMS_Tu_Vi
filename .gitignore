@@ -79,3 +79,6 @@ Thumbs.db
 
 # Local rendered design review artifacts
 .taste-skill/governance/
+
+# Office doc previews
+.dsh-office-*/

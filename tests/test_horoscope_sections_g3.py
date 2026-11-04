@@ -7,8 +7,8 @@ Ma trận kiểm thử:
 - TC-G3-03: Tổng quan năm hiển thị 3 đoạn văn bám sát target_year.
 - TC-G3-04: Báo cáo cũ thiếu tom_tat_nam hiển thị banner/thông báo nhắc tạo lại.
 - TC-G3-05: Không xuất hiện badge tin cậy, nhãn mạnh/yếu, hay mã giờ sinh A-D trong giao diện người xem.
-- TC-G3-06: Giờ sinh C/D hiển thị câu phổ thông không chứa nhãn mã C hay D.
-- TC-G3-07: Khối chuyên môn (annual_panel kỹ thuật, Vì sao, Bảng kích hoạt, Bảng sao) được gom vào mục căn cứ thu gọn cuối trang.
+- TC-G3-06: UI đã bỏ mục độ tin cậy giờ sinh; không còn câu cảnh báo C/D.
+- TC-G3-07: Thiên Bàn trung tâm hiển thị thông tin chung của người xem (họ tên, ngày giờ, can chi, tuổi, Âm Dương, Mệnh, Cục, Cách) thay cho thẻ cung vừa bấm.
 """
 from __future__ import annotations
 
@@ -126,13 +126,58 @@ def test_tc_g3_05_no_confidence_badges_or_signal_weights():
     assert "Mức tập trung tín hiệu cần xem xét:" not in all_text
 
 
-def test_tc_g3_06_low_confidence_hour_shows_plain_caution():
-    """TC-G3-06: Giờ sinh C/D hiển thị câu phổ thông, không lộ mã A-D."""
+def test_tc_g3_06_low_confidence_hour_caution_removed():
+    """TC-G3-06: UI đã bỏ mục độ tin cậy giờ sinh; không còn câu cảnh báo C/D."""
     app = AppTest.from_file(Path(__file__).resolve().parents[1] / "frontend/horoscope_ui.py", default_timeout=20).run()
     _submit_report(app, target_year=2026, input_conf="C")
     assert not app.exception
 
     all_warnings = " ".join(item.value for item in app.warning)
-    assert "Giờ sinh cần được đối chiếu thêm; nội dung về thời điểm được hạn chế." in all_warnings
+    assert "Giờ sinh cần được đối chiếu thêm; nội dung về thời điểm được hạn chế." not in all_warnings
     assert "mức C" not in all_warnings
     assert "mức D" not in all_warnings
+
+
+def test_tc_g3_07_thien_ban_shows_general_info_instead_of_palace_card():
+    """TC-G3-07: Thiên Bàn trung tâm hiển thị thông tin chung thay cho thẻ cung đang xem."""
+    from frontend.laso_renderer import render_laso
+
+    req = HoroscopeRequest(
+        ngay=3, thang=2, nam=1900, chi_gio=1, gioi_tinh=1,
+        provider="mock", target_year=2026,
+    )
+    report = horoscope_read(req)
+    general = sections.chart_viewer_general(report, "Người Xem")
+
+    assert general["can_chi_nam"] == "Canh Tý"
+    assert general["can_chi_thang"] == "Mậu Dần"
+    assert general["can_chi_ngay"] == "Đinh Mùi"
+    assert general["can_chi_gio"] == "Canh Tý"
+    assert general["am_duong"] == "Dương Nam"
+    assert general["am_duong_ly"] == "Âm Dương thuận lý"
+    assert general["thang_am"] == 1 and general["ngay_am"] == 4
+    assert general["tuoi_am"] == 127
+    assert general["cuc"] == "Thổ Ngũ Cục"
+    assert general["cuc_notes"]  # có nhãn quan hệ Mệnh – Cục
+    assert "Không phá cách" in general["cach"]
+
+    html = render_laso(
+        report["la_so"]["thap_ni_cung"], che_do="luoi",
+        thien_ban={"ho_ten": "Người Xem", "general": general},
+    )
+    assert "tb-gen-table" in html
+    assert "Họ tên" in html and "Âm Dương" in html and "Cách" in html
+    assert "Canh Tý" in html and "Bính Ngọ" in html
+    assert "127 tuổi" in html and "Không phá cách" in html
+    assert "tb-gen-lunar" in html
+    assert "thien-ban-inspect-card" not in html
+    assert "tb-cung-badge" not in html
+
+    # Tích hợp UI: card thông tin chung thực sự được render trên trang.
+    app = AppTest.from_file(Path(__file__).resolve().parents[1] / "frontend/horoscope_ui.py", default_timeout=20).run()
+    _submit_report(app, target_year=2026)
+    assert not app.exception
+    rendered = " ".join(item.value for item in app.markdown)
+    assert "tb-gen-table" in rendered
+    assert "Họ tên" in rendered
+    assert "thien-ban-inspect-card" not in rendered

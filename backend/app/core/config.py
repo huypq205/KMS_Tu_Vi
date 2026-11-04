@@ -37,8 +37,15 @@ VECTOR_STORE = os.getenv("KMS_VECTOR_STORE", "qdrant")  # qdrant | numpy
 EMBEDDING_PROVIDER = os.getenv("KMS_EMBEDDING_PROVIDER", "local")
 
 # --- LLM ---
-LLM_PROVIDER = os.getenv("KMS_LLM_PROVIDER", "gemini")  # gemini | mock
+LLM_PROVIDER = os.getenv("KMS_LLM_PROVIDER", "groq")  # groq | gemini | deepseek | mock
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
+DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
+GROQ_BASE_URL = os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
+HOROSCOPE_PROVIDER = os.getenv("KMS_HOROSCOPE_PROVIDER", "auto")  # auto | groq | deepseek | gemini | mock
 GEMINI_MODEL = os.getenv("KMS_GEMINI_MODEL", "gemini-3.8-flash")
 LLM_MAX_TOKENS = int(os.getenv("KMS_LLM_MAX_TOKENS", "2048"))
 LLM_TEMPERATURE = float(os.getenv("KMS_LLM_TEMPERATURE", "0.0"))

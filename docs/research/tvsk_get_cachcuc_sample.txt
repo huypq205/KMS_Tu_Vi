@@ -1,0 +1,34 @@
+
+<!-- Cach Cuc List -->
+    <div class="mt-8 bg-white">
+        <h3 class="text-2xl font-bold text-gray-900 mb-6 uppercase">TỔNG QUÁT CÁCH CỤC</h3>
+        <div class="space-y-6">
+                            <div class="cach-cuc-item">
+                    <h3 class="text-lg font-bold text-blue-600 mb-2">
+                        Binh Hình Tướng Ấn                    </h3>
+                    <p class="text-gray-700 leading-relaxed text-justify">
+                        Chủ về quyền lực, địa vị và tài lộc. Người có cách này thường có khả năng nắm giữ quyền lực, có địa vị cao trong xã hội, được hưởng phú quý và có nhiều cơ hội thăng tiến trong sự nghiệp. Đây là cách cục quý, mang lại sự thành công về quyền lực và tài lộc.                    </p>
+                </div>
+                    </div>
+    </div>
+
+<!-- Pha Cach List -->
+    <div class="mt-8 bg-white">
+        <h3 class="text-lg font-bold text-red-600 mb-2">Phá cách</h3>
+        <div class="space-y-6">
+                            <div class="cach-cuc-item">
+                    <p class="text-red-600 leading-relaxed text-justify">
+                        Đồng Lương gặp Không Kiếp.
+                        Đồng Lương vốn dĩ ôn hòa, thanh tao nhưng sát khí Không Kiếp xâm phạm làm cho cuộc đời hay gặp sóng gió thăng trầm, thành bại thất thường, hao tâm tổn trí. Các phá cách làm cho cách cục thiếu tính
+                        hoàn thiện. Đôi khi còn làm đảo ngược cả tính tốt của cách cục.
+                    </p>
+                </div>
+                            <div class="cach-cuc-item">
+                    <p class="text-red-600 leading-relaxed text-justify">
+                        Lộc Tồn gặp Không Kiếp.
+                        Kho báu lủng đáy. Tiền bạc tụ tán thất thường, làm ra được nhưng hay gặp số kiếp hao hụt trầm trọng, bạo phát bạo tàn. Các phá cách làm cho cách cục thiếu tính
+                        hoàn thiện. Đôi khi còn làm đảo ngược cả tính tốt của cách cục.
+                    </p>
+                </div>
+                    </div>
+    </div>

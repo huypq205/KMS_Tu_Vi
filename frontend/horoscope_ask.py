@@ -40,7 +40,7 @@ def render_ask_answer(saved: dict) -> None:
                 st.text(c.get("excerpt") or "Chưa có đoạn trích.")
 
 
-def ask_box(key: str, snapshot: dict, mode: str, api_base: str) -> None:
+def ask_box(key: str, snapshot: dict, api_base: str) -> None:
     """Ô hỏi nhanh theo chủ đề; câu trả lời lưu theo key chủ đề trong session_state."""
     st.markdown('<p class="muted"><strong>Hỏi nhanh có đáp · kèm nguồn sách</strong> — trả lời theo dữ kiện lá số và trích dẫn 3 sách nguồn; chưa kiểm duyệt thủ công.</p>', unsafe_allow_html=True)
     for sug_index, suggestion in enumerate(ASK_SUGGESTIONS.get(key, [])):
@@ -54,11 +54,8 @@ def ask_box(key: str, snapshot: dict, mode: str, api_base: str) -> None:
             payload = {'ho_ten': snapshot.get('ho_ten', ''), 'ngay': snapshot['ngay'], 'thang': snapshot['thang'],
                        'nam': snapshot['nam'], 'chi_gio': snapshot['chi_gio'], 'gioi_tinh': snapshot['gioi_tinh'],
                        'duong_lich': snapshot['duong_lich'],
-                       'input_confidence': snapshot.get('input_confidence', 'A'),
-                       'gio_sinh_source': snapshot.get('gio_sinh_source', 'memory'),
-                       'gio_sinh_error_phut': snapshot.get('gio_sinh_error_phut'),
                        'target_year': snapshot.get('target_year'),
-                       'topic': key, 'question': question, 'provider': mode}
+                       'topic': key, 'question': question, 'provider': 'auto'}
             with st.spinner("Đang hỏi luận giải thông minh…"):
                 try:
                     result = ask_horoscope(api_base, payload)

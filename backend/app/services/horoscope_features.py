@@ -153,7 +153,11 @@ def generate_raw_horoscope(
         nn, tt, nnnn, duong_lich, TIME_ZONE
     )
     can_ngay, chi_ngay = canChiNgay(nn, tt, nnnn, duong_lich, TIME_ZONE)
-    _, _, lunar_year, _ = ngayThangNam(nn, tt, nnnn, duong_lich, TIME_ZONE)
+    ngay_am, thang_am, lunar_year, thang_nhuan = ngayThangNam(nn, tt, nnnn, duong_lich, TIME_ZONE)
+    # Chi của tháng âm lịch: tháng Giêng là Dần, tháng 11 là Tý, tháng 12 là Sửu.
+    chi_thang = (thang_am + 1) % 12 + 1
+    # Can của giờ sinh tính từ can ngày và chi giờ.
+    can_gio_sinh = can_gio(can_ngay, chi_gio)
 
     # Tính số cục
     can_thang_gieng = (can_nam * 2 + 1) % 10
@@ -192,6 +196,15 @@ def generate_raw_horoscope(
         "ban_menh": nguHanhNapAm(chi_nam, can_nam, True).replace("Ð", "Đ"),
         "can_nam": thienCan[can_nam]["tenCan"],
         "chi_nam": diaChi[chi_nam]["tenChi"],
+        "can_chi_thang": f"{thienCan[can_thang]['tenCan']} {diaChi[chi_thang]['tenChi']}",
+        "can_chi_ngay": f"{thienCan[can_ngay]['tenCan']} {diaChi[chi_ngay]['tenChi']}",
+        "can_chi_gio": f"{thienCan[can_gio_sinh]['tenCan']} {diaChi[chi_gio]['tenChi']}",
+        "ngay_am": ngay_am,
+        "thang_am": thang_am,
+        "thang_nhuan": bool(thang_nhuan),
+        "ngay_sinh": nn,
+        "thang_sinh": tt,
+        "chi_gio": chi_gio,
         "nam_sinh": nnnn,
         "nam_sinh_am": lunar_year,
         "duong_lich": duong_lich,
@@ -566,6 +579,17 @@ def extract_horoscope_features(
             "duong_lich": raw_laso.get("duong_lich", True),
             "gioi_tinh": raw_laso["gioi_tinh"],
             "can_chi_nam": f"{raw_laso['can_nam']} {raw_laso['chi_nam']}",
+            "can_chi_thang": raw_laso.get("can_chi_thang", ""),
+            "can_chi_ngay": raw_laso.get("can_chi_ngay", ""),
+            "can_chi_gio": raw_laso.get("can_chi_gio", ""),
+            "can_chi_nam_xem": nam_xem.get("can_chi", ""),
+            "ngay_am": raw_laso.get("ngay_am"),
+            "thang_am": raw_laso.get("thang_am"),
+            "thang_nhuan": raw_laso.get("thang_nhuan", False),
+            "ngay_sinh": raw_laso.get("ngay_sinh"),
+            "thang_sinh": raw_laso.get("thang_sinh"),
+            "chi_gio": raw_laso.get("chi_gio"),
+            "tuoi_am": nam_xem.get("tuoi_am"),
             "ban_menh": raw_laso["ban_menh"],
             "ten_cuc": raw_laso["ten_cuc"],
             "cung_menh": menh_cung.get("chuan_ten", ""),

@@ -102,7 +102,8 @@ def test_gemini_busy_is_one_bounded_attempt_with_explicit_reason():
     assert 'test-secret' not in json.dumps(result)
 
 
-def test_busy_primary_model_falls_back_before_mock():
+@pytest.mark.parametrize('primary_status', [503, 429])
+def test_overloaded_primary_model_falls_back_before_mock(primary_status):
     from backend.app.services.horoscope_analysis import build_star_facts
     f = chart()
     context = bridge.retrieve_horoscope_context(f)
@@ -114,14 +115,14 @@ def test_busy_primary_model_falls_back_before_mock():
                              'loi_chung_cu': [fact.get('kind', 'toa_thu')],
                              'phan_chung': 'Không ghi nhận phản chứng trong nguồn đã lấy.',
                              'fact_ids': [fact['fact_id']], 'source_refs': fact['source_refs'][:1]}]
-    busy = Mock(status_code=503)
-    busy.json.return_value = {'error': {'message': 'busy'}}
+    unavailable = Mock(status_code=primary_status)
+    unavailable.json.return_value = {'error': {'message': 'unavailable'}}
     ok = Mock(status_code=200)
     ok.json.return_value = {'candidates': [{'finishReason': 'STOP', 'content': {'parts': [{'text': json.dumps(reading)}]}}]}
     with patch.object(interpreter, 'GEMINI_API_KEY', 'test-secret'), \
             patch.object(interpreter, 'HOROSCOPE_FALLBACK_MODELS', ('gemini-fallback',)), \
             patch.object(interpreter, 'check_specificity', return_value=None), \
-            patch('requests.post', side_effect=[busy, ok]) as post:
+            patch('requests.post', side_effect=[unavailable, ok]) as post:
         actual = interpreter.interpret_horoscope(f, bridge.format_context_for_prompt(context), 'auto', context)
     assert actual['_generation']['actual_provider'] == 'gemini'
     assert actual['_generation']['model'] == 'gemini-fallback'

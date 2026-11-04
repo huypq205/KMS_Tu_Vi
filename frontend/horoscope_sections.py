@@ -40,10 +40,6 @@ def _inject_laso_interactive_script() -> None:
                 const thienBan = chart.querySelector('.cell.center.thien-ban');
                 if (!cells.length || !thienBan) return;
 
-                if (!thienBan.dataset.defaultHtml) {
-                    thienBan.dataset.defaultHtml = thienBan.innerHTML;
-                }
-
                 const palaceData = {};
                 cells.forEach(cell => {
                     const cungSo = parseInt(cell.getAttribute('data-cung'));
@@ -51,11 +47,6 @@ def _inject_laso_interactive_script() -> None:
                         palaceData[cungSo] = {
                             element: cell,
                             cungSo: cungSo,
-                            chi: cell.getAttribute('data-chi') || '',
-                            ten: cell.getAttribute('data-ten') || '',
-                            hanh: cell.getAttribute('data-hanh') || '',
-                            chinhTinh: cell.querySelector('.chinh-row')?.innerText?.trim() || '',
-                            tuHoa: cell.querySelector('.tu-hoa-row')?.innerText?.trim() || '',
                         };
                     }
                 });
@@ -91,48 +82,16 @@ def _inject_laso_interactive_script() -> None:
                     if (palaceData[rels.nhiHop]) {
                         palaceData[rels.nhiHop].element.classList.add('is-nhi-hop');
                     }
+                }
 
-                    const th1 = palaceData[rels.tamHop[0]] || {};
-                    const th2 = palaceData[rels.tamHop[1]] || {};
-                    const xc = palaceData[rels.xungChieu] || {};
-                    const nh = palaceData[rels.nhiHop] || {};
-
-                    thienBan.innerHTML = `
-                        <div class="thien-ban-inspect-card">
-                            <div class="tb-inspect-header">
-                                <span class="tb-cung-badge">${cur.ten}</span>
-                                <span class="tb-chi-badge">${cur.chi} · ${cur.hanh}</span>
-                            </div>
-                            <div class="tb-inspect-stars">
-                                <div class="tb-chinh-text">${cur.chinhTinh || 'Vô chính diệu'}</div>
-                                ${cur.tuHoa ? `<div class="tb-tuhoa-tag">${cur.tuHoa}</div>` : ''}
-                            </div>
-                            <div class="tb-inspect-rels">
-                                <div class="tb-rel-item">
-                                    <span class="rel-tag yellow">Tam hợp</span>
-                                    <span class="rel-desc">${th1.ten || ''} (${th1.chi || ''}) &amp; ${th2.ten || ''} (${th2.chi || ''})</span>
-                                </div>
-                                <div class="tb-rel-item">
-                                    <span class="rel-tag red">Xung chiếu</span>
-                                    <span class="rel-desc">${xc.ten || ''} (${xc.chi || ''})</span>
-                                </div>
-                                <div class="tb-rel-item">
-                                    <span class="rel-tag green">Nhị hợp</span>
-                                    <span class="rel-desc">${nh.ten || ''} (${nh.chi || ''})</span>
-                                </div>
-                            </div>
-                            <button type="button" class="tb-reset-btn" id="tb-reset-btn">☯ Về Thiên Bàn chung</button>
-                        </div>
-                    `;
-
-                    const resetBtn = thienBan.querySelector('#tb-reset-btn');
-                    if (resetBtn) {
-                        resetBtn.onclick = function(e) {
-                            e.stopPropagation();
-                            clearHighlight();
-                            thienBan.innerHTML = thienBan.dataset.defaultHtml;
-                        };
-                    }
+                // Nút "Về Thiên Bàn chung" chỉ bỏ chọn/highlight; phần trung tâm luôn
+                // hiển thị thông tin chung của người xem.
+                const resetBtn = thienBan.querySelector('#tb-reset-btn');
+                if (resetBtn) {
+                    resetBtn.onclick = function(e) {
+                        e.stopPropagation();
+                        clearHighlight();
+                    };
                 }
 
                 cells.forEach(cell => {
@@ -140,7 +99,6 @@ def _inject_laso_interactive_script() -> None:
                         const cungSo = parseInt(this.getAttribute('data-cung'));
                         if (this.classList.contains('is-selected')) {
                             clearHighlight();
-                            thienBan.innerHTML = thienBan.dataset.defaultHtml;
                         } else {
                             selectPalace(cungSo);
                         }
@@ -160,19 +118,14 @@ def _inject_laso_interactive_script() -> None:
 
 
 def render_header_identity(report: dict[str, Any], snapshot: dict[str, Any],
-                           basic: dict[str, Any], input_confidence: str) -> None:
-    """Khối 1: Định danh người xem (ẩn các mã ký hiệu A-D, giữ ngôn ngữ phổ thông)."""
-    caution_hour = ""
-    if str(input_confidence).upper() in ("C", "D"):
-        caution_hour = " · <em>Giờ sinh cần được đối chiếu thêm; nội dung về thời điểm được hạn chế.</em>"
-
+                           basic: dict[str, Any]) -> None:
+    """Khối 1: Định danh người xem (ngôn ngữ phổ thông)."""
     st.markdown(
         f'<div class="report-heading"><h2>{text(report.get("ho_ten"))}</h2>'
         f'<span>{text(st.session_state.get("report_time", ""))}</span></div>'
         f'<p class="muted">{snapshot["ngay"]:02d}/{snapshot["thang"]:02d}/{snapshot["nam"]} · '
         f'{"Dương lịch" if snapshot["duong_lich"] else "Âm lịch"} · '
-        f'{text(HOURS[snapshot["chi_gio"]-1])} · Năm chiêm nghiệm {snapshot["target_year"]}'
-        f'{caution_hour}</p>',
+        f'{text(HOURS[snapshot["chi_gio"]-1])} · Năm chiêm nghiệm {snapshot["target_year"]}</p>',
         unsafe_allow_html=True,
     )
 
@@ -219,6 +172,96 @@ def render_annual_overview_section(reading: dict[str, Any], report: dict[str, An
         st.info("Báo cáo được tạo theo phiên bản cũ chưa có phần tổng quan năm. Vui lòng bấm 'Tạo bản luận giải' để cập nhật bản mới.")
 
 
+def chart_viewer_general(report: dict[str, Any], ho_ten: str) -> dict[str, Any]:
+    """Thông tin chung của người xem hiển thị tại Thiên Bàn trung tâm."""
+    basic = report.get("thong_tin_co_ban") or {}
+    menh_cuc = report.get("menh_cuc") or {}
+    reading = report.get("reading") or {}
+    cach_cuc = reading.get("cach_cuc") or report.get("cach_cuc") or {}
+
+    can_nam = str(basic.get("can_chi_nam") or "").split(" ")[0]
+    is_duong = can_nam in {"Giáp", "Bính", "Mậu", "Canh", "Nhâm"}
+    gender = str(basic.get("gioi_tinh") or "")
+    am_duong = f"{'Dương' if is_duong else 'Âm'} {gender}".strip()
+    thuan_ly = (is_duong and gender == "Nam") or (not is_duong and gender == "Nữ")
+
+    rel_labels = {
+        "MENH_CUC_TI_HOA": "Mệnh Cục bình hoà",
+        "CUC_SINH_MENH": "Cục sinh Mệnh",
+        "MENH_SINH_CUC": "Mệnh sinh Cục",
+        "MENH_KHAC_CUC": "Mệnh khắc Cục",
+        "CUC_KHAC_MENH": "Cục khắc Mệnh",
+    }
+    cuc_notes = []
+    relation_label = rel_labels.get(str(menh_cuc.get("relation_type") or ""))
+    if relation_label:
+        cuc_notes.append(relation_label)
+    if basic.get("cung_menh") and basic.get("cung_menh") == basic.get("cung_than"):
+        cuc_notes.append("Thân Mệnh đồng cung")
+
+    matched_cach = []
+    matched_pha = []
+    rules = cach_cuc.get("rules") or []
+    for rule in rules:
+        outcome = rule.get("ket_qua")
+        if outcome not in ("khop_du", "khop_mot_phan"):
+            continue
+        name = rule.get("ten") or rule.get("rule_id")
+        if not name:
+            continue
+        entry = str(name) if outcome == "khop_du" else f"{name} (một phần)"
+        if rule.get("nhom") == "pha_cach":
+            matched_pha.append(entry)
+        else:
+            matched_cach.append(entry)
+
+    # Bản đầu chưa chạy quy tắc phá cách; chỉ kết luận "Không phá cách" khi đã
+    # có kết quả nhận diện. Khi P3 bật thêm quy tắc, tên phá cách sẽ tự thay thế.
+    if matched_pha:
+        matched_cach.extend(matched_pha)
+    elif rules:
+        matched_cach.append("Không phá cách")
+
+    chi_gio = basic.get("chi_gio")
+    gio_chi = ""
+    gio_range = ""
+    try:
+        gio_label = HOURS[int(chi_gio) - 1]
+        gio_chi, _, gio_range = gio_label.partition(" · ")
+    except (TypeError, ValueError, IndexError):
+        pass
+
+    nam_xem = (report.get("annual") or {}).get("year")
+    can_chi_nam_xem = str(basic.get("can_chi_nam_xem") or "")
+    tuoi_am = basic.get("tuoi_am")
+
+    return {
+        "ho_ten": ho_ten,
+        "calendar": "Dương lịch · Âm lịch" if basic.get("duong_lich", True) else "Âm lịch",
+        "show_lunar": bool(basic.get("duong_lich", True)),
+        "nam_sinh": basic.get("nam_sinh") or "—",
+        "thang_sinh": basic.get("thang_sinh") or "—",
+        "ngay_sinh": basic.get("ngay_sinh") or "—",
+        "thang_am": basic.get("thang_am"),
+        "ngay_am": basic.get("ngay_am"),
+        "gio_chi": gio_chi or "—",
+        "gio_range": gio_range,
+        "nam_xem": nam_xem or "—",
+        "can_chi_nam": basic.get("can_chi_nam") or "",
+        "can_chi_thang": basic.get("can_chi_thang") or "",
+        "can_chi_ngay": basic.get("can_chi_ngay") or "",
+        "can_chi_gio": basic.get("can_chi_gio") or "",
+        "can_chi_nam_xem": can_chi_nam_xem,
+        "tuoi_am": tuoi_am,
+        "am_duong": am_duong,
+        "am_duong_ly": "Âm Dương thuận lý" if thuan_ly else "Âm Dương nghịch lý",
+        "menh": str(basic.get("ban_menh") or "").title(),
+        "cuc": str(basic.get("ten_cuc") or "").title(),
+        "cuc_notes": cuc_notes,
+        "cach": matched_cach,
+    }
+
+
 def render_chart_section(report: dict[str, Any], luu_nien_by_cung_fn: Any = None) -> None:
     """Khối 3: Lá số 12 cung (chuyển khối năm chuyên môn xuống mục căn cứ)."""
     palaces = report.get("la_so", {}).get("thap_ni_cung", [])
@@ -241,14 +284,9 @@ def render_chart_section(report: dict[str, Any], luu_nien_by_cung_fn: Any = None
 
             basic = report.get("thong_tin_co_ban", {})
             ho_ten = report.get("ho_ten") or basic.get("ho_ten") or "Chủ Mệnh"
-            ban_menh = basic.get("ban_menh") or ""
-            ten_cuc = basic.get("ten_cuc") or ""
-            cung_menh = basic.get("cung_menh") or ""
-            cung_than = basic.get("cung_than") or ""
             thien_ban_info = {
                 "ho_ten": ho_ten,
-                "menh_cuc": f"{ban_menh} · {ten_cuc}" if ban_menh else "",
-                "cung_info": f"Mệnh tại {cung_menh} · Thân tại {cung_than}" if cung_menh else "",
+                "general": chart_viewer_general(report, ho_ten),
             }
 
             st.markdown(
@@ -286,10 +324,17 @@ def render_topics_section(reading: dict[str, Any], snapshot: dict[str, Any],
 
 
 def render_action_advice_section(reading: dict[str, Any]) -> None:
-    """Khối 6: Gợi ý hành động (đưa ra ngoài mục chuyên môn để người xem đọc được ngay)."""
+    """Khối 6: Gợi ý hành động dành cho người xem web (đời thường, dễ áp dụng)."""
     loi_khuyen = reading.get("loi_khuyen_hanh_dong")
     if loi_khuyen:
-        st.markdown(panel("Gợi ý hành động", content(loi_khuyen)), unsafe_allow_html=True)
+        st.markdown(
+            panel(
+                "Gợi ý hành động cho bạn",
+                '<p class="muted">Những việc cụ thể bạn có thể áp dụng trong công việc, tài chính, '
+                'quan hệ và chăm sóc bản thân.</p>' + content(loi_khuyen),
+            ),
+            unsafe_allow_html=True,
+        )
 
 
 def _render_why_content(reading: dict[str, Any], report: dict[str, Any]) -> None:

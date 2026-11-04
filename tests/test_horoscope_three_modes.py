@@ -199,17 +199,20 @@ def test_p6_tc09_contract_groups_fulfilled_for_each_mode():
 
 
 def test_p6_tc10_ui_apptest_allows_reading_mode_selection():
-    """P6.TC-10: UI Streamlit có widget chọn 3 mức đọc và hiển thị mức hoàn thành."""
+    """P6.TC-10 (điều chỉnh): UI chỉ còn 2 mức đọc, đã bỏ mức 'AI giải thích'."""
     from streamlit.testing.v1 import AppTest
     from pathlib import Path
 
     app = AppTest.from_file(Path(__file__).resolve().parents[1] / "frontend/horoscope_ui.py", default_timeout=20).run()
     assert not app.exception
 
-    # Selectbox chọn mức đọc tồn tại
+    # Selectbox chọn mức đọc tồn tại, chỉ còn lá số & dữ kiện / AI chuyên sâu
     assert "reading_mode" in [sb.key for sb in app.sidebar.selectbox]
     mode_sb = app.sidebar.selectbox(key="reading_mode")
-    assert len(mode_sb.options) == 3
+    assert len(mode_sb.options) == 2
+    assert not any("giải nghĩa thuật ngữ" in str(opt) for opt in mode_sb.options)
+    assert any("Lá số & dữ kiện" in str(opt) for opt in mode_sb.options)
+    assert any("AI chuyên sâu" in str(opt) for opt in mode_sb.options)
 
     # Submit với mức 'du_lieu'
     mode_sb.set_value("du_lieu")

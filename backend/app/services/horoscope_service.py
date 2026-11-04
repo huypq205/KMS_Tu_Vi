@@ -40,6 +40,7 @@ def reading_events(req: HoroscopeRequest):
             'status': 'chart_ready',
             'ho_ten': req.ho_ten or 'Người Xem',
             'thong_tin_co_ban': features['thong_tin_co_ban'],
+            'menh_cuc': features.get('menh_cuc'),
             'la_so': {'thap_ni_cung': raw['thap_ni_cung']},
             'annual': features['nam_xem'],
             'luu_nien': features.get('luu_nien'),
@@ -77,6 +78,7 @@ def reading_events(req: HoroscopeRequest):
         report = {
             'status': 'ok', 'ho_ten': req.ho_ten or 'Người Xem',
             'thong_tin_co_ban': features['thong_tin_co_ban'], 'reading': {},
+            'menh_cuc': features.get('menh_cuc'),
             'la_so': {'thap_ni_cung': raw['thap_ni_cung']}, 'citations': citations,
             'star_analysis': facts, 'annual': features['nam_xem'],
             'star_meaning_references': meaning_references,
@@ -147,7 +149,7 @@ def reading_events(req: HoroscopeRequest):
         timings['generation'] = round((time.perf_counter() - mark) * 1000, 1)
         timings['total'] = round((time.perf_counter() - started) * 1000, 1)
         generation = reading.pop('_generation')
-        if generation.get('actual_provider') == 'gemini':
+        if generation.get('actual_provider') in ('gemini', 'groq', 'deepseek'):
             horoscope_cache.save(
                 cache_key, horoscope_cache.hash_payload(birth), features['nam_xem']['year'],
                 HOROSCOPE_MODEL, reading, generation,
@@ -159,7 +161,7 @@ def reading_events(req: HoroscopeRequest):
                            'reading_mode': req.reading_mode,
                            'actual_reading_mode': actual_mode,
                            'fallback_reason': fallback_reason,
-                           'star_meanings_provided_to_ai':generation.get('actual_provider')=='gemini' and bool(meaning_references)}}
+                           'star_meanings_provided_to_ai': generation.get('actual_provider') in ('gemini', 'groq', 'deepseek') and bool(meaning_references)}}
         logger.info('horoscope_read request_id=%s provider=%s reason=%s timings_ms=%s',
                     request_id, generation['actual_provider'], generation['reason'], timings)
         yield {'event': 'result', 'report': report}

@@ -62,8 +62,9 @@ def add_inline(p, text, size=BODY_SIZE, base_bold=False, base_italic=False,
                        italic=base_italic, color=color)
         tok = m.group(0)
         if tok.startswith("**") and tok.endswith("**") and len(tok) > 4:
-            _add_plain(p, tok[2:-2], size=size, bold=True, italic=base_italic,
-                       color=color)
+            # Recurse so code/italic nested inside ** (e.g. **`xfail`**) is handled.
+            add_inline(p, tok[2:-2], size=size, base_bold=True,
+                       base_italic=base_italic, color=color)
         elif tok.startswith("`") and tok.endswith("`") and len(tok) > 2:
             _add_plain(p, tok[1:-1], size=size, code=True, color=color)
         elif tok.startswith("["):
@@ -121,7 +122,8 @@ def _left_border(p, color="8EAADB", sz=18):
 # ------------------------------------------------------------------ blocks
 def add_heading(doc, text, level):
     h = doc.add_heading("", level=level)
-    add_inline(h, text, size=BODY_SIZE)
+    sizes = {1: 14, 2: 13, 3: 12}
+    add_inline(h, text, size=sizes.get(level, BODY_SIZE), base_bold=True)
     return h
 
 
@@ -170,6 +172,36 @@ def add_list_item(doc, content, marker, indent):
 _SEP_RE = re.compile(r"^:?-{2,}:?$")
 
 
+def _add_table_layout(tbl, parsed, usable_cm=16.0):
+    """Chia độ rộng cột theo nội dung, lặp dòng tiêu đề, không tách hàng."""
+    ncol = len(parsed[0])
+    weights = []
+    for j in range(ncol):
+        longest = max(
+            len((row[j] if j < len(row) else "").strip()) for row in parsed
+        )
+        weights.append(max(6.0, min(longest, 90)) ** 0.5)
+    total = sum(weights)
+    widths = [usable_cm * w / total for w in weights]
+
+    tbl.autofit = False
+    tblPr = tbl._tbl.tblPr
+    layout = OxmlElement("w:tblLayout")
+    layout.set(qn("w:type"), "fixed")
+    tblPr.append(layout)
+
+    for j, width in enumerate(widths):
+        tbl.columns[j].width = Cm(width)
+        for row in tbl.rows:
+            row.cells[j].width = Cm(width)
+
+    for row in tbl.rows:
+        trPr = row._tr.get_or_add_trPr()
+        trPr.append(OxmlElement("w:cantSplit"))
+    hdr_trPr = tbl.rows[0]._tr.get_or_add_trPr()
+    hdr_trPr.append(OxmlElement("w:tblHeader"))
+
+
 def add_md_table(doc, rows):
     parsed = []
     for row in rows:
@@ -183,21 +215,29 @@ def add_md_table(doc, rows):
     tbl = doc.add_table(rows=1 + len(parsed) - 1, cols=ncol)
     tbl.style = "Table Grid"
     tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
-    tbl.autofit = True
+    font_size = 10.5 if ncol <= 4 else 9.5
     header, data = parsed[0], parsed[1:]
     for j in range(ncol):
         cell = tbl.cell(0, j)
         cell.text = ""
         _shade_cell(cell, "D9E1F2")
         add_inline(cell.paragraphs[0], header[j] if j < len(header) else "",
-                   size=10.5, base_bold=True)
+                   size=font_size, base_bold=True)
     for i, dr in enumerate(data):
         for j in range(ncol):
             cell = tbl.cell(i + 1, j)
             cell.text = ""
             add_inline(cell.paragraphs[0], dr[j] if j < len(dr) else "",
-                       size=10.5)
+                       size=font_size)
+    for row in tbl.rows:
+        for cell in row.cells:
+            for par in cell.paragraphs:
+                par.paragraph_format.space_before = Pt(1)
+                par.paragraph_format.space_after = Pt(1)
+                par.paragraph_format.line_spacing = 1.15
+    _add_table_layout(tbl, parsed)
     doc.add_paragraph().paragraph_format.space_after = Pt(2)
+
 
 
 def add_toc_field(doc):
@@ -260,7 +300,8 @@ def add_cover(doc):
         ("Sinh viên / Nhóm", "[điền tên các thành viên]"),
         ("Giảng viên phụ trách", "[điền tên GV]"),
         ("Học phần", "Quản trị Tri thức (KMS) — [điền mã học phần / tín chỉ]"),
-        ("Ngày báo cáo", "01/11/2026"),
+        ("Ngày báo cáo", "05/11/2026"),
+        ("Phiên bản", "2.0 — cập nhật theo trạng thái dự án hiện tại"),
     ]:
         p = doc.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.CENTER
