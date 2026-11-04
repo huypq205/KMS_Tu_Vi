@@ -8,6 +8,7 @@
 - Phụ tinh chia 2 cột cát tinh / hung tinh; có khu vực cho sao khác.
 - Thể hiện riêng Tuần, Triệt và dấu hiệu sao lưu niên.
 - Hỗ trợ cả 2 chế độ: Lưới 12 cung truyền thống 4x4 (desktop) và Danh sách từng cung rõ chữ (mobile).
+- Hỗ trợ Thiên Bàn trung tâm và thuộc tính tương tác động cho desktop.
 """
 from __future__ import annotations
 
@@ -151,8 +152,9 @@ def _render_cell_content(
 def luoi_html(
     cacs_cung: list[dict[str, Any]],
     luu_nien_by_cung: dict[int, list[dict[str, Any]]] | None = None,
+    thien_ban: dict[str, Any] | None = None,
 ) -> str:
-    """Bố cục lưới truyền thống 4x4; CSS giúp responsive trên desktop và tablet."""
+    """Bố cục lưới truyền thống 4x4; hỗ trợ Thiên Bàn trung tâm và thuộc tính tương tác động."""
     cells = {}
     ln_map = luu_nien_by_cung or {}
 
@@ -162,16 +164,51 @@ def luoi_html(
         if position is None:
             continue
         cung_ln = ln_map.get(cung_so)
+        chuan_ten = escape(str(cung.get("chuan_ten", "")))
+        ten_cung = escape(str(cung.get("ten_cung", "")))
+        hanh_cung = escape(str(cung.get("hanh_cung", "")))
         cells[position] = (
-            f'<div class="cell" data-cung="{cung_so}">'
+            f'<div class="cell" data-cung="{cung_so}" data-chi="{chuan_ten}" '
+            f'data-ten="{ten_cung}" data-hanh="{hanh_cung}">'
             f'{_render_cell_content(cung, luu_nien_saos=cung_ln)}'
             '</div>'
         )
 
+    # Dựng Thiên Bàn trung tâm (2x2: chiếm ô 1-2 trên hàng và cột)
+    tb = thien_ban or {}
+    ho_ten = escape(str(tb.get("ho_ten") or "Bản Đồ Tử Vi"))
+    birth_time = escape(str(tb.get("birth_time") or ""))
+    menh_cuc = escape(str(tb.get("menh_cuc") or ""))
+    cung_info = escape(str(tb.get("cung_info") or ""))
+
+    tb_html_parts = [
+        '<div class="cell center thien-ban" id="thien-ban-panel">',
+        '<div class="thien-ban-default">',
+        '<div class="tb-seal"><span class="seal-stamp">KMS<br>TỬ VI</span></div>',
+        f'<div class="tb-name">{ho_ten}</div>',
+    ]
+    if birth_time:
+        tb_html_parts.append(f'<div class="tb-meta">{birth_time}</div>')
+    if menh_cuc:
+        tb_html_parts.append(f'<div class="tb-stat"><strong>Mệnh Cục:</strong> {menh_cuc}</div>')
+    if cung_info:
+        tb_html_parts.append(f'<div class="tb-stat"><strong>Mệnh/Thân:</strong> {cung_info}</div>')
+    tb_html_parts.append(
+        '<div class="tb-hint">✦ Bấm vào ô cung để xem Tam hợp · Xung chiếu · Nhị hợp ✦</div>'
+        '</div>'
+        '</div>'
+    )
+    thien_ban_cell = "".join(tb_html_parts)
+
     result = []
     for row in range(4):
         for col in range(4):
-            result.append(cells.get((row, col), '<div class="cell center" aria-hidden="true"></div>'))
+            if (row, col) == (1, 1):
+                result.append(thien_ban_cell)
+            elif (row, col) in ((1, 2), (2, 1), (2, 2)):
+                result.append('<div class="cell center spacer" style="display:none;" aria-hidden="true"></div>')
+            else:
+                result.append(cells.get((row, col), '<div class="cell center" aria-hidden="true"></div>'))
 
     return '<div class="grid">' + "".join(result) + '</div>'
 
@@ -188,8 +225,12 @@ def danh_sach_html(
     for cung in sorted_cungs:
         cung_so = cung.get("cung_so")
         cung_ln = ln_map.get(cung_so)
+        chuan_ten = escape(str(cung.get("chuan_ten", "")))
+        ten_cung = escape(str(cung.get("ten_cung", "")))
+        hanh_cung = escape(str(cung.get("hanh_cung", "")))
         items.append(
-            f'<div class="danh-sach-card" data-cung="{cung_so}">'
+            f'<div class="danh-sach-card" data-cung="{cung_so}" data-chi="{chuan_ten}" '
+            f'data-ten="{ten_cung}" data-hanh="{hanh_cung}">'
             f'{_render_cell_content(cung, luu_nien_saos=cung_ln)}'
             '</div>'
         )
@@ -201,6 +242,7 @@ def render_laso(
     cacs_cung: list[dict[str, Any]],
     che_do: str = "luoi",
     luu_nien_by_cung: dict[int, list[dict[str, Any]]] | None = None,
+    thien_ban: dict[str, Any] | None = None,
 ) -> str:
     """Renderer hợp nhất cho lá số 12 cung:
 
@@ -209,4 +251,4 @@ def render_laso(
     """
     if che_do == "danh_sach":
         return danh_sach_html(cacs_cung, luu_nien_by_cung=luu_nien_by_cung)
-    return luoi_html(cacs_cung, luu_nien_by_cung=luu_nien_by_cung)
+    return luoi_html(cacs_cung, luu_nien_by_cung=luu_nien_by_cung, thien_ban=thien_ban)

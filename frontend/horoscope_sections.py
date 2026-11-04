@@ -3,6 +3,11 @@
 
 Thứ tự 5 khối (§10.2):
 Lá số -> Tổng quan -> Chủ đề -> Vì sao -> Xem căn cứ
+
+Cập nhật:
+- Phong cách Á Đông thư tịch cổ (giấy dó, mực than, triện son).
+- Tương tác động client-side trên bàn lá số 12 cung (highlight Tam hợp, Xung chiếu, Nhị hợp).
+- Bỏ phần hỏi đáp nhanh theo yêu cầu để giao diện tinh gọn, tập trung chiêm nghiệm.
 """
 from __future__ import annotations
 
@@ -14,7 +19,142 @@ from frontend.horoscope_view import (
     annual_panel, star_table, confidence_badge, evidence_table,
 )
 from frontend.laso_renderer import render_laso
-from frontend.horoscope_ask import ask_box
+
+
+def _inject_laso_interactive_script() -> None:
+    """Script tương tác động client-side: click cung -> highlight Tam hợp, Xung chiếu, Nhị hợp & hiển thị tại Thiên Bàn."""
+    import streamlit.components.v1 as components
+    js_code = """
+    <script>
+    (function() {
+        function setupInteractions() {
+            try {
+                const doc = window.parent.document;
+                const chart = doc.querySelector('.horoscope-chart');
+                if (!chart) return;
+                const grid = chart.querySelector('.grid');
+                if (!grid) return;
+                const cells = chart.querySelectorAll('.cell[data-cung]');
+                const thienBan = chart.querySelector('.cell.center.thien-ban');
+                if (!cells.length || !thienBan) return;
+
+                if (!thienBan.dataset.defaultHtml) {
+                    thienBan.dataset.defaultHtml = thienBan.innerHTML;
+                }
+
+                const palaceData = {};
+                cells.forEach(cell => {
+                    const cungSo = parseInt(cell.getAttribute('data-cung'));
+                    if (cungSo) {
+                        palaceData[cungSo] = {
+                            element: cell,
+                            cungSo: cungSo,
+                            chi: cell.getAttribute('data-chi') || '',
+                            ten: cell.getAttribute('data-ten') || '',
+                            hanh: cell.getAttribute('data-hanh') || '',
+                            chinhTinh: cell.querySelector('.chinh-row')?.innerText?.trim() || '',
+                            tuHoa: cell.querySelector('.tu-hoa-row')?.innerText?.trim() || '',
+                        };
+                    }
+                });
+
+                function getRelations(c) {
+                    const tamHop1 = ((c + 4 - 1) % 12) + 1;
+                    const tamHop2 = ((c + 8 - 1) % 12) + 1;
+                    const xungChieu = ((c + 6 - 1) % 12) + 1;
+                    const nhiHopMap = {1:2, 2:1, 3:12, 4:11, 5:10, 6:9, 7:8, 8:7, 9:6, 10:5, 11:4, 12:3};
+                    return { tamHop: [tamHop1, tamHop2], xungChieu, nhiHop: nhiHopMap[c] };
+                }
+
+                function clearHighlight() {
+                    cells.forEach(c => {
+                        c.classList.remove('is-selected', 'is-tam-hop', 'is-xung-chieu', 'is-nhi-hop');
+                    });
+                }
+
+                function selectPalace(cungSo) {
+                    clearHighlight();
+                    const cur = palaceData[cungSo];
+                    if (!cur) return;
+
+                    cur.element.classList.add('is-selected');
+                    const rels = getRelations(cungSo);
+
+                    rels.tamHop.forEach(ts => {
+                        if (palaceData[ts]) palaceData[ts].element.classList.add('is-tam-hop');
+                    });
+                    if (palaceData[rels.xungChieu]) {
+                        palaceData[rels.xungChieu].element.classList.add('is-xung-chieu');
+                    }
+                    if (palaceData[rels.nhiHop]) {
+                        palaceData[rels.nhiHop].element.classList.add('is-nhi-hop');
+                    }
+
+                    const th1 = palaceData[rels.tamHop[0]] || {};
+                    const th2 = palaceData[rels.tamHop[1]] || {};
+                    const xc = palaceData[rels.xungChieu] || {};
+                    const nh = palaceData[rels.nhiHop] || {};
+
+                    thienBan.innerHTML = `
+                        <div class="thien-ban-inspect-card">
+                            <div class="tb-inspect-header">
+                                <span class="tb-cung-badge">${cur.ten}</span>
+                                <span class="tb-chi-badge">${cur.chi} · ${cur.hanh}</span>
+                            </div>
+                            <div class="tb-inspect-stars">
+                                <div class="tb-chinh-text">${cur.chinhTinh || 'Vô chính diệu'}</div>
+                                ${cur.tuHoa ? `<div class="tb-tuhoa-tag">${cur.tuHoa}</div>` : ''}
+                            </div>
+                            <div class="tb-inspect-rels">
+                                <div class="tb-rel-item">
+                                    <span class="rel-tag yellow">Tam hợp</span>
+                                    <span class="rel-desc">${th1.ten || ''} (${th1.chi || ''}) &amp; ${th2.ten || ''} (${th2.chi || ''})</span>
+                                </div>
+                                <div class="tb-rel-item">
+                                    <span class="rel-tag red">Xung chiếu</span>
+                                    <span class="rel-desc">${xc.ten || ''} (${xc.chi || ''})</span>
+                                </div>
+                                <div class="tb-rel-item">
+                                    <span class="rel-tag green">Nhị hợp</span>
+                                    <span class="rel-desc">${nh.ten || ''} (${nh.chi || ''})</span>
+                                </div>
+                            </div>
+                            <button type="button" class="tb-reset-btn" id="tb-reset-btn">☯ Về Thiên Bàn chung</button>
+                        </div>
+                    `;
+
+                    const resetBtn = thienBan.querySelector('#tb-reset-btn');
+                    if (resetBtn) {
+                        resetBtn.onclick = function(e) {
+                            e.stopPropagation();
+                            clearHighlight();
+                            thienBan.innerHTML = thienBan.dataset.defaultHtml;
+                        };
+                    }
+                }
+
+                cells.forEach(cell => {
+                    cell.onclick = function(e) {
+                        const cungSo = parseInt(this.getAttribute('data-cung'));
+                        if (this.classList.contains('is-selected')) {
+                            clearHighlight();
+                            thienBan.innerHTML = thienBan.dataset.defaultHtml;
+                        } else {
+                            selectPalace(cungSo);
+                        }
+                    };
+                });
+            } catch(e) {}
+        }
+        setTimeout(setupInteractions, 150);
+        setTimeout(setupInteractions, 600);
+    })();
+    </script>
+    """
+    try:
+        components.html(js_code, height=0)
+    except Exception:
+        pass
 
 
 def render_header_identity(report: dict[str, Any], snapshot: dict[str, Any],
@@ -70,10 +210,26 @@ def render_chart_section(report: dict[str, Any], luu_nien_by_cung_fn: Any = None
             che_do = "danh_sach" if chart_view == "Đọc từng cung" else "luoi"
             ln_map = luu_nien_by_cung_fn(report.get("luu_nien"), palaces) if luu_nien_by_cung_fn else {}
             st.caption("M: Miếu · V: Vượng · Đ: Đắc · B: Bình · H: Hãm · L.: Sao lưu niên · [Tuần/Triệt]: Không Vong.")
+
+            # Thông tin hiển thị mặc định trên Thiên Bàn
+            basic = report.get("thong_tin_co_ban", {})
+            ho_ten = report.get("ho_ten") or basic.get("ho_ten") or "Chủ Mệnh"
+            ban_menh = basic.get("ban_menh") or ""
+            ten_cuc = basic.get("ten_cuc") or ""
+            cung_menh = basic.get("cung_menh") or ""
+            cung_than = basic.get("cung_than") or ""
+            thien_ban_info = {
+                "ho_ten": ho_ten,
+                "menh_cuc": f"{ban_menh} · {ten_cuc}" if ban_menh else "",
+                "cung_info": f"Mệnh tại {cung_menh} · Thân tại {cung_than}" if cung_menh else "",
+            }
+
             st.markdown(
-                '<div class="horoscope-chart">' + render_laso(palaces, che_do=che_do, luu_nien_by_cung=ln_map) + '</div>',
+                '<div class="horoscope-chart">' + render_laso(palaces, che_do=che_do, luu_nien_by_cung=ln_map, thien_ban=thien_ban_info) + '</div>',
                 unsafe_allow_html=True,
             )
+            # Kích hoạt tương tác động client-side
+            _inject_laso_interactive_script()
 
 
 def render_overview_section(reading: dict[str, Any]) -> None:
@@ -94,14 +250,13 @@ def render_overview_section(reading: dict[str, Any]) -> None:
 
 def render_topics_section(reading: dict[str, Any], snapshot: dict[str, Any],
                           api_base: str, priorities: list[str] | None = None) -> None:
-    """Khối 3: Theo chủ đề - Sự nghiệp, Tài chính, Tình cảm, Vận trình (kèm ask_box)."""
+    """Khối 3: Theo chủ đề - Sự nghiệp, Tài chính, Tình cảm, Vận trình (tinh gọn, không chat box)."""
     priorities = priorities or []
     order = list(dict.fromkeys(priorities + list(TOPICS)))
     tabs = st.tabs([TOPICS[key] for key in order])
     for key, tab in zip(order, tabs):
         with tab:
             st.markdown(topic_panel(key, reading.get(key, {})), unsafe_allow_html=True)
-            ask_box(key, snapshot, snapshot.get('provider', 'auto'), api_base)
 
 
 def render_why_section(reading: dict[str, Any], report: dict[str, Any]) -> None:

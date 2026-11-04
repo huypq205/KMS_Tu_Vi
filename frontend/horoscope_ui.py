@@ -16,7 +16,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 import importlib
-for _mod in ('frontend.horoscope_view', 'frontend.horoscope_sections', 'frontend.horoscope_transport', 'frontend.horoscope_ask', 'frontend.laso_renderer'):
+for _mod in ('frontend.horoscope_view', 'frontend.horoscope_sections', 'frontend.horoscope_transport', 'frontend.laso_renderer'):
     if _mod in sys.modules:
         try:
             importlib.reload(sys.modules[_mod])
@@ -28,7 +28,6 @@ from frontend.horoscope_view import (BOOKS, HOURS, TOPICS, content,
                                     annual_panel, star_table, confidence_badge, evidence_table)
 from frontend.laso_renderer import luoi_html, render_laso
 from frontend.horoscope_transport import reading_events
-from frontend.horoscope_ask import ask_box
 from frontend.horoscope_sections import (
     render_header_identity,
     render_chart_section,
@@ -86,7 +85,6 @@ def _is_in_container() -> bool:
 PROD_FALLBACK = "onrender.com" in API_BASE and not os.getenv("KMS_API_BASE") and not _is_in_container()
 
 
-
 def _luu_nien_by_cung_map(luu_nien: dict | None, thap_ni_cung: list[dict]) -> dict[int, list[dict]]:
     if not isinstance(luu_nien, dict):
         return {}
@@ -119,7 +117,7 @@ def _luu_nien_by_cung_map(luu_nien: dict | None, thap_ni_cung: list[dict]) -> di
     return mapping
 
 with st.sidebar:
-    st.markdown('<div class="brand"><span class="brand-mark" aria-hidden="true">田</span><strong>KMS Tử Vi</strong></div>', unsafe_allow_html=True)
+    st.markdown('<div class="brand"><span class="seal-stamp" style="font-size:9px;padding:2px 4px;">KMS</span><strong>Tử Vi Cổ Thư</strong></div>', unsafe_allow_html=True)
     st.markdown("### Thông tin của bạn")
     st.caption("Ngày và giờ sinh là điểm khởi đầu cho bản đồ 12 cung.")
     name = st.text_input("Họ tên (không bắt buộc)", max_chars=80, key="birth_name")
@@ -171,8 +169,8 @@ with st.sidebar:
     submitted = st.button("Tạo bản luận giải", type="primary", use_container_width=True)
     st.caption("Giờ sinh theo múi giờ Việt Nam (UTC+7). Với lịch âm, thuật toán hiện chưa hỗ trợ lựa chọn tháng nhuận.")
 
-st.markdown('<div class="viewer-bar"><span>KMS Tử Vi · Bản đồ bản thân</span><span>Tri thức từ NPL · Bửu Đình · Đẩu Số</span></div>', unsafe_allow_html=True)
-st.title("Bản luận giải Tử Vi")
+st.markdown('<div class="viewer-bar"><span>☯ KMS Tử Vi · Bản đồ bản thân</span><span>Tri thức từ NPL · Bửu Đình · Đẩu Số</span></div>', unsafe_allow_html=True)
+st.title("Bản đồ bản thân & Chiêm nghiệm")
 st.markdown("Một góc nhìn từ tri thức truyền thống, để hiểu mình và chiêm nghiệm.")
 if PROD_FALLBACK:
     st.warning(
