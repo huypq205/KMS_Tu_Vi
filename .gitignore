@@ -74,6 +74,10 @@ frontend/build/
 # OS & Editor files
 .DS_Store
 Thumbs.db
+*.log
+*.tmp
+*.bak
+*.swp
 .vscode/
 .idea/
 
@@ -82,3 +86,6 @@ Thumbs.db
 
 # Office doc previews
 .dsh-office-*/
+
+# Agent metadata and reports
+.agents/

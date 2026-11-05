@@ -500,7 +500,7 @@ Bộ test hiện có **42 file**, `pytest --collect-only` thu được **2.665 t
 
 | Lần chạy (05/11/2026) | Lệnh | Kết quả |
 |---|---|---|
-| Cấu hình local (`.env` đặt `KMS_LLM_PROVIDER=groq`, `KMS_HOROSCOPE_PROVIDER=groq`) | `python -m pytest tests/ -q` | **2.293 passed, 16 failed, 351 xfailed** (181,5 giây) |
+| Cấu hình local (`.env` đặt `KMS_LLM_PROVIDER=groq`, `KMS_HOROSCOPE_PROVIDER=groq`) | `python -m pytest tests/ -q` | **2.298 passed, 16 failed, 351 xfailed** (204,4 giây) |
 | Ép provider Gemini (mô phỏng môi trường CI không có `.env`) | `KMS_HOROSCOPE_PROVIDER=gemini KMS_LLM_PROVIDER=gemini python -m pytest tests/ -q` | **2.307 passed, 7 failed, 351 xfailed** (197,2 giây) |
 
 Diễn giải trung thực 16/7 ca đỏ:
@@ -692,7 +692,7 @@ Nguồn: `docs/GOVERNANCE_ACCEPTANCE.md` (nghiệm thu 03/11/2026), `docs/CHANGE
 | 3 | "max tokens 2.500", "gọi tối đa 2 lần" | **12.288 token** theo 3 mức đọc; 2 lần sinh × số model trong chuỗi; timeout kẹp 5–60 giây |
 | 4 | Chưa nhắc bảo mật API | **X-API-Key (401), rate limit 10 req/phút (429), CORS allowlist** |
 | 5 | 8 bảng dữ liệu | **17 bảng nghiệp vụ** (thêm `chunk_members`, `audit_samples`, journal T8, 2 bảng cache) |
-| 6 | "74 passed" (01/11) | **42 file, 2.665 case**; chạy 05/11: **2.293/16/351** và **2.307/7/351** (hai cấu hình) |
+| 6 | "74 passed" (01/11) | **42 file, 2.665 case**; chạy 05/11: **2.298/16/351** và **2.307/7/351** (hai cấu hình) |
 | 7 | UI 1 trang luận giải | **3 trang** (luận giải, hồ sơ sao, nhật ký nghiệm lý) + 7 khối + lá số 12 cung 2 layout |
 | 8 | Chỉ "trust tier + citation + abstention" | **6 lớp quản trị**: gate T7, tier, evidence T3, kiểm sinh văn bản, citation, journal T8 |
 | 9 | Nhắc `gemini_embeddings.py` (không tồn tại) | Sửa còn `embeddings.py`; nêu bất nhất manifest ↔ code (Phụ lục C) |

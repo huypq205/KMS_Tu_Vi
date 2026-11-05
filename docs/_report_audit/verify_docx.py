@@ -56,9 +56,9 @@ for i, t in enumerate(d.tables):
 
 print("\n== Keyword presence ==")
 checks = [
-    "05/11/2026", "17 endpoint", "2.293", "2.307", "351 xfailed",
+    "05/11/2026", "17 endpoint", "2.298", "2.307", "351 xfailed",
     "KMS_HOROSCOPE_PROVIDER", "reading_mode", "cach_cuc_detector",
-    "Mức tập trung tín hiệu", "0,5882", "30/4.350", "Phụ lục E", "2.665",
+    "Mức tập trung tín hiệu", "0,5882", "30/4.350", "PHỤ LỤC E", "2.665",
 ]
 for c in checks:
     print(f"  {'OK ' if c in all_text else 'MISS'} {c}")

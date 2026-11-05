@@ -1,0 +1,304 @@
+// ==============================================================================
+// KMS TỬ VI — DATABASE SCHEMA SPECIFICATION (DBML)
+// Chuẩn DBML cho dbdiagram.io / dbdocs.io & xuất SQL PostgreSQL
+// ==============================================================================
+
+Project kms_tu_vi {
+  database_type: 'PostgreSQL'
+  Note: '''
+    # Hệ thống Quản trị Tri thức Tử Vi (KMS Tử Vi)
+    Cơ sở dữ liệu quản trị tri thức Tử Vi chuẩn hóa từ ba tác phẩm kinh điển:
+    - NPL: Tử Vi Tổng Hợp (Nguyễn Phát Lộc)
+    - BD: Tử Vi Ứng Dụng (Bửu Đình)
+    - DAU: Tử Vi Đẩu Số Toàn Thư (Trần Đoàn / La Hồng Tiên / Vũ Tài Lục)
+    Bao gồm 17 bảng nghiệp vụ chia thành 4 nhóm miền chức năng chính.
+  '''
+}
+
+// ==============================================================================
+// 1. MIỀN TRI THỨC CHUẨN HÓA & NGUỒN SÁCH (CORE KNOWLEDGE & CORPUS)
+// ==============================================================================
+
+Table books {
+  book_code varchar(16) [pk, note: 'Mã định danh duy nhất của sách: NPL (Nguyễn Phát Lộc), BD (Bửu Đình), DAU (Đẩu Số Toàn Thư)']
+  source_id varchar(64) [not null, note: 'Mã nguồn tài liệu tương ứng trong Master Excel (SRC001, SRC_BD_001, SRC_DAU_001)']
+  title varchar(512) [not null, note: 'Tên đầy đủ của tác phẩm sách Tử Vi']
+  author varchar(256) [note: 'Tên tác giả, người biên dịch hoặc dịch giả chú giải']
+  total_pages integer [note: 'Tổng số trang sách theo tài liệu lưu trữ']
+  source_status varchar(64) [note: 'Trạng thái xử lý nguồn: ACTIVE, OCR_SOURCE_REVIEW_PENDING, OCR_TRANSCRIPTION_DRAFT']
+
+  Note: 'Bảng lưu trữ thông tin danh mục ba bộ sách Tử Vi kinh điển làm nguồn tri thức chuẩn.'
+}
+
+Table book_parts {
+  id integer [pk, increment, note: 'Khóa chính tự tăng của phần sách']
+  source_id varchar(64) [not null, note: 'Mã nguồn tài liệu (SRC_BD_001, SRC001, SRC_DAU_001)']
+  part_number varchar(32) [not null, note: 'Số thứ tự phần (ví dụ 1 đến 7 cho BD, FULL cho NPL/DAU)']
+  pdf_file varchar(512) [note: 'Tên tập tin PDF số hóa tương ứng']
+  total_pdf_pages integer [note: 'Tổng số trang trong tập tin PDF của phần này']
+  book_code varchar(16) [ref: > books.book_code, note: 'Mã sách liên kết đến bảng books']
+
+  indexes {
+    (source_id, part_number) [unique, name: 'uq_part']
+  }
+
+  Note: 'Bảng phân chia các phần hoặc tập PDF của từng cuốn sách (đặc biệt bộ Bửu Đình gồm 7 phần riêng biệt).'
+}
+
+Table knowledge_items {
+  knowledge_id varchar(64) [pk, note: 'Mã định danh tri thức canonical duy nhất (ví dụ KN-000001, BD-KN-000001, DAU-KN-000001)']
+  book_code varchar(16) [not null, ref: > books.book_code, note: 'Mã sách nguồn (NPL, BD, DAU)']
+  knowledge_type varchar(64) [note: 'Phân loại tri thức: CONCEPT, RULE, INTERPRETATION, SOURCE_CLAIM, CASE, v.v.']
+  taxonomy_code varchar(64) [note: 'Mã phân loại chủ đề chuyên môn (TV-01.01 đến TV-11.06)']
+  subject text [note: 'Chủ thể trong mô hình tri thức (ví dụ sao, cung, cách cục)']
+  predicate text [note: 'Vị ngữ / Mối quan hệ logic (ví dụ IS_A, HAS_ATTRIBUTE, REPRESENTS)']
+  object text [note: 'Tân ngữ / Đối tượng kết quả luận giải']
+  condition_context text [note: 'Bối cảnh hoặc điều kiện áp dụng quy tắc luận giải']
+  text text [not null, note: 'Nội dung văn bản tri thức chuẩn hóa đầy đủ dùng cho retrieval và hiển thị']
+  chapter varchar(512) [note: 'Tên chương hoặc mục sách trích xuất']
+  source_certainty varchar(32) [note: 'Mức độ chắc chắn của nguồn: HIGH, MEDIUM, LOW, UNKNOWN, UNVERIFIED']
+  review_flag varchar(64) [note: 'Cờ kiểm duyệt: STANDARD, OCR_REVIEW_REQUIRED, SEMANTIC_REVIEW_PENDING, v.v.']
+  release_status varchar(64) [note: 'Trạng thái phát hành: LOCKED_V1_0 (NPL) hoặc DRAFT_NOT_RELEASED (BD, DAU)']
+  validation_status varchar(64) [note: 'Trạng thái kiểm định cấu trúc và nội dung nguồn']
+  conflict_status varchar(64) [note: 'Trạng thái xung đột quan điểm: NONE, SOURCE_POSITION_RETAINED, NOT_EVALUATED']
+  dedupe_status varchar(64) [note: 'Trạng thái hợp nhất trùng lặp: UNIQUE, EXACT_INTRA_BOOK_CONSOLIDATED, NOT_EVALUATED']
+  trust_tier integer [not null, note: 'Cấp độ tin cậy suy luận tự động: 1 (NPL), 2 (DAU sạch), 3 (BD OCR), 9 (Cần kiểm tra)']
+  duplicate_text_group varchar(64) [note: 'Mã nhóm văn bản trùng lặp nguyên văn nếu có']
+  content_hash varchar(64) [not null, note: 'Mã băm SHA-256 nội dung để phát hiện thay đổi và dedup']
+  version integer [not null, default: 1, note: 'Phiên bản bản ghi tri thức']
+  updated_at timestamp [not null, default: `now()`, note: 'Thời điểm cập nhật bản ghi gần nhất']
+
+  Note: 'Kho tri thức trung tâm chứa 10.456 đơn vị tri thức chuẩn hóa theo mô hình Subject-Predicate-Object và bối cảnh điều kiện.'
+}
+
+Table knowledge_pages {
+  id integer [pk, increment, note: 'Khóa chính tự tăng']
+  knowledge_id varchar(64) [not null, ref: > knowledge_items.knowledge_id, note: 'Mã tri thức liên kết']
+  part_number varchar(32) [note: 'Số thứ tự phần PDF (cho sách chia phần như Bửu Đình)']
+  pdf_page integer [note: 'Số trang trong file PDF']
+
+  Note: 'Bảng ánh xạ nhiều trang cho một đơn vị tri thức, lưu số trang PDF và phần tương ứng.'
+}
+
+Table id_redirects {
+  original_id varchar(64) [pk, note: 'Mã định danh cũ trước khi gộp']
+  active_id varchar(64) [not null, note: 'Mã định danh tri thức hiện hành đang được sử dụng']
+  reason varchar(256) [note: 'Lý do gộp bản ghi (ví dụ trùng nội dung, lặp câu)']
+
+  Note: 'Bảng lưu vết chuyển hướng định danh khi các mục tri thức trùng lặp được hợp nhất trong quá trình deduplication.'
+}
+
+Table term_aliases {
+  id integer [pk, increment, note: 'Khóa chính tự tăng']
+  term varchar(256) [not null, note: 'Thuật ngữ Tử Vi chuẩn hóa (Canonical Term)']
+  alias varchar(256) [not null, note: 'Tên gọi khác hoặc từ đồng nghĩa trong dân gian / dị bản']
+  entity_type varchar(64) [note: 'Loại thực thể: PALACE (cung), STAR (sao), ELEMENT (ngũ hành), YIN_YANG (âm dương)']
+  taxonomy_code varchar(64) [note: 'Mã phân loại taxonomy liên quan']
+  alias_source varchar(16) [not null, default: 'excel', note: 'Nguồn sinh alias: excel, auto, manual']
+
+  Note: 'Từ điển kiểm soát từ vựng, ánh xạ thuật ngữ chuẩn và các tên gọi thay thế (alias) của sao, cung, cách cục.'
+}
+
+// ==============================================================================
+// 2. MIỀN BẰNG CHỨNG NGUỒN & KIỂM THẨM DỮ LIỆU (EVIDENCE & AUDIT)
+// ==============================================================================
+
+Table evidences {
+  evidence_id varchar(64) [pk, note: 'Mã định danh bằng chứng (ví dụ NPL-EV-000011, BD-EV-000001)']
+  knowledge_id varchar(64) [not null, ref: > knowledge_items.knowledge_id, note: 'Mã bản ghi tri thức được đối chiếu']
+  book_code varchar(16) [ref: > books.book_code, note: 'Mã sách nguồn (NPL, BD, DAU)']
+  part_number varchar(32) [note: 'Phần sách chứa bằng chứng (đặc thù BD)']
+  pdf_page integer [note: 'Trang PDF chứa bằng chứng']
+  printed_page varchar(64) [note: 'Số trang in thực tế của sách nếu có']
+  original_text text [note: 'Đoạn văn bản nguyên văn trích xuất từ trang PDF/OCR']
+  ocr_legibility varchar(32) [note: 'Độ rõ nét của văn bản OCR: HIGH, MEDIUM, LOW']
+  evidence_method varchar(64) [note: 'Phương pháp trích xuất bằng chứng: TEXT_LAYER, EXTRACTION_ORIGINAL_TEXT']
+  origin varchar(64) [note: 'Nguồn gốc tạo evidence: ORIGINAL_EVIDENCE_SHEET hoặc SYNTHESIZED_FROM_EXTRACTION']
+  source_review_status varchar(64) [note: 'Trạng thái kiểm duyệt nguồn của bằng chứng']
+  verification_status varchar(32) [not null, default: 'unverified', note: 'Mức độ xác minh thủ công: unverified, sample_verified, verified, rejected']
+  reviewer varchar(128) [note: 'Tên hoặc định danh chuyên viên thẩm định']
+  reviewed_at timestamp [note: 'Thời điểm thực hiện thẩm định']
+  review_note text [note: 'Ghi chú chi tiết trong quá trình kiểm tra']
+
+  Note: 'Bảng lưu trữ bằng chứng nguyên văn trích từ trang sách PDF gốc, giữ nguyên trạng văn bản OCR để đối chiếu thẩm định.'
+}
+
+Table audit_samples {
+  sample_id varchar(96) [pk, note: 'Mã mẫu kiểm định']
+  knowledge_id varchar(64) [not null, ref: > knowledge_items.knowledge_id, note: 'Mã tri thức được lấy mẫu']
+  book_code varchar(16) [not null, ref: > books.book_code, note: 'Mã sách nguồn của mẫu']
+  auditor varchar(128) [note: 'Tên kiểm định viên thực hiện đối soát']
+  text_matches_source varchar(16) [note: 'Độ khớp văn bản với sách gốc: Y (khớp), N (sai lệch), partial (khớp một phần)']
+  page_correct varchar(16) [note: 'Số trang có chính xác: Y/N']
+  ocr_error varchar(16) [note: 'Có phát hiện lỗi nhận dạng chữ OCR: Y/N']
+  note text [note: 'Ghi chú kết quả chi tiết của người kiểm tra']
+  audited_at timestamp [not null, default: `now()`, note: 'Thời điểm kiểm định mẫu']
+
+  Note: 'Bảng lưu trữ tập mẫu kiểm tra chất lượng tri thức phân tầng (stratified sampling) để thẩm định thủ công chéo.'
+}
+
+Table import_runs {
+  run_id varchar(64) [pk, note: 'Mã phiên import duy nhất']
+  file_name varchar(512) [not null, note: 'Tên tệp Excel nguồn được nhập']
+  file_sha256 varchar(64) [not null, note: 'Mã băm SHA-256 của tệp nguồn']
+  started_at timestamp [not null, default: `now()`, note: 'Thời điểm bắt đầu phiên nhập']
+  finished_at timestamp [note: 'Thời điểm kết thúc phiên nhập']
+  rows_read integer [not null, default: 0, note: 'Số dòng đã đọc từ tệp']
+  rows_imported integer [not null, default: 0, note: 'Số dòng nhập thành công vào database']
+  rows_rejected integer [not null, default: 0, note: 'Số dòng bị từ chối do lỗi cấu trúc']
+  report_path varchar(512) [note: 'Đường dẫn tệp báo cáo tổng kết import json']
+
+  Note: 'Nhật ký theo dõi các lần import file Excel Master vào cơ sở dữ liệu, ghi nhận SHA-256 để đảm bảo tính bất biến.'
+}
+
+// ==============================================================================
+// 3. MIỀN TRUY VẾT & TÌM KIẾM TRI THỨC (RAG & RETRIEVAL)
+// ==============================================================================
+
+Table chunks {
+  chunk_id varchar(96) [pk, note: 'Mã khối tri thức duy nhất (ví dụ ck-KN-000001)']
+  book_code varchar(16) [not null, ref: > books.book_code, note: 'Mã sách của khối tri thức']
+  chapter varchar(512) [note: 'Tên chương hoặc tiêu đề đoạn văn bản']
+  chunk_text text [not null, note: 'Nội dung khối văn bản hoàn chỉnh phục vụ ngữ cảnh trả lời']
+  embed_text text [not null, note: 'Nội dung chuẩn hóa tối ưu để tạo embedding vector']
+  trust_tier integer [not null, note: 'Cấp độ tin cậy của chunk (1, 2, 3 được index; 9 bị loại)']
+  part_number varchar(32) [note: 'Phần sách tương ứng']
+  pdf_page_start integer [note: 'Trang PDF bắt đầu của chunk']
+  pdf_page_end integer [note: 'Trang PDF kết thúc của chunk']
+  chunking_version varchar(32) [not null, note: 'Phiên bản thuật toán chunking (ví dụ v0.1)']
+  embedding_model varchar(128) [not null, note: 'Tên mô hình embedding sử dụng (ví dụ gemini-embedding-001, bge-m3)']
+  indexed_at timestamp [not null, default: `now()`, note: 'Thời điểm tạo chỉ mục chunk']
+  content_hash varchar(64) [not null, note: 'Mã băm SHA-256 nội dung chunk để tránh re-index trùng']
+
+  Note: 'Bảng lưu trữ các khối văn bản tri thức (chunks) đã được gom nhóm để nhúng vector và tìm kiếm FTS5.'
+}
+
+Table chunk_members {
+  id integer [pk, increment, note: 'Khóa chính tự tăng']
+  chunk_id varchar(96) [not null, ref: > chunks.chunk_id, note: 'Mã khối tri thức']
+  knowledge_id varchar(64) [not null, ref: > knowledge_items.knowledge_id, note: 'Mã tri thức thành viên tham gia cấu thành chunk']
+  position integer [not null, note: 'Vị trí thứ tự của bản ghi tri thức bên trong chunk']
+
+  indexes {
+    (chunk_id, knowledge_id) [unique, name: 'uq_chunk_member']
+  }
+
+  Note: 'Bảng nối quan hệ N-N giữa Chunk và Knowledge Item, giúp truy vết ngược từ fact trong câu trả lời về đúng ID tri thức.'
+}
+
+Table evaluation_cases {
+  case_id varchar(64) [pk, note: 'Mã trường hợp kiểm thử (ví dụ EVAL-001)']
+  question text [not null, note: 'Câu hỏi kiểm thử đặt ra cho hệ thống']
+  type varchar(64) [not null, note: 'Loại câu hỏi kiểm thử: single_star, palace_meaning, cross_book_leakage, out_of_scope']
+  expected_knowledge_ids text [not null, note: 'Danh sách JSON các knowledge_id bắt buộc phải được truy xuất']
+  expected_status varchar(32) [not null, default: 'answered', note: 'Trạng thái kỳ vọng: answered (trả lời được) hoặc out_of_scope (từ chối)']
+  author varchar(128) [note: 'Người thiết kế ca kiểm thử']
+
+  Note: 'Bộ câu hỏi kiểm thử chuẩn (Golden Dataset) để đo lường độ chính xác của hệ thống RAG retrieval và chất lượng sinh câu trả lời.'
+}
+
+Table query_cache {
+  cache_key varchar(64) [pk, note: 'Mã băm SHA-256 khóa đệm tổng hợp']
+  question text [not null, note: 'Nội dung câu hỏi nguyên bản của người dùng']
+  normalized_question text [not null, note: 'Nội dung câu hỏi đã qua xử lý chuẩn hóa chữ hoa/thường, dấu']
+  book_codes varchar(64) [note: 'Bộ lọc danh sách sách yêu cầu truy vấn (ví dụ NPL,BD)']
+  model_name varchar(64) [not null, note: 'Tên mô hình LLM sinh phản hồi']
+  prompt_hash varchar(16) [not null, note: 'Mã băm của template system prompt']
+  index_version varchar(64) [not null, note: 'Phiên bản chỉ mục tri thức tại thời điểm cache']
+  status varchar(32) [not null, note: 'Trạng thái kết quả: success, no_context, error']
+  response_json text [not null, note: 'Chuỗi JSON chứa kết quả phản hồi hoàn chỉnh kèm trích dẫn']
+  hit_count integer [not null, default: 1, note: 'Số lần truy vấn tái sử dụng kết quả trong cache']
+  created_at timestamp [not null, default: `now()`, note: 'Thời điểm tạo bản ghi cache']
+  last_hit_at timestamp [not null, default: `now()`, note: 'Thời điểm có lượt truy vấn trúng cache gần nhất']
+
+  Note: 'Bộ nhớ đệm lưu kết quả truy vấn hỏi đáp tất định theo hash câu hỏi chuẩn hóa, cấu hình mô hình và phiên bản index.'
+}
+
+// ==============================================================================
+// 4. MIỀN LUẬN GIẢI & NGHIỆM LÝ LÁ SỐ (ASTROLOGY & VALIDATION JOURNAL)
+// ==============================================================================
+
+Table horoscope_cache {
+  cache_key varchar(64) [pk, note: 'Mã băm duy nhất xác định bài luận lá số']
+  payload_hash varchar(64) [not null, note: 'Mã băm tổng hợp dữ liệu lá số đầu vào và bảng Tứ Hóa']
+  target_year integer [not null, note: 'Năm xem hạn luận giải']
+  model_name varchar(64) [not null, note: 'Mô hình AI đã thực hiện luận giải']
+  response_json text [not null, note: 'Nội dung bài luận JSON có cấu trúc 3 tầng']
+  hit_count integer [not null, default: 1, note: 'Số lần tái sử dụng bài luận']
+  created_at timestamp [not null, default: `now()`, note: 'Thời điểm tạo cache']
+  last_hit_at timestamp [not null, default: `now()`, note: 'Thời điểm bài luận được truy xuất gần nhất']
+
+  Note: 'Lưu đệm các bài luận giải lá số hoàn chỉnh theo năm xem, bảng Tứ Hóa và hash lá số đầu vào nhằm tiết kiệm chi phí gọi LLM.'
+}
+
+Table validation_cases {
+  case_id varchar(11) [pk, note: 'Mã hồ sơ ca nghiệm lý định dạng TV-YYYY-NNN']
+  chart_snapshot text [not null, note: 'Bản chụp cấu trúc 12 cung, danh sách sao và các facts có trích dẫn nguồn']
+  input_confidence varchar(1) [not null, note: 'Độ tin cậy của giờ sinh đầu vào (A: rất chuẩn xác, B: khoảng 1 giờ, C: chỉ biết buổi, D: không chắc chắn)']
+  created_at timestamp [not null, default: `now()`, note: 'Thời điểm tạo hồ sơ ca nghiệm lý']
+
+  Note: 'Hồ sơ ca nghiệm lý lá số ẩn danh (Journal T8), không lưu thông tin ngày giờ sinh hay danh tính cá nhân nhằm bảo vệ quyền riêng tư.'
+}
+
+Table predictions {
+  prediction_id varchar(32) [pk, note: 'Mã dự đoán duy nhất']
+  case_id varchar(11) [not null, ref: > validation_cases.case_id, note: 'Mã ca nghiệm lý tương ứng']
+  noi_dung text [not null, note: 'Nội dung luận đoán cụ thể, không sử dụng tỷ lệ phần trăm tùy tiện']
+  khoa_thoi_gian varchar(16) [not null, note: 'Khoảng thời gian ứng nghiệm (năm cụ thể hoặc khoảng năm đại vận, ví dụ 2026 hoặc 2026-2035)']
+  muc_tin_cay varchar(16) [not null, note: 'Mức độ tin cậy của dự đoán: rat_manh, manh, trung_binh, yeu']
+  loai_ket_luan varchar(16) [not null, default: 'thoi_diem', note: 'Loại kết luận: cau_truc (tính cách/cơ địa) hoặc thoi_diem (hạn cụ thể)']
+  chung_cu_ids text [not null, note: 'Danh sách mã chứng cứ facts hỗ trợ dự đoán (dạng JSON list)']
+  phan_chung text [not null, note: 'Dữ kiện hoặc yếu tố triệt tiêu/hóa giải có thể làm sai lệch dự đoán']
+  supersedes varchar(32) [ref: > predictions.prediction_id, note: 'Mã dự đoán cũ mà bản ghi này thay thế (trong trường hợp đính chính)']
+  revision_reason text [note: 'Lý do thực hiện chỉnh sửa hoặc thay thế dự đoán']
+  created_at timestamp [not null, default: `now()`, note: 'Thời điểm tạo dự đoán ban đầu']
+  locked_at timestamp [note: 'Thời điểm khóa dự đoán trước khi đối chiếu biến cố thực tế']
+
+  Note: 'Lưu trữ các kết luận dự đoán có thể kiểm chứng được, ghi nhận trước khi sự kiện thực tế diễn ra, hỗ trợ quản lý lịch sử chỉnh sửa.'
+}
+
+Table events {
+  event_id varchar(32) [pk, note: 'Mã định danh sự kiện thực tế']
+  case_id varchar(11) [not null, ref: > validation_cases.case_id, note: 'Mã ca nghiệm lý']
+  prediction_id varchar(32) [not null, unique, ref: > predictions.prediction_id, note: 'Mã dự đoán được đem ra đối chiếu kiểm chứng']
+  year integer [not null, note: 'Năm dương lịch xảy ra sự kiện thực tế']
+  category varchar(16) [not null, note: 'Lĩnh vực sự kiện: career, finance, marriage, children, family, health, relocation, other']
+  mo_ta text [not null, note: 'Mô tả chi tiết biến cố đã diễn ra ngoài đời thực']
+  prediction_result varchar(24) [not null, note: 'Kết quả đánh giá đối soát: clear_match (khớp hoàn toàn), partial_match (khớp một phần), no_match (không khớp), not_verifiable (không thể kiểm chứng)']
+  revealed_at timestamp [not null, default: `now()`, note: 'Thời điểm cung cấp dữ liệu thực tế']
+
+  Note: 'Ghi nhận sự kiện thực tế trong cuộc đời đương số đã xảy ra để đối chiếu, chấm điểm độ chính xác của dự đoán trước đó.'
+}
+
+// ==============================================================================
+// ĐỊNH NGHĨA NHÓM BẢNG (TABLE GROUPS) TRÊN DBDIAGRAM
+// ==============================================================================
+
+TableGroup core_knowledge {
+  books
+  book_parts
+  knowledge_items
+  knowledge_pages
+  id_redirects
+  term_aliases
+}
+
+TableGroup evidence_audit {
+  evidences
+  audit_samples
+  import_runs
+}
+
+TableGroup rag_retrieval {
+  chunks
+  chunk_members
+  evaluation_cases
+  query_cache
+}
+
+TableGroup astrology_validation {
+  horoscope_cache
+  validation_cases
+  predictions
+  events
+}

@@ -1,0 +1,184 @@
+direction: right
+
+title: "KIẾN TRÚC TỔNG THỂ HỆ THỐNG KMS TỬ VI (KNOWLEDGE MANAGEMENT SYSTEM)" {
+  near: top-center
+  shape: text
+  style: {
+    font-size: 24
+    bold: true
+  }
+}
+
+# --- TÁC NHÂN NGƯỜI DÙNG ---
+User: Người dùng {
+  shape: person
+  style.fill: "#E8F0FE"
+}
+
+# --- KHỐI CLIENT / GIAO DIỆN STREAMLIT ---
+Client: Ứng dụng Giao diện Client (Streamlit UI) {
+  style.fill: "#F8F9FA"
+
+  AppUnified: Điều hướng Hợp nhất (app.py) {
+    style.fill: "#E3F2FD"
+  }
+  HoroscopeUI: Luận giải Lá số (horoscope_ui.py) {
+    style.fill: "#E8F5E9"
+  }
+  StarDossierUI: Hồ sơ Sao (star_dossier_ui.py) {
+    style.fill: "#FFF8E1"
+  }
+  ValidationUI: Nhật ký Nghiệm lý (case_validation_ui.py) {
+    style.fill: "#EDE7F6"
+  }
+  AcademicUI: Tra cứu & Hỏi đáp RAG (frontend/app.py) {
+    style.fill: "#FCE4EC"
+  }
+}
+
+# --- KHỐI BACKEND SYSTEM / FASTAPI ---
+Backend: Hệ thống Backend (FastAPI & Domain Services) {
+  style.fill: "#F5F5F5"
+
+  Gateway: Cổng API & Bảo mật {
+    style.fill: "#E0F2F1"
+    AuthSecurity: Middleware Bảo mật & Rate Limit
+    RouterKMS: Router Tra cứu & Hỏi đáp RAG
+    RouterHoroscope: Router Lá số & Luận giải
+    RouterGov: Router Quản trị & Vận năm
+    RouterValidation: Router Nhật ký Nghiệm lý
+  }
+
+  Guardrails: Lớp Phòng vệ & Kiểm soát {
+    style.fill: "#FFEBEE"
+    OutOfScope: Phễu lọc Ngoài phạm vi (Scope Filter)
+    KnowledgeGate: Cổng Tri thức Đầu vào (T7 Gate)
+    ConfidencePolicy: Kiểm soát Giờ sinh A-D (T1)
+    CitationValidator: Kiểm tra Trích dẫn (T11 Citation)
+    OutputGuard: Kiểm soát 6 Lớp Đầu ra (P1-P5)
+  }
+
+  RAGCore: Động cơ Tìm kiếm & RAG Hybrid {
+    style.fill: "#FFF3E0"
+    QueryCache: Bộ nhớ đệm Truy vấn Tất định
+    RetrieverHybrid: Bộ Truy xuất Đa sách (RRF k=60)
+    FTSAdapter: Bộ tìm kiếm Từ khóa (FTS5 BM25)
+    DenseAdapter: Bộ tìm kiếm Ngữ nghĩa (Dense Vector)
+    ContextAssembly: Lắp ráp & Cân bằng Ngữ cảnh 3 Sách
+  }
+
+  HoroscopeCore: Nghiệp vụ Tử Vi & Luận giải {
+    style.fill: "#F3E5F5"
+    ChartEngine: Động cơ An sao Tất định (vendor/lasotuvi)
+    FeatureExtractor: Bóc tách Đặc trưng & Chứng cứ
+    CachCucDetector: Nhận diện Cách cục bằng Mã (P3)
+    AnnualEngine: Bảng Vận năm 4 Tầng (T9)
+    DossierEngine: Quản trị Hồ sơ 108 Sao (T6)
+    Interpreter: Bộ Luận giải Đa Chế độ (3 Modes)
+    HoroscopeCache: Bộ nhớ đệm Lá số & Luận giải
+  }
+
+  ValidationCore: Động cơ Nghiệm lý Bất biến {
+    style.fill: "#E8EAF6"
+    JournalService: Quản lý Ca & Dự đoán
+    ImmutabilityLock: Khóa Bất biến & Phiên bản (Triggers)
+    EventReview: Đối chiếu Sự kiện Thực tế
+  }
+}
+
+# --- KHỐI DATA & STORAGE ---
+Data: Tầng Dữ liệu & Lưu trữ Tri thức {
+  style.fill: "#FAFAFA"
+
+  SQLiteDB: Cơ sở Dữ liệu Quan hệ (SQLite Engine) {
+    shape: cylinder
+    style.fill: "#E8F5E9"
+    TablesMeta: Bảng Tri thức & Nguồn (knowledge_items, evidences, books)
+    TablesFTS: Bảng Chỉ mục Từ khóa (chunks_fts FTS5)
+    TablesJournal: Bảng Nghiệm lý Bất biến (validation_cases, predictions, events)
+    TablesCache: Bảng Bộ nhớ đệm (query_cache, horoscope_cache)
+  }
+
+  VectorDB: Cơ sở Dữ liệu Vector (Qdrant Vector Store) {
+    shape: cylinder
+    style.fill: "#E1F5FE"
+    CollectionChunks: Collection kms_chunks (1024D Cosine)
+  }
+
+  MasterFiles: Dữ liệu Tri thức Nguồn (Canonical Master) {
+    shape: document
+    style.fill: "#FFFDE7"
+    ExcelMaster: Canonical Excel v1.0 (3 Sách NPL, BD, DAU)
+    ConfigYAML: Quy tắc Ánh xạ & Phân tầng (column_mapping.yaml)
+    StarSeeds: Dữ liệu Mầm Sao (configs/star_seeds)
+    SkillMeanings: Ý nghĩa Sao Tham khảo (star_meanings.md)
+  }
+}
+
+# --- KHỐI EXTERNAL SERVICES ---
+External: Dịch vụ Ngoài & Mô hình Ngôn ngữ {
+  style.stroke-dash: 3
+  style.fill: "#FFF8E1"
+
+  LLMPool: Các Nhà cung cấp LLM (LLM Provider Chain) {
+    GeminiAPI: Google Gemini API (Flash 3.8 / 3.5-lite)
+    GroqAPI: Groq API (openai/gpt-oss-20b)
+    DeepSeekAPI: DeepSeek API (deepseek-chat)
+    MockProvider: Mock Provider Nội bộ (Offline / Test)
+  }
+
+  EmbeddingAPI: Dịch vụ Vector Embedding {
+    LocalBGE: Local BAAI/bge-m3 (1024D CPU)
+    GeminiEmbedding: Google Gemini Embedding API
+  }
+}
+
+# --- KẾT NỐI LUỒNG NGHIỆP VỤ ---
+User -> Client.AppUnified: "Tương tác giao diện"
+Client.AppUnified -> Client.HoroscopeUI: "Điều hướng trang"
+Client.AppUnified -> Client.StarDossierUI: "Điều hướng trang"
+Client.AppUnified -> Client.ValidationUI: "Điều hướng trang"
+
+Client.HoroscopeUI -> Backend.Gateway.RouterHoroscope: "Luận giải lá số (REST / NDJSON)"
+Client.StarDossierUI -> Backend.Gateway.RouterGov: "Tra cứu hồ sơ sao (/api/v1/stars/dossier)"
+Client.ValidationUI -> Backend.Gateway.RouterValidation: "Ghi nhận ca & dự đoán (/api/v1/validation)"
+Client.AcademicUI -> Backend.Gateway.RouterKMS: "Tra cứu & Hỏi đáp RAG (/api/v1/search, /chat/ask)"
+
+Backend.Gateway.AuthSecurity -> Backend.Gateway.RouterKMS: "Ủy quyền & Giới hạn tần suất"
+Backend.Gateway.AuthSecurity -> Backend.Gateway.RouterHoroscope: "Ủy quyền & Giới hạn tần suất"
+
+# Luồng 1: Tra cứu & Hỏi đáp RAG Học thuật
+Backend.Gateway.RouterKMS -> Backend.Guardrails.OutOfScope: "Kiểm tra phạm vi (Chặn bói toán cá nhân)"
+Backend.Guardrails.OutOfScope -> Backend.RAGCore.QueryCache: "Tra cứu kết quả lưu đệm"
+Backend.RAGCore.QueryCache -> Backend.RAGCore.RetrieverHybrid: "Phối hợp truy xuất (khi cache miss)"
+Backend.RAGCore.RetrieverHybrid -> Backend.RAGCore.FTSAdapter: "Truy vấn từ khóa bỏ dấu"
+Backend.RAGCore.RetrieverHybrid -> Backend.RAGCore.DenseAdapter: "Truy vấn tương đồng ngữ nghĩa"
+Backend.RAGCore.FTSAdapter -> Data.SQLiteDB.TablesFTS: "BM25 match trên chunks_fts"
+Backend.RAGCore.DenseAdapter -> Data.VectorDB.CollectionChunks: "Cosine search vector 1024D"
+Backend.RAGCore.RetrieverHybrid -> Backend.RAGCore.ContextAssembly: "Hợp nhất RRF (k=60) & Cân bằng 3 sách"
+Backend.RAGCore.ContextAssembly -> External.LLMPool: "Gửi prompt kèm ngữ cảnh trích dẫn"
+External.LLMPool -> Backend.Guardrails.CitationValidator: "Câu trả lời dự thảo"
+Backend.Guardrails.CitationValidator -> Backend.RAGCore.QueryCache: "Lưu đệm kết quả hợp lệ"
+
+# Luồng 2: Lập & Luận giải Lá số Cá nhân
+Backend.Gateway.RouterHoroscope -> Backend.HoroscopeCore.ChartEngine: "Tính toán 108 sao & 12 cung (Thuật toán tất định)"
+Backend.HoroscopeCore.ChartEngine -> Backend.HoroscopeCore.FeatureExtractor: "Bóc tách 20 nhóm đặc trưng"
+Backend.HoroscopeCore.FeatureExtractor -> Backend.HoroscopeCore.CachCucDetector: "Nhận diện cách cục chuẩn"
+Backend.HoroscopeCore.FeatureExtractor -> Backend.RAGCore.RetrieverHybrid: "Cầu nối RAG truy xuất nguồn theo sao/cung"
+Backend.HoroscopeCore.FeatureExtractor -> Backend.HoroscopeCore.Interpreter: "Tập hợp dữ kiện & chứng cứ"
+Backend.HoroscopeCore.Interpreter -> Backend.Guardrails.OutputGuard: "Kiểm tra 6 lớp an toàn & tin cậy"
+Backend.Guardrails.OutputGuard -> External.LLMPool: "Sinh diễn giải (Mức giải thích & chuyên sâu)"
+Backend.HoroscopeCore.Interpreter -> Backend.HoroscopeCore.HoroscopeCache: "Lưu đệm kết quả luận giải"
+
+# Luồng 3: Quản trị & Nhật ký Nghiệm lý
+Backend.Gateway.RouterValidation -> Backend.ValidationCore.JournalService: "Ghi nhận ca & dự đoán"
+Backend.ValidationCore.JournalService -> Backend.ValidationCore.ImmutabilityLock: "Phong tỏa dự đoán trước hạn"
+Backend.ValidationCore.ImmutabilityLock -> Data.SQLiteDB.TablesJournal: "Ghi bảng bất biến qua Triggers"
+Backend.ValidationCore.EventReview -> Data.SQLiteDB.TablesJournal: "Cập nhật đối chiếu sự kiện thực tế"
+
+# Luồng 4: Nạp Dữ liệu & Lập chỉ mục Offline
+Data.MasterFiles.ExcelMaster -> Backend.Guardrails.KnowledgeGate: "Thẩm định cấu trúc A/B/C & Cách ly nguồn D"
+Backend.Guardrails.KnowledgeGate -> Data.SQLiteDB.TablesMeta: "Nhập bản ghi, evidence & phân tầng trust_tier"
+Data.SQLiteDB.TablesMeta -> Data.SQLiteDB.TablesFTS: "Sinh chunk & Lập chỉ mục FTS5"
+Data.SQLiteDB.TablesMeta -> External.EmbeddingAPI: "Sinh vector embedding cho chunk"
+External.EmbeddingAPI -> Data.VectorDB.CollectionChunks: "Nạp vector vào Qdrant"

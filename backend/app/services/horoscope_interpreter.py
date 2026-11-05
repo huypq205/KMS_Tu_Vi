@@ -565,10 +565,9 @@ def _sanitize_reading_citations(reading: dict, facts: list, context: dict) -> No
 
             cnt = len(set(valid_ids))
             if cnt >= 3:
-                point['muc_tin_cay'] = 'rat_manh'
-            elif cnt == 2:
-                point['muc_tin_cay'] = 'manh'
-            elif cnt == 1:
+                if point.get('muc_tin_cay') not in ('rat_manh', 'manh'):
+                    point['muc_tin_cay'] = 'manh'
+            elif cnt >= 1:
                 point['muc_tin_cay'] = 'trung_binh'
             else:
                 point['muc_tin_cay'] = 'yeu'
@@ -577,7 +576,7 @@ def _sanitize_reading_citations(reading: dict, facts: list, context: dict) -> No
             if cited_kinds:
                 point['loi_chung_cu'] = list(dict.fromkeys(cited_kinds))
             else:
-                point['loi_chung_cu'] = ['dong_cung']
+                point['loi_chung_cu'] = ['suy_luan']
             if not point.get('phan_chung') or not isinstance(point['phan_chung'], str):
                 point['phan_chung'] = NO_COUNTER_EVIDENCE
 
@@ -601,10 +600,9 @@ def _sanitize_reading_citations(reading: dict, facts: list, context: dict) -> No
 
             cnt = len(set(valid_ids))
             if cnt >= 3:
-                point['muc_tin_cay'] = 'rat_manh'
-            elif cnt == 2:
-                point['muc_tin_cay'] = 'manh'
-            elif cnt == 1:
+                if point.get('muc_tin_cay') not in ('rat_manh', 'manh'):
+                    point['muc_tin_cay'] = 'manh'
+            elif cnt >= 1:
                 point['muc_tin_cay'] = 'trung_binh'
             else:
                 point['muc_tin_cay'] = 'yeu'
@@ -918,10 +916,8 @@ def _request_groq(prompt_text: str, key: str, model: str = GROQ_MODEL, reading_m
         "temperature": LLM_TEMPERATURE,
         "max_tokens": max_tokens,
     }
-    response = requests.post(url, headers=headers, json=payload, timeout=(5, HOROSCOPE_TIMEOUT_SECONDS))
-    if response.status_code == 429:
-        time.sleep(8.0)
-        response = requests.post(url, headers=headers, json=payload, timeout=(5, HOROSCOPE_TIMEOUT_SECONDS))
+    groq_timeout = (3, min(12.0, HOROSCOPE_TIMEOUT_SECONDS))
+    response = requests.post(url, headers=headers, json=payload, timeout=groq_timeout)
     if response.status_code != 200:
         raise HoroscopeGenerationError({503: 'busy', 429: 'quota', 401: 'invalid_key', 403: 'invalid_key',
                                          404: 'model_not_found', 400: 'invalid_request'}.get(response.status_code, 'provider_error'))
@@ -1120,6 +1116,7 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
             try:
                 reading = _request_gemini(user_prompt, key, model, reading_mode=reading_mode)
                 reading.setdefault('van_han_hien_tai', {}).update(build_annual_report(features, facts))
+                _sanitize_reading_citations(reading, facts, context)
                 validate_reading(reading, facts, context)
                 confidence_problem = check_input_confidence(reading, features)
                 conclusion_problem = check_conclusion_confidence(reading)
@@ -1161,6 +1158,7 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
                     )
                     reading = _request_gemini(user_prompt + extra, key, model, reading_mode=reading_mode)
                     reading.setdefault('van_han_hien_tai', {}).update(build_annual_report(features, facts))
+                    _sanitize_reading_citations(reading, facts, context)
                     validate_reading(reading, facts, context)
                     conclusion_problem = check_conclusion_confidence(reading)
                     evidence_problem = check_evidence_labels(reading, facts)

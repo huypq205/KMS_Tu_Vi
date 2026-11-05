@@ -66,7 +66,8 @@ def add_inline(p, text, size=BODY_SIZE, base_bold=False, base_italic=False,
             add_inline(p, tok[2:-2], size=size, base_bold=True,
                        base_italic=base_italic, color=color)
         elif tok.startswith("`") and tok.endswith("`") and len(tok) > 2:
-            _add_plain(p, tok[1:-1], size=size, code=True, color=color)
+            _add_plain(p, tok[1:-1], size=size, bold=base_bold,
+                       italic=base_italic, code=True, color=color)
         elif tok.startswith("["):
             inner = tok[1:tok.index("]")]
             _add_plain(p, inner, size=size, bold=base_bold,
