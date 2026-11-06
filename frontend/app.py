@@ -13,10 +13,22 @@ Chạy:
 from __future__ import annotations
 
 import os
+from pathlib import Path
+import sys
 from typing import Any
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+import altair as alt
+import pandas as pd
 import requests
 import streamlit as st
+
+from frontend.ui_fixture import is_fixture_mode, load_fixture, mock_search, mock_stats
+from frontend.ui_themes import apply_theme
+
 
 def _resolve_api_base() -> str:
     env_url = os.getenv("KMS_API_BASE")
@@ -40,20 +52,22 @@ BOOK_TITLES = {
     "BD": "Tử Vi Ứng Dụng — Bửu Đình",
 }
 
-# màu badge theo trust tier (dùng cho chip trong UI)
-TIER_COLORS = {1: "#1a7f37", 2: "#0969da", 3: "#bf8700", 9: "#82061e"}
-
 st.set_page_config(
     page_title="KMS Tử Vi",
-    page_icon="☯",
     layout="wide",
 )
+apply_theme()
 
 
 # --------------------------------------------------------------------------
 # gọi API
 # --------------------------------------------------------------------------
 def api_get(path: str) -> dict[str, Any] | None:
+    if is_fixture_mode():
+        if path == "/api/v1/health":
+            return {"status": "ok", "knowledge_items": 10456, "chunks": 4350}
+        if path == "/api/v1/stats":
+            return mock_stats()
     try:
         resp = requests.get(f"{API_BASE}{path}", timeout=TIMEOUT)
         resp.raise_for_status()
@@ -64,6 +78,38 @@ def api_get(path: str) -> dict[str, Any] | None:
 
 
 def api_post(path: str, payload: dict[str, Any]) -> dict[str, Any] | None:
+    if is_fixture_mode():
+        if path == "/api/v1/search":
+            return mock_search(payload.get("query"))
+        if path == "/api/v1/chat/ask":
+            raw_ask = load_fixture("sample_ask")
+            citations = [
+                {
+                    "ref": str(c.get("ref_id", i + 1)),
+                    "book_code": c.get("book_code", "NPL"),
+                    "book_title": c.get("book_title"),
+                    "part_number": c.get("part_number"),
+                    "pdf_page_start": c.get("pdf_page_start"),
+                    "pdf_page_end": c.get("pdf_page_end"),
+                    "trust_tier": c.get("trust_tier", 1),
+                    "verification_status": c.get("verification_status", "unverified"),
+                    "ui_badge": c.get("ui_badge", "Bản mẫu fixture"),
+                    "excerpt": c.get("excerpt", ""),
+                    "knowledge_ids": [c.get("chunk_id", "")],
+                }
+                for i, c in enumerate(raw_ask.get("citations", []))
+            ]
+            return {
+                "status": "answered",
+                "answer": raw_ask.get("tra_loi", ""),
+                "citations": citations,
+                "retrieval": {
+                    "num_candidates": len(citations),
+                    "num_contexts": len(citations),
+                    "books_covered": ["NPL", "DAU", "BD"],
+                },
+                "message": "Dữ liệu mẫu fixture (KMS_UI_FIXTURE=1)",
+            }
     try:
         resp = requests.post(f"{API_BASE}{path}", json=payload, timeout=TIMEOUT)
         resp.raise_for_status()
@@ -74,13 +120,9 @@ def api_post(path: str, payload: dict[str, Any]) -> dict[str, Any] | None:
 
 
 def tier_badge(tier: int, badge: str | None) -> str:
-    color = TIER_COLORS.get(tier, "#57606a")
+    tier_class = f"tier-t{tier}"
     label = badge or f"Tier {tier}"
-    return (
-        f'<span style="background:{color}22;border:1px solid {color};color:{color};'
-        f'border-radius:10px;padding:1px 8px;font-size:12px;white-space:nowrap">'
-        f"Tier {tier} · {label}</span>"
-    )
+    return f'<span class="tier-badge {tier_class}">Tier {tier} · {label}</span>'
 
 
 def book_chip(book_code: str) -> str:
@@ -102,7 +144,7 @@ def page_label(c: dict) -> str:
 # sidebar
 # --------------------------------------------------------------------------
 with st.sidebar:
-    st.markdown("### ☯ KMS Tử Vi")
+    st.markdown("### KMS Tử Vi")
     st.caption("Tra cứu tri thức Tử Vi từ 3 sách nguồn, có dẫn nguồn.")
     st.caption(f"API: `{API_BASE}`")
 
@@ -122,7 +164,7 @@ with st.sidebar:
 # tiêu đề + tab
 # --------------------------------------------------------------------------
 st.title("KMS Tử Vi")
-tab_search, tab_chat, tab_stats = st.tabs(["🔎 Tra cứu", "💬 Hỏi đáp RAG", "📊 Thống kê"])
+tab_search, tab_chat, tab_stats = st.tabs(["Tra cứu", "Hỏi đáp RAG", "Thống kê"])
 
 
 # --------------------------------------------------------------------------
@@ -136,8 +178,12 @@ with tab_search:
 
     c1, c2, c3 = st.columns([3, 1, 1])
     with c1:
+        default_query = "Tử Vi" if is_fixture_mode() else ""
         query = st.text_input(
-            "Từ khóa", placeholder="VD: sao Thiên Phủ, khoa bảng, địa chi", label_visibility="collapsed"
+            "Từ khóa",
+            value=default_query,
+            placeholder="VD: sao Thiên Phủ, khoa bảng, địa chi",
+            label_visibility="collapsed",
         )
     with c2:
         top_k = st.number_input("Số kết quả", min_value=1, max_value=30, value=10, step=1)
@@ -146,12 +192,15 @@ with tab_search:
         st.write("")
         do_search = st.button("Tìm kiếm", type="primary", use_container_width=True)
 
-    if do_search:
+    search_data = None
+    if do_search or (is_fixture_mode() and "sample_search_loaded" not in st.session_state):
+        if is_fixture_mode():
+            st.session_state["sample_search_loaded"] = True
         if not query.strip():
             st.warning("Nhập từ khóa cần tìm.")
         else:
             with st.spinner("Đang tìm..."):
-                data = api_post(
+                search_data = api_post(
                     "/api/v1/search",
                     {
                         "query": query,
@@ -160,46 +209,50 @@ with tab_search:
                         "use_fts": True,
                     },
                 )
+            if search_data:
+                st.session_state["current_search_data"] = search_data
 
-            if data:
-                if data.get("status") != "ok" or not data.get("results"):
-                    st.info("Không tìm thấy kết quả nào.")
-                else:
-                    meta = data.get("meta", {})
-                    st.caption(
-                        f"{meta.get('count', 0)} kết quả · sách: "
-                        f"{', '.join(meta.get('books', []))} · "
-                        f"tier được bật: {meta.get('enabled_tiers', [])}"
-                    )
+    active_search = search_data or st.session_state.get("current_search_data")
+    if active_search:
+        if active_search.get("status") != "ok" or not active_search.get("results"):
+            st.info("Không tìm thấy kết quả nào.")
+        else:
+            meta = active_search.get("meta", {})
+            st.caption(
+                f"{meta.get('count', 0)} kết quả · sách: "
+                f"{', '.join(meta.get('books', []))} · "
+                f"tier được bật: {meta.get('enabled_tiers', [])}"
+            )
 
-                    # gom kết quả theo sách để "tách NPL / DAU / BD"
-                    by_book: dict[str, list[dict]] = {}
-                    for r in data["results"]:
-                        by_book.setdefault(r["book_code"], []).append(r)
+            # gom kết quả theo sách để "tách NPL / DAU / BD"
+            by_book: dict[str, list[dict]] = {}
+            for r in active_search["results"]:
+                by_book.setdefault(r["book_code"], []).append(r)
 
-                    for book_code in ["NPL", "DAU", "BD"]:
-                        if book_code not in by_book:
-                            continue
-                        with st.expander(
-                            f"{BOOK_TITLES.get(book_code, book_code)} ({book_code})"
-                            f" — {len(by_book[book_code])} kết quả",
-                            expanded=True,
-                        ):
-                            for r in by_book[book_code]:
-                                st.markdown(
-                                    f"**[{r.get('index', '?')}] {r.get('chapter') or '—'}**"
-                                )
-                                st.markdown(
-                                    f"{tier_badge(r['trust_tier'], r.get('ui_badge'))}"
-                                    f" &nbsp;|&nbsp; `{r.get('page_label', '')}`"
-                                    f" &nbsp;|&nbsp; mức tin cậy tier {r['trust_tier']}"
-                                )
-                                st.write(r.get("text", ""))
-                                st.caption(
-                                    f"chunk `{r.get('chunk_id')}` · "
-                                    f"bản ghi: {', '.join(r.get('knowledge_ids', []))}"
-                                )
-                                st.divider()
+            for book_code in ["NPL", "DAU", "BD"]:
+                if book_code not in by_book:
+                    continue
+                with st.expander(
+                    f"{BOOK_TITLES.get(book_code, book_code)} ({book_code})"
+                    f" — {len(by_book[book_code])} kết quả",
+                    expanded=True,
+                ):
+                    for r in by_book[book_code]:
+                        st.markdown(
+                            f"**[{r.get('index', '?')}] {r.get('chapter') or '—'}**"
+                        )
+                        st.markdown(
+                            f"{tier_badge(r['trust_tier'], r.get('ui_badge'))}"
+                            f" &nbsp;|&nbsp; `{r.get('page_label', '')}`"
+                            f" &nbsp;|&nbsp; mức tin cậy tier {r['trust_tier']}",
+                            unsafe_allow_html=True,
+                        )
+                        st.write(r.get("text", ""))
+                        st.caption(
+                            f"chunk `{r.get('chunk_id')}` · "
+                            f"bản ghi: {', '.join(r.get('knowledge_ids', []))}"
+                        )
+                        st.divider()
 
 
 # --------------------------------------------------------------------------
@@ -278,7 +331,8 @@ with tab_chat:
                             )
                             st.markdown(page_label(c))
                             st.markdown(
-                                f"{tier_badge(c['trust_tier'], c.get('ui_badge'))}"
+                                f"{tier_badge(c['trust_tier'], c.get('ui_badge'))}",
+                                unsafe_allow_html=True,
                             )
                             st.caption(
                                 f"bản ghi: {', '.join(c.get('knowledge_ids', []))} · "
@@ -318,12 +372,59 @@ with tab_stats:
                 )
             st.dataframe(rows, use_container_width=True, hide_index=True)
 
-            # thanh phân bố
+            # thanh phân bố Altair đồng bộ theme palette
             try:
-                import pandas as pd
-
                 df = pd.DataFrame(rows)
-                st.bar_chart(df.set_index("Trust Tier")["Số bản ghi"])
+                df["Tier_Label"] = df["Trust Tier"].apply(lambda t: f"Tier {t}")
+                chart = (
+                    alt.Chart(df)
+                    .mark_bar(cornerRadiusTopLeft=4, cornerRadiusTopRight=4)
+                    .encode(
+                        x=alt.X(
+                            "Tier_Label:N",
+                            sort=None,
+                            title="Mức tin cậy (Trust Tier)",
+                            axis=alt.Axis(
+                                labelAngle=0,
+                                labelFont="IBM Plex Sans",
+                                titleFont="IBM Plex Sans",
+                                labelColor="#5d5f60",
+                                titleColor="#131416",
+                                domainColor="#e8eaec",
+                                tickColor="#e8eaec",
+                            ),
+                        ),
+                        y=alt.Y(
+                            "Số bản ghi:Q",
+                            title="Số bản ghi",
+                            axis=alt.Axis(
+                                labelFont="IBM Plex Sans",
+                                titleFont="IBM Plex Sans",
+                                labelColor="#5d5f60",
+                                titleColor="#131416",
+                                gridColor="#f0f1f2",
+                                domainColor="#e8eaec",
+                            ),
+                        ),
+                        color=alt.Color(
+                            "Tier_Label:N",
+                            scale=alt.Scale(
+                                domain=["Tier 1", "Tier 2", "Tier 3", "Tier 9"],
+                                range=["#1b6c80", "#2f70bb", "#a86f0c", "#5d5f60"],
+                            ),
+                            legend=None,
+                        ),
+                        tooltip=[
+                            alt.Tooltip("Tier_Label:N", title="Phân tầng"),
+                            alt.Tooltip("Nhãn:N", title="Mô tả"),
+                            alt.Tooltip("Số bản ghi:Q", title="Số lượng", format=","),
+                            alt.Tooltip("Được index:N", title="Index vào search"),
+                        ],
+                    )
+                    .properties(height=260)
+                    .configure_view(strokeWidth=0)
+                )
+                st.altair_chart(chart, use_container_width=True)
             except Exception:
                 pass
 

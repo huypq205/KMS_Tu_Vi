@@ -360,6 +360,16 @@ code, pre, .mono-data {
   margin: 8px 0;
 }
 
+.notice.notice-error, .notice-error {
+  font-size: var(--font-size-small) !important;
+  color: var(--pill-neg-text) !important;
+  background: var(--pill-neg-bg) !important;
+  border: 1px solid #fecdd3 !important;
+  padding: 10px 14px;
+  border-radius: var(--radius-control);
+  margin: 8px 0;
+}
+
 .pill, .badge, .conf-badge {
   display: inline-flex;
   align-items: center;
@@ -410,7 +420,18 @@ code, pre, .mono-data {
 }
 
 /* Source Book Badges & Tier Badges */
-.badge-tier-1, .badge-book-npl {
+.book-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.book-badge.book-npl, .badge-tier-1, .badge-book-npl {
   background: #e8f4f7;
   color: var(--accent);
   border: 1px solid #c7e5ed;
@@ -420,7 +441,7 @@ code, pre, .mono-data {
   border-radius: 4px;
 }
 
-.badge-tier-2, .badge-book-bd {
+.book-badge.book-bd, .badge-tier-2, .badge-book-bd {
   background: #eff6ff;
   color: #2f70bb;
   border: 1px solid #bfdbfe;
@@ -430,7 +451,7 @@ code, pre, .mono-data {
   border-radius: 4px;
 }
 
-.badge-tier-3, .badge-book-dau {
+.book-badge.book-dau, .badge-tier-3, .badge-book-dau {
   background: #fefce8;
   color: #a86f0c;
   border: 1px solid #fef08a;
@@ -438,6 +459,65 @@ code, pre, .mono-data {
   font-weight: 600;
   padding: 2px 6px;
   border-radius: 4px;
+}
+
+/* Knowledge Tier Badges (KMS Tra cứu & RAG) */
+.tier-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.tier-badge.tier-t1 {
+  background: #e8f4f7;
+  color: var(--accent);
+  border: 1px solid #c7e5ed;
+}
+
+.tier-badge.tier-t2 {
+  background: #eff6ff;
+  color: #2f70bb;
+  border: 1px solid #bfdbfe;
+}
+
+.tier-badge.tier-t3 {
+  background: #fffbeb;
+  color: var(--warning);
+  border: 1px solid #fde68a;
+}
+
+.tier-badge.tier-t9 {
+  background: var(--pill-neg-bg);
+  color: var(--pill-neg-text);
+  border: 1px solid #fecdd3;
+}
+
+/* Journal Empty State (Framed-sheet style) */
+.journal-empty-state {
+  padding: 24px 20px;
+  background: var(--raised);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-card);
+  text-align: center;
+  margin: 12px 0 16px;
+}
+
+.journal-empty-title {
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.journal-empty-desc {
+  font-size: var(--font-size-small);
+  color: var(--muted);
+  margin: 0;
 }
 
 /* Seal stamp flat replacement */
