@@ -62,6 +62,10 @@
 }
 
 /* Base reset & typography */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 html, body, [data-testid="stApp"] {
   font-family: var(--font) !important;
   color: var(--text);
@@ -195,7 +199,15 @@ li + li {
   box-shadow: none !important; /* taste-skill-ignore */
 }
 
-[data-baseweb="input"]:focus-within, [data-baseweb="select"] > div:focus-within {
+[data-baseweb="input"]:hover,
+[data-baseweb="select"] > div:hover,
+[data-baseweb="textarea"]:hover {
+  border-color: var(--muted) !important;
+}
+
+[data-baseweb="input"]:focus-within,
+[data-baseweb="select"] > div:focus-within,
+[data-baseweb="textarea"]:focus-within {
   border-color: var(--accent) !important;
   outline: 2px solid var(--accent);
   outline-offset: 1px;
@@ -241,6 +253,36 @@ button[kind="secondary"]:hover {
   border-color: var(--border) !important;
 }
 
+/* Tactile feedback states (:active) */
+.stButton > button:active,
+.btn-secondary:active,
+.btn-tertiary:active,
+button[kind="secondary"]:active {
+  background-color: var(--active) !important;
+  border-color: var(--control) !important;
+  transform: scale(0.99);
+}
+
+button[kind="primaryFormSubmit"]:active,
+button[kind="primary"]:active,
+.stButton > button[kind="primary"]:active,
+.btn-primary:active {
+  background-color: #0f404b !important;
+  border-color: #0f404b !important;
+  color: #ffffff !important;
+  transform: scale(0.99);
+}
+
+button[kind="primaryFormSubmit"]:active p,
+button[kind="primary"]:active p {
+  color: #ffffff !important;
+}
+
+.tb-reset-btn:active {
+  background-color: var(--active) !important;
+  transform: none !important;
+}
+
 button:focus-visible, input:focus-visible, [role="tab"]:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -259,6 +301,17 @@ button:focus-visible, input:focus-visible, [role="tab"]:focus-visible {
   color: var(--muted);
   font-weight: 400;
   font-size: var(--font-size-body);
+  transition: color 0.15s ease;
+  cursor: pointer;
+}
+
+[data-baseweb="tab"]:hover {
+  color: var(--text) !important;
+}
+
+[data-baseweb="tab"]:active {
+  background-color: var(--active) !important;
+  color: var(--accent) !important;
 }
 
 [data-baseweb="tab"][aria-selected="true"] {
@@ -282,10 +335,21 @@ button:focus-visible, input:focus-visible, [role="tab"]:focus-visible {
   border-color: var(--border) !important;
   font-weight: 600;
   padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
 }
 
 [data-testid="stExpander"] details summary:hover {
   background: var(--raised);
+}
+
+[data-testid="stExpander"] details summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
+
+[data-testid="stExpander"] details summary:active {
+  background: var(--active) !important;
 }
 
 /* ==========================================================================
@@ -342,9 +406,9 @@ td, [data-testid="stTable"] td {
   vertical-align: top;
 }
 
-code, pre, .mono-data {
+code, pre, .mono-data, .stCaption code, [data-testid="stCaptionContainer"] code, .stMarkdown code {
   font-family: var(--font-mono), monospace !important; /* taste-skill-ignore */
-  font-size: var(--font-size-small);
+  font-size: 11px !important;
 }
 
 /* ==========================================================================
@@ -453,7 +517,7 @@ code, pre, .mono-data {
 
 .book-badge.book-dau, .badge-tier-3, .badge-book-dau {
   background: #fefce8;
-  color: #a86f0c;
+  color: #92400e;
   border: 1px solid #fef08a;
   font-size: 11px;
   font-weight: 600;
@@ -761,7 +825,8 @@ code, pre, .mono-data {
   gap: 8px;
 }
 
-.horoscope-chart .cell {
+.horoscope-chart .cell,
+.cell {
   background: var(--surface);
   border: 1px solid var(--border);
   padding: 10px 12px;
@@ -771,12 +836,27 @@ code, pre, .mono-data {
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
   position: relative;
+  box-sizing: border-box !important;
   box-shadow: none !important; /* taste-skill-ignore */
 }
 
-.horoscope-chart .cell:not(.center):hover {
+.horoscope-chart .cell:not(.center):hover,
+.cell:not(.center):hover {
   background: var(--raised);
   border-color: var(--control);
+}
+
+.horoscope-chart .cell:not(.center):active,
+.cell:not(.center):active,
+.cell:active {
+  background-color: var(--active) !important;
+  transform: none !important;
+}
+
+.horoscope-chart .cell:focus-visible,
+.cell:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 /* Interactive selection states: flat fills, distinct 2px borders, no elevation */
@@ -787,6 +867,7 @@ code, pre, .mono-data {
   z-index: 2;
   box-shadow: none !important; /* taste-skill-ignore */
   transform: none !important;
+  box-sizing: border-box !important;
 }
 
 .horoscope-chart .cell.is-tam-hop,
@@ -795,6 +876,7 @@ code, pre, .mono-data {
   border: 2px solid #2f70bb !important;
   box-shadow: none !important; /* taste-skill-ignore */
   transform: none !important;
+  box-sizing: border-box !important;
 }
 
 .horoscope-chart .cell.is-xung-chieu,
@@ -803,6 +885,7 @@ code, pre, .mono-data {
   border: 2px dashed #a86f0c !important;
   box-shadow: none !important; /* taste-skill-ignore */
   transform: none !important;
+  box-sizing: border-box !important;
 }
 
 .horoscope-chart .cell.is-nhi-hop,
@@ -811,6 +894,7 @@ code, pre, .mono-data {
   border: 2px solid #1e7b4f !important;
   box-shadow: none !important; /* taste-skill-ignore */
   transform: none !important;
+  box-sizing: border-box !important;
 }
 
 /* Center Thien-Ban (2x2) */
@@ -1026,7 +1110,7 @@ code, pre, .mono-data {
 }
 
 .horoscope-chart .badge-tag {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   padding: 1px 4px;
   border-radius: 3px;
@@ -1235,7 +1319,7 @@ code, pre, .mono-data {
 }
 
 .qc {
-  font-size: 10px;
+  font-size: 11px;
   border: 1px solid var(--rule);
   border-radius: 4px;
   padding: 0 4px;
@@ -1348,6 +1432,18 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition: none !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
+
+/* Ensure inline code blocks meet the 11px minimum text rule */
+code,
+[data-testid="stCaptionContainer"] code,
+.stMarkdown code {
+  font-size: 11px !important;
+}
+

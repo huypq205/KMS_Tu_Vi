@@ -126,7 +126,7 @@ def _luu_nien_by_cung_map(luu_nien: dict | None, thap_ni_cung: list[dict]) -> di
     return mapping
 
 with st.sidebar:
-    st.markdown('<div class="brand"><span class="seal-stamp" style="font-size:9px;padding:2px 4px;">KMS</span><strong>Tử Vi Cổ Thư</strong></div>', unsafe_allow_html=True)
+    st.markdown('<div class="brand"><span class="seal-stamp" style="font-size:11px;padding:2px 4px;">KMS</span><strong>Tử Vi Cổ Thư</strong></div>', unsafe_allow_html=True)
     st.markdown("### Thông tin của bạn")
     st.caption("Ngày và giờ sinh là điểm khởi đầu cho bản đồ 12 cung.")
     name = st.text_input("Họ tên (không bắt buộc)", max_chars=80, key="birth_name")

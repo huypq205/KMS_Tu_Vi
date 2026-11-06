@@ -254,10 +254,10 @@ def luoi_html(
             f'<span class="tb-gen-value tb-gen-span">{cach_html}</span>'
             '</div>',
         ]
-        hint = escape(str(tb.get("hint") or "✦ Bấm vào ô cung để xem Tam hợp · Xung chiếu · Nhị hợp ✦"))
+        hint = escape(str(tb.get("hint") or "Bấm vào ô cung để xem Tam hợp · Xung chiếu · Nhị hợp"))
         tb_html_parts.append(
             f'<div class="tb-hint">{hint}</div>'
-            '<button type="button" class="tb-reset-btn" id="tb-reset-btn">☯ Về Thiên Bàn chung</button>'
+            '<button type="button" class="tb-reset-btn" id="tb-reset-btn">Về Thiên Bàn chung</button>'
             '</div>'
             '</div>'
         )
@@ -280,7 +280,7 @@ def luoi_html(
         if cung_info:
             tb_html_parts.append(f'<div class="tb-stat"><strong>Mệnh/Thân:</strong> {cung_info}</div>')
         tb_html_parts.append(
-            '<div class="tb-hint">✦ Bấm vào ô cung để xem Tam hợp · Xung chiếu · Nhị hợp ✦</div>'
+            '<div class="tb-hint">Bấm vào ô cung để xem Tam hợp · Xung chiếu · Nhị hợp</div>'
             '</div>'
             '</div>'
         )
