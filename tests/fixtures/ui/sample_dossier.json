@@ -1,0 +1,3563 @@
+{
+  "name": "Tử Vi",
+  "slots": {
+    "core_function": {
+      "label": "Bản chất và ý nghĩa biểu tượng",
+      "status": "seed_unverified",
+      "message": "Tham khảo, chưa đối chiếu sách KMS",
+      "entries": [
+        {
+          "text": "Biểu tượng vai trò điều phối và tổ chức; cần xem các sao hỗ trợ trước khi diễn giải.",
+          "source": "Toàn Tập (bản dịch Quách Ngọc Bội) — nguồn gián tiếp do repo tham khảo gán, chưa xác minh",
+          "reference": "https://github.com/hung-ngm/tu-vi-dau-so/blob/d0238e9ee9f1a8a1603f5ff1328b18bf6e4635b7/tu-vi-dau-so/skills/tu-vi-dau-so/references/star_meanings.md",
+          "status": "seed_unverified"
+        }
+      ]
+    },
+    "yin_yang_five_element": {
+      "label": "Âm dương và ngũ hành",
+      "status": "seed_unverified",
+      "message": "Tham khảo, chưa đối chiếu sách KMS",
+      "entries": [
+        {
+          "text": "Thuộc hành Thổ theo tài liệu tham khảo.",
+          "source": "Toàn Tập (bản dịch Quách Ngọc Bội) — nguồn gián tiếp do repo tham khảo gán, chưa xác minh",
+          "reference": "https://github.com/hung-ngm/tu-vi-dau-so/blob/d0238e9ee9f1a8a1603f5ff1328b18bf6e4635b7/tu-vi-dau-so/skills/tu-vi-dau-so/references/star_meanings.md",
+          "status": "seed_unverified"
+        }
+      ]
+    },
+    "favorable_expression": {
+      "label": "Biểu hiện thuận",
+      "status": "missing",
+      "message": "chưa có trong kho tri thức hiện tại",
+      "entries": []
+    },
+    "unfavorable_expression": {
+      "label": "Biểu hiện cần cân nhắc",
+      "status": "missing",
+      "message": "chưa có trong kho tri thức hiện tại",
+      "entries": []
+    },
+    "strength_by_branch": {
+      "label": "Miếu, vượng, đắc, hãm",
+      "status": "canonical",
+      "message": "Nguồn KMS; giữ riêng từng sách, chưa kiểm duyệt thủ công.",
+      "entries": [
+        {
+          "knowledge_id": "KN-000349",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Thiên Phủ + Vũ Khúc + Thiên Tướng",
+          "predicate": "STRENGTHENS",
+          "taxonomy_code": "TV-06.05",
+          "text": "Nguồn xem cấu hình Tử Phủ Vũ Tướng đắc địa là một trong những phối cách giải họa mạnh nhất.",
+          "condition_context": "Khi cả bốn sao đắc địa",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 341
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001424",
+          "book_code": "NPL",
+          "subject": "Tử Vi đắc địa",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.D",
+          "text": "Nguồn xem Tử Vi có hiệu lực phúc và che chở, nhưng kém trực tiếp hơn Vũ Khúc/Thiên Tướng trong giải họa.",
+          "condition_context": "Khi đắc địa và có cát tinh hỗ trợ",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 340
+            }
+          ]
+        }
+      ]
+    },
+    "by_palace": {
+      "label": "Theo cung",
+      "status": "canonical",
+      "message": "Nguồn KMS; giữ riêng từng sách, chưa kiểm duyệt thủ công.",
+      "entries": [
+        {
+          "knowledge_id": "KN-000401",
+          "book_code": "NPL",
+          "subject": "Tử Vi / Thiên Phủ / Thái Dương sáng",
+          "predicate": "REDUCES",
+          "taxonomy_code": "TV-06.06",
+          "text": "Theo nguồn, Tử Vi / Thiên Phủ / Thái Dương sáng có thể làm giảm/kiềm chế biểu hiện ái tình: khuynh hướng chính trực, tự chế, làm giảm biểu hiện ái tình quá mức.",
+          "condition_context": "Khi đi cùng hoặc chi phối các sao ái tình",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 151
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000863",
+          "book_code": "NPL",
+          "subject": "Tử Vi + nhiều quyền/dũng/trợ tinh",
+          "predicate": "REPRESENTS",
+          "taxonomy_code": "TV-09.B",
+          "text": "Theo nguồn, Tử Vi + nhiều quyền/dũng/trợ tinh biểu thị tăng thực quyền, số thuộc hạ và năng lực chỉ huy; văn quan cần văn tinh, võ quan cần võ tinh.",
+          "condition_context": "Theo trạng thái/cung như mô tả",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 194
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000864",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Thiên Tướng",
+          "predicate": "REPRESENTS",
+          "taxonomy_code": "TV-09.B",
+          "text": "Theo nguồn, Tử Vi + Thiên Tướng biểu thị kết hợp lãnh đạo và thi hành, tham vọng chỉ huy cao.",
+          "condition_context": "Theo trạng thái/cung như mô tả",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 196
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000865",
+          "book_code": "NPL",
+          "subject": "Tử Vi thiếu trợ tinh",
+          "predicate": "REPRESENTS",
+          "taxonomy_code": "TV-09.B",
+          "text": "Theo nguồn, Tử Vi thiếu trợ tinh biểu thị dễ thiên về tham mưu/chuyên môn/cố vấn hơn trực tiếp cầm quyền.",
+          "condition_context": "Theo trạng thái/cung như mô tả",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 194
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000866",
+          "book_code": "NPL",
+          "subject": "Tử Vi đắc tại Quan",
+          "predicate": "REPRESENTS",
+          "taxonomy_code": "TV-09.B",
+          "text": "Theo nguồn, Tử Vi đắc tại Quan biểu thị quyền quý, chỉ huy/lãnh đạo, chức vụ cao; cấp bậc tùy miếu/vượng/đắc.",
+          "condition_context": "Theo trạng thái/cung như mô tả",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 193
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001423",
+          "book_code": "NPL",
+          "subject": "Tử Vi tại Ngọ hoặc đi với Thiên Phủ/Thiên Tướng",
+          "predicate": "STRENGTHENS",
+          "taxonomy_code": "TV-09.D",
+          "text": "Theo nguồn Tử Vi, Tử Vi tại Ngọ hoặc đi với Thiên Phủ/Thiên Tướng được liệt kê trong các cấu trúc hỗ trợ thọ.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 279
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001425",
+          "book_code": "NPL",
+          "subject": "Tử Vi, Phaù, quaân ñoàng cung.",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.D",
+          "text": "Nguồn liệt kê Tử Vi, Phaù, quaân ñoàng cung. như một dấu hiệu hoặc cấu hình liên quan đến bất lợi liên quan cha mẹ hoặc anh chị em.",
+          "condition_context": "Trong mục Họa cho cha mẹ/anh chị em",
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 334
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001426",
+          "book_code": "NPL",
+          "subject": "Tử Vi, Tham Lang ñoàng cung.",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.D",
+          "text": "Nguồn liệt kê Tử Vi, Tham Lang ñoàng cung. như một dấu hiệu hoặc cấu hình liên quan đến bất lợi liên quan cha mẹ hoặc anh chị em.",
+          "condition_context": "Trong mục Họa cho cha mẹ/anh chị em",
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 334
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001701",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Tham Lang hội Tả/Hữu tại Cung Phu",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.E",
+          "text": "Nguồn dùng Tả/Hữu ở Phu để gợi tính song đôi; nếu muốn suy thành chồng và nhân tình thì cần thêm dấu hiệu tình dục ở Mệnh/Thân.",
+          "condition_context": "Chỉ suy thành chồng + nhân tình khi Mệnh/Thân còn có nhiều sao tình dục",
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 365
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001703",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Thiên Tướng tại Cung Thê",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.E",
+          "text": "Nguồn liệt kê Tử Vi + Thiên Tướng ở Cung Thê như một cấu hình hỗ trợ luận người vợ có vị thế mạnh.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 362
+            }
+          ]
+        }
+      ]
+    },
+    "supportive_combinations": {
+      "label": "Tổ hợp hỗ trợ",
+      "status": "canonical",
+      "message": "Nguồn KMS; giữ riêng từng sách, chưa kiểm duyệt thủ công.",
+      "entries": [
+        {
+          "knowledge_id": "KN-000349",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Thiên Phủ + Vũ Khúc + Thiên Tướng",
+          "predicate": "STRENGTHENS",
+          "taxonomy_code": "TV-06.05",
+          "text": "Nguồn xem cấu hình Tử Phủ Vũ Tướng đắc địa là một trong những phối cách giải họa mạnh nhất.",
+          "condition_context": "Khi cả bốn sao đắc địa",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 341
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001423",
+          "book_code": "NPL",
+          "subject": "Tử Vi tại Ngọ hoặc đi với Thiên Phủ/Thiên Tướng",
+          "predicate": "STRENGTHENS",
+          "taxonomy_code": "TV-09.D",
+          "text": "Theo nguồn Tử Vi, Tử Vi tại Ngọ hoặc đi với Thiên Phủ/Thiên Tướng được liệt kê trong các cấu trúc hỗ trợ thọ.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 279
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001424",
+          "book_code": "NPL",
+          "subject": "Tử Vi đắc địa",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.D",
+          "text": "Nguồn xem Tử Vi có hiệu lực phúc và che chở, nhưng kém trực tiếp hơn Vũ Khúc/Thiên Tướng trong giải họa.",
+          "condition_context": "Khi đắc địa và có cát tinh hỗ trợ",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 340
+            }
+          ]
+        }
+      ]
+    },
+    "challenging_combinations": {
+      "label": "Tổ hợp cần đối chiếu",
+      "status": "missing",
+      "message": "chưa có trong kho tri thức hiện tại",
+      "entries": []
+    },
+    "transformation_behavior": {
+      "label": "Tứ Hóa",
+      "status": "missing",
+      "message": "chưa có trong kho tri thức hiện tại",
+      "entries": []
+    },
+    "with_tuan_triet": {
+      "label": "Khi gặp Tuần, Triệt",
+      "status": "canonical",
+      "message": "Nguồn KMS; giữ riêng từng sách, chưa kiểm duyệt thủ công.",
+      "entries": [
+        {
+          "knowledge_id": "KN-001422",
+          "book_code": "NPL",
+          "subject": "Tử Vi gặp Tuần/Triệt",
+          "predicate": "REDUCES",
+          "taxonomy_code": "TV-09.D",
+          "text": "Theo nguồn Tử Vi, Tử Vi gặp Tuần/Triệt được liên hệ với giảm thọ theo nguồn.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 273
+            }
+          ]
+        }
+      ]
+    },
+    "with_sat_tinh": {
+      "label": "Khi gặp sát tinh",
+      "status": "missing",
+      "message": "chưa có trong kho tri thức hiện tại",
+      "entries": []
+    },
+    "school_differences": {
+      "label": "Tiếng nói từng sách và trường phái",
+      "status": "canonical",
+      "message": "Nguồn KMS; giữ riêng từng sách, chưa kiểm duyệt thủ công.",
+      "entries": [
+        {
+          "knowledge_id": "KN-000008",
+          "book_code": "NPL",
+          "subject": "Tử Vi học",
+          "predicate": "IS_A",
+          "taxonomy_code": "TV-01.01",
+          "text": "Tác giả gọi Tử Vi là tri thức ứng dụng/humanities theo nghĩa hệ thống, đồng thời nói rõ không hiểu nó như khoa học chính xác kiểu toán, lý, hóa.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 4
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000009",
+          "book_code": "NPL",
+          "subject": "Tử Vi Tổng Hợp",
+          "predicate": "HAS_ATTRIBUTE",
+          "taxonomy_code": "TV-01.01",
+          "text": "Tác giả xác định một mục tiêu của sách là nâng cao kiến văn và kinh nghiệm về học thuật Tử Vi.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 2
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000010",
+          "book_code": "NPL",
+          "subject": "Tử Vi Tổng Hợp",
+          "predicate": "HAS_ATTRIBUTE",
+          "taxonomy_code": "TV-01.01",
+          "text": "Tác giả xác định mục tiêu thứ hai là phổ biến Tử Vi theo cách dễ hiểu, dễ học và dễ áp dụng hơn.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 2
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000011",
+          "book_code": "NPL",
+          "subject": "Tử Vi Tổng Hợp",
+          "predicate": "HAS_ATTRIBUTE",
+          "taxonomy_code": "TV-01.01",
+          "text": "Tác giả trình bày Tử Vi Tổng Hợp như công trình nối tiếp cuốn Tử Vi Hàm Số, hướng tới mức thâm cứu hơn.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 1
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000020",
+          "book_code": "NPL",
+          "subject": "Tử Vi học",
+          "predicate": "REPRESENTS",
+          "taxonomy_code": "TV-01.03",
+          "text": "Theo nguồn, mục tiêu lịch sử của Tử Vi là dùng tri thức về con người và đời người cho việc tiên đoán vận số cá nhân.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 4
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000124",
+          "book_code": "NPL",
+          "subject": "Tử Vi",
+          "predicate": "HAS_ATTRIBUTE",
+          "taxonomy_code": "TV-02.08",
+          "text": "Nguồn cho rằng Tử Vi cùng chia sẻ một số nền Dịch/Tượng Số nhưng phát triển kỹ thuật lá số riêng.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 56
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000125",
+          "book_code": "NPL",
+          "subject": "Tử Vi",
+          "predicate": "HAS_ATTRIBUTE",
+          "taxonomy_code": "TV-02.08",
+          "text": "Nguồn cho rằng Tử Vi kế thừa các khái niệm Âm Dương, Ngũ Hành và Dịch.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 55
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000126",
+          "book_code": "NPL",
+          "subject": "Tử Vi",
+          "predicate": "HAS_ATTRIBUTE",
+          "taxonomy_code": "TV-02.08",
+          "text": "Nguồn đặt Tử Vi trong lịch sử bói toán Trung Hoa nhưng nhấn mạnh hệ thống lá số là một cách tổ chức riêng.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 54
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000127",
+          "book_code": "NPL",
+          "subject": "Tử Vi",
+          "predicate": "HAS_ATTRIBUTE",
+          "taxonomy_code": "TV-02.08",
+          "text": "Nguồn cho rằng Tử Vi chịu ảnh hưởng từ các dòng tư tưởng và tri thức tồn tại vào thời hình thành.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 54
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000349",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Thiên Phủ + Vũ Khúc + Thiên Tướng",
+          "predicate": "STRENGTHENS",
+          "taxonomy_code": "TV-06.05",
+          "text": "Nguồn xem cấu hình Tử Phủ Vũ Tướng đắc địa là một trong những phối cách giải họa mạnh nhất.",
+          "condition_context": "Khi cả bốn sao đắc địa",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 341
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000401",
+          "book_code": "NPL",
+          "subject": "Tử Vi / Thiên Phủ / Thái Dương sáng",
+          "predicate": "REDUCES",
+          "taxonomy_code": "TV-06.06",
+          "text": "Theo nguồn, Tử Vi / Thiên Phủ / Thái Dương sáng có thể làm giảm/kiềm chế biểu hiện ái tình: khuynh hướng chính trực, tự chế, làm giảm biểu hiện ái tình quá mức.",
+          "condition_context": "Khi đi cùng hoặc chi phối các sao ái tình",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 151
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000616",
+          "book_code": "NPL",
+          "subject": "Tử Vi",
+          "predicate": "HAS_ATTRIBUTE",
+          "taxonomy_code": "TV-09.A",
+          "text": "Theo nguồn, Tử Vi được gán các đặc điểm hình tướng: cao, đẫy đà, da hồng, mặt đầy.",
+          "condition_context": "Khi xét riêng phương diện hình tướng theo nguồn",
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 141
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000617",
+          "book_code": "NPL",
+          "subject": "Tử Vi",
+          "predicate": "REPRESENTS",
+          "taxonomy_code": "TV-09.A",
+          "text": "Theo nguồn, Tử Vi được dùng để luận nguồn gán khuynh hướng tính toán lợi ích trước khi hành động.",
+          "condition_context": "Theo cách phân loại cá tính của nguồn",
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 173
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000863",
+          "book_code": "NPL",
+          "subject": "Tử Vi + nhiều quyền/dũng/trợ tinh",
+          "predicate": "REPRESENTS",
+          "taxonomy_code": "TV-09.B",
+          "text": "Theo nguồn, Tử Vi + nhiều quyền/dũng/trợ tinh biểu thị tăng thực quyền, số thuộc hạ và năng lực chỉ huy; văn quan cần văn tinh, võ quan cần võ tinh.",
+          "condition_context": "Theo trạng thái/cung như mô tả",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 194
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000864",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Thiên Tướng",
+          "predicate": "REPRESENTS",
+          "taxonomy_code": "TV-09.B",
+          "text": "Theo nguồn, Tử Vi + Thiên Tướng biểu thị kết hợp lãnh đạo và thi hành, tham vọng chỉ huy cao.",
+          "condition_context": "Theo trạng thái/cung như mô tả",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 196
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000865",
+          "book_code": "NPL",
+          "subject": "Tử Vi thiếu trợ tinh",
+          "predicate": "REPRESENTS",
+          "taxonomy_code": "TV-09.B",
+          "text": "Theo nguồn, Tử Vi thiếu trợ tinh biểu thị dễ thiên về tham mưu/chuyên môn/cố vấn hơn trực tiếp cầm quyền.",
+          "condition_context": "Theo trạng thái/cung như mô tả",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 194
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000866",
+          "book_code": "NPL",
+          "subject": "Tử Vi đắc tại Quan",
+          "predicate": "REPRESENTS",
+          "taxonomy_code": "TV-09.B",
+          "text": "Theo nguồn, Tử Vi đắc tại Quan biểu thị quyền quý, chỉ huy/lãnh đạo, chức vụ cao; cấp bậc tùy miếu/vượng/đắc.",
+          "condition_context": "Theo trạng thái/cung như mô tả",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 193
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000867",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Thiên Phủ + Vũ Khúc + Thiên Tướng",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.B",
+          "text": "Theo nguồn, Tử/Phủ/Vũ/Tướng hỗ trợ học vấn/khoa bảng: có thể cho học hành cả văn lẫn võ; thiên về quý cách/chức vị hơn thuần học thuật.",
+          "condition_context": "Khi đắc/sáng như mô tả của nguồn",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 176
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000868",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Thiên Phủ + Vũ Khúc + Thiên Tướng",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.B",
+          "text": "Theo nguồn, Tử/Phủ/Vũ/Tướng hỗ trợ võ học/võ nghiệp: kết hợp văn-võ, có thể chỉ huy chính trị/quân sự.",
+          "condition_context": "Khi phối hợp đúng võ cách và trạng thái",
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 181
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-000961",
+          "book_code": "NPL",
+          "subject": "Tử Vi",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.C",
+          "text": "Theo nguồn, Tử Vi hỗ trợ cách giàu qua ý nghĩa quý/tài lực khi phối hợp thuận.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 244
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001421",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Tham Lang",
+          "predicate": "REDUCES",
+          "taxonomy_code": "TV-09.D",
+          "text": "Theo nguồn Tử Vi, Tử Vi + Tham Lang được liên hệ với giảm thọ theo nguồn.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 273
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001422",
+          "book_code": "NPL",
+          "subject": "Tử Vi gặp Tuần/Triệt",
+          "predicate": "REDUCES",
+          "taxonomy_code": "TV-09.D",
+          "text": "Theo nguồn Tử Vi, Tử Vi gặp Tuần/Triệt được liên hệ với giảm thọ theo nguồn.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 273
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001423",
+          "book_code": "NPL",
+          "subject": "Tử Vi tại Ngọ hoặc đi với Thiên Phủ/Thiên Tướng",
+          "predicate": "STRENGTHENS",
+          "taxonomy_code": "TV-09.D",
+          "text": "Theo nguồn Tử Vi, Tử Vi tại Ngọ hoặc đi với Thiên Phủ/Thiên Tướng được liệt kê trong các cấu trúc hỗ trợ thọ.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 279
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001424",
+          "book_code": "NPL",
+          "subject": "Tử Vi đắc địa",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.D",
+          "text": "Nguồn xem Tử Vi có hiệu lực phúc và che chở, nhưng kém trực tiếp hơn Vũ Khúc/Thiên Tướng trong giải họa.",
+          "condition_context": "Khi đắc địa và có cát tinh hỗ trợ",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 340
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001425",
+          "book_code": "NPL",
+          "subject": "Tử Vi, Phaù, quaân ñoàng cung.",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.D",
+          "text": "Nguồn liệt kê Tử Vi, Phaù, quaân ñoàng cung. như một dấu hiệu hoặc cấu hình liên quan đến bất lợi liên quan cha mẹ hoặc anh chị em.",
+          "condition_context": "Trong mục Họa cho cha mẹ/anh chị em",
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 334
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001426",
+          "book_code": "NPL",
+          "subject": "Tử Vi, Tham Lang ñoàng cung.",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.D",
+          "text": "Nguồn liệt kê Tử Vi, Tham Lang ñoàng cung. như một dấu hiệu hoặc cấu hình liên quan đến bất lợi liên quan cha mẹ hoặc anh chị em.",
+          "condition_context": "Trong mục Họa cho cha mẹ/anh chị em",
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 334
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001700",
+          "book_code": "NPL",
+          "subject": "Tử Vi",
+          "predicate": "MODIFIES",
+          "taxonomy_code": "TV-09.E",
+          "text": "Nguồn không dùng Tử Vi đơn độc để kết luận giới tính; khi đi với Nam/Bắc Đẩu thì theo nhóm đi cùng, còn Tử Vi đơn thủ ở Dương cung thì thiên về trai.",
+          "condition_context": "Tử Vi vừa thuộc Nam Đẩu vừa thuộc Bắc Đẩu",
+          "trust_tier": 1,
+          "review_flag": "STANDARD",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 374
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001701",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Tham Lang hội Tả/Hữu tại Cung Phu",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.E",
+          "text": "Nguồn dùng Tả/Hữu ở Phu để gợi tính song đôi; nếu muốn suy thành chồng và nhân tình thì cần thêm dấu hiệu tình dục ở Mệnh/Thân.",
+          "condition_context": "Chỉ suy thành chồng + nhân tình khi Mệnh/Thân còn có nhiều sao tình dục",
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 365
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001702",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Thiên Phủ",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.E",
+          "text": "Theo nguồn, Tử Vi + Thiên Phủ được liệt kê trong nhóm dấu hiệu đông con.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 376
+            }
+          ]
+        },
+        {
+          "knowledge_id": "KN-001703",
+          "book_code": "NPL",
+          "subject": "Tử Vi + Thiên Tướng tại Cung Thê",
+          "predicate": "SUPPORTS",
+          "taxonomy_code": "TV-09.E",
+          "text": "Nguồn liệt kê Tử Vi + Thiên Tướng ở Cung Thê như một cấu hình hỗ trợ luận người vợ có vị thế mạnh.",
+          "condition_context": null,
+          "trust_tier": 1,
+          "review_flag": "LOW_CERTAINTY",
+          "conflict_status": "NONE",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 362
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001767",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "KÌNH ĐÀ: 'Cắng kiến tắc thương” tức suốt đời chỉ thấy trắc trở buồn phiền vì bộ KÌNH ĐÀ tại đây là khó khăn và trở ngại. Đưa đến sự bất mãn trong quan trường",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001768",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "HOẢ HAO: Tai ương do đập phá, chống phá một cách điên cuồng vì giận hờn, gặp thêm VIỆT HINH tai họa giáng xuống khó thoát.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001769",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "DƯƠNG LINH: Chuyên ỷ DƯƠNG LINH chi ngược, ưa làm chuyện bạo động bạo hành, anh hùng hảo hán nhưng thành ít bại nhiều.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001770",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "KÌNH HÌNH: Xung đột bằng hung khí, vũ khí. Cái họa tủ tội dễ thấy trước mắt.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001771",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "LINH XƯƠNG ĐÀ VŨ: Nghe lời xúi giục mà làm bậy có thêm KY phẫn uất mà chết.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001772",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "KIẾP SÁT: Thành cách lưỡng sát gây ra cảnh cướp đoạt qua lại, xung đột mâu thuẩn vì 2 chữ cướp đoạt.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001776",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Bài viết ngày 16 tháng 4 năm 2009. Nhằm trả lời VuaLocVung hỏi vê cách Khủng, Hoảng Kinh Tế. Để trả lời câu hỏi",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001781",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Để có ấn tượng người viết gọi là cách \"Khủng hoảng kinh tế”, `Đoạt của”",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "PAGE_OR_PARAGRAPH_CONTINUATION",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001783",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Chú ý có thể gặp cách: LINH XƯƠNG ĐÀ VŨ nhất là có thêm KỊ",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001784",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Đây là trường hợp suốt đời chỉ thấy khó khăn và trở ngại. Công việc, địa vị không bên, không như ý muốn. Thất vọng nhiều hơn hy vọng, thành ít bại nhiều. Có thể gọi cách nầy như là 'hết giải pháp” mặc dù VŨ là sao chủ lắm giải pháp hay.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "PAGE_OR_PARAGRAPH_CONTINUATION",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001785",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "*VŨ, PHÁ, LIÊM, THAM xung hợp khúc toàn cố quí”",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001786",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Nếu thấy KÌNH ĐÀ còn là cách khi công họa loạn, chốn quan trường không thích hợp, chỉ nên kinh thương.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001787",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Và đây còn là dâm cách. Không có cát tinh dễ chết vì tửu sắc.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "PAGE_OR_PARAGRAPH_CONTINUATION",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001789",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Lại còn phòng cây đè, sét đánh, nhà đổ (còn hàm ý nhà cửa sân sâ) nai nhất có PHT VTIFT HÓA ITNH HĨNH dễ hi tai haa tiY",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "PAGE_OR_PARAGRAPH_CONTINUATION",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001790",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "TT TT, SIƯnE trưng mở su — \".. s....",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001791",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Tử Vi Ứng Dụng Bửu Đình *** Quyển 4 *** ***2**+",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001793",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "BỊ ÉP BUỘC, BỊ ÁP LỰC, bị XÚI GIỤC, THÔI THÚC : Bị thúc giục và ép buộc làm những điều không muốn.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001794",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Nơi đây còn vị trí dễ bị ép buộc, bị áp lực phải làm, làm những điều không muốn. Bị ép buộc hơn là được ép buộc kẻ khác. Kẻ bị áp bức, bị bóc lột công sức là đây.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001795",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Cần gặp cát tinh, quyền tinh. Nếu có. Cá biệt thành công nhờ cát tinh tụ tập và thành công trong gian nan. Hoặc là cái cảnh 'quân tử tại dã, tiểu nhân tại vị”.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001796",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Tuy nhiên đây cũng là mẫu người ưa làm chuyện anh hùng, dù trong hoàn cảnh nào. Ví dụ là tăng nhân, hay quan lại nhỏ, làm những công việc tự do... nhưng cũng ưa luận chữ anh hùng, để rồi sau nầy ngậm đẳng nuốt cay, mình chỉ là nấc thang cho người ta bước lên mà thôi.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001797",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-06.05",
+          "text": "Dễ bị đoạt mất tài sản, bị khảo của, bị thất thoát, bị đánh mất tài sản. Nói chung dễ bị đoạt _của. Tài sản dễ bị thất thoát, đưa đến khủng hoảng tài chính. Dễ bị lâm vào âm mưu thủ đoạt chiếm đoạt. Từ vị trí nây luôn luôn có THÁI ẨM nhị hợp, nếu là một VŨ bất tài lại càng cay đẳng bởi âm mưu, bị khảo bị tra cho văng ra của cải. Nếu là VŨ có tài (mà không chuyên môn) cũng không hiểu vì sao mà thất thoát, hao tài... Ví dụ như chỉ xì ống",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001798",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "nước ngầm đâu đó, chỉ rò ri điện đâu đó... tốn thêm hằng triệu dòng cả tháng, hà tiện một sợi dây điện có thể gây cháy nổ lung tung trong nhà.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "PAGE_OR_PARAGRAPH_CONTINUATION",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 4
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001799",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Từ vị trí trí nầy ta còn thấy bộ TỬ PHÁ. Chỉ nói đôi dòng thôi nghe... bỏ việc là đây, bị ép buộc thôi việc là đây. Từ đó sinh ra khủng hoảng tài chính.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 4
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001800",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-07.02",
+          "text": "Tại đây còn là hoàn cảnh mua đắt, bán rẻ. Trò chơi đó cứ tiếp tục vài lần vốn liếng teo dân. Nghe 2 chữ kinh doanh phát bịnh. Mà không làm bị câu: Miệng ăn núi lỡ. Khi thất vọng là đây, thầy bà đồng bóng càng mau phá của, nếu gặp thêm cách LINH XƯƠNG LA VŨ là từ bị thương tới chết, nhất là các thầy kiến thức lá mít, dối lòng dối người, thiên cơ bất khả lậu, hại người bằng lời nói, giết người không gươm dao, bàn tay không vấy máu. Sợ gì mà xúi người cúng bái, sửa nhà, xoay mộ... Cả gan nói mộ ông bà người ta động, nhưng hỏi năm ở đâu thì không biết... Khi thất vọng càng dễ tin người. Hạn VŨ SÁT một năm thấy chóng mặt, chơi Đại hạn 10 năm ngao ngán tấc lòng.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "CONDITIONAL_MEANING_CHECK",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 4
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001802",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "ơi! Ngoặc qua đây không lối thoát. Thế là thành tử lộ, may ra là con hẽm tăm tối đằng xa có lộ mới thế là mừng. Bởi thế có chết trong nầy chẳng ai hay biết. Vì thế còn là cách mất tích, thất tích. Ô hô ai tail. Xem tiếp càng buồn nhưng ráng xem nhé.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "PAGE_OR_PARAGRAPH_CONTINUATION",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 4
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001804",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "#NAME?",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 4
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001806",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Và VŨ SÁT còn là nỗi đau lòng làm thất tích cả di tích cha ông để lại. Mất đâu rồi một nấm mộ. Bãi biển nương dâu. 10 năm không viếng, vật đổi sao dời. Thế đấy.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "PAGE_OR_PARAGRAPH_CONTINUATION",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 5
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001807",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Dễ bị bắt, ép buộc bằng vũ lực, sức mạnh, vũ khí, bị ấp giải. Một VŨ hay luồn lách như trạch nhưng VŨ SÁT dễ bị nắm đầu, thế là thấy cảnh áp giải. Vì VŨ này. từng gây thất thoát hằng trăm tỷ bạc, hay vì VŨ dùng bạo lực để cướp đoạt, để xung đột, để giết người. Và ngôi sao bạo lực, ngôi sao mạnh vì gạo, bạo vì tiền... để tránh cái cảnh thất bại, thất thế, cảnh bị bắt bị giải đành tự sát. Ngay cả Hạng Võ anh hùng đến đây cũng đành tự sát, (tương truyền tự cắt đầu mình) nhưng thôi hãy đọc tiếp hồi sau sẽ rõ.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 5
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001808",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Dễ bị lục soát, khám xét bằng vũ lực. Lục soát khám xét tài sản. Dĩ nhiên có vấn đề mới bị như vậy.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 5
+            }
+          ]
+        },
+        {
+          "knowledge_id": "BD-KN-001809",
+          "book_code": "BD",
+          "subject": "Tử Vi",
+          "predicate": "CLAIMS",
+          "taxonomy_code": "TV-05.04",
+          "text": "Hiếm hoi có kẻ tốt được quyền làm việc đó, phức tạp là nay lục người mai người khác soát lại. Cái mà dễ gặp là lục soát, tìm kiếm tư liệu tức tham khảo sách vở.",
+          "condition_context": null,
+          "trust_tier": 3,
+          "review_flag": "SOURCE_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 5
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000145",
+          "book_code": "DAU",
+          "subject": null,
+          "predicate": null,
+          "taxonomy_code": "TV-02.08",
+          "text": "- Sao Tử Vi là Bá Âp, thần của khí chất tôn quí.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 22
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000298",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "Đáp: Tử Vi thuộc hành thổ là vị sao ở ngôi tôn trong các vị sao. Mệnh con người ta trước phải căn cứ vào Tử Vi để từ đấy mà lập ra thành số.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000299",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.05",
+          "text": "Tử Vi ở nơi miếu vượng là cực tốt, rơi vào hãm địa là cực hung.Tử Vi cần đi cặp với Phụ, Bật, Thiên Tướng, Xương Khúc, Khôi Việt, Nhật Nguyệt và Lộc Tồn.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "CONTENT_REVIEW_REQUIRED",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000300",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.05",
+          "text": "Ơ ngôi tô đúng miếu địa Tử Vi có thể làm tiêu bách ác chế như các sao hung hãn như Thất Sát, Hỏa Tinh, Linh Tinh. Tử vi có Lộc Tồn lại thêm Nhật Nguyệt tam hợp chiêu thì quý bất khả ngôn.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000301",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "Tử vi thiếu Phụ, Bật đồng hành ví như ông vua mất triều thần gọi bằng cô quân, tốt đẹp giảm nhiều lắm.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000302",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "Tử vi gặp toàn sao hung ví như tiểu nhân lấn quyền đuổi quân tử ra đứng đường sẽ trở nên người gian trá bất thiện.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000303",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.07",
+          "text": "Tử Vi hội Liêm Trinh không thấy tả hữu tướng tá thường làm anh tiểu lại.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000304",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "Tử Vi nên vào cung Mệnh Thân, cung Quan, cung Phúc Đức nếu Tử Vi ngồi tại cung Tật Ach, Nô Bộc là sái, giảm mất uy quyền dù có sự trợ giúp cũng không thành phúc lớn.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000305",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "Tử Vi đóng vào các cung quan lộc, thân mệnh mà được tam hợp, xung chiếu có Tả Hữu, Thiên Tướng hay Lộc Tồn ngọ Thiên Mã không bị không vong cản trở là quí.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000306",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "Tử Vi mà khuất phục được Thất Sát để dùng Thất Sát làm quyền uy là cách về Võ. Tử Vi nhờ lực Văn Khúc là cách về Văn. Tử Vi ở cung Tài Bạch hay Điền trạch đồng cư cùng Thiên Tướng, Thiên Phủ lại thêm lộc cung và tả hữu hộ vệ",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000309",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.07",
+          "text": "/ Tử Vi là đế toà, có thể giáng phúc tiêu tai ở các cung, hoá giải tính ác hư của các sao hung, chế phục Hoả Linh, trị sao Thất Sát, được sự trợ giúp của Tả Hữu, Phủ Tướng đều quyền quí, nếu không được quí thì cũng phú. Bị Tứ Sát xung phá, Tử Vi khả dĩ chống đối đỡ giảm tai hại.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 41
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000310",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.07",
+          "text": "Tử Vi gặp Phá Quân tại các cung Thìn, Tuất, sửu, Mùi thì làm tôi bất trung, làm con bất hiếu.Số đàn bà con gái có Tử Vi ở mệnh Tứ Sat xung phá không đến nỗi phải rơi vào cảnh hạ tiện/.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 41
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000312",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "/ Tử Vi nhược ngộ Phá Quân tại Thìn, Tuất, Sửu, Mùi chủ vi thần bất trung vi tử bất hiếu/ hơi khác lý thuyết Tử Vi ở nước ta chỉ nói rằng : /Giai bất nhân Phá Quân Thìn Tuất / mà thôi không thấy nói đến Sửu, Mùi đồng thời cho rằng mỗi lần Phá Quân gặp Tử Vi ở Sửu, Mùi Phá Quân bị Tử Vi khuất phục.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 41
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000313",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "Ngọc Thiềm tiên sinh có câu ca về Tử Vi như sau :",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 41
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000315",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "HAS_ELEMENT",
+          "taxonomy_code": "TV-05.04",
+          "text": "Tử Vi thuộc hành thổ, chủ tinh về quan tước, phải có tướng tá mới hữu dụng, không tướng tá là ông vua bị vây. Nó khả dĩ giáng phúc cho các cung, gặp hung nó chống",
+          "condition_context": "Câu gốc chứa thêm điều kiện/nội dung; cần tách tiếp khi duyệt.",
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 41
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000317",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.05",
+          "text": "Thiếu Tả Phụ, Hữu Bật để các ác tính uống rượu lăng nhục chủ là loại vua vô đạo.Tử Vi miếu ở cung Dần Ngọ, vượng địa ở cung Thân Hợi, Thìn Tị, Tí, Sửu, Mùi, Bình thường Mão Dậu. Sao này không có hãm địa vì nó tự giải cứu được.",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "CONTENT_REVIEW_REQUIRED",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000318",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "Những câu phú về Tử Vi ghi trong đẩu số toàn thư gồm có :",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000319",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "- Tử Vi cư Tí Ngọ, Khoa, Quyền Lộc chiếu tối vi kỳ (Tử Vi ngồi ở cung Tí cung Ngọ được Khoa Quyền Lộc tam phương chiếu tới gọi là cách ngưỡng diện triều đẩu, số rất kỳ lạ) .",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000320",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "- Tử Vi nam Hợi nữ Dần cung, Nhâm Giáp sinh nhân phú quí đồng. (Sao Tử Vi số con trai đóng tại cung Hợi, số con gái đóng tại cung Dần, những người tuổi Giáp tuổi Nhâm đều phú quí).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000321",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.05",
+          "text": "- Tử Vi Mão Dậu Kiếp Không, Tứ Sát đa vi thoát tục chi tăng.(Tử Vi ngồi ở cung Mão cung Dậu bị Tứ Sat) là Kinh, Đà, Hoả, Linh vây hãm cùng với Kiếp Không chỉ nên đi tu cho thoát tục là tốt hơn cả).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000322",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "- Tử Vi Thiên Phủ toàn y phụ bật chi công. (Tử Vi và Thiên Phủ cần dựa vào hai sao Tả Phụ Hữu Bật mới dễ bề phú quí).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000323",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.07",
+          "text": "- Tử Phủ đồng cung vô sát tấu, Giáp nhân hưởng phúc chung thân. (Hai sao Tử Vi, Thiên Phủ đồng cung ở Dần và Thân thủ mệnh, những người tuổi Giáp hưởng phúc suốt đời nếu không gặp những sát tinh làm hỗn ).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000324",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.07",
+          "text": "- Tử Phủ đồng cung lâm Tị Hợi nhất triều phú quí song toàn. (Tử Vi, Thiên Phủ ở cùng một cung Tị hoặc Hợi thì được cả giàu lẫn sang).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000325",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "- Tử Phủ triền viên, lộc phùng chung thân phúc hậu chí tam công. (Tử Vi, Thiên Phủ cùng ở Thân hoặc Dần lập mệnh lại thêm các sao tốt khác nhất là sao Lộc Tồn suốt đời phúc hậu, chức đến tam công).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000326",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.07",
+          "text": "- Tử Vi, Phụ Bật đồng cung nhất hô bách nặc. (Tử Vi, cùng ở một cung với hai sao Tả Phụ, Hữu Bật gọi một lời trăm người thưa. Nếu Phụ Bật ở tam hợp hay xung chiếu thì không tốt bằng).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000328",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.07",
+          "text": "- Tử Phủ Kình Dương tại cự thương. (Tử Vi Thiên Phủ hội với Kình Dương nếu được Vũ Khúc ở cung Thiên Di chiếu sang càng hay, số doanh thương lớn).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000329",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.07",
+          "text": "- Tử Vi, Xương Khúc phú quí khả kỳ. (Tử Vi hội cùng hai sao Văn Xương, Văn Khúc có thể ngồi đợi giàu sang tới).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000330",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.07",
+          "text": "- Tử Lộc đồng cung Nhật Nguyệt chiếu, quí bất khả ngôn. (Tử Vi cùng một cung với Lộc,có Thái Âm , Thái Dương chiếu, đại quí tộc).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000331",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "- Tử Vi, Thất Sát, Hoá Quyền phản tác trinh tường. (Tử Vi chế phục Thất Sát lại có Hoá Quyền, công danh hiển đạt).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ]
+        },
+        {
+          "knowledge_id": "DAU-KN-000332",
+          "book_code": "DAU",
+          "subject": "Tử Vi",
+          "predicate": "SOURCE_STATES",
+          "taxonomy_code": "TV-05.04",
+          "text": "- Tử Vi, Phá Quân vô Tã Hữu cát diệu hung ác tế lại chi đồ. (Sao Tử Vi đi với Phá Quân, không thấy có Tả Hữu hay sao tốt là loại ác bá cường hào).",
+          "condition_context": null,
+          "trust_tier": 2,
+          "review_flag": "SEMANTIC_REVIEW_PENDING",
+          "conflict_status": "NOT_EVALUATED",
+          "author_stance": null,
+          "source_type": "canonical",
+          "status": "unverified",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ]
+        }
+      ]
+    },
+    "case_notes": {
+      "label": "Ca nghiệm lý",
+      "status": "missing",
+      "message": "chưa có trong kho tri thức hiện tại",
+      "entries": []
+    },
+    "source_citations": {
+      "label": "Trích dẫn sách",
+      "status": "canonical",
+      "message": "Nguồn KMS; giữ riêng từng sách, chưa kiểm duyệt thủ công.",
+      "entries": [
+        {
+          "knowledge_id": "KN-000008",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 4
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000009",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 2
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000010",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 2
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000011",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 1
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000020",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 4
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000124",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 56
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000125",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 55
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000126",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 54
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000127",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 54
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000349",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 341
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000401",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 151
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000616",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 141
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000617",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 173
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000863",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 194
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000864",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 196
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000865",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 194
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000866",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 193
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000867",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 176
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000868",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 181
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-000961",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 244
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-001421",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 273
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-001422",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 273
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-001423",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 279
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-001424",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 340
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-001425",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 334
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-001426",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 334
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-001700",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 374
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-001701",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 365
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-001702",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 376
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "KN-001703",
+          "book_code": "NPL",
+          "citations": [
+            {
+              "book_code": "NPL",
+              "part_number": null,
+              "pdf_page": 362
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001767",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001768",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001769",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001770",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001771",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001772",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001776",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 1
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001781",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001783",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001784",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001785",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001786",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001787",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001789",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 2
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001790",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001791",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001793",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001794",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001795",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001796",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001797",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 3
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001798",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 4
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001799",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 4
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001800",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 4
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001802",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 4
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001804",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 4
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001806",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 5
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001807",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 5
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001808",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 5
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "BD-KN-001809",
+          "book_code": "BD",
+          "citations": [
+            {
+              "book_code": "BD",
+              "part_number": "4",
+              "pdf_page": 5
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000145",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 22
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000298",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000299",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000300",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000301",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000302",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000303",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000304",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000305",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000306",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 40
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000309",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 41
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000310",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 41
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000312",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 41
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000313",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 41
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000315",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 41
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000317",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000318",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000319",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000320",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000321",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000322",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000323",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 42
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000324",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000325",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000326",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000328",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000329",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000330",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000331",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ],
+          "status": "unverified"
+        },
+        {
+          "knowledge_id": "DAU-KN-000332",
+          "book_code": "DAU",
+          "citations": [
+            {
+              "book_code": "DAU",
+              "part_number": null,
+              "pdf_page": 43
+            }
+          ],
+          "status": "unverified"
+        }
+      ]
+    }
+  },
+  "canonical_records": 90,
+  "reference_meaning": {
+    "name": "Tử Vi",
+    "group_heading": "TỬ VI (Thổ, Bắc Đẩu, Đế Tinh)",
+    "text": "Bản chất: Đế tinh tôn quý, chủ chưởng tạo hóa, thống lĩnh chư tinh. Có thể hàng phục Thất Sát, chế phục Hỏa Linh.\nTính cách: Đôn hậu, uy nghi, phúc hậu, lãnh đạo bẩm sinh\nHình tướng: Phì mãn, mặt đỏ tía\nMiếu vượng: Phú quý song toàn. Rất mừng được Tả Hữu, Xương Khúc, Khôi Việt phù tá\nHãm địa: Bình thường, thêm sát → tăng đạo\nKhông Phụ Bật: \"Cô quân\" - như ngọc đẹp chưa đủ\nCung đặc biệt: Tử Vi cư Ngọ vô sát → \"Nhật lệ trung thiên\", tước Tam Công\nLưu ý: Tại Mão Dậu thêm sát → dễ thoát tục đi tu",
+    "status": "reference_unverified",
+    "source": "Tử Vi Đẩu Số Toàn Tập",
+    "source_note": "Tài liệu tham khảo từ bộ skill; chưa đối chiếu bản sách",
+    "source_file": "star_meanings.md",
+    "source_sha256": "0addc247d1b3cd000629d8ddd4825ff72e2a4ffca55eb64f9f3721013e50e108",
+    "omitted_lines": 0,
+    "reference_id": "REF-STAR-tu vi"
+  },
+  "books": [
+    "NPL",
+    "DAU",
+    "BD"
+  ],
+  "seed_enabled": true,
+  "tin_cay": [
+    {
+      "book_code": "BD",
+      "trust_tiers": [
+        3
+      ],
+      "label": "Đối chiếu theo nguồn; chưa xác minh toàn bộ điều kiện hoặc trang thủ công."
+    },
+    {
+      "book_code": "DAU",
+      "trust_tiers": [
+        2
+      ],
+      "label": "Đối chiếu theo nguồn; chưa xác minh toàn bộ điều kiện hoặc trang thủ công."
+    },
+    {
+      "book_code": "NPL",
+      "trust_tiers": [
+        1
+      ],
+      "label": "Đối chiếu theo nguồn; chưa xác minh toàn bộ điều kiện hoặc trang thủ công."
+    }
+  ]
+}

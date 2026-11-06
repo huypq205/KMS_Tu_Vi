@@ -1,0 +1,3533 @@
+{
+  "status": "ok",
+  "ho_ten": "Người Xem",
+  "thong_tin_co_ban": {
+    "nam_sinh": 1995,
+    "nam_sinh_am": 1995,
+    "duong_lich": true,
+    "gioi_tinh": "Nam",
+    "can_chi_nam": "Ất Hợi",
+    "ban_menh": "SƠN ĐẦU HỎA",
+    "ten_cuc": "Kim tứ Cục",
+    "cung_menh": "Thìn",
+    "cung_than": "Tý",
+    "cung_than_so": 1
+  },
+  "reading": {
+    "tieu_de": "Luận giải lá số Tử Vi - Nam Ất Hợi",
+    "tong_quan": {
+      "ban_sac": "Mệnh tại Thìn: Thất sát (H). Nhóm cần lưu ý: Quan phù (—), Tử phù (—), Mộc dục (—), Kình dương (Đ), Thiên la (—). Nhóm hỗ trợ: Hữu bật. không có Tuần/Triệt. Nhóm tham chiếu: Bộ Sát - Phá - Tham. Tại cung Mệnh có Thất Sát hãm địa hội cùng Kình Dương đắc địa theo ghi nhận của Đẩu Số Toàn Thư, cấu hình này có thể liên quan đến các đặc trưng về lao động kỹ thuật nặng hoặc định hướng kỹ nghệ như sách Nguyễn Phát Lộc đã đề cập. [1] [2]",
+      "diem_manh": [
+        "Tài Bạch tại Tý: Ân quang, Thiên khôi",
+        "Phu thê tại Dần: Thiên quý",
+        "Huynh đệ tại Mão: Lộc tồn, Hóa quyền",
+        "Mệnh tại Thìn: Hữu bật"
+      ],
+      "diem_can_ren_luyen": [
+        "Tại Mệnh, cần đối chiếu Quan phù, Tử phù, Mộc dục, Kình dương, Thiên la với trạng thái và tổ hợp trước khi diễn giải."
+      ],
+      "ngu_hanh_nang_luong": "Bản mệnh SƠN ĐẦU HỎA; Mệnh Khắc Cục. Đây là quan hệ theo quy tắc truyền thống, chưa kết luận về cuộc sống thực tế."
+    },
+    "su_nghiep": {
+      "phong_cach_lam_viec": "Quan lộc tại Thân: Phá quân (H). Nhóm cần lưu ý: Tuyệt (—), Kiếp sát (—). Nhóm hỗ trợ: Văn Khúc, Thiên việt. Tuần. Cung Quan lộc tại Thân có Phá Quân hãm địa đi cùng sao Tuyệt và Kiếp Sát theo dữ liệu từ Đẩu Số Toàn Thư, cho thấy công danh sự nghiệp có thể trải qua nhiều biến động, đòi hỏi sự kiên nhẫn khi đối diện với khó khăn. [8] [10]",
+      "moi_truong_phu_hop": "Thiên di tại Tuất: Liêm trinh (M), Thiên phủ (—). Nhóm cần lưu ý: Trực phù (—), Tử (—), Quả tú (—), Địa võng (—), Lưu hà (—). Nhóm hỗ trợ: Tả phù. không có Tuần/Triệt.",
+      "nghe_nghiep_tuong_hop": [],
+      "loi_khuyen_phat_trien": "Cần thêm đối chiếu về trạng thái Tuần Triệt thực tế tại cung Thân cũng như các cát tinh phò trợ để đánh giá chính xác khả năng vực dậy trong sự nghiệp. [8] [10]"
+    },
+    "tai_chinh": {
+      "tu_duy_tien_bac": "Tài Bạch tại Tý: Tham lang (H). Nhóm cần lưu ý: Tiểu hao (—), Thiên không (—), Suy (—). Nhóm hỗ trợ: Ân quang, Thiên khôi. không có Tuần/Triệt. Cung Tài Bạch tại Tý có Tham lang hãm địa hội cùng Tiểu hao và Thiên không theo các nguồn sách, lưu ý việc quản lý dòng tiền cần hết sức thận trọng để tránh những thất thoát không đáng có. [11] [12] [13]",
+      "co_hoi_tich_luy": "Chưa đủ căn cứ để kết luận mức thu nhập hay cơ hội kiếm tiền.",
+      "rui_ro_can_phong": "Chưa kiểm chứng đầy đủ các phụ tinh đồng cung khác tại Tài Bạch Tý để xác định liệu có cấu hình giải tỏa được các sát tinh tài chính hay không. [11] [12] [13]",
+      "loi_khuyen_quan_ly_tai_chinh": "Đối chiếu nguồn của các sao tại Tài bạch trong mục phân tích sao."
+    },
+    "tinh_cam": {
+      "xu_huong_tinh_cam": "Phu thê tại Dần: Vũ khúc (V), Thiên tướng (M). Nhóm cần lưu ý: Đà la (H), Linh tinh (Đ), Cô thần (—). Nhóm hỗ trợ: Thiên quý. không có Tuần/Triệt. Chưa đủ căn cứ từ nguồn đã lấy cho chủ đề này.",
+      "mau_nguoi_tuong_hop": "Chưa đủ căn cứ để kết luận người tương hợp.",
+      "bi_quyet_hoa_hop": "Chưa đủ căn cứ từ nguồn đã lấy cho chủ đề này."
+    },
+    "van_han_hien_tai": {
+      "giai_doan": "Năm 2027 Đinh Mùi; đại hạn 24–33 tuổi tại Dần.",
+      "chu_de_trong_tam": "Cung tiểu hạn năm được chọn: Nô bộc tại Dậu: Vô chính diệu. Nhóm cần lưu ý: Điếu khách (—), Thiên thương (—). Nhóm hỗ trợ: chưa có cát tinh trong danh mục hiện tại. Tuần. Năm 2027 (Đinh Mùi), tiểu hạn đặt tại cung Nô bộc (Dậu) có các sao Điếu khách và Thiên thương theo tài liệu lưu trữ, là năm cần chú trọng giữ gìn sức khỏe và cân nhắc kỹ khi hợp tác với bạn bè hoặc đồng nghiệp. [19] [20]",
+      "co_hoi_nen_nam_bat": "Cần đọc cùng đại hạn và các điều kiện trong sách; chưa suy ra sự kiện trong năm.",
+      "thach_thuc_can_can_trong": "Chưa an các lưu tinh và lưu Tứ Hóa năm Đinh Mùi cho tiểu hạn 2027 nên các phán đoán chỉ mang tính tham khảo tổng quan. [19] [20] Các sao tại cung tiểu hạn là sao gốc của lá số; chưa an lưu tinh hay lưu Tứ Hóa. Năm được hiểu theo năm âm lịch Can Chi, không theo ngày 01/01."
+    },
+    "loi_khuyen_hanh_dong": [
+      "Đọc tên sao, cung và trạng thái trước khi đối chiếu các nhận định trong sách.",
+      "Kiểm tra điều kiện đồng cung/hội chiếu và Tuần/Triệt của đoạn sách.",
+      "Phân biệt sao gốc tại cung tiểu hạn với lưu tinh theo năm."
+    ],
+    "luan_diem": [
+      {
+        "topic": "ban_menh",
+        "tinh_chat": "trung_tinh",
+        "nhan_dinh": "Tại cung Mệnh có Thất Sát hãm địa hội cùng Kình Dương đắc địa theo ghi nhận của Đẩu Số Toàn Thư, cấu hình này có thể liên quan đến các đặc trưng về lao động kỹ thuật nặng hoặc định hướng kỹ nghệ như sách Nguyễn Phát Lộc đã đề cập.",
+        "gioi_han": "Chưa đủ dữ liệu về các sao hội chiếu khác ngoài Kình Dương tại cung Mệnh Thìn để khẳng định mức độ ảnh hưởng toàn diện đến bản mệnh.",
+        "fact_ids": [
+          "c5_s13",
+          "c5_s52"
+        ],
+        "source_refs": [
+          1,
+          2
+        ]
+      },
+      {
+        "topic": "su_nghiep",
+        "tinh_chat": "luu_y",
+        "nhan_dinh": "Cung Quan lộc tại Thân có Phá Quân hãm địa đi cùng sao Tuyệt và Kiếp Sát theo dữ liệu từ Đẩu Số Toàn Thư, cho thấy công danh sự nghiệp có thể trải qua nhiều biến động, đòi hỏi sự kiên nhẫn khi đối diện với khó khăn.",
+        "gioi_han": "Cần thêm đối chiếu về trạng thái Tuần Triệt thực tế tại cung Thân cũng như các cát tinh phò trợ để đánh giá chính xác khả năng vực dậy trong sự nghiệp.",
+        "fact_ids": [
+          "c9_s14",
+          "c9_s48",
+          "c9_s104"
+        ],
+        "source_refs": [
+          8,
+          10
+        ]
+      },
+      {
+        "topic": "tai_chinh",
+        "tinh_chat": "luu_y",
+        "nhan_dinh": "Cung Tài Bạch tại Tý có Tham lang hãm địa hội cùng Tiểu hao và Thiên không theo các nguồn sách, lưu ý việc quản lý dòng tiền cần hết sức thận trọng để tránh những thất thoát không đáng có.",
+        "gioi_han": "Chưa kiểm chứng đầy đủ các phụ tinh đồng cung khác tại Tài Bạch Tý để xác định liệu có cấu hình giải tỏa được các sát tinh tài chính hay không.",
+        "fact_ids": [
+          "c1_s9",
+          "c1_s30",
+          "c1_s108"
+        ],
+        "source_refs": [
+          11,
+          12,
+          13
+        ]
+      },
+      {
+        "topic": "van_han",
+        "tinh_chat": "luu_y",
+        "nhan_dinh": "Năm 2027 (Đinh Mùi), tiểu hạn đặt tại cung Nô bộc (Dậu) có các sao Điếu khách và Thiên thương theo tài liệu lưu trữ, là năm cần chú trọng giữ gìn sức khỏe và cân nhắc kỹ khi hợp tác với bạn bè hoặc đồng nghiệp.",
+        "gioi_han": "Chưa an các lưu tinh và lưu Tứ Hóa năm Đinh Mùi cho tiểu hạn 2027 nên các phán đoán chỉ mang tính tham khảo tổng quan.",
+        "fact_ids": [
+          "c10_s25",
+          "c10_s88"
+        ],
+        "source_refs": [
+          19,
+          20
+        ]
+      }
+    ]
+  },
+  "la_so": {
+    "thap_ni_cung": [
+      {
+        "cung_so": 1,
+        "chuan_ten": "Tý",
+        "hanh_cung": "Thủy",
+        "ten_cung": "Tài Bạch",
+        "co_thanh": true,
+        "tu_dai_han": 44,
+        "tieu_han_chi": "Tuất",
+        "tuan_trung": false,
+        "triet_lo": false,
+        "saos": [
+          {
+            "saoID": 9,
+            "saoTen": "Tham lang",
+            "saoNguHanh": "T",
+            "saoLoai": 1,
+            "saoPhuongVi": "Bắc đẩu tinh",
+            "saoAmDuong": -1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": "H"
+          },
+          {
+            "saoID": 30,
+            "saoTen": "Tiểu hao",
+            "saoNguHanh": "H",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 16,
+            "saoTen": "Thiếu dương",
+            "saoNguHanh": "H",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 108,
+            "saoTen": "Thiên không",
+            "saoNguHanh": "T",
+            "saoLoai": 11,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 44,
+            "saoTen": "Suy",
+            "saoNguHanh": "T",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 67,
+            "saoTen": "Ân quang",
+            "saoNguHanh": "M",
+            "saoLoai": 3,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 59,
+            "saoTen": "Thiên khôi",
+            "saoNguHanh": "H",
+            "saoLoai": 6,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 78,
+            "saoTen": "Đào hoa",
+            "saoNguHanh": "M",
+            "saoLoai": 8,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 2,
+        "chuan_ten": "Sửu",
+        "hanh_cung": "Thổ",
+        "ten_cung": "Tử tức",
+        "co_thanh": false,
+        "tu_dai_han": 34,
+        "tieu_han_chi": "Hợi",
+        "tuan_trung": false,
+        "triet_lo": false,
+        "saos": [
+          {
+            "saoID": 3,
+            "saoTen": "Thiên đồng",
+            "saoNguHanh": "T",
+            "saoLoai": 1,
+            "saoPhuongVi": "Bắc đẩu tinh",
+            "saoAmDuong": 1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": "H"
+          },
+          {
+            "saoID": 10,
+            "saoTen": "Cự môn",
+            "saoNguHanh": "T",
+            "saoLoai": 1,
+            "saoPhuongVi": "Bắc đẩu tinh",
+            "saoAmDuong": -1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": "H"
+          },
+          {
+            "saoID": 29,
+            "saoTen": "Thanh long",
+            "saoNguHanh": "T",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 17,
+            "saoTen": "Tang môn",
+            "saoNguHanh": "M",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 43,
+            "saoTen": "Đế vượng",
+            "saoNguHanh": "K",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhKim",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 82,
+            "saoTen": "Địa giải",
+            "saoNguHanh": "O",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 3,
+        "chuan_ten": "Dần",
+        "hanh_cung": "Mộc",
+        "ten_cung": "Phu thê",
+        "co_thanh": false,
+        "tu_dai_han": 24,
+        "tieu_han_chi": "Tý",
+        "tuan_trung": false,
+        "triet_lo": false,
+        "saos": [
+          {
+            "saoID": 4,
+            "saoTen": "Vũ khúc",
+            "saoNguHanh": "K",
+            "saoLoai": 1,
+            "saoPhuongVi": "Bắc đẩu tinh",
+            "saoAmDuong": -1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": "V"
+          },
+          {
+            "saoID": 11,
+            "saoTen": "Thiên tướng",
+            "saoNguHanh": "T",
+            "saoLoai": 1,
+            "saoPhuongVi": "Nam đẩu tinh",
+            "saoAmDuong": 1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": "M"
+          },
+          {
+            "saoID": 28,
+            "saoTen": "Lực sĩ",
+            "saoNguHanh": "H",
+            "saoLoai": 2,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 18,
+            "saoTen": "Thiếu âm",
+            "saoNguHanh": "T",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 42,
+            "saoTen": "Lâm quan",
+            "saoNguHanh": "K",
+            "saoLoai": 7,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhKim",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 51,
+            "saoTen": "Đà la",
+            "saoNguHanh": "K",
+            "saoLoai": 11,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": "H"
+          },
+          {
+            "saoID": 55,
+            "saoTen": "Linh tinh",
+            "saoNguHanh": "H",
+            "saoLoai": 11,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": "Đ"
+          },
+          {
+            "saoID": 68,
+            "saoTen": "Thiên quý",
+            "saoNguHanh": "O",
+            "saoLoai": 3,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 96,
+            "saoTen": "Cô thần",
+            "saoNguHanh": "O",
+            "saoLoai": 13,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 4,
+        "chuan_ten": "Mão",
+        "hanh_cung": "Mộc",
+        "ten_cung": "Huynh đệ",
+        "co_thanh": false,
+        "tu_dai_han": 14,
+        "tieu_han_chi": "Sửu",
+        "tuan_trung": false,
+        "triet_lo": false,
+        "saos": [
+          {
+            "saoID": 5,
+            "saoTen": "Thái Dương",
+            "saoNguHanh": "H",
+            "saoLoai": 1,
+            "saoPhuongVi": "Nam đẩu tinh",
+            "saoAmDuong": 1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": "V"
+          },
+          {
+            "saoID": 12,
+            "saoTen": "Thiên lương",
+            "saoNguHanh": "M",
+            "saoLoai": 1,
+            "saoPhuongVi": "Nam đẩu tinh",
+            "saoAmDuong": -1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": "V"
+          },
+          {
+            "saoID": 27,
+            "saoTen": "Lộc tồn",
+            "saoNguHanh": "O",
+            "saoLoai": 3,
+            "saoPhuongVi": "Bắc đẩu tinh",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 109,
+            "saoTen": "Bác sỹ",
+            "saoNguHanh": "T",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 19,
+            "saoTen": "Quan phù",
+            "saoNguHanh": "H",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 41,
+            "saoTen": "Quan đới",
+            "saoNguHanh": "K",
+            "saoLoai": 4,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhKim",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 54,
+            "saoTen": "Địa kiếp",
+            "saoNguHanh": "H",
+            "saoLoai": 11,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": "H"
+          },
+          {
+            "saoID": 63,
+            "saoTen": "Long trì",
+            "saoNguHanh": "T",
+            "saoLoai": 3,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 86,
+            "saoTen": "Thiên tài",
+            "saoNguHanh": "O",
+            "saoLoai": 2,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 73,
+            "saoTen": "Thiên hình",
+            "saoNguHanh": "H",
+            "saoLoai": 15,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": "Đ"
+          },
+          {
+            "saoID": 93,
+            "saoTen": "Hóa quyền",
+            "saoNguHanh": "T",
+            "saoLoai": 4,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 5,
+        "chuan_ten": "Thìn",
+        "hanh_cung": "Thổ",
+        "ten_cung": "Mệnh",
+        "co_thanh": false,
+        "tu_dai_han": 4,
+        "tieu_han_chi": "Dần",
+        "tuan_trung": false,
+        "triet_lo": false,
+        "saos": [
+          {
+            "saoID": 13,
+            "saoTen": "Thất sát",
+            "saoNguHanh": "K",
+            "saoLoai": 1,
+            "saoPhuongVi": "Nam đẩu tinh",
+            "saoAmDuong": 1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": "H"
+          },
+          {
+            "saoID": 38,
+            "saoTen": "Quan phù",
+            "saoNguHanh": "H",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 20,
+            "saoTen": "Tử phù",
+            "saoNguHanh": "K",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 72,
+            "saoTen": "Nguyệt đức",
+            "saoNguHanh": "H",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 40,
+            "saoTen": "Mộc dục",
+            "saoNguHanh": "T",
+            "saoLoai": 14,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 52,
+            "saoTen": "Kình dương",
+            "saoNguHanh": "K",
+            "saoLoai": 11,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": "Đ"
+          },
+          {
+            "saoID": 62,
+            "saoTen": "Hữu bật",
+            "saoNguHanh": "O",
+            "saoLoai": 2,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 79,
+            "saoTen": "Hồng loan",
+            "saoNguHanh": "T",
+            "saoLoai": 8,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 100,
+            "saoTen": "Thiên quan",
+            "saoNguHanh": "H",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 90,
+            "saoTen": "Thiên la",
+            "saoNguHanh": "O",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 6,
+        "chuan_ten": "Tỵ",
+        "hanh_cung": "Hỏa",
+        "ten_cung": "Phụ mẫu",
+        "co_thanh": false,
+        "tu_dai_han": 114,
+        "tieu_han_chi": "Mão",
+        "tuan_trung": false,
+        "triet_lo": false,
+        "saos": [
+          {
+            "saoID": 6,
+            "saoTen": "Thiên cơ",
+            "saoNguHanh": "M",
+            "saoLoai": 1,
+            "saoPhuongVi": "Nam đẩu tinh",
+            "saoAmDuong": -1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": "V"
+          },
+          {
+            "saoID": 37,
+            "saoTen": "Phục binh",
+            "saoNguHanh": "H",
+            "saoLoai": 13,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 21,
+            "saoTen": "Tuế phá",
+            "saoNguHanh": "H",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 39,
+            "saoTen": "Tràng sinh",
+            "saoNguHanh": "T",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 56,
+            "saoTen": "Hỏa tinh",
+            "saoNguHanh": "H",
+            "saoLoai": 11,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": "Đ"
+          },
+          {
+            "saoID": 65,
+            "saoTen": "Tam thai",
+            "saoNguHanh": "M",
+            "saoLoai": 7,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 70,
+            "saoTen": "Thiên hư",
+            "saoNguHanh": "T",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 98,
+            "saoTen": "Thiên mã",
+            "saoNguHanh": "H",
+            "saoLoai": 3,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": "Đ"
+          },
+          {
+            "saoID": 99,
+            "saoTen": "Phá toái",
+            "saoNguHanh": "H",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 94,
+            "saoTen": "Hóa lộc",
+            "saoNguHanh": "M",
+            "saoLoai": 3,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 7,
+        "chuan_ten": "Ngọ",
+        "hanh_cung": "Hỏa",
+        "ten_cung": "Phúc đức",
+        "co_thanh": false,
+        "tu_dai_han": 104,
+        "tieu_han_chi": "Thìn",
+        "tuan_trung": false,
+        "triet_lo": true,
+        "saos": [
+          {
+            "saoID": 1,
+            "saoTen": "Tử vi",
+            "saoNguHanh": "O",
+            "saoLoai": 1,
+            "saoPhuongVi": "Đế tinh",
+            "saoAmDuong": 1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": "M"
+          },
+          {
+            "saoID": 36,
+            "saoTen": "Đại hao",
+            "saoNguHanh": "H",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 22,
+            "saoTen": "Long đức",
+            "saoNguHanh": "T",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 49,
+            "saoTen": "Thai",
+            "saoNguHanh": "O",
+            "saoLoai": 14,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 57,
+            "saoTen": "Văn xương",
+            "saoNguHanh": "K",
+            "saoLoai": 6,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": "H"
+          },
+          {
+            "saoID": 106,
+            "saoTen": "Văn tinh",
+            "saoNguHanh": "H",
+            "saoLoai": 6,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 85,
+            "saoTen": "Phong cáo",
+            "saoNguHanh": "O",
+            "saoLoai": 4,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 92,
+            "saoTen": "Hóa khoa",
+            "saoNguHanh": "T",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 103,
+            "saoTen": "Thiên trù",
+            "saoNguHanh": "O",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 8,
+        "chuan_ten": "Mùi",
+        "hanh_cung": "Thổ",
+        "ten_cung": "Điền trạch",
+        "co_thanh": false,
+        "tu_dai_han": 94,
+        "tieu_han_chi": "Tỵ",
+        "tuan_trung": false,
+        "triet_lo": true,
+        "saos": [
+          {
+            "saoID": 35,
+            "saoTen": "Bệnh phù",
+            "saoNguHanh": "O",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 23,
+            "saoTen": "Bạch hổ",
+            "saoNguHanh": "K",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 50,
+            "saoTen": "Dưỡng",
+            "saoNguHanh": "M",
+            "saoLoai": 2,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 53,
+            "saoTen": "Địa không",
+            "saoNguHanh": "H",
+            "saoLoai": 11,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": "H"
+          },
+          {
+            "saoID": 69,
+            "saoTen": "Thiên khốc",
+            "saoNguHanh": "T",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": "Đ"
+          },
+          {
+            "saoID": 74,
+            "saoTen": "Thiên riêu",
+            "saoNguHanh": "T",
+            "saoLoai": 13,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 75,
+            "saoTen": "Thiên y",
+            "saoNguHanh": "T",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 105,
+            "saoTen": "Hoa cái",
+            "saoNguHanh": "K",
+            "saoLoai": 14,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 9,
+        "chuan_ten": "Thân",
+        "hanh_cung": "Kim",
+        "ten_cung": "Quan lộc",
+        "co_thanh": false,
+        "tu_dai_han": 84,
+        "tieu_han_chi": "Ngọ",
+        "tuan_trung": true,
+        "triet_lo": false,
+        "saos": [
+          {
+            "saoID": 14,
+            "saoTen": "Phá quân",
+            "saoNguHanh": "T",
+            "saoLoai": 1,
+            "saoPhuongVi": "Bắc đẩu tinh",
+            "saoAmDuong": -1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": "H"
+          },
+          {
+            "saoID": 34,
+            "saoTen": "Hỷ thần",
+            "saoNguHanh": "H",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 24,
+            "saoTen": "Phúc đức",
+            "saoNguHanh": "O",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 71,
+            "saoTen": "Thiên đức",
+            "saoNguHanh": "H",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 48,
+            "saoTen": "Tuyệt",
+            "saoNguHanh": "O",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 58,
+            "saoTen": "Văn Khúc",
+            "saoNguHanh": "T",
+            "saoLoai": 6,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": "H"
+          },
+          {
+            "saoID": 60,
+            "saoTen": "Thiên việt",
+            "saoNguHanh": "H",
+            "saoLoai": 6,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 101,
+            "saoTen": "Thiên phúc",
+            "saoNguHanh": "H",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 77,
+            "saoTen": "Đường phù",
+            "saoNguHanh": "M",
+            "saoLoai": 4,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 81,
+            "saoTen": "Thiên giải",
+            "saoNguHanh": "H",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 104,
+            "saoTen": "Kiếp sát",
+            "saoNguHanh": "H",
+            "saoLoai": 11,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 10,
+        "chuan_ten": "Dậu",
+        "hanh_cung": "Kim",
+        "ten_cung": "Nô bộc",
+        "co_thanh": false,
+        "tu_dai_han": 74,
+        "tieu_han_chi": "Mùi",
+        "tuan_trung": true,
+        "triet_lo": false,
+        "saos": [
+          {
+            "saoID": 33,
+            "saoTen": "Phi liêm",
+            "saoNguHanh": "H",
+            "saoLoai": 2,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 25,
+            "saoTen": "Điếu khách",
+            "saoNguHanh": "H",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 47,
+            "saoTen": "Mộ",
+            "saoNguHanh": "O",
+            "saoLoai": 2,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 66,
+            "saoTen": "Bát tọa",
+            "saoNguHanh": "T",
+            "saoLoai": 7,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 88,
+            "saoTen": "Thiên thương",
+            "saoNguHanh": "O",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 107,
+            "saoTen": "Đẩu quân",
+            "saoNguHanh": "H",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 11,
+        "chuan_ten": "Tuất",
+        "hanh_cung": "Thổ",
+        "ten_cung": "Thiên di",
+        "co_thanh": false,
+        "tu_dai_han": 64,
+        "tieu_han_chi": "Thân",
+        "tuan_trung": false,
+        "triet_lo": false,
+        "saos": [
+          {
+            "saoID": 2,
+            "saoTen": "Liêm trinh",
+            "saoNguHanh": "H",
+            "saoLoai": 1,
+            "saoPhuongVi": "Bắc đẩu tinh",
+            "saoAmDuong": 1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": "M"
+          },
+          {
+            "saoID": 7,
+            "saoTen": "Thiên phủ",
+            "saoNguHanh": "O",
+            "saoLoai": 1,
+            "saoPhuongVi": "Nam đẩu tinh",
+            "saoAmDuong": 1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 32,
+            "saoTen": "Tấu thư",
+            "saoNguHanh": "K",
+            "saoLoai": 3,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 26,
+            "saoTen": "Trực phù",
+            "saoNguHanh": "K",
+            "saoLoai": 16,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 46,
+            "saoTen": "Tử",
+            "saoNguHanh": "H",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 61,
+            "saoTen": "Tả phù",
+            "saoNguHanh": "O",
+            "saoLoai": 2,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 80,
+            "saoTen": "Thiên hỷ",
+            "saoNguHanh": "T",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 97,
+            "saoTen": "Quả tú",
+            "saoNguHanh": "O",
+            "saoLoai": 13,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 84,
+            "saoTen": "Thai phụ",
+            "saoNguHanh": "K",
+            "saoLoai": 6,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhKim",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 91,
+            "saoTen": "Địa võng",
+            "saoNguHanh": "O",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 102,
+            "saoTen": "Lưu hà",
+            "saoNguHanh": "T",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          }
+        ]
+      },
+      {
+        "cung_so": 12,
+        "chuan_ten": "Hợi",
+        "hanh_cung": "Thủy",
+        "ten_cung": "Tật Ách",
+        "co_thanh": false,
+        "tu_dai_han": 54,
+        "tieu_han_chi": "Dậu",
+        "tuan_trung": false,
+        "triet_lo": false,
+        "saos": [
+          {
+            "saoID": 8,
+            "saoTen": "Thái âm",
+            "saoNguHanh": "T",
+            "saoLoai": 1,
+            "saoPhuongVi": "Bắc đẩu tinh",
+            "saoAmDuong": -1,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": "M"
+          },
+          {
+            "saoID": 31,
+            "saoTen": "Tướng quân",
+            "saoNguHanh": "M",
+            "saoLoai": 4,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 15,
+            "saoTen": "Thái tuế",
+            "saoNguHanh": "H",
+            "saoLoai": 15,
+            "saoPhuongVi": "",
+            "saoAmDuong": 0,
+            "vongTrangSinh": 0,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 45,
+            "saoTen": "Bệnh",
+            "saoNguHanh": "H",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 1,
+            "cssSao": "hanhHoa",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 64,
+            "saoTen": "Phượng các",
+            "saoNguHanh": "O",
+            "saoLoai": 3,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 83,
+            "saoTen": "Giải thần",
+            "saoNguHanh": "M",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhMoc",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 87,
+            "saoTen": "Thiên thọ",
+            "saoNguHanh": "O",
+            "saoLoai": 5,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 76,
+            "saoTen": "Quốc ấn",
+            "saoNguHanh": "O",
+            "saoLoai": 6,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhTho",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 89,
+            "saoTen": "Thiên sứ",
+            "saoNguHanh": "T",
+            "saoLoai": 12,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          },
+          {
+            "saoID": 95,
+            "saoTen": "Hóa kỵ",
+            "saoNguHanh": "T",
+            "saoLoai": 13,
+            "saoPhuongVi": "",
+            "saoAmDuong": "",
+            "vongTrangSinh": 0,
+            "cssSao": "hanhThuy",
+            "saoDacTinh": null
+          }
+        ]
+      }
+    ]
+  },
+  "citations": [
+    {
+      "ref_id": 1,
+      "chunk_id": "ck-KN-000835",
+      "book_code": "NPL",
+      "chapter": "Chương 11 – Cách nghề nghiệp",
+      "part_number": null,
+      "pdf_page_start": 232,
+      "pdf_page_end": 232,
+      "page_label": "PDF tr. 232",
+      "trust_tier": 1,
+      "verification_status": "unverified",
+      "excerpt": "Chương 11 – Cách nghề nghiệp | Thất Sát + Kình Dương | Theo nguồn, Thất Sát + Kình Dương được dùng như dấu hiệu liên quan kỹ nghệ/cơ khí: Lao động kỹ thuật nặng.",
+      "matched_query": "Thất sát Kình dương cung Mệnh"
+    },
+    {
+      "ref_id": 2,
+      "chunk_id": "ck-KN-000876",
+      "book_code": "NPL",
+      "chapter": "Chương 9 – Cách khoa bảng",
+      "part_number": null,
+      "pdf_page_start": 186,
+      "pdf_page_end": 186,
+      "page_label": "PDF tr. 186",
+      "trust_tier": 1,
+      "verification_status": "unverified",
+      "excerpt": "Chương 9 – Cách khoa bảng | Vũ Khúc + Tham Lang + Kình Dương + Thất Sát đắc | Theo nguồn, Vũ Khúc + Tham Lang + Kình Dương + Thất Sát đắc được liên hệ với công nghiệp/kỹ nghệ theo thử nghiệm nguồn.",
+      "matched_query": "Thất sát Kình dương cung Mệnh"
+    },
+    {
+      "ref_id": 3,
+      "chunk_id": "ck-8cfedd2582bafd87",
+      "book_code": "DAU",
+      "chapter": "Cách Cục",
+      "part_number": null,
+      "pdf_page_start": 298,
+      "pdf_page_end": 298,
+      "page_label": "PDF tr. 298",
+      "trust_tier": 2,
+      "verification_status": "unverified",
+      "excerpt": "Cách Cục | | Mão Thìn Tị Ngọ Dương chính chiếu Cách Cục | | Tử Phủ Cự Tú Tị Hợi hưng Cách Cục | | Hợi cung Thiên Phủ Thiên Lương cát Cách Cục | | Tí cung Cơ tú diệc trung bình Cách Cục | | Thất Sát Tí Ngọ phùng Tả Hữu Cách Cục | | Văn Khúc gia chi cách tối thanh Cách Cục | | Liêm tọa Thân cung phùng Cách Cục | | Cánh kiêm hóa cát phúc vưu hưng",
+      "matched_query": "Thất sát Tử phù cung Mệnh"
+    },
+    {
+      "ref_id": 4,
+      "chunk_id": "ck-ac89d0bc3d2be980",
+      "book_code": "BD",
+      "chapter": "Quyển 4",
+      "part_number": "4",
+      "pdf_page_start": 40,
+      "pdf_page_end": 68,
+      "page_label": "Phần 4, PDF tr. 40",
+      "trust_tier": 3,
+      "verification_status": "unverified",
+      "excerpt": "ình. Quyển 4 | Thiên Lương | THIÊN LƯƠNG còn là sao *Từ Thiện”. Từ là THIÊN CƠ, thiện là THIÊN LƯƠNG. Nghe 2 tiếng từ thiện là nghĩ ngay đến bộ sao nầy. Cho nên có câu: Quyển 4 | Thiên Lương | *THIÊN LƯƠNG bảo tư tài dĩ dữ nhân.THẤT SÁT thủ tha tài vi kỷ vật”",
+      "matched_query": "Thất sát Thiên la cung Mệnh"
+    },
+    {
+      "ref_id": 5,
+      "chunk_id": "ck-0e7b94bbe4037ad3",
+      "book_code": "DAU",
+      "chapter": "SAO LIÊM TRINH",
+      "part_number": null,
+      "pdf_page_start": 58,
+      "pdf_page_end": 58,
+      "page_label": "PDF tr. 58",
+      "trust_tier": 2,
+      "verification_status": "unverified",
+      "excerpt": "đẩu đệ ngũ tinh, ở số coi về quyền lệnh nếu không được miếu vượng địa lại phạm Quan Phù (trong chòm sao Thái Tuế) cho nên hoá khí thành tù, chủ tính lang độc, không học lễ nghĩa. Đắc địa gặp Lộc Tôn, phú quí gặp Văn Xương, bặt thiệp, gặp Thất Sát hiển đạt về võ chức, tại cung Quan lộc có uy quyền, tại Thân mệnh cung là sao Đào Hoa thú hai ham đánh bạc, mê gái mà bị tai tiếng.",
+      "matched_query": "Thất sát Quan phù cung Mệnh"
+    },
+    {
+      "ref_id": 6,
+      "chunk_id": "ck-KN-000220",
+      "book_code": "NPL",
+      "chapter": "Chương 6 – Các sao",
+      "part_number": null,
+      "pdf_page_start": 73,
+      "pdf_page_end": 73,
+      "page_label": "PDF tr. 73",
+      "trust_tier": 1,
+      "verification_status": "unverified",
+      "excerpt": "Chương 6 – Các sao | Mộc Dục | Mộc Dục được dùng làm ví dụ cho nhóm tính tình.",
+      "matched_query": "Mộc dục cung Mệnh"
+    },
+    {
+      "ref_id": 7,
+      "chunk_id": "ck-KN-000210",
+      "book_code": "NPL",
+      "chapter": "Chương 6 – Các sao",
+      "part_number": null,
+      "pdf_page_start": 73,
+      "pdf_page_end": 73,
+      "page_label": "PDF tr. 73",
+      "trust_tier": 1,
+      "verification_status": "unverified",
+      "excerpt": "Chương 6 – Các sao | Hóa Kỵ | Hóa Kỵ được dùng làm ví dụ cho ý nghĩa cơ thể: cái lưỡi.",
+      "matched_query": "Hóa kỵ cung Tật Ách"
+    },
+    {
+      "ref_id": 8,
+      "chunk_id": "ck-9ad4c875924b924d",
+      "book_code": "DAU",
+      "chapter": "SAO VŨ KHÚC",
+      "part_number": null,
+      "pdf_page_start": 54,
+      "pdf_page_end": 54,
+      "page_label": "PDF tr. 54",
+      "trust_tier": 2,
+      "verification_status": "unverified",
+      "excerpt": "SAO VŨ KHÚC | Vũ Khúc | - Vũ Khúc, Phá Quân phá tổ phá gia lao bác. (Vũ Khúc gặp Phá Quân phá hoại tổ nghiệp gia đình, vất vả lao đao). SAO VŨ KHÚC | Vũ Khúc | - Vũ Khúc, Phá Liêm ư mão địa, mộc yếm lôi kinh. ( Câu này không rõ nghĩa ra sao ?) SAO VŨ KHÚC | Vũ Khúc | - Vũ Khúc, Kiếp Sát hội Kình Dương nhân tài trì lực. (Vũ Khúc đi cặp cùng sao Kiếp Sát lại gặp Kình Dương quanh năm vì ham tiền mà vất vả). SAO VŨ KHÚC | Vũ Khúc | - Vũ Khúc, Dương Đà kiêm Hoả Tú táng mạng nhân tài. (Vũ Khúc Hội sao",
+      "matched_query": "Phá quân Kiếp sát cung Quan lộc"
+    },
+    {
+      "ref_id": 9,
+      "chunk_id": "ck-b63ad14e47913444",
+      "book_code": "DAU",
+      "chapter": "SAO HOÁ LỘC",
+      "part_number": null,
+      "pdf_page_start": 99,
+      "pdf_page_end": 99,
+      "page_label": "PDF tr. 99",
+      "trust_tier": 2,
+      "verification_status": "unverified",
+      "excerpt": "SAO HOÁ LỘC | | Đáp : Hoá Lộc là thần của phúc đức, thủ Thân Mệnh hay dứng Quan Lộc cung gặp Hoá Khoa, Hoá Quyền tất làm đến bậc đại thần. Tiểu Hạn ngộ Hoá Lộc sẽ phát tài thăng chức. Đại Hạn 10 năm ngộ Hoá Lộc cát khánh. Hoá Lộc không sợ các ác tính như Dương Đà, Hoả, Kị xung chiếu. Số đàn bà Hoá Lộc thủ Mệnh thêm cát tinh tấu hợp là mệnh phụ. Đại Tiểu Hạn gặp Hoá Lộc nữ mạng không có sát tinh xung chiếu mới hay.",
+      "matched_query": "Hóa khoa cung Phúc đức"
+    },
+    {
+      "ref_id": 10,
+      "chunk_id": "ck-0a3713c7088faac4",
+      "book_code": "BD",
+      "chapter": "Quyển 4",
+      "part_number": "4",
+      "pdf_page_start": 31,
+      "pdf_page_end": 31,
+      "page_label": "Phần 4, PDF tr. 31",
+      "trust_tier": 3,
+      "verification_status": "unverified",
+      "excerpt": "hạ thủ vi cường mà) tức không ai chấp ai. Yếu tố nầy giống như bộ THIÊN TƯỞNG, PHÁ QUẦN. THIÊN ĐÓNG là ngôi sao thông minh như đã biết (tuyệt nhất là cách ĐÔNG LƯƠNG Dần Thân). Trong kinh doanh cũng tương đương với các đối thủ khác, chứ không chịu thua kém cho bằng chị bằng em. Ta đã biết THIÊN ĐỒNG ưa giống nhau, ưa bắt chước, có ,tính con nít. Cho nên hàng giả, hàng nhái... đều từ các THIÊN ĐỒNG",
+      "matched_query": "Phá quân Tuyệt cung Quan lộc"
+    },
+    {
+      "ref_id": 11,
+      "chunk_id": "ck-KN-000570",
+      "book_code": "NPL",
+      "chapter": "Chương 4 – Cách ái tình",
+      "part_number": null,
+      "pdf_page_start": 148,
+      "pdf_page_end": 148,
+      "page_label": "PDF tr. 148",
+      "trust_tier": 1,
+      "verification_status": "unverified",
+      "excerpt": "Chương 4 – Cách ái tình | Tham Lang + Đại Hao/Tiểu Hao | Theo nguồn, khi Tham Lang + Đại Hao/Tiểu Hao hội tụ, thái thứ lang được dẫn cho rằng dễ có tình kín hoặc nhiều mối quan hệ.",
+      "matched_query": "Tham lang Tiểu hao cung Tài Bạch"
+    },
+    {
+      "ref_id": 12,
+      "chunk_id": "ck-0db7105bb8f50114",
+      "book_code": "DAU",
+      "chapter": "LUẬN VỀ NỮ MỆNH",
+      "part_number": null,
+      "pdf_page_start": 245,
+      "pdf_page_end": 245,
+      "page_label": "PDF tr. 245",
+      "trust_tier": 2,
+      "verification_status": "unverified",
+      "excerpt": "u mệnh giàu sang chức tước). LUẬN VỀ NỮ MỆNH | | - Hỏa Linh Dương Đà cặp Cự Môn Thiên Không Địa Kiếp hựu tương làm Tham Lang Thất Sát Liêm Trinh tú Vũ Khúc gia lâm khắc hại xâm. (Nữ mệnh không nên gặp Dương Đà, Linh Hỏa, Thiên Không, Địa Kiếp và Cự Môn. Nữ mệnh cũng không nên có Tham Lang, Thất Sát, Liêm Trinh lại thêm Vũ Khúc).",
+      "matched_query": "Tham lang Thiên không cung Tài Bạch"
+    },
+    {
+      "ref_id": 13,
+      "chunk_id": "ck-KN-001701",
+      "book_code": "NPL",
+      "chapter": "Chương 20 – Cách đa phu",
+      "part_number": null,
+      "pdf_page_start": 365,
+      "pdf_page_end": 365,
+      "page_label": "PDF tr. 365",
+      "trust_tier": 1,
+      "verification_status": "unverified",
+      "excerpt": "Chương 20 – Cách đa phu | Tử Vi + Tham Lang hội Tả/Hữu tại Cung Phu | Nguồn dùng Tả/Hữu ở Phu để gợi tính song đôi; nếu muốn suy thành chồng và nhân tình thì cần thêm dấu hiệu tình dục ở Mệnh/Thân.",
+      "matched_query": "Tham lang Suy cung Tài Bạch"
+    },
+    {
+      "ref_id": 14,
+      "chunk_id": "ck-KN-000878",
+      "book_code": "NPL",
+      "chapter": "Chương 9 – Cách khoa bảng",
+      "part_number": null,
+      "pdf_page_start": 181,
+      "pdf_page_end": 181,
+      "page_label": "PDF tr. 181",
+      "trust_tier": 1,
+      "verification_status": "unverified",
+      "excerpt": "Chương 9 – Cách khoa bảng | Vũ Khúc + Thiên Tướng | Theo nguồn, Vũ Khúc + Thiên Tướng hỗ trợ võ học/võ nghiệp: võ nghiệp mạnh.",
+      "matched_query": "Vũ khúc Thiên tướng cung Phu thê"
+    },
+    {
+      "ref_id": 15,
+      "chunk_id": "ck-KN-001712",
+      "book_code": "NPL",
+      "chapter": "Chương 21 – Cách tử tức",
+      "part_number": null,
+      "pdf_page_start": 372,
+      "pdf_page_end": 372,
+      "page_label": "PDF tr. 372",
+      "trust_tier": 1,
+      "verification_status": "unverified",
+      "excerpt": "Chương 21 – Cách tử tức | Vũ Khúc + Thiên Tướng | Theo nguồn, Vũ Khúc + Thiên Tướng thuộc nhóm chính tinh/cách được ghi nhận là bất lợi hoặc làm giảm số con.",
+      "matched_query": "Vũ khúc Thiên tướng cung Phu thê"
+    },
+    {
+      "ref_id": 16,
+      "chunk_id": "ck-2634bcf43e1b5247",
+      "book_code": "BD",
+      "chapter": "Quyển 6",
+      "part_number": "6",
+      "pdf_page_start": 59,
+      "pdf_page_end": 59,
+      "page_label": "Phần 6, PDF tr. 59",
+      "trust_tier": 3,
+      "verification_status": "unverified",
+      "excerpt": "Quyển 6 | Tuần | Bây giờ tự mình xem lại bộ TUẦN ĐÀ lá số MH (để điều tra có bị mắc bây hay không), Chiến Binh Tử Trận (sa vào đâu?), thấy gì trên lá số Hitler. Rút ra một kinh nghiệm, đưa vào phòng VŨ KHÚC, phòng ĐÀ LA thì tùy. Nhiều phòng mới gọi là viện, mai mốt làm viện trưởng. Xin đừng quên câu: Quyển 6 | Tử Vi | \"Nhất tự vi sư, bán tự vi sư, càng học càng ...hư”. Câu nầy mới, hiện đại ở chỗ Trung Việt đề huầ.",
+      "matched_query": "Vũ khúc Đà la cung Phu thê"
+    },
+    {
+      "ref_id": 17,
+      "chunk_id": "ck-1a8b694bc05107c7",
+      "book_code": "DAU",
+      "chapter": "SAO THIÊN LƯƠNG",
+      "part_number": null,
+      "pdf_page_start": 78,
+      "pdf_page_end": 78,
+      "page_label": "PDF tr. 78",
+      "trust_tier": 2,
+      "verification_status": "unverified",
+      "excerpt": "ƠNG | Thiên Lương | - Lương Vũ Am Linh nghĩ tác đống lương chi khách. (Hội cùng Vũ Khúc, Thái Âm , Linh Tinh đắc địa là người tài giỏi có thể đứng ngôi vị trụ cột ). SAO THIÊN LƯƠNG | Thiên Lương | - Lương tú Thái Âm khước tác phiêu bồng chi khách. (Thiên Lương ở Dậu, Thái Âm ở Tị là kẻ phiêu bạt). SAO THIÊN LƯƠNG | Thiên Lương | - Thiên Lương, Thiên Mã vi nhân phiêu đãng phong lưu. (Hội cùng Thiên Mã làm người phong lưu phiêu lãng).",
+      "matched_query": "Vũ khúc Linh tinh cung Phu thê"
+    },
+    {
+      "ref_id": 18,
+      "chunk_id": "ck-KN-000896",
+      "book_code": "NPL",
+      "chapter": "Chương 12 – Cách giàu",
+      "part_number": null,
+      "pdf_page_start": 254,
+      "pdf_page_end": 254,
+      "page_label": "PDF tr. 254",
+      "trust_tier": 1,
+      "verification_status": "unverified",
+      "excerpt": "Chương 12 – Cách giàu | Cô Thần/Quả Tú | Theo nguồn, Cô Thần/Quả Tú có thể biểu thị khuynh hướng giữ của; điều này không tự động đồng nghĩa với giàu.",
+      "matched_query": "Cô thần cung Phu thê"
+    },
+    {
+      "ref_id": 19,
+      "chunk_id": "ck-KN-000967",
+      "book_code": "NPL",
+      "chapter": "Chương 13 – Cách nghèo",
+      "part_number": null,
+      "pdf_page_start": 262,
+      "pdf_page_end": 262,
+      "page_label": "PDF tr. 262",
+      "trust_tier": 1,
+      "verification_status": "unverified",
+      "excerpt": "Chương 13 – Cách nghèo | Điếu Khách | Theo nguồn, Điếu Khách được liên hệ với khuynh hướng cờ bạc mạnh hơn theo nguồn.",
+      "matched_query": "Điếu khách cung Nô bộc"
+    },
+    {
+      "ref_id": 20,
+      "chunk_id": "ck-d463c16ef6c1541a",
+      "book_code": "DAU",
+      "chapter": "SAO THIÊN THƯƠNG – THIÊN SỨ",
+      "part_number": null,
+      "pdf_page_start": 116,
+      "pdf_page_end": 116,
+      "page_label": "PDF tr. 116",
+      "trust_tier": 2,
+      "verification_status": "unverified",
+      "excerpt": "SAO THIÊN THƯƠNG – THIÊN SỨ | | Đại Tiểu Hạn gặp sao Thiên Thương SAO THIÊN THƯƠNG – THIÊN SỨ | | Đức Thánh Khổng bị tuyệt lương ở nước Trần SAO THIÊN THƯƠNG – THIÊN SỨ | | Lại thêm sao Thiên Sứ nữa càng khó khăn hơn SAO THIÊN THƯƠNG – THIÊN SỨ | | Thạch Sùng cự phú mà mất hết nghiệp. SAO THIÊN THƯƠNG – THIÊN SỨ | | Những câu phú về sao Thương Sứ ghi trong Tử Vi đẩu số toàn thư gồm có : SAO THIÊN THƯƠNG – THIÊN SỨ | | - Thiên Thương gia ác diệu Trọng Ni tuyệt lương, Đặng Thông vong. (Hạn Thiên T",
+      "matched_query": "Thiên thương cung Nô bộc"
+    }
+  ],
+  "star_analysis": [
+    {
+      "fact_id": "c1_s30",
+      "star_id": 30,
+      "sao": "Tiểu hao",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Tài Bạch",
+      "dia_chi": "Tý",
+      "roles": [
+        "Thân cư"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        11
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c1_s108",
+      "star_id": 108,
+      "sao": "Thiên không",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Tài Bạch",
+      "dia_chi": "Tý",
+      "roles": [
+        "Thân cư"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        12
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c1_s44",
+      "star_id": 44,
+      "sao": "Suy",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Tài Bạch",
+      "dia_chi": "Tý",
+      "roles": [
+        "Thân cư"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        13
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c1_s9",
+      "star_id": 9,
+      "sao": "Tham lang",
+      "nhom": "chinh_tinh",
+      "dac_tinh": "H",
+      "cung": "Tài Bạch",
+      "dia_chi": "Tý",
+      "roles": [
+        "Thân cư"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        2,
+        11,
+        12,
+        13
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c1_s67",
+      "star_id": 67,
+      "sao": "Ân quang",
+      "nhom": "cat_tinh",
+      "dac_tinh": "—",
+      "cung": "Tài Bạch",
+      "dia_chi": "Tý",
+      "roles": [
+        "Thân cư"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [],
+      "source_status": "Chưa tìm được đoạn sách phù hợp để diễn giải."
+    },
+    {
+      "fact_id": "c1_s59",
+      "star_id": 59,
+      "sao": "Thiên khôi",
+      "nhom": "cat_tinh",
+      "dac_tinh": "—",
+      "cung": "Tài Bạch",
+      "dia_chi": "Tý",
+      "roles": [
+        "Thân cư"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [],
+      "source_status": "Chưa tìm được đoạn sách phù hợp để diễn giải."
+    },
+    {
+      "fact_id": "c3_s51",
+      "star_id": 51,
+      "sao": "Đà la",
+      "nhom": "risk_stars",
+      "dac_tinh": "H",
+      "cung": "Phu thê",
+      "dia_chi": "Dần",
+      "roles": [
+        "Đại hạn hiện tại"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        16
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c3_s55",
+      "star_id": 55,
+      "sao": "Linh tinh",
+      "nhom": "risk_stars",
+      "dac_tinh": "Đ",
+      "cung": "Phu thê",
+      "dia_chi": "Dần",
+      "roles": [
+        "Đại hạn hiện tại"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        17
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c3_s96",
+      "star_id": 96,
+      "sao": "Cô thần",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Phu thê",
+      "dia_chi": "Dần",
+      "roles": [
+        "Đại hạn hiện tại"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        18
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c3_s4",
+      "star_id": 4,
+      "sao": "Vũ khúc",
+      "nhom": "chinh_tinh",
+      "dac_tinh": "V",
+      "cung": "Phu thê",
+      "dia_chi": "Dần",
+      "roles": [
+        "Đại hạn hiện tại"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        2,
+        8,
+        12,
+        14,
+        15,
+        16,
+        17
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c3_s11",
+      "star_id": 11,
+      "sao": "Thiên tướng",
+      "nhom": "chinh_tinh",
+      "dac_tinh": "M",
+      "cung": "Phu thê",
+      "dia_chi": "Dần",
+      "roles": [
+        "Đại hạn hiện tại"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        10,
+        14,
+        15
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c3_s68",
+      "star_id": 68,
+      "sao": "Thiên quý",
+      "nhom": "cat_tinh",
+      "dac_tinh": "—",
+      "cung": "Phu thê",
+      "dia_chi": "Dần",
+      "roles": [
+        "Đại hạn hiện tại"
+      ],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [],
+      "source_status": "Chưa tìm được đoạn sách phù hợp để diễn giải."
+    },
+    {
+      "fact_id": "c5_s38",
+      "star_id": 38,
+      "sao": "Quan phù",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Mệnh",
+      "dia_chi": "Thìn",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        5
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c5_s20",
+      "star_id": 20,
+      "sao": "Tử phù",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Mệnh",
+      "dia_chi": "Thìn",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        3
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c5_s40",
+      "star_id": 40,
+      "sao": "Mộc dục",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Mệnh",
+      "dia_chi": "Thìn",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        6
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c5_s52",
+      "star_id": 52,
+      "sao": "Kình dương",
+      "nhom": "risk_stars",
+      "dac_tinh": "Đ",
+      "cung": "Mệnh",
+      "dia_chi": "Thìn",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        1,
+        2,
+        8
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c5_s90",
+      "star_id": 90,
+      "sao": "Thiên la",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Mệnh",
+      "dia_chi": "Thìn",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        4
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c5_s13",
+      "star_id": 13,
+      "sao": "Thất sát",
+      "nhom": "chinh_tinh",
+      "dac_tinh": "H",
+      "cung": "Mệnh",
+      "dia_chi": "Thìn",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        12
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c5_s62",
+      "star_id": 62,
+      "sao": "Hữu bật",
+      "nhom": "cat_tinh",
+      "dac_tinh": "—",
+      "cung": "Mệnh",
+      "dia_chi": "Thìn",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [],
+      "source_status": "Chưa tìm được đoạn sách phù hợp để diễn giải."
+    },
+    {
+      "fact_id": "c9_s48",
+      "star_id": 48,
+      "sao": "Tuyệt",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Quan lộc",
+      "dia_chi": "Thân",
+      "roles": [],
+      "tuan": true,
+      "triet": false,
+      "source_refs": [
+        10,
+        20
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c9_s104",
+      "star_id": 104,
+      "sao": "Kiếp sát",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Quan lộc",
+      "dia_chi": "Thân",
+      "roles": [],
+      "tuan": true,
+      "triet": false,
+      "source_refs": [
+        8
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c9_s14",
+      "star_id": 14,
+      "sao": "Phá quân",
+      "nhom": "chinh_tinh",
+      "dac_tinh": "H",
+      "cung": "Quan lộc",
+      "dia_chi": "Thân",
+      "roles": [],
+      "tuan": true,
+      "triet": false,
+      "source_refs": [
+        8,
+        10
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c9_s58",
+      "star_id": 58,
+      "sao": "Văn Khúc",
+      "nhom": "cat_tinh",
+      "dac_tinh": "H",
+      "cung": "Quan lộc",
+      "dia_chi": "Thân",
+      "roles": [],
+      "tuan": true,
+      "triet": false,
+      "source_refs": [
+        3
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c9_s60",
+      "star_id": 60,
+      "sao": "Thiên việt",
+      "nhom": "cat_tinh",
+      "dac_tinh": "—",
+      "cung": "Quan lộc",
+      "dia_chi": "Thân",
+      "roles": [],
+      "tuan": true,
+      "triet": false,
+      "source_refs": [],
+      "source_status": "Chưa tìm được đoạn sách phù hợp để diễn giải."
+    },
+    {
+      "fact_id": "c10_s25",
+      "star_id": 25,
+      "sao": "Điếu khách",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Nô bộc",
+      "dia_chi": "Dậu",
+      "roles": [
+        "Tiểu hạn 2027"
+      ],
+      "tuan": true,
+      "triet": false,
+      "source_refs": [
+        19
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c10_s88",
+      "star_id": 88,
+      "sao": "Thiên thương",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Nô bộc",
+      "dia_chi": "Dậu",
+      "roles": [
+        "Tiểu hạn 2027"
+      ],
+      "tuan": true,
+      "triet": false,
+      "source_refs": [
+        20
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c11_s26",
+      "star_id": 26,
+      "sao": "Trực phù",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Thiên di",
+      "dia_chi": "Tuất",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [],
+      "source_status": "Chưa tìm được đoạn sách phù hợp để diễn giải."
+    },
+    {
+      "fact_id": "c11_s46",
+      "star_id": 46,
+      "sao": "Tử",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Thiên di",
+      "dia_chi": "Tuất",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        3,
+        4,
+        5,
+        8,
+        10,
+        11,
+        12,
+        13,
+        15,
+        16,
+        17,
+        18,
+        20
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c11_s97",
+      "star_id": 97,
+      "sao": "Quả tú",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Thiên di",
+      "dia_chi": "Tuất",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        18
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c11_s91",
+      "star_id": 91,
+      "sao": "Địa võng",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Thiên di",
+      "dia_chi": "Tuất",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [],
+      "source_status": "Chưa tìm được đoạn sách phù hợp để diễn giải."
+    },
+    {
+      "fact_id": "c11_s102",
+      "star_id": 102,
+      "sao": "Lưu hà",
+      "nhom": "risk_stars",
+      "dac_tinh": "—",
+      "cung": "Thiên di",
+      "dia_chi": "Tuất",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [],
+      "source_status": "Chưa tìm được đoạn sách phù hợp để diễn giải."
+    },
+    {
+      "fact_id": "c11_s2",
+      "star_id": 2,
+      "sao": "Liêm trinh",
+      "nhom": "chinh_tinh",
+      "dac_tinh": "M",
+      "cung": "Thiên di",
+      "dia_chi": "Tuất",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        12
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c11_s7",
+      "star_id": 7,
+      "sao": "Thiên phủ",
+      "nhom": "chinh_tinh",
+      "dac_tinh": "—",
+      "cung": "Thiên di",
+      "dia_chi": "Tuất",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [
+        3
+      ],
+      "source_status": "Có đoạn nhắc tên sao; cần đối chiếu thêm điều kiện tổ hợp/cung."
+    },
+    {
+      "fact_id": "c11_s61",
+      "star_id": 61,
+      "sao": "Tả phù",
+      "nhom": "cat_tinh",
+      "dac_tinh": "—",
+      "cung": "Thiên di",
+      "dia_chi": "Tuất",
+      "roles": [],
+      "tuan": false,
+      "triet": false,
+      "source_refs": [],
+      "source_status": "Chưa tìm được đoạn sách phù hợp để diễn giải."
+    }
+  ],
+  "annual": {
+    "year": 2027,
+    "can_chi": "Đinh Mùi",
+    "tuoi_am": 33,
+    "tieu_han": {
+      "cung_so": 10,
+      "ten": "Nô bộc",
+      "chuan_ten": "Dậu",
+      "tuan_trung": true,
+      "triet_lo": false,
+      "chinh_tinh": [],
+      "sat_tinh": [],
+      "cat_tinh": [],
+      "phu_tinh_khac": [
+        {
+          "id": 33,
+          "ten": "Phi liêm",
+          "dac_tinh": "—",
+          "loai": 2
+        },
+        {
+          "id": 25,
+          "ten": "Điếu khách",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 47,
+          "ten": "Mộ",
+          "dac_tinh": "—",
+          "loai": 2
+        },
+        {
+          "id": 66,
+          "ten": "Bát tọa",
+          "dac_tinh": "—",
+          "loai": 7
+        },
+        {
+          "id": 88,
+          "ten": "Thiên thương",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 107,
+          "ten": "Đẩu quân",
+          "dac_tinh": "—",
+          "loai": 5
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 25,
+          "ten": "Điếu khách",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 88,
+          "ten": "Thiên thương",
+          "dac_tinh": "—",
+          "loai": 12
+        }
+      ]
+    },
+    "method": "Tiểu hạn theo ánh xạ cungTieuHan của vendor/lasotuvi, chọn theo chi năm âm lịch.",
+    "limitations": "Các sao tại cung tiểu hạn là sao gốc của lá số; chưa an lưu tinh hay lưu Tứ Hóa. Năm được hiểu theo năm âm lịch Can Chi, không theo ngày 01/01."
+  },
+  "palaces": [
+    {
+      "cung_so": 1,
+      "ten": "Tài Bạch",
+      "chuan_ten": "Tý",
+      "tuan_trung": false,
+      "triet_lo": false,
+      "chinh_tinh": [
+        {
+          "id": 9,
+          "ten": "Tham lang",
+          "dac_tinh": "H",
+          "loai": 1
+        }
+      ],
+      "sat_tinh": [],
+      "cat_tinh": [
+        {
+          "id": 67,
+          "ten": "Ân quang",
+          "dac_tinh": "—",
+          "loai": 3
+        },
+        {
+          "id": 59,
+          "ten": "Thiên khôi",
+          "dac_tinh": "—",
+          "loai": 6
+        }
+      ],
+      "phu_tinh_khac": [
+        {
+          "id": 30,
+          "ten": "Tiểu hao",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 16,
+          "ten": "Thiếu dương",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 108,
+          "ten": "Thiên không",
+          "dac_tinh": "—",
+          "loai": 11
+        },
+        {
+          "id": 44,
+          "ten": "Suy",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 78,
+          "ten": "Đào hoa",
+          "dac_tinh": "—",
+          "loai": 8
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 30,
+          "ten": "Tiểu hao",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 108,
+          "ten": "Thiên không",
+          "dac_tinh": "—",
+          "loai": 11
+        },
+        {
+          "id": 44,
+          "ten": "Suy",
+          "dac_tinh": "—",
+          "loai": 12
+        }
+      ]
+    },
+    {
+      "cung_so": 2,
+      "ten": "Tử tức",
+      "chuan_ten": "Sửu",
+      "tuan_trung": false,
+      "triet_lo": false,
+      "chinh_tinh": [
+        {
+          "id": 3,
+          "ten": "Thiên đồng",
+          "dac_tinh": "H",
+          "loai": 1
+        },
+        {
+          "id": 10,
+          "ten": "Cự môn",
+          "dac_tinh": "H",
+          "loai": 1
+        }
+      ],
+      "sat_tinh": [],
+      "cat_tinh": [],
+      "phu_tinh_khac": [
+        {
+          "id": 29,
+          "ten": "Thanh long",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 17,
+          "ten": "Tang môn",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 43,
+          "ten": "Đế vượng",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 82,
+          "ten": "Địa giải",
+          "dac_tinh": "—",
+          "loai": 5
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 17,
+          "ten": "Tang môn",
+          "dac_tinh": "—",
+          "loai": 12
+        }
+      ]
+    },
+    {
+      "cung_so": 3,
+      "ten": "Phu thê",
+      "chuan_ten": "Dần",
+      "tuan_trung": false,
+      "triet_lo": false,
+      "chinh_tinh": [
+        {
+          "id": 4,
+          "ten": "Vũ khúc",
+          "dac_tinh": "V",
+          "loai": 1
+        },
+        {
+          "id": 11,
+          "ten": "Thiên tướng",
+          "dac_tinh": "M",
+          "loai": 1
+        }
+      ],
+      "sat_tinh": [
+        {
+          "id": 51,
+          "ten": "Đà la",
+          "dac_tinh": "H",
+          "loai": 11
+        },
+        {
+          "id": 55,
+          "ten": "Linh tinh",
+          "dac_tinh": "Đ",
+          "loai": 11
+        }
+      ],
+      "cat_tinh": [
+        {
+          "id": 68,
+          "ten": "Thiên quý",
+          "dac_tinh": "—",
+          "loai": 3
+        }
+      ],
+      "phu_tinh_khac": [
+        {
+          "id": 28,
+          "ten": "Lực sĩ",
+          "dac_tinh": "—",
+          "loai": 2
+        },
+        {
+          "id": 18,
+          "ten": "Thiếu âm",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 42,
+          "ten": "Lâm quan",
+          "dac_tinh": "—",
+          "loai": 7
+        },
+        {
+          "id": 96,
+          "ten": "Cô thần",
+          "dac_tinh": "—",
+          "loai": 13
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 51,
+          "ten": "Đà la",
+          "dac_tinh": "H",
+          "loai": 11
+        },
+        {
+          "id": 55,
+          "ten": "Linh tinh",
+          "dac_tinh": "Đ",
+          "loai": 11
+        },
+        {
+          "id": 96,
+          "ten": "Cô thần",
+          "dac_tinh": "—",
+          "loai": 13
+        }
+      ]
+    },
+    {
+      "cung_so": 4,
+      "ten": "Huynh đệ",
+      "chuan_ten": "Mão",
+      "tuan_trung": false,
+      "triet_lo": false,
+      "chinh_tinh": [
+        {
+          "id": 5,
+          "ten": "Thái Dương",
+          "dac_tinh": "V",
+          "loai": 1
+        },
+        {
+          "id": 12,
+          "ten": "Thiên lương",
+          "dac_tinh": "V",
+          "loai": 1
+        }
+      ],
+      "sat_tinh": [
+        {
+          "id": 54,
+          "ten": "Địa kiếp",
+          "dac_tinh": "H",
+          "loai": 11
+        }
+      ],
+      "cat_tinh": [
+        {
+          "id": 27,
+          "ten": "Lộc tồn",
+          "dac_tinh": "—",
+          "loai": 3
+        },
+        {
+          "id": 93,
+          "ten": "Hóa quyền",
+          "dac_tinh": "—",
+          "loai": 4
+        }
+      ],
+      "phu_tinh_khac": [
+        {
+          "id": 109,
+          "ten": "Bác sỹ",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 19,
+          "ten": "Quan phù",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 41,
+          "ten": "Quan đới",
+          "dac_tinh": "—",
+          "loai": 4
+        },
+        {
+          "id": 63,
+          "ten": "Long trì",
+          "dac_tinh": "—",
+          "loai": 3
+        },
+        {
+          "id": 86,
+          "ten": "Thiên tài",
+          "dac_tinh": "—",
+          "loai": 2
+        },
+        {
+          "id": 73,
+          "ten": "Thiên hình",
+          "dac_tinh": "Đ",
+          "loai": 15
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 19,
+          "ten": "Quan phù",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 54,
+          "ten": "Địa kiếp",
+          "dac_tinh": "H",
+          "loai": 11
+        },
+        {
+          "id": 73,
+          "ten": "Thiên hình",
+          "dac_tinh": "Đ",
+          "loai": 15
+        }
+      ]
+    },
+    {
+      "cung_so": 5,
+      "ten": "Mệnh",
+      "chuan_ten": "Thìn",
+      "tuan_trung": false,
+      "triet_lo": false,
+      "chinh_tinh": [
+        {
+          "id": 13,
+          "ten": "Thất sát",
+          "dac_tinh": "H",
+          "loai": 1
+        }
+      ],
+      "sat_tinh": [
+        {
+          "id": 52,
+          "ten": "Kình dương",
+          "dac_tinh": "Đ",
+          "loai": 11
+        }
+      ],
+      "cat_tinh": [
+        {
+          "id": 62,
+          "ten": "Hữu bật",
+          "dac_tinh": "—",
+          "loai": 2
+        }
+      ],
+      "phu_tinh_khac": [
+        {
+          "id": 38,
+          "ten": "Quan phù",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 20,
+          "ten": "Tử phù",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 72,
+          "ten": "Nguyệt đức",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 40,
+          "ten": "Mộc dục",
+          "dac_tinh": "—",
+          "loai": 14
+        },
+        {
+          "id": 79,
+          "ten": "Hồng loan",
+          "dac_tinh": "—",
+          "loai": 8
+        },
+        {
+          "id": 100,
+          "ten": "Thiên quan",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 90,
+          "ten": "Thiên la",
+          "dac_tinh": "—",
+          "loai": 12
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 38,
+          "ten": "Quan phù",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 20,
+          "ten": "Tử phù",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 40,
+          "ten": "Mộc dục",
+          "dac_tinh": "—",
+          "loai": 14
+        },
+        {
+          "id": 52,
+          "ten": "Kình dương",
+          "dac_tinh": "Đ",
+          "loai": 11
+        },
+        {
+          "id": 90,
+          "ten": "Thiên la",
+          "dac_tinh": "—",
+          "loai": 12
+        }
+      ]
+    },
+    {
+      "cung_so": 6,
+      "ten": "Phụ mẫu",
+      "chuan_ten": "Tỵ",
+      "tuan_trung": false,
+      "triet_lo": false,
+      "chinh_tinh": [
+        {
+          "id": 6,
+          "ten": "Thiên cơ",
+          "dac_tinh": "V",
+          "loai": 1
+        }
+      ],
+      "sat_tinh": [
+        {
+          "id": 56,
+          "ten": "Hỏa tinh",
+          "dac_tinh": "Đ",
+          "loai": 11
+        }
+      ],
+      "cat_tinh": [
+        {
+          "id": 98,
+          "ten": "Thiên mã",
+          "dac_tinh": "Đ",
+          "loai": 3
+        },
+        {
+          "id": 94,
+          "ten": "Hóa lộc",
+          "dac_tinh": "—",
+          "loai": 3
+        }
+      ],
+      "phu_tinh_khac": [
+        {
+          "id": 37,
+          "ten": "Phục binh",
+          "dac_tinh": "—",
+          "loai": 13
+        },
+        {
+          "id": 21,
+          "ten": "Tuế phá",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 39,
+          "ten": "Tràng sinh",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 65,
+          "ten": "Tam thai",
+          "dac_tinh": "—",
+          "loai": 7
+        },
+        {
+          "id": 70,
+          "ten": "Thiên hư",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 99,
+          "ten": "Phá toái",
+          "dac_tinh": "—",
+          "loai": 12
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 37,
+          "ten": "Phục binh",
+          "dac_tinh": "—",
+          "loai": 13
+        },
+        {
+          "id": 21,
+          "ten": "Tuế phá",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 56,
+          "ten": "Hỏa tinh",
+          "dac_tinh": "Đ",
+          "loai": 11
+        },
+        {
+          "id": 70,
+          "ten": "Thiên hư",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 99,
+          "ten": "Phá toái",
+          "dac_tinh": "—",
+          "loai": 12
+        }
+      ]
+    },
+    {
+      "cung_so": 7,
+      "ten": "Phúc đức",
+      "chuan_ten": "Ngọ",
+      "tuan_trung": false,
+      "triet_lo": true,
+      "chinh_tinh": [
+        {
+          "id": 1,
+          "ten": "Tử vi",
+          "dac_tinh": "M",
+          "loai": 1
+        }
+      ],
+      "sat_tinh": [],
+      "cat_tinh": [
+        {
+          "id": 57,
+          "ten": "Văn xương",
+          "dac_tinh": "H",
+          "loai": 6
+        },
+        {
+          "id": 92,
+          "ten": "Hóa khoa",
+          "dac_tinh": "—",
+          "loai": 5
+        }
+      ],
+      "phu_tinh_khac": [
+        {
+          "id": 36,
+          "ten": "Đại hao",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 22,
+          "ten": "Long đức",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 49,
+          "ten": "Thai",
+          "dac_tinh": "—",
+          "loai": 14
+        },
+        {
+          "id": 106,
+          "ten": "Văn tinh",
+          "dac_tinh": "—",
+          "loai": 6
+        },
+        {
+          "id": 85,
+          "ten": "Phong cáo",
+          "dac_tinh": "—",
+          "loai": 4
+        },
+        {
+          "id": 103,
+          "ten": "Thiên trù",
+          "dac_tinh": "—",
+          "loai": 5
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 36,
+          "ten": "Đại hao",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 49,
+          "ten": "Thai",
+          "dac_tinh": "—",
+          "loai": 14
+        }
+      ]
+    },
+    {
+      "cung_so": 8,
+      "ten": "Điền trạch",
+      "chuan_ten": "Mùi",
+      "tuan_trung": false,
+      "triet_lo": true,
+      "chinh_tinh": [],
+      "sat_tinh": [
+        {
+          "id": 53,
+          "ten": "Địa không",
+          "dac_tinh": "H",
+          "loai": 11
+        }
+      ],
+      "cat_tinh": [],
+      "phu_tinh_khac": [
+        {
+          "id": 35,
+          "ten": "Bệnh phù",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 23,
+          "ten": "Bạch hổ",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 50,
+          "ten": "Dưỡng",
+          "dac_tinh": "—",
+          "loai": 2
+        },
+        {
+          "id": 69,
+          "ten": "Thiên khốc",
+          "dac_tinh": "Đ",
+          "loai": 12
+        },
+        {
+          "id": 74,
+          "ten": "Thiên riêu",
+          "dac_tinh": "—",
+          "loai": 13
+        },
+        {
+          "id": 75,
+          "ten": "Thiên y",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 105,
+          "ten": "Hoa cái",
+          "dac_tinh": "—",
+          "loai": 14
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 35,
+          "ten": "Bệnh phù",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 23,
+          "ten": "Bạch hổ",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 53,
+          "ten": "Địa không",
+          "dac_tinh": "H",
+          "loai": 11
+        },
+        {
+          "id": 69,
+          "ten": "Thiên khốc",
+          "dac_tinh": "Đ",
+          "loai": 12
+        },
+        {
+          "id": 74,
+          "ten": "Thiên riêu",
+          "dac_tinh": "—",
+          "loai": 13
+        },
+        {
+          "id": 105,
+          "ten": "Hoa cái",
+          "dac_tinh": "—",
+          "loai": 14
+        }
+      ]
+    },
+    {
+      "cung_so": 9,
+      "ten": "Quan lộc",
+      "chuan_ten": "Thân",
+      "tuan_trung": true,
+      "triet_lo": false,
+      "chinh_tinh": [
+        {
+          "id": 14,
+          "ten": "Phá quân",
+          "dac_tinh": "H",
+          "loai": 1
+        }
+      ],
+      "sat_tinh": [],
+      "cat_tinh": [
+        {
+          "id": 58,
+          "ten": "Văn Khúc",
+          "dac_tinh": "H",
+          "loai": 6
+        },
+        {
+          "id": 60,
+          "ten": "Thiên việt",
+          "dac_tinh": "—",
+          "loai": 6
+        }
+      ],
+      "phu_tinh_khac": [
+        {
+          "id": 34,
+          "ten": "Hỷ thần",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 24,
+          "ten": "Phúc đức",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 71,
+          "ten": "Thiên đức",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 48,
+          "ten": "Tuyệt",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 101,
+          "ten": "Thiên phúc",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 77,
+          "ten": "Đường phù",
+          "dac_tinh": "—",
+          "loai": 4
+        },
+        {
+          "id": 81,
+          "ten": "Thiên giải",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 104,
+          "ten": "Kiếp sát",
+          "dac_tinh": "—",
+          "loai": 11
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 48,
+          "ten": "Tuyệt",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 104,
+          "ten": "Kiếp sát",
+          "dac_tinh": "—",
+          "loai": 11
+        }
+      ]
+    },
+    {
+      "cung_so": 10,
+      "ten": "Nô bộc",
+      "chuan_ten": "Dậu",
+      "tuan_trung": true,
+      "triet_lo": false,
+      "chinh_tinh": [],
+      "sat_tinh": [],
+      "cat_tinh": [],
+      "phu_tinh_khac": [
+        {
+          "id": 33,
+          "ten": "Phi liêm",
+          "dac_tinh": "—",
+          "loai": 2
+        },
+        {
+          "id": 25,
+          "ten": "Điếu khách",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 47,
+          "ten": "Mộ",
+          "dac_tinh": "—",
+          "loai": 2
+        },
+        {
+          "id": 66,
+          "ten": "Bát tọa",
+          "dac_tinh": "—",
+          "loai": 7
+        },
+        {
+          "id": 88,
+          "ten": "Thiên thương",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 107,
+          "ten": "Đẩu quân",
+          "dac_tinh": "—",
+          "loai": 5
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 25,
+          "ten": "Điếu khách",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 88,
+          "ten": "Thiên thương",
+          "dac_tinh": "—",
+          "loai": 12
+        }
+      ]
+    },
+    {
+      "cung_so": 11,
+      "ten": "Thiên di",
+      "chuan_ten": "Tuất",
+      "tuan_trung": false,
+      "triet_lo": false,
+      "chinh_tinh": [
+        {
+          "id": 2,
+          "ten": "Liêm trinh",
+          "dac_tinh": "M",
+          "loai": 1
+        },
+        {
+          "id": 7,
+          "ten": "Thiên phủ",
+          "dac_tinh": "—",
+          "loai": 1
+        }
+      ],
+      "sat_tinh": [],
+      "cat_tinh": [
+        {
+          "id": 61,
+          "ten": "Tả phù",
+          "dac_tinh": "—",
+          "loai": 2
+        }
+      ],
+      "phu_tinh_khac": [
+        {
+          "id": 32,
+          "ten": "Tấu thư",
+          "dac_tinh": "—",
+          "loai": 3
+        },
+        {
+          "id": 26,
+          "ten": "Trực phù",
+          "dac_tinh": "—",
+          "loai": 16
+        },
+        {
+          "id": 46,
+          "ten": "Tử",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 80,
+          "ten": "Thiên hỷ",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 97,
+          "ten": "Quả tú",
+          "dac_tinh": "—",
+          "loai": 13
+        },
+        {
+          "id": 84,
+          "ten": "Thai phụ",
+          "dac_tinh": "—",
+          "loai": 6
+        },
+        {
+          "id": 91,
+          "ten": "Địa võng",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 102,
+          "ten": "Lưu hà",
+          "dac_tinh": "—",
+          "loai": 12
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 26,
+          "ten": "Trực phù",
+          "dac_tinh": "—",
+          "loai": 16
+        },
+        {
+          "id": 46,
+          "ten": "Tử",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 97,
+          "ten": "Quả tú",
+          "dac_tinh": "—",
+          "loai": 13
+        },
+        {
+          "id": 91,
+          "ten": "Địa võng",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 102,
+          "ten": "Lưu hà",
+          "dac_tinh": "—",
+          "loai": 12
+        }
+      ]
+    },
+    {
+      "cung_so": 12,
+      "ten": "Tật Ách",
+      "chuan_ten": "Hợi",
+      "tuan_trung": false,
+      "triet_lo": false,
+      "chinh_tinh": [
+        {
+          "id": 8,
+          "ten": "Thái âm",
+          "dac_tinh": "M",
+          "loai": 1
+        }
+      ],
+      "sat_tinh": [],
+      "cat_tinh": [],
+      "phu_tinh_khac": [
+        {
+          "id": 31,
+          "ten": "Tướng quân",
+          "dac_tinh": "—",
+          "loai": 4
+        },
+        {
+          "id": 15,
+          "ten": "Thái tuế",
+          "dac_tinh": "—",
+          "loai": 15
+        },
+        {
+          "id": 45,
+          "ten": "Bệnh",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 64,
+          "ten": "Phượng các",
+          "dac_tinh": "—",
+          "loai": 3
+        },
+        {
+          "id": 83,
+          "ten": "Giải thần",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 87,
+          "ten": "Thiên thọ",
+          "dac_tinh": "—",
+          "loai": 5
+        },
+        {
+          "id": 76,
+          "ten": "Quốc ấn",
+          "dac_tinh": "—",
+          "loai": 6
+        },
+        {
+          "id": 89,
+          "ten": "Thiên sứ",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 95,
+          "ten": "Hóa kỵ",
+          "dac_tinh": "—",
+          "loai": 13
+        }
+      ],
+      "risk_stars": [
+        {
+          "id": 15,
+          "ten": "Thái tuế",
+          "dac_tinh": "—",
+          "loai": 15
+        },
+        {
+          "id": 45,
+          "ten": "Bệnh",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 89,
+          "ten": "Thiên sứ",
+          "dac_tinh": "—",
+          "loai": 12
+        },
+        {
+          "id": 95,
+          "ten": "Hóa kỵ",
+          "dac_tinh": "—",
+          "loai": 13
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "request_id": "7f1e4dee-2502-4d7c-8f5b-260349dc365a",
+    "provider": "gemini",
+    "target_year": 2027,
+    "total_chunks_retrieved": 20,
+    "queries_evaluated": 56,
+    "actual_provider": "gemini",
+    "is_mock": false,
+    "reason": null,
+    "model": "gemini-3.5-flash-lite",
+    "attempts": 1,
+    "accepted_claims": 4,
+    "rejected_claims": 1,
+    "elapsed_ms": 4298.9,
+    "timings_ms": {
+      "chart": 1.7,
+      "retrieval": 380.4,
+      "generation": 4439.3,
+      "total": 4821.5
+    }
+  }
+}

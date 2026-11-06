@@ -1,0 +1,50 @@
+{
+  "status": "ok",
+  "total_records": 10456,
+  "by_tier": [
+    {
+      "trust_tier": 1,
+      "count": 2191,
+      "label": "NPL — có cấu trúc, release LOCKED",
+      "ui_badge": "Đối chiếu theo trang PDF, chưa kiểm thủ công",
+      "enabled": true
+    },
+    {
+      "trust_tier": 2,
+      "count": 3798,
+      "label": "DAU — text layer, chưa duyệt",
+      "ui_badge": "Bản dịch/OCR text layer, chưa duyệt ngữ nghĩa",
+      "enabled": true
+    },
+    {
+      "trust_tier": 3,
+      "count": 2691,
+      "label": "BD — OCR, chưa duyệt",
+      "ui_badge": "OCR chưa kiểm — có thể sai chính tả",
+      "enabled": true
+    },
+    {
+      "trust_tier": 9,
+      "count": 1776,
+      "label": "Loại khỏi index cho đến khi review",
+      "ui_badge": "Loại khỏi index cho đến khi review",
+      "enabled": false
+    }
+  ],
+  "by_book": [
+    {
+      "book_code": "BD",
+      "count": 4450
+    },
+    {
+      "book_code": "DAU",
+      "count": 3815
+    },
+    {
+      "book_code": "NPL",
+      "count": 2191
+    }
+  ],
+  "chunks": 4350,
+  "fts_rows": 4350
+}

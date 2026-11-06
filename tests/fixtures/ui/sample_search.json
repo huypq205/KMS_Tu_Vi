@@ -1,0 +1,219 @@
+{
+  "query": "Tử Vi",
+  "status": "ok",
+  "results": [
+    {
+      "chunk_id": "ck-KN-000412",
+      "book_code": "NPL",
+      "chapter": "Mở đầu Quyển II – Thuật Tử Vi",
+      "text": "Mở đầu Quyển II – Thuật Tử Vi | Thuật Tử Vi | Quyển II phân biệt Thuật Tử Vi với Khoa Tử Vi: phần này tập trung việc thích nghi nguyên tắc lý thuyết vào từng lá số cụ thể.",
+      "trust_tier": 1,
+      "part_number": null,
+      "pdf_page_start": 103,
+      "pdf_page_end": 103,
+      "score": 0.0,
+      "rrf_score": 0.016393,
+      "knowledge_ids": [
+        "KN-000412"
+      ],
+      "index": 1,
+      "page_label": "PDF tr. 103",
+      "ui_badge": "Đối chiếu theo trang PDF, chưa kiểm thủ công"
+    },
+    {
+      "chunk_id": "ck-a71e5c32e6896095",
+      "book_code": "DAU",
+      "chapter": "SAO TỬ VI",
+      "text": "SAO TỬ VI | Tử Vi | Tử vi thiếu Phụ, Bật đồng hành ví như ông vua mất triều thần gọi bằng cô quân, tốt đẹp giảm nhiều lắm. SAO TỬ VI | Tử Vi | Tử vi gặp toàn sao hung ví như tiểu nhân lấn quyền đuổi quân tử ra đứng đường sẽ trở nên người gian trá bất thiện. SAO TỬ VI | Tử Vi | Tử Vi hội Liêm Trinh không thấy tả hữu tướng tá thường làm anh tiểu lại. SAO TỬ VI | Tử Vi | Tử Vi nên vào cung Mệnh Thân, cung Quan, cung Phúc Đức nếu Tử Vi ngồi tại cung Tật Ach, Nô Bộc là sái, giảm mất uy quyền dù có sự trợ giúp cũng không thành phúc lớn.",
+      "trust_tier": 2,
+      "part_number": null,
+      "pdf_page_start": 40,
+      "pdf_page_end": 40,
+      "score": 0.0,
+      "rrf_score": 0.016393,
+      "knowledge_ids": [
+        "DAU-KN-000301",
+        "DAU-KN-000302",
+        "DAU-KN-000303",
+        "DAU-KN-000304"
+      ],
+      "index": 2,
+      "page_label": "PDF tr. 40",
+      "ui_badge": "Bản dịch/OCR text layer, chưa duyệt ngữ nghĩa"
+    },
+    {
+      "chunk_id": "ck-b86fc66069deffc9",
+      "book_code": "BD",
+      "chapter": "Quyển 6",
+      "text": "Quyển 6 | Tử Vi | Cảm hứng cách” Kình tứ mộ Mã triều lai'. Quyển 6 | Tử Vi | Kình tứ mộ Mã triều lai, Quyển 6 | Tử Vi | Bao nhiêu trai tráng trổ tài võ công. Quyển 6 | Tử Vi | Mẹ thì nhớ, em thì mong, Quyển 6 | Tử Vi | Lửa chinh chến cháy hết trông trở về Quyển 6 | Tử Vi | Mấy ai giữ được câu thề, Quyển 6 | Tử Vi | Đường đi thì có, đường về lại không. Quyển 6 | Tử Vi | Tiếc thay má thắm môi hồng, Quyển 6 | Tử Vi | Tuổi xanh hoang phí vùi nông nấm mồ.",
+      "trust_tier": 3,
+      "part_number": "6",
+      "pdf_page_start": 56,
+      "pdf_page_end": 56,
+      "score": 0.0,
+      "rrf_score": 0.016393,
+      "knowledge_ids": [
+        "BD-KN-003702",
+        "BD-KN-003703",
+        "BD-KN-003704",
+        "BD-KN-003705",
+        "BD-KN-003706",
+        "BD-KN-003707",
+        "BD-KN-003708",
+        "BD-KN-003709",
+        "BD-KN-003710"
+      ],
+      "index": 3,
+      "page_label": "Phần 6, PDF tr. 56",
+      "ui_badge": "OCR chưa kiểm — có thể sai chính tả"
+    },
+    {
+      "chunk_id": "ck-485dff539a3f3e04",
+      "book_code": "DAU",
+      "chapter": "SAO TỬ VI",
+      "text": "SAO TỬ VI | | - Tử Phủ hiệp mệnh vi qui cách. (Hai sao Tử Phủ giáp cung mệnh là quí cách). SAO TỬ VI | Tử Vi | - Tử Phủ Kình Dương tại cự thương. (Tử Vi Thiên Phủ hội với Kình Dương nếu được Vũ Khúc ở cung Thiên Di chiếu sang càng hay, số doanh thương lớn). SAO TỬ VI | Tử Vi | - Tử Vi, Xương Khúc phú quí khả kỳ. (Tử Vi hội cùng hai sao Văn Xương, Văn Khúc có thể ngồi đợi giàu sang tới). SAO TỬ VI | Tử Vi | - Tử Lộc đồng cung Nhật Nguyệt chiếu, quí bất khả ngôn. (Tử Vi cùng một cung với Lộc,có Thái Âm , Thái Dương chiếu, đại quí tộc).",
+      "trust_tier": 2,
+      "part_number": null,
+      "pdf_page_start": 43,
+      "pdf_page_end": 43,
+      "score": 0.0,
+      "rrf_score": 0.016129,
+      "knowledge_ids": [
+        "DAU-KN-000327",
+        "DAU-KN-000328",
+        "DAU-KN-000329",
+        "DAU-KN-000330"
+      ],
+      "index": 4,
+      "page_label": "PDF tr. 43",
+      "ui_badge": "Bản dịch/OCR text layer, chưa duyệt ngữ nghĩa"
+    },
+    {
+      "chunk_id": "ck-KN-000127",
+      "book_code": "NPL",
+      "chapter": "Chương 4 – Văn hóa Trung Hoa trong khoa Tử Vi",
+      "text": "Chương 4 – Văn hóa Trung Hoa trong khoa Tử Vi | Tử Vi | Nguồn cho rằng Tử Vi chịu ảnh hưởng từ các dòng tư tưởng và tri thức tồn tại vào thời hình thành.",
+      "trust_tier": 1,
+      "part_number": null,
+      "pdf_page_start": 54,
+      "pdf_page_end": 54,
+      "score": 0.0,
+      "rrf_score": 0.016129,
+      "knowledge_ids": [
+        "KN-000127"
+      ],
+      "index": 5,
+      "page_label": "PDF tr. 54",
+      "ui_badge": "Đối chiếu theo trang PDF, chưa kiểm thủ công"
+    }
+  ],
+  "citations": [
+    {
+      "index": 1,
+      "chunk_id": "ck-KN-000412",
+      "book_code": "NPL",
+      "chapter": "Mở đầu Quyển II – Thuật Tử Vi",
+      "part_number": null,
+      "pdf_page_start": 103,
+      "pdf_page_end": 103,
+      "trust_tier": 1,
+      "ui_badge": "Đối chiếu theo trang PDF, chưa kiểm thủ công",
+      "page_label": "PDF tr. 103",
+      "excerpt": "Mở đầu Quyển II – Thuật Tử Vi | Thuật Tử Vi | Quyển II phân biệt Thuật Tử Vi với Khoa Tử Vi: phần này tập trung việc thích nghi nguyên tắc lý thuyết vào từng lá số cụ thể.",
+      "knowledge_ids": [
+        "KN-000412"
+      ]
+    },
+    {
+      "index": 2,
+      "chunk_id": "ck-a71e5c32e6896095",
+      "book_code": "DAU",
+      "chapter": "SAO TỬ VI",
+      "part_number": null,
+      "pdf_page_start": 40,
+      "pdf_page_end": 40,
+      "trust_tier": 2,
+      "ui_badge": "Bản dịch/OCR text layer, chưa duyệt ngữ nghĩa",
+      "page_label": "PDF tr. 40",
+      "excerpt": "SAO TỬ VI | Tử Vi | Tử vi thiếu Phụ, Bật đồng hành ví như ông vua mất triều thần gọi bằng cô quân, tốt đẹp giảm nhiều lắm. SAO TỬ VI | Tử Vi | Tử vi gặp toàn sao hung ví như tiểu nhân lấn quyền đuổi quân tử ra đứng đường sẽ trở nên người gian trá bất thiện. SAO TỬ VI | Tử Vi | Tử Vi hội Liêm Trinh k",
+      "knowledge_ids": [
+        "DAU-KN-000301",
+        "DAU-KN-000302",
+        "DAU-KN-000303",
+        "DAU-KN-000304"
+      ]
+    },
+    {
+      "index": 3,
+      "chunk_id": "ck-b86fc66069deffc9",
+      "book_code": "BD",
+      "chapter": "Quyển 6",
+      "part_number": "6",
+      "pdf_page_start": 56,
+      "pdf_page_end": 56,
+      "trust_tier": 3,
+      "ui_badge": "OCR chưa kiểm — có thể sai chính tả",
+      "page_label": "Phần 6, PDF tr. 56",
+      "excerpt": "Quyển 6 | Tử Vi | Cảm hứng cách” Kình tứ mộ Mã triều lai'. Quyển 6 | Tử Vi | Kình tứ mộ Mã triều lai, Quyển 6 | Tử Vi | Bao nhiêu trai tráng trổ tài võ công. Quyển 6 | Tử Vi | Mẹ thì nhớ, em thì mong, Quyển 6 | Tử Vi | Lửa chinh chến cháy hết trông trở về Quyển 6 | Tử Vi | Mấy ai giữ được câu thề, Q",
+      "knowledge_ids": [
+        "BD-KN-003702",
+        "BD-KN-003703",
+        "BD-KN-003704",
+        "BD-KN-003705",
+        "BD-KN-003706",
+        "BD-KN-003707",
+        "BD-KN-003708",
+        "BD-KN-003709",
+        "BD-KN-003710"
+      ]
+    },
+    {
+      "index": 4,
+      "chunk_id": "ck-485dff539a3f3e04",
+      "book_code": "DAU",
+      "chapter": "SAO TỬ VI",
+      "part_number": null,
+      "pdf_page_start": 43,
+      "pdf_page_end": 43,
+      "trust_tier": 2,
+      "ui_badge": "Bản dịch/OCR text layer, chưa duyệt ngữ nghĩa",
+      "page_label": "PDF tr. 43",
+      "excerpt": "SAO TỬ VI | | - Tử Phủ hiệp mệnh vi qui cách. (Hai sao Tử Phủ giáp cung mệnh là quí cách). SAO TỬ VI | Tử Vi | - Tử Phủ Kình Dương tại cự thương. (Tử Vi Thiên Phủ hội với Kình Dương nếu được Vũ Khúc ở cung Thiên Di chiếu sang càng hay, số doanh thương lớn). SAO TỬ VI | Tử Vi | - Tử Vi, Xương Khúc ph",
+      "knowledge_ids": [
+        "DAU-KN-000327",
+        "DAU-KN-000328",
+        "DAU-KN-000329",
+        "DAU-KN-000330"
+      ]
+    },
+    {
+      "index": 5,
+      "chunk_id": "ck-KN-000127",
+      "book_code": "NPL",
+      "chapter": "Chương 4 – Văn hóa Trung Hoa trong khoa Tử Vi",
+      "part_number": null,
+      "pdf_page_start": 54,
+      "pdf_page_end": 54,
+      "trust_tier": 1,
+      "ui_badge": "Đối chiếu theo trang PDF, chưa kiểm thủ công",
+      "page_label": "PDF tr. 54",
+      "excerpt": "Chương 4 – Văn hóa Trung Hoa trong khoa Tử Vi | Tử Vi | Nguồn cho rằng Tử Vi chịu ảnh hưởng từ các dòng tư tưởng và tri thức tồn tại vào thời hình thành.",
+      "knowledge_ids": [
+        "KN-000127"
+      ]
+    }
+  ],
+  "meta": {
+    "count": 5,
+    "books": [
+      "BD",
+      "DAU",
+      "NPL"
+    ],
+    "enabled_tiers": [
+      1,
+      2,
+      3
+    ]
+  }
+}
