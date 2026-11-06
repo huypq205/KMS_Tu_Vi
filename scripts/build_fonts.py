@@ -64,6 +64,10 @@ def build_subset_font(
     sub.populate(unicodes=unicodes)
     sub.subset(font)
 
+    # CRITICAL: fontTools requires font.flavor to be set to "woff2" before save(),
+    # otherwise it defaults to None (saving an uncompressed SFNT TrueType container).
+    font.flavor = "woff2"
+
     output_woff2.parent.mkdir(parents=True, exist_ok=True)
     font.save(str(output_woff2))
 

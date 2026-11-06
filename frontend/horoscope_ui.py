@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 from datetime import datetime
-import base64
 import os
 from pathlib import Path
 import sys
@@ -41,13 +40,10 @@ from frontend.horoscope_sections import (
     chart_viewer_general,
 )
 
+from frontend.ui_themes import apply_theme
+
 st.set_page_config(page_title="Tử Vi · Bản đồ bản thân", layout="wide", initial_sidebar_state="auto")
-style = (ROOT / "frontend/assets/horoscope.css").read_text(encoding="utf-8")
-font_faces = ""
-for weight in (400, 500, 600):
-    encoded = base64.b64encode((ROOT / f"frontend/assets/fonts/IBMPlexSans-{weight}.ttf").read_bytes()).decode("ascii")
-    font_faces += f"@font-face{{font-family:'IBM Plex Sans';font-weight:{weight};font-style:normal;font-display:swap;src:url(data:font/ttf;base64,{encoded}) format('truetype');}}"
-st.markdown(f"<style>{font_faces}{style}</style>", unsafe_allow_html=True)
+apply_theme()
 
 def _resolve_api_base() -> str:
     env_url = os.getenv("KMS_API_BASE")

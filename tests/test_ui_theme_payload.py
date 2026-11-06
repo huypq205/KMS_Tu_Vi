@@ -50,11 +50,17 @@ def test_font_files_exist_and_weights():
     assert not font_500.exists(), "plex-500.woff2 must not exist (only 400 and 600 permitted)"
     assert not font_700.exists(), "plex-700.woff2 must not exist (only 400 and 600 permitted)"
 
+    # Assert authentic WOFF2 container signature (magic number b'wOF2' / 0x774F4632)
+    assert font_400.read_bytes()[:4] == b"wOF2", "plex-400.woff2 must have wOF2 magic header"
+    assert font_600.read_bytes()[:4] == b"wOF2", "plex-600.woff2 must have wOF2 magic header"
+
     # Base64 loader works for 400 and 600
     b64_400 = get_font_base64(400)
     b64_600 = get_font_base64(600)
     assert len(b64_400) > 0
     assert len(b64_600) > 0
+    assert b64_400.startswith("d09GMg"), "plex-400 base64 payload must start with genuine WOFF2 header signature"
+    assert b64_600.startswith("d09GMg"), "plex-600 base64 payload must start with genuine WOFF2 header signature"
 
     with pytest.raises(FileNotFoundError):
         get_font_base64(500)
@@ -71,9 +77,9 @@ def test_base64_font_payload_size():
         f"Font payload exceeds budget: {total_bytes:,} bytes "
         f"({total_bytes / 1024:.2f} KB) > {max_allowed:,} bytes (70 KB)"
     )
-    # Check individual weights are balanced (around 24-28 KB each)
-    assert 10 * 1024 < len(b64_400) < 35 * 1024
-    assert 10 * 1024 < len(b64_600) < 35 * 1024
+    # Check individual weights are non-empty and well within budget (around 9-12 KB each for Brotli WOFF2)
+    assert 5 * 1024 < len(b64_400) < 25 * 1024, f"plex-400 base64 size out of bounds: {len(b64_400)}"
+    assert 5 * 1024 < len(b64_600) < 25 * 1024, f"plex-600 base64 size out of bounds: {len(b64_600)}"
 
 
 def test_offline_no_external_urls():
@@ -157,6 +163,20 @@ def test_legacy_css_removed():
 
     assert not legacy_horoscope.exists(), f"Legacy file must be removed: {legacy_horoscope}"
     assert not legacy_research.exists(), f"Legacy file must be removed: {legacy_research}"
+
+
+def test_no_weight_500_or_700_in_app_css():
+    """Confirms no font-weight 500 or 700 exists anywhere in app.css.
+
+    Per Requirement R1, the typography system strictly uses only two font
+    weights: 400 (regular) and 600 (semibold). Weight 500 and 700 are forbidden.
+    """
+    app_css = APP_CSS_PATH.read_text(encoding="utf-8")
+    assert "font-weight: 500" not in app_css, "Found 'font-weight: 500' in app.css"
+    assert "font-weight: 700" not in app_css, "Found 'font-weight: 700' in app.css"
+    assert "font-weight:500" not in app_css, "Found 'font-weight:500' in app.css"
+    assert "font-weight:700" not in app_css, "Found 'font-weight:700' in app.css"
+    assert not re.search(r"font-weight\s*:\s*(500|700)\b", app_css), "Weight 500 or 700 regex match found in app.css"
 
 
 def test_fixture_mode_toggle(monkeypatch):
