@@ -700,29 +700,37 @@ code, pre, .mono-data {
 }
 
 /* Interactive selection states: flat fills, distinct 2px borders, no elevation */
-.horoscope-chart .cell.is-selected {
-  background: var(--raised) !important;
+.horoscope-chart .cell.is-selected,
+.cell.is-selected {
+  background: var(--active) !important;
   border: 2px solid var(--accent) !important;
   z-index: 2;
   box-shadow: none !important; /* taste-skill-ignore */
+  transform: none !important;
 }
 
-.horoscope-chart .cell.is-tam-hop {
-  background: #fbf7eb !important;
-  border: 2px solid #a86f0c !important;
+.horoscope-chart .cell.is-tam-hop,
+.cell.is-tam-hop {
+  background: var(--raised) !important;
+  border: 2px solid #2f70bb !important;
   box-shadow: none !important; /* taste-skill-ignore */
+  transform: none !important;
 }
 
-.horoscope-chart .cell.is-xung-chieu {
-  background: #ffedea !important;
-  border: 2px dashed var(--negative) !important;
+.horoscope-chart .cell.is-xung-chieu,
+.cell.is-xung-chieu {
+  background: #fffbeb !important;
+  border: 2px dashed #a86f0c !important;
   box-shadow: none !important; /* taste-skill-ignore */
+  transform: none !important;
 }
 
-.horoscope-chart .cell.is-nhi-hop {
-  background: #dcfae5 !important;
-  border: 2px solid var(--positive) !important;
+.horoscope-chart .cell.is-nhi-hop,
+.cell.is-nhi-hop {
+  background: var(--raised) !important;
+  border: 2px solid #1e7b4f !important;
   box-shadow: none !important; /* taste-skill-ignore */
+  transform: none !important;
 }
 
 /* Center Thien-Ban (2x2) */
@@ -1132,6 +1140,30 @@ code, pre, .mono-data {
 }
 
 .sao.phu {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.sao.phu.tot {
+  color: var(--positive);
+  font-weight: 600;
+}
+
+.sao.phu.hung {
+  color: var(--negative);
+  font-weight: 600;
+}
+
+.qc {
+  font-size: 10px;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  padding: 0 4px;
+  margin-left: 3px;
+}
+
+.meta {
+  margin-top: 4px;
   font-size: 12px;
   color: var(--muted);
 }

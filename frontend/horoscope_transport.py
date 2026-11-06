@@ -26,6 +26,9 @@ def _raise_for_status(response) -> None:
 
 def ask_horoscope(api_base: str, payload: dict):
     """Hỏi nhanh theo chủ đề (/api/v1/horoscope/ask); trả JSON hoặc raise."""
+    if os.getenv("KMS_UI_FIXTURE") == "1":
+        from frontend.ui_fixture import mock_ask_horoscope
+        return mock_ask_horoscope(payload)
     response = requests.post(f'{api_base}/api/v1/horoscope/ask', json=payload,
                              headers=_headers(), timeout=(5, 75))
     _raise_for_status(response)
@@ -36,6 +39,10 @@ def ask_horoscope(api_base: str, payload: dict):
 
 
 def reading_events(api_base: str, payload: dict):
+    if os.getenv("KMS_UI_FIXTURE") == "1":
+        from frontend.ui_fixture import mock_reading_events
+        yield from mock_reading_events(payload)
+        return
     response = requests.post(f'{api_base}/api/v1/horoscope/read-stream', json=payload,
                              headers=_headers(), stream=True, timeout=(5, 75))
     try:

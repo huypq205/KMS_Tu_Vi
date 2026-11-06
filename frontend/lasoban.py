@@ -54,6 +54,7 @@ GIO_CHI = [
 ]
 
 from frontend.laso_renderer import luoi_html, sao_html  # noqa: E402
+from frontend.ui_themes import apply_theme  # noqa: E402
 
 
 def can_gio(canNgay: int, chi: int) -> int:
@@ -114,37 +115,10 @@ def lap_laso(nn: int, tt: int, nnnn: int, chi_gio: int,
 
 
 # ---------------------------------------------------------------------------
-st.set_page_config(page_title="Lập lá số Tử Vi", page_icon="☯", layout="wide")
-st.markdown("""
-<style>
-.grid { display: grid; grid-template-columns: repeat(4, 220px);
-        grid-auto-rows: 190px; gap: 2px; }
-.grid > div.cell:nth-child(n+1) { }
-.cell { border: 1px solid #8b1e1e; padding: 6px; font-size: 13px;
-        background: #fffdf5; line-height: 1.35; }
-.chi { color: #8b1e1e; font-size: 12px; margin-bottom: 2px; }
-.ten { font-weight: bold; font-size: 15px; margin-bottom: 2px; }
-.sao { } .chinh { font-weight: bold; font-size: 14px; }
-.sao.phu { font-size: 12px; color: #444; }
-.sao.phu.tot { color: #1a7f37; font-weight: 600; }
-.sao.phu.hung { color: #cf222e; font-weight: 600; }
-.qc { font-size: 10px; border: 1px solid; border-radius: 4px;
-      padding: 0 4px; margin-left: 3px; }
-.meta { margin-top: 4px; font-size: 12px; color: #555; }
-.phan-tich { max-width: 980px; margin-top: 12px; }
-.phan-tich h3 { color: #8b1e1e; font-size: 16px; margin: 18px 0 8px; }
-.phan-tich table { border-collapse: collapse; width: 100%; font-size: 13px;
-                   margin: 6px 0; }
-.phan-tich th, .phan-tich td { border: 1px solid #d8c9b0; padding: 5px 8px;
-                   text-align: left; vertical-align: top; }
-.phan-tich th { background: #f6efe1; color: #8b1e1e; }
-.phan-tich p { line-height: 1.5; color: #333; }
-.phan-tich .foot { font-size: 12px; color: #888; margin-top: 14px;
-                  border-top: 1px solid #d8c9b0; padding-top: 8px; }
-</style>
-""", unsafe_allow_html=True)
+st.set_page_config(page_title="Lập lá số Tử Vi", layout="wide")
+apply_theme()
 
-st.title("☯ Lập lá số Tử Vi")
+st.title("Lập lá số Tử Vi")
 st.caption(
     "Ứng dụng **chỉ an sao và hiển thị dữ liệu lá số** theo thuật toán của "
     "thư viện [lasotuvi](https://github.com/doanguyen/lasotuvi) (MIT). "

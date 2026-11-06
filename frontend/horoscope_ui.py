@@ -61,6 +61,28 @@ def _resolve_api_base() -> str:
 API_BASE = _resolve_api_base()
 year_now = datetime.now(ZoneInfo("Asia/Bangkok")).year
 
+from frontend.ui_fixture import is_fixture_mode, load_fixture
+
+if is_fixture_mode() and "report" not in st.session_state:
+    sample_report = load_fixture("sample_report")
+    if isinstance(sample_report, dict):
+        st.session_state["report"] = sample_report
+        st.session_state["report_input"] = {
+            "ho_ten": sample_report.get("ho_ten", "Lê An"),
+            "ngay": 15,
+            "thang": 8,
+            "nam": 1995,
+            "chi_gio": 5,
+            "gioi_tinh": 1,
+            "duong_lich": True,
+            "target_year": sample_report.get("meta", {}).get("target_year", year_now),
+            "provider": "auto",
+            "reading_mode": "chuyen_sau",
+            "top_k_per_topic": 4,
+        }
+        st.session_state["report_priorities"] = list(TOPICS)
+        st.session_state["report_time"] = datetime.now(ZoneInfo("Asia/Bangkok")).strftime("%H:%M · %d/%m/%Y")
+
 
 def _is_in_container() -> bool:
     """Streamlit Cloud / Docker: fallback production là hành vi bình thường, không cảnh báo."""
@@ -134,7 +156,7 @@ with st.sidebar:
     submitted = st.button("Tạo bản luận giải", type="primary", use_container_width=True)
     st.caption("Giờ sinh theo múi giờ Việt Nam (UTC+7). Với lịch âm, thuật toán hiện chưa hỗ trợ lựa chọn tháng nhuận.")
 
-st.markdown('<div class="viewer-bar"><span>☯ KMS Tử Vi · Bản đồ bản thân</span><span>Tri thức từ NPL · Bửu Đình · Đẩu Số</span></div>', unsafe_allow_html=True)
+st.markdown('<div class="viewer-bar"><span>KMS Tử Vi · Bản đồ bản thân</span><span>Tri thức từ NPL · Bửu Đình · Đẩu Số</span></div>', unsafe_allow_html=True)
 st.title("Bản đồ bản thân & Chiêm nghiệm")
 st.markdown("Một góc nhìn từ tri thức truyền thống, để hiểu mình và chiêm nghiệm.")
 if PROD_FALLBACK:
