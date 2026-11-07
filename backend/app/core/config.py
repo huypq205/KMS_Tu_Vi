@@ -7,18 +7,38 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 
 
-def _load_env() -> None:
-    env = ROOT / ".env"
-    if not env.exists():
+def _load_env(env_path: Path | None = None) -> None:
+    env = env_path if env_path is not None else (ROOT / ".env")
+    if not env.is_file():
         return
-    for line in env.read_text(encoding="utf-8").splitlines():
+    preserve = os.getenv("KMS_PRESERVE_SYSTEM_ENV", "").strip().lower() in ("1", "true", "yes")
+    lines = env.read_text(encoding="utf-8-sig").splitlines()
+    if not preserve:
+        for line in lines:
+            line_str = line.strip()
+            if not line_str or line_str.startswith("#") or "=" not in line_str:
+                continue
+            key, val = line_str.split("=", 1)
+            if key.strip() == "KMS_PRESERVE_SYSTEM_ENV" and val.strip().strip('"').strip("'").lower() in ("1", "true", "yes"):
+                preserve = True
+                break
+    for line in lines:
         line = line.strip()
         if line and not line.startswith("#") and "=" in line:
             key, value = line.split("=", 1)
-            os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
+            k = key.strip()
+            v = value.strip().strip('"').strip("'")
+            if not k:
+                continue
+            if preserve:
+                os.environ.setdefault(k, v)
+            else:
+                os.environ[k] = v
 
 
 _load_env()
+
+PRESERVE_SYSTEM_ENV = os.getenv("KMS_PRESERVE_SYSTEM_ENV", "").strip().lower() in ("1", "true", "yes")
 
 # --- đường dẫn ---
 EXCEL_PATH = Path(os.getenv("KMS_EXCEL", ROOT / "data/raw/TuVi_KMS_3Books_CANONICAL_MASTER_DEDUP_v1.0.xlsx"))
@@ -37,7 +57,7 @@ VECTOR_STORE = os.getenv("KMS_VECTOR_STORE", "qdrant")  # qdrant | numpy
 EMBEDDING_PROVIDER = os.getenv("KMS_EMBEDDING_PROVIDER", "local")
 
 # --- LLM ---
-LLM_PROVIDER = os.getenv("KMS_LLM_PROVIDER", "groq")  # groq | gemini | deepseek | mock
+LLM_PROVIDER = os.getenv("KMS_LLM_PROVIDER", "auto")  # auto (gemini chính -> groq dự phòng) | gemini | groq | mock
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY", "")
 DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
@@ -45,7 +65,7 @@ DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-chat")
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 GROQ_BASE_URL = os.getenv("GROQ_BASE_URL", "https://api.groq.com/openai/v1")
 GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
-HOROSCOPE_PROVIDER = os.getenv("KMS_HOROSCOPE_PROVIDER", "auto")  # auto | groq | deepseek | gemini | mock
+HOROSCOPE_PROVIDER = os.getenv("KMS_HOROSCOPE_PROVIDER", "auto")  # auto (gemini chính -> groq dự phòng) | gemini | groq | mock
 GEMINI_MODEL = os.getenv("KMS_GEMINI_MODEL", "gemini-3.8-flash")
 LLM_MAX_TOKENS = int(os.getenv("KMS_LLM_MAX_TOKENS", "2048"))
 LLM_TEMPERATURE = float(os.getenv("KMS_LLM_TEMPERATURE", "0.0"))

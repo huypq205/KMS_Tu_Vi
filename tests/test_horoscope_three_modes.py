@@ -72,7 +72,7 @@ def test_p6_tc03_llm_failure_in_chuyen_sau_falls_back_gracefully():
     req = _req(mode="chuyen_sau", provider="auto")
 
     with patch("backend.app.services.horoscope_cache.lookup", return_value=None), \
-         patch("backend.app.services.horoscope_interpreter.interpret_horoscope") as mock_interp:
+         patch("backend.app.services.horoscope_service.interpret_horoscope") as mock_interp:
         mock_interp.side_effect = Exception("Gemini service unavailable")
         # Giả lập interpret_horoscope ném lỗi trong stream
         events = list(reading_events(req))
@@ -85,11 +85,9 @@ def test_p6_tc03_llm_failure_in_chuyen_sau_falls_back_gracefully():
 
 
 def test_p6_tc04_token_budgets_defined_per_mode():
-    """P6.TC-04: Ngân sách output được cấu hình theo từng mức đọc (P6 §9.2)."""
+    """P6.TC-04: Ngân sách output được cấu hình theo từng mức đọc (P6 §9.2, cập nhật Gói 2: 12288)."""
     assert HOROSCOPE_MAX_TOKENS_GIAI_THICH >= 2500
-    assert HOROSCOPE_MAX_TOKENS_GIAI_THICH <= 4000
     assert HOROSCOPE_MAX_TOKENS_CHUYEN_SAU >= 6000
-    assert HOROSCOPE_MAX_TOKENS_CHUYEN_SAU <= 8192
 
 
 def test_p6_tc05_cache_key_differentiates_all_three_modes():

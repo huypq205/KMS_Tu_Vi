@@ -11,6 +11,16 @@ from backend.app.services import horoscope_interpreter as interpreter
 from backend.app.services import horoscope_rag_bridge as bridge
 
 
+@pytest.fixture(autouse=True)
+def _isolate_other_providers():
+    import os
+    with patch.object(interpreter, 'GROQ_API_KEY', ''), \
+         patch.object(interpreter, 'DEEPSEEK_API_KEY', ''), \
+         patch.object(interpreter, 'HOROSCOPE_PROVIDER', 'gemini'), \
+         patch.dict(os.environ, {'GROQ_API_KEY': '', 'DEEPSEEK_API_KEY': '', 'KMS_HOROSCOPE_PROVIDER': 'gemini'}):
+        yield
+
+
 def chart(year=2026, birth=(15, 8, 1995, 5, 1)):
     return features.extract_horoscope_features(features.generate_raw_horoscope(*birth), year)
 

@@ -137,6 +137,31 @@ MODEL_FALLBACK_CODES = frozenset({
     'invalid_response', 'incomplete_response', 'sensitive_content',
 })
 
+ERROR_PRIORITY: dict[str, int] = {
+    'deepseek_insufficient_balance': 100,
+    'quota': 90,
+    'busy': 70,
+    'timeout': 60,
+    'network': 50,
+    'model_not_found': 40,
+    'invalid_request': 35,
+    'invalid_response': 30,
+    'incomplete_response': 25,
+    'sensitive_content': 22,
+    'provider_error': 20,
+    'invalid_key': 10,
+    'missing_key': 5,
+}
+
+
+def prioritize_error(attempts_detail: list[dict[str, Any]]) -> tuple[str, str]:
+    if not attempts_detail:
+        return 'provider_error', ERROR_MESSAGES.get('provider_error', '')
+    best = max(attempts_detail, key=lambda a: ERROR_PRIORITY.get(a.get('code', ''), 0))
+    code = best.get('code', 'provider_error')
+    msg = best.get('message') or ERROR_MESSAGES.get(code, '')
+    return code, msg
+
 CONCLUSION_CONFIDENCE_LEVELS = ('rat_manh', 'manh', 'trung_binh', 'yeu')
 CONCLUSION_CONFIDENCE_LABELS = {
     'rat_manh': 'Rất mạnh', 'manh': 'Mạnh', 'trung_binh': 'Trung bình', 'yeu': 'Yếu',
@@ -356,6 +381,7 @@ def build_horoscope_user_prompt(
         + '- Nhận định dùng tài liệu skill phải dẫn reference_ids (ví dụ: ["REF-STAR-vu_khuc"]); không gán source_refs của sách KMS cho tài liệu skill.\n'
         + '- Ghi loai_ket_luan=cau_truc hoặc thoi_diem; dữ liệu giờ sinh C/D chỉ được cau_truc.\n'
         + '- Mỗi mục luan_diem ghi "loi_chung_cu" khớp kind của fact_id và "phan_chung" không rỗng.\n'
+        + '- Mỗi mục luan_diem/ket_luan ghi "muc_tin_cay" (rat_manh/manh/trung_binh/yeu); không dùng phần trăm độ tin cậy.\n'
     )
 
 
@@ -765,6 +791,8 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
         "Điều nên cân nhắc là giữ sự chừng mực trong các quyết định lớn, phân biệt rõ các biến động ngắn hạn với mục tiêu dài hạn. Hướng ứng xử thuận lợi là chủ động lập kế hoạch, đối chiếu kỹ lưỡng các điều kiện thực tế trước khi hành động và lắng nghe ý kiến phản biện khách quan.",
     ]
 
+    allowed_ctx_refs = [s['ref_id'] for s in (context or {}).get('reference_list', []) if type(s.get('ref_id')) is int]
+
     def palace_point(name: str) -> dict | None:
         p = palaces.get(name.casefold())
         if not p:
@@ -772,8 +800,9 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
         ten = p.get('ten', name)
         chinh = ', '.join(f"{s['ten']} ({s.get('dac_tinh', '—')})" for s in p.get('chinh_tinh', [])) or 'Vô chính diệu'
         risk_names = ', '.join(s['ten'] for s in p.get('risk_stars', []))
-        ids = [f['fact_id'] for f in facts if f['cung'].casefold() == ten.casefold()][:6]
-        refs = sorted({r for f in facts if f['cung'].casefold() == ten.casefold() for r in f['source_refs']})[:4]
+        matched = [f for f in facts if f['cung'].casefold() == ten.casefold()][:6]
+        ids = [f['fact_id'] for f in matched]
+        refs = sorted({r for f in matched for r in f.get('source_refs', []) if r in allowed_ctx_refs})[:4]
         nhan = f"Cung {ten} tại {p.get('chuan_ten', '—')}: chính tinh {chinh}."
         if risk_names:
             nhan += f" Sao cần lưu ý: {risk_names}."
@@ -791,7 +820,6 @@ def generate_mock_reading(features: dict[str, Any], context: dict | None = None)
             'muc_tin_cay': 'trung_binh' if (refs and ids) else 'yeu',
         }
 
-    allowed_ctx_refs = [s['ref_id'] for s in (context or {}).get('reference_list', []) if type(s.get('ref_id')) is int]
     ket_luan = [pt for pt in (palace_point('Phu thê'), palace_point('Phụ mẫu'), palace_point('Mệnh')) if pt]
     luan_diem = []
     used_kinds = set()
@@ -982,9 +1010,6 @@ def _request_gemini(prompt_text: str, key: str, model: str = HOROSCOPE_MODEL, re
         },
     }
     response = requests.post(url, headers=headers, json=payload, timeout=(5, HOROSCOPE_TIMEOUT_SECONDS))
-    if response.status_code == 503:
-        time.sleep(2.0)
-        response = requests.post(url, headers=headers, json=payload, timeout=(5, HOROSCOPE_TIMEOUT_SECONDS))
     if response.status_code != 200:
         raise HoroscopeGenerationError({503: 'busy', 429: 'quota', 401: 'invalid_key', 403: 'invalid_key',
                                          404: 'model_not_found', 400: 'invalid_request'}.get(response.status_code, 'provider_error'))
@@ -1002,14 +1027,16 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
     detection = detect_cach_cuc(features, facts=facts, context=context)
     start = time.perf_counter()
     attempts = 0
+    attempts_detail: list[dict[str, Any]] = []
     chain = _model_chain()
 
-    def fallback(reason, model):
+    def fallback(reason: str, model: str):
         reading = generate_mock_reading(features, context)
         actual_mode = 'du_lieu' if reason in ('sensitive_content', 'invalid_response', 'timeout') else reading_mode
         reading['_generation'] = {'actual_provider': 'mock', 'is_mock': True, 'reason': reason,
                                   'message': ERROR_MESSAGES.get(reason, ''), 'model': model,
-                                  'attempts': attempts, 'specificity_low': False,
+                                  'attempts': attempts, 'attempts_detail': attempts_detail,
+                                  'specificity_low': False,
                                   'actual_reading_mode': actual_mode,
                                   'fallback_reason': reason if actual_mode != reading_mode else None,
                                   'elapsed_ms': round((time.perf_counter() - start) * 1000, 1)}
@@ -1019,182 +1046,225 @@ def interpret_horoscope(features: dict[str, Any], formatted_context: str, provid
         reading = generate_mock_reading(features, context)
         reading['_generation'] = {'actual_provider': 'mock', 'is_mock': True, 'reason': 'requested',
                                   'message': ERROR_MESSAGES.get('requested', ''), 'model': chain[0],
-                                  'attempts': 0, 'specificity_low': False,
+                                  'attempts': 0, 'attempts_detail': [], 'specificity_low': False,
                                   'actual_reading_mode': reading_mode,
                                   'fallback_reason': None,
                                   'elapsed_ms': round((time.perf_counter() - start) * 1000, 1)}
         return reading
 
-    active_provider = provider
-    if active_provider == 'auto':
-        active_provider = (HOROSCOPE_PROVIDER or 'auto').lower()
-        if active_provider == 'auto':
-            if GROQ_API_KEY or os.getenv('GROQ_API_KEY'):
-                active_provider = 'groq'
-            elif DEEPSEEK_API_KEY or os.getenv('DEEPSEEK_API_KEY'):
-                active_provider = 'deepseek'
-            else:
-                active_provider = 'gemini'
+    # Xác định danh sách provider cần chạy: Gemini chính, Groq dự phòng (bỏ DeepSeek)
+    if provider in ('gemini', 'groq'):
+        provider_sequence = [provider]
+    elif provider == 'deepseek':
+        # DeepSeek đã bị loại bỏ, fallback về chuỗi Gemini -> Groq
+        provider_sequence = ['gemini', 'groq']
+    else:  # provider == 'auto'
+        cfg_provider = (HOROSCOPE_PROVIDER or 'auto').lower()
+        order = ['gemini', 'groq']
+        if cfg_provider in order:
+            order.remove(cfg_provider)
+            order.insert(0, cfg_provider)
 
-    if active_provider == 'groq':
-        g_key = GROQ_API_KEY or os.getenv('GROQ_API_KEY', '')
-        g_model = GROQ_MODEL or os.getenv('GROQ_MODEL', 'openai/gpt-oss-20b')
-        last_model = g_model
-        try:
-            if not g_key:
-                raise HoroscopeGenerationError('missing_key')
-            user_prompt = build_horoscope_user_prompt(features, formatted_context, facts, cach_cuc=detection, reading_mode=reading_mode)
-            attempts += 1
-            reading = _request_groq(user_prompt, g_key, g_model, reading_mode=reading_mode)
-            reading.setdefault('van_han_hien_tai', {}).update(build_annual_report(features, facts))
-            _sanitize_reading_citations(reading, facts, context)
-            validate_reading(reading, facts, context)
-            reading['cach_cuc'] = detection
-            reading['_generation'] = {'actual_provider': 'groq', 'is_mock': False, 'reason': None,
-                                      'model': g_model, 'primary_model': g_model, 'attempts': attempts,
-                                      'specificity_low': False, 'specificity_reason': None,
-                                      'actual_reading_mode': reading_mode,
-                                      'fallback_reason': None,
-                                      'elapsed_ms': round((time.perf_counter() - start) * 1000, 1)}
-            return reading
-        except HoroscopeGenerationError as exc:
-            error = exc
-        except requests.Timeout:
-            error = HoroscopeGenerationError('timeout')
-        except requests.RequestException:
-            error = HoroscopeGenerationError('network')
-        except Exception:
-            error = HoroscopeGenerationError('invalid_response')
-        logger.warning('groq_generation failed code=%s, falling back...', error.code)
-        if provider == 'groq':
-            return fallback(error.code, last_model)
+        gemini_key = GEMINI_API_KEY or os.getenv('GEMINI_API_KEY', '')
+        groq_key = GROQ_API_KEY or os.getenv('GROQ_API_KEY', '')
 
-    if active_provider == 'deepseek':
-        ds_key = DEEPSEEK_API_KEY or os.getenv('DEEPSEEK_API_KEY', '')
-        ds_model = DEEPSEEK_MODEL or os.getenv('DEEPSEEK_MODEL', 'deepseek-chat')
-        last_model = ds_model
-        try:
-            if not ds_key:
-                raise HoroscopeGenerationError('missing_key')
-            user_prompt = build_horoscope_user_prompt(features, formatted_context, facts, cach_cuc=detection, reading_mode=reading_mode)
-            attempts += 1
-            reading = _request_deepseek(user_prompt, ds_key, ds_model, reading_mode=reading_mode)
-            reading.setdefault('van_han_hien_tai', {}).update(build_annual_report(features, facts))
-            _sanitize_reading_citations(reading, facts, context)
-            validate_reading(reading, facts, context)
-            reading['cach_cuc'] = detection
-            reading['_generation'] = {'actual_provider': 'deepseek', 'is_mock': False, 'reason': None,
-                                      'model': ds_model, 'primary_model': ds_model, 'attempts': attempts,
-                                      'specificity_low': False, 'specificity_reason': None,
-                                      'actual_reading_mode': reading_mode,
-                                      'fallback_reason': None,
-                                      'elapsed_ms': round((time.perf_counter() - start) * 1000, 1)}
-            return reading
-        except HoroscopeGenerationError as exc:
-            error = exc
-        except requests.Timeout:
-            error = HoroscopeGenerationError('timeout')
-        except requests.RequestException:
-            error = HoroscopeGenerationError('network')
-        except Exception:
-            error = HoroscopeGenerationError('invalid_response')
-        logger.warning('deepseek_generation failed code=%s, falling back to gemini/mock...', error.code)
-        if provider == 'deepseek':
-            return fallback(error.code, last_model)
+        available = []
+        for p in order:
+            if p == 'gemini' and gemini_key:
+                available.append(p)
+            elif p == 'groq' and groq_key:
+                available.append(p)
 
-    key = GEMINI_API_KEY or os.getenv('GEMINI_API_KEY', '')
+        provider_sequence = available if available else ['gemini']
+
     last_model = chain[0]
-    error = None
-    primary_quota_exceeded = False
-    try:
-        if not key:
-            raise HoroscopeGenerationError('missing_key')
-        user_prompt = build_horoscope_user_prompt(features, formatted_context, facts, cach_cuc=detection, reading_mode=reading_mode)
-        for index, model in enumerate(chain):
-            last_model = model
-            attempts += 1
+    for current_provider in provider_sequence:
+        if current_provider == 'groq':
+            g_key = GROQ_API_KEY or os.getenv('GROQ_API_KEY', '')
+            g_model = GROQ_MODEL or os.getenv('GROQ_MODEL', 'openai/gpt-oss-20b')
+            last_model = g_model
             try:
-                reading = _request_gemini(user_prompt, key, model, reading_mode=reading_mode)
+                if not g_key:
+                    raise HoroscopeGenerationError('missing_key')
+                user_prompt = build_horoscope_user_prompt(features, formatted_context, facts, cach_cuc=detection, reading_mode=reading_mode)
+                attempts += 1
+                reading = _request_groq(user_prompt, g_key, g_model, reading_mode=reading_mode)
                 reading.setdefault('van_han_hien_tai', {}).update(build_annual_report(features, facts))
                 _sanitize_reading_citations(reading, facts, context)
                 validate_reading(reading, facts, context)
-                confidence_problem = check_input_confidence(reading, features)
-                conclusion_problem = check_conclusion_confidence(reading)
-                evidence_problem = check_evidence_labels(reading, facts)
-                rule_problem = check_rule_ids(reading, detection)
-                sensitive_problem = check_sensitive_content(reading)
-                problem = (confidence_problem or conclusion_problem or evidence_problem
-                           or rule_problem or sensitive_problem or check_specificity(reading, features, context))
-                if problem:
-                    attempts += 1
-                    annual = features.get('nam_xem') or {}
-                    extra = f"\nBỔ SUNG BẮT BUỘC: {problem} "
-                    if confidence_problem:
-                        extra += (
-                            "Giữ nguyên giờ sinh mức C/D: chỉ kết luận cấu trúc; mỗi mục "
-                            f'gioi_han phải nêu nguyên văn "{LOW_CONFIDENCE_CAVEAT}". '
-                        )
-                    if conclusion_problem:
-                        extra += (
-                            'Mỗi mục luan_diem/ket_luan phải ghi "muc_tin_cay" '
-                            '(rat_manh/manh/trung_binh/yeu) đúng với số fact_id; '
-                            'không dùng phần trăm độ tin cậy. '
-                        )
-                    if evidence_problem:
-                        extra += (
-                            'Mỗi mục luan_diem phải có "loi_chung_cu" đúng loại chứng cứ '
-                            f'({", ".join(EVIDENCE_TYPE_VALUES)}) khớp "kind" của fact_id đã dẫn, '
-                            f'và "phan_chung" không rỗng; nếu không có phản chứng thì ghi '
-                            f'nguyên văn "{NO_COUNTER_EVIDENCE}". '
-                        )
-                    if rule_problem:
-                        extra += (
-                            'Chỉ dẫn "rule_ids" có trong khối CÁCH CỤC ĐÃ NHẬN DIỆN và chỉ khi '
-                            'quy tắc khớp đủ hoặc khớp một phần; không tự thêm cách cục. '
-                        )
-                    extra += (
-                        f"Mỗi luận điểm phải dẫn fact_id khác nhau; "
-                        f"phần vận trình phải nhắc năm xem {annual.get('year', '')} ({annual.get('can_chi', '')})."
-                    )
-                    reading = _request_gemini(user_prompt + extra, key, model, reading_mode=reading_mode)
-                    reading.setdefault('van_han_hien_tai', {}).update(build_annual_report(features, facts))
-                    _sanitize_reading_citations(reading, facts, context)
-                    validate_reading(reading, facts, context)
-                    conclusion_problem = check_conclusion_confidence(reading)
-                    evidence_problem = check_evidence_labels(reading, facts)
-                    rule_problem = check_rule_ids(reading, detection)
-                    if check_sensitive_content(reading):
-                        raise HoroscopeGenerationError('sensitive_content')
-                    if conclusion_problem or evidence_problem or rule_problem or check_input_confidence(reading, features):
-                        raise HoroscopeGenerationError('invalid_response')
-                    problem = (check_input_confidence(reading, features) or rule_problem
-                               or check_specificity(reading, features, context))
                 reading['cach_cuc'] = detection
-                reading['_generation'] = {'actual_provider': 'gemini', 'is_mock': False, 'reason': None,
-                                          'model': model, 'primary_model': chain[0], 'attempts': attempts,
-                                          'specificity_low': bool(problem), 'specificity_reason': problem,
+                reading['_generation'] = {'actual_provider': 'groq', 'is_mock': False, 'reason': None,
+                                          'model': g_model, 'primary_model': g_model, 'attempts': attempts,
+                                          'attempts_detail': attempts_detail,
+                                          'specificity_low': False, 'specificity_reason': None,
                                           'actual_reading_mode': reading_mode,
                                           'fallback_reason': None,
                                           'elapsed_ms': round((time.perf_counter() - start) * 1000, 1)}
                 return reading
-            except requests.Timeout:
-                error = HoroscopeGenerationError('timeout')
-            except requests.RequestException:
-                error = HoroscopeGenerationError('network')
             except HoroscopeGenerationError as exc:
-                error = exc
-                if index == 0 and exc.code == 'quota':
-                    primary_quota_exceeded = True
-            except (ValueError, KeyError, TypeError):
-                error = HoroscopeGenerationError('invalid_response')
-            if index == len(chain) - 1 or error.code not in MODEL_FALLBACK_CODES:
-                if primary_quota_exceeded and error.code == 'busy':
-                    error = HoroscopeGenerationError('quota')
-                raise error
-            logger.warning('horoscope_model_fallback from=%s to=%s code=%s', model, chain[index + 1], error.code)
-    except HoroscopeGenerationError as exc:
-        error = exc
-    logger.warning('horoscope_generation code=%s model=%s elapsed_ms=%.1f', error.code, last_model, (time.perf_counter() - start) * 1000)
-    if provider == 'gemini':
-        raise error
-    return fallback(error.code, last_model)
+                err = exc
+            except requests.Timeout:
+                err = HoroscopeGenerationError('timeout')
+            except requests.RequestException:
+                err = HoroscopeGenerationError('network')
+            except Exception:
+                err = HoroscopeGenerationError('invalid_response')
+            logger.warning('groq_generation failed code=%s, falling back...', err.code)
+            attempts_detail.append({
+                'provider': 'groq',
+                'model': g_model,
+                'code': err.code,
+                'message': ERROR_MESSAGES.get(err.code, str(err)),
+            })
+            if provider == 'groq':
+                return fallback(err.code, g_model)
+
+        elif current_provider == 'deepseek':
+            ds_key = DEEPSEEK_API_KEY or os.getenv('DEEPSEEK_API_KEY', '')
+            ds_model = DEEPSEEK_MODEL or os.getenv('DEEPSEEK_MODEL', 'deepseek-chat')
+            last_model = ds_model
+            try:
+                if not ds_key:
+                    raise HoroscopeGenerationError('missing_key')
+                user_prompt = build_horoscope_user_prompt(features, formatted_context, facts, cach_cuc=detection, reading_mode=reading_mode)
+                attempts += 1
+                reading = _request_deepseek(user_prompt, ds_key, ds_model, reading_mode=reading_mode)
+                reading.setdefault('van_han_hien_tai', {}).update(build_annual_report(features, facts))
+                _sanitize_reading_citations(reading, facts, context)
+                validate_reading(reading, facts, context)
+                reading['cach_cuc'] = detection
+                reading['_generation'] = {'actual_provider': 'deepseek', 'is_mock': False, 'reason': None,
+                                          'model': ds_model, 'primary_model': ds_model, 'attempts': attempts,
+                                          'attempts_detail': attempts_detail,
+                                          'specificity_low': False, 'specificity_reason': None,
+                                          'actual_reading_mode': reading_mode,
+                                          'fallback_reason': None,
+                                          'elapsed_ms': round((time.perf_counter() - start) * 1000, 1)}
+                return reading
+            except HoroscopeGenerationError as exc:
+                err = exc
+            except requests.Timeout:
+                err = HoroscopeGenerationError('timeout')
+            except requests.RequestException:
+                err = HoroscopeGenerationError('network')
+            except Exception:
+                err = HoroscopeGenerationError('invalid_response')
+            logger.warning('deepseek_generation failed code=%s, falling back...', err.code)
+            attempts_detail.append({
+                'provider': 'deepseek',
+                'model': ds_model,
+                'code': err.code,
+                'message': ERROR_MESSAGES.get(err.code, str(err)),
+            })
+            if provider == 'deepseek':
+                return fallback(err.code, ds_model)
+
+        elif current_provider == 'gemini':
+            key = GEMINI_API_KEY or os.getenv('GEMINI_API_KEY', '')
+            gemini_error = None
+            primary_quota_exceeded = False
+            last_model = chain[0]
+            try:
+                if not key:
+                    raise HoroscopeGenerationError('missing_key')
+                user_prompt = build_horoscope_user_prompt(features, formatted_context, facts, cach_cuc=detection, reading_mode=reading_mode)
+                for index, model in enumerate(chain):
+                    last_model = model
+                    attempts += 1
+                    try:
+                        reading = _request_gemini(user_prompt, key, model, reading_mode=reading_mode)
+                        reading.setdefault('van_han_hien_tai', {}).update(build_annual_report(features, facts))
+                        validate_reading(reading, facts, context)
+                        confidence_problem = check_input_confidence(reading, features)
+                        conclusion_problem = check_conclusion_confidence(reading)
+                        evidence_problem = check_evidence_labels(reading, facts)
+                        rule_problem = check_rule_ids(reading, detection)
+                        sensitive_problem = check_sensitive_content(reading)
+                        problem = (confidence_problem or conclusion_problem or evidence_problem
+                                   or rule_problem or sensitive_problem or check_specificity(reading, features, context))
+                        if problem:
+                            attempts += 1
+                            annual = features.get('nam_xem') or {}
+                            extra = f"\nBỔ SUNG BẮT BUỘC: {problem} "
+                            if confidence_problem:
+                                extra += (
+                                    "Giữ nguyên giờ sinh mức C/D: chỉ kết luận cấu trúc; mỗi mục "
+                                    f'gioi_han phải nêu nguyên văn "{LOW_CONFIDENCE_CAVEAT}". '
+                                )
+                            if conclusion_problem:
+                                extra += (
+                                    'Mỗi mục luan_diem/ket_luan phải ghi "muc_tin_cay" '
+                                    '(rat_manh/manh/trung_binh/yeu) đúng với số fact_id; '
+                                    'không dùng phần trăm độ tin cậy. '
+                                )
+                            if evidence_problem:
+                                extra += (
+                                    'Mỗi mục luan_diem phải có "loi_chung_cu" đúng loại chứng cứ '
+                                    f'({", ".join(EVIDENCE_TYPE_VALUES)}) khớp "kind" của fact_id đã dẫn, '
+                                    f'và "phan_chung" không rỗng; nếu không có phản chứng thì ghi '
+                                    f'nguyên văn "{NO_COUNTER_EVIDENCE}". '
+                                )
+                            if rule_problem:
+                                extra += (
+                                    'Chỉ dẫn "rule_ids" có trong khối CÁCH CỤC ĐÃ NHẬN DIỆN và chỉ khi '
+                                    'quy tắc khớp đủ hoặc khớp một phần; không tự thêm cách cục. '
+                                )
+                            extra += (
+                                f"Mỗi luận điểm phải dẫn fact_id khác nhau; "
+                                f"phần vận trình phải nhắc năm xem {annual.get('year', '')} ({annual.get('can_chi', '')})."
+                            )
+                            reading = _request_gemini(user_prompt + extra, key, model, reading_mode=reading_mode)
+                            reading.setdefault('van_han_hien_tai', {}).update(build_annual_report(features, facts))
+                            validate_reading(reading, facts, context)
+                            conclusion_problem = check_conclusion_confidence(reading)
+                            evidence_problem = check_evidence_labels(reading, facts)
+                            rule_problem = check_rule_ids(reading, detection)
+                            if check_sensitive_content(reading):
+                                raise HoroscopeGenerationError('sensitive_content')
+                            if conclusion_problem or evidence_problem or rule_problem or check_input_confidence(reading, features):
+                                raise HoroscopeGenerationError('invalid_response')
+                            problem = (check_input_confidence(reading, features) or rule_problem
+                                       or check_specificity(reading, features, context))
+                        reading['cach_cuc'] = detection
+                        reading['_generation'] = {'actual_provider': 'gemini', 'is_mock': False, 'reason': None,
+                                                  'model': model, 'primary_model': chain[0], 'attempts': attempts,
+                                                  'attempts_detail': attempts_detail,
+                                                  'specificity_low': bool(problem), 'specificity_reason': problem,
+                                                  'actual_reading_mode': reading_mode,
+                                                  'fallback_reason': None,
+                                                  'elapsed_ms': round((time.perf_counter() - start) * 1000, 1)}
+                        return reading
+                    except requests.Timeout:
+                        gemini_error = HoroscopeGenerationError('timeout')
+                    except requests.RequestException:
+                        gemini_error = HoroscopeGenerationError('network')
+                    except HoroscopeGenerationError as exc:
+                        gemini_error = exc
+                        if index == 0 and exc.code == 'quota':
+                            primary_quota_exceeded = True
+                    except (ValueError, KeyError, TypeError):
+                        gemini_error = HoroscopeGenerationError('invalid_response')
+                    if index == len(chain) - 1 or gemini_error.code not in MODEL_FALLBACK_CODES:
+                        if primary_quota_exceeded and gemini_error.code == 'busy':
+                            gemini_error = HoroscopeGenerationError('quota')
+                        raise gemini_error
+                    logger.warning('horoscope_model_fallback from=%s to=%s code=%s', model, chain[index + 1], gemini_error.code)
+            except HoroscopeGenerationError as exc:
+                gemini_error = exc
+            except Exception:
+                gemini_error = HoroscopeGenerationError('provider_error')
+
+            logger.warning('horoscope_generation code=%s model=%s elapsed_ms=%.1f', gemini_error.code, last_model, (time.perf_counter() - start) * 1000)
+            attempts_detail.append({
+                'provider': 'gemini',
+                'model': last_model,
+                'code': gemini_error.code,
+                'message': ERROR_MESSAGES.get(gemini_error.code, str(gemini_error)),
+            })
+            if provider == 'gemini':
+                raise gemini_error
+
+    # Tất cả provider trong chuỗi đều thất bại -> Chọn mã lỗi ưu tiên và fallback về mock
+    prioritized_code, _ = prioritize_error(attempts_detail)
+    logger.warning('all providers failed (%d attempts). Prioritized code=%s', len(attempts_detail), prioritized_code)
+    return fallback(prioritized_code, last_model)

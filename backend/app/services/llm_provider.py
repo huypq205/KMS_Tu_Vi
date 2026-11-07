@@ -303,9 +303,37 @@ class GroqLLMProvider(LLMProvider):
             raise LLMError(f"Lỗi kết nối Groq: {exc}") from exc
 
 
+class FallbackLLMProvider(LLMProvider):
+    """Provider kết hợp: Thử gọi Gemini trước (chính); nếu lỗi/hết quota thì tự động chuyển sang Groq (dự phòng)."""
+
+    name = "fallback"
+
+    def __init__(
+        self,
+        primary: LLMProvider | None = None,
+        fallback: LLMProvider | None = None,
+    ):
+        self.primary = primary or GeminiLLMProvider()
+        self.fallback = fallback or GroqLLMProvider()
+        self.model = f"{getattr(self.primary, 'model', 'gemini')} (dự phòng: {getattr(self.fallback, 'model', 'groq')})"
+
+    def generate(self, system_prompt: str, user_prompt: str) -> LLMResponse:
+        import logging
+        try:
+            return self.primary.generate(system_prompt, user_prompt)
+        except Exception as exc:
+            logging.getLogger(__name__).warning(
+                "Primary LLM (%s) gặp lỗi: %s. Đang chuyển sang LLM dự phòng (%s)...",
+                self.primary.name,
+                exc,
+                self.fallback.name,
+            )
+            return self.fallback.generate(system_prompt, user_prompt)
+
+
 def get_llm_provider(provider: str | None = None) -> LLMProvider:
     """Trả provider theo cấu hình (KMS_LLM_PROVIDER trong .env)."""
-    name = (provider or LLM_PROVIDER or "mock").lower()
+    name = (provider or LLM_PROVIDER or "auto").lower()
     if name == "mock":
         return MockLLMProvider()
     if name == "gemini":
@@ -314,4 +342,18 @@ def get_llm_provider(provider: str | None = None) -> LLMProvider:
         return DeepSeekLLMProvider()
     if name == "groq":
         return GroqLLMProvider()
+    if name == "auto":
+        from backend.app.core.config import GEMINI_API_KEY as CFG_GEMINI_KEY, GROQ_API_KEY as CFG_GROQ_KEY
+        gemini_k = GEMINI_API_KEY or CFG_GEMINI_KEY
+        groq_k = GROQ_API_KEY or CFG_GROQ_KEY
+        if gemini_k and groq_k:
+            return FallbackLLMProvider(
+                primary=GeminiLLMProvider(api_key=gemini_k),
+                fallback=GroqLLMProvider(api_key=groq_k),
+            )
+        if gemini_k:
+            return GeminiLLMProvider(api_key=gemini_k)
+        if groq_k:
+            return GroqLLMProvider(api_key=groq_k)
+        return MockLLMProvider()
     raise LLMError(f"LLM provider không hỗ trợ: {name}")

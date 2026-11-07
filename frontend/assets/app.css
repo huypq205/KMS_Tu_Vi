@@ -51,8 +51,8 @@
 
   /* Typography stack */
   --font: 'IBM Plex Sans', Inter, system-ui, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; /* taste-skill-ignore */
-  --font-size-title: 22px;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Consolas, 'Liberation Mono', monospace;
+  --font-size-title: 24px;
   --font-size-section: 16px;
   --font-size-kpi: 28px;
   --font-size-body: 14px;
@@ -72,6 +72,45 @@ html, body, [data-testid="stApp"] {
   background: var(--ground);
   margin: 0;
   padding: 0;
+}
+
+/* Streamlit inject font mac dinh (Source Sans) qua bien CSS va gan truc tiep
+   font-family cho phan tu con. Ghi de o goc + theo data-testid de moi phan tu
+   trong app dung IBM Plex Sans, khong fallback ve font he thong. */
+[data-testid="stApp"] {
+  --body-font: var(--font);
+  --heading-font: var(--font);
+  --code-font: var(--font-mono);
+  --body-font-color: var(--text);
+  --body-font-color-secondary: var(--muted);
+}
+[data-testid="stApp"] *,
+[data-testid="stApp"] *::before,
+[data-testid="stApp"] *::after {
+  font-family: var(--font) !important;
+}
+/* Streamlit dung rgba(49,51,63,0.2) cho vien mac dinh: linter doc alpha sai
+   va bao heavy-borders. Ep vien ro bang token cua he thong. */
+[data-testid="stApp"] hr,
+[data-testid="stApp"] [data-testid="stExpanderDetails"] {
+  border-color: var(--border) !important;
+  background: transparent !important;
+}
+[data-testid="stApp"] [data-testid="stVerticalBlockBorderWrapper"] {
+  border-color: var(--border) !important;
+}
+
+/* Icon Material cua Streamlit phai giu font icon rieng, neu khong se hien thi
+   ten ky tu (vi du 'keyboard_arrow_down') thay vi hinh. */
+[data-testid="stApp"] [data-testid="stIconMaterial"],
+[data-testid="stApp"] .material-symbols-rounded,
+[data-testid="stApp"] [class*="material-symbols"] {
+  font-family: 'Material Symbols Rounded' !important;
+}
+[data-testid="stApp"] code,
+[data-testid="stApp"] pre,
+[data-testid="stApp"] .mono-data {
+  font-family: var(--font-mono);
 }
 
 /* ==========================================================================
@@ -116,7 +155,7 @@ html, body, [data-testid="stApp"] {
 [data-testid="stMainBlockContainer"] {
   max-width: 1260px;
   padding: var(--pad);
-  margin: var(--sheet-inset) auto;
+  margin: var(--sheet-inset) var(--sheet-inset) var(--sheet-inset) 0;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-sheet);
@@ -388,13 +427,13 @@ table, [data-testid="stTable"] table {
 }
 
 th, [data-testid="stTable"] th {
-  background: var(--raised);
+  background: transparent;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: 400;
   font-size: var(--font-size-small);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  border-bottom: 1px solid var(--rule);
+  text-transform: none;
+  letter-spacing: 0;
+  border-bottom: 1px solid var(--border);
   padding: 8px 12px;
   text-align: left;
 }
@@ -586,21 +625,18 @@ code, pre, .mono-data, .stCaption code, [data-testid="stCaptionContainer"] code,
 
 /* Seal stamp flat replacement */
 .seal-stamp {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
   border: 1px solid var(--accent);
   color: var(--accent);
   font-weight: 600;
   font-size: 11px;
-  line-height: 1.2;
+  line-height: 1.25;
   padding: 4px 8px;
   letter-spacing: 0.05em;
-  text-transform: uppercase;
   border-radius: var(--radius-control);
   background: #e8f4f7;
   user-select: none;
+  white-space: nowrap;
 }
 
 /* ==========================================================================
@@ -905,8 +941,10 @@ code, pre, .mono-data, .stCaption code, [data-testid="stCaptionContainer"] code,
 }
 
 .horoscope-chart .cell.center.thien-ban {
-  grid-column: 2 / span 2;
-  grid-row: 2 / span 2;
+  /* O thien-ban nam o (row 1, col 1) va da chiem san 4 o trong grid 4x4:
+     khong gan them grid-column/row, neu khong se chen vao cac o khac. */
+  grid-column: auto;
+  grid-row: auto;
   background: var(--raised);
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
@@ -963,8 +1001,8 @@ code, pre, .mono-data, .stCaption code, [data-testid="stCaptionContainer"] code,
 
 .tb-gen-calendar {
   font-size: 11px;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--muted);
   text-align: center;
   padding-bottom: 3px;

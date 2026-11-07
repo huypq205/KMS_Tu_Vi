@@ -32,7 +32,9 @@ def test_report_contract_includes_chart_and_actual_prompt_sources():
 def test_missing_key_fallback_is_explicit():
     from backend.app.services import horoscope_interpreter as module
 
-    with patch.object(module, "GEMINI_API_KEY", ""), patch.dict(module.os.environ, {"GEMINI_API_KEY": ""}):
+    with patch.object(module, "GEMINI_API_KEY", ""), patch.dict(module.os.environ, {"GEMINI_API_KEY": ""}), \
+         patch.object(module, "GROQ_API_KEY", ""), patch.dict(module.os.environ, {"GROQ_API_KEY": ""}), \
+         patch.object(module, "DEEPSEEK_API_KEY", ""), patch.dict(module.os.environ, {"DEEPSEEK_API_KEY": ""}):
         reading = module.interpret_horoscope({}, "", provider="auto")
     assert reading["_generation"]["is_mock"] is True
     assert reading["_generation"]["reason"] == "missing_key"
@@ -178,3 +180,70 @@ def test_star_filter_resets_to_default_after_report_changes():
     assert app.selectbox(key="star_filter").value == "Cần lưu ý"
     assert new_payload["meta"]["target_year"] == year + 1
     assert not app.exception
+
+
+def test_ui_renders_attempts_detail_expander_on_fallback():
+    """Verify attempts_detail is displayed in an expander with provider error table when present."""
+    from streamlit.testing.v1 import AppTest
+    from backend.app.main import horoscope_read
+    from tests.horoscope_support import make_request
+    import json
+
+    app = AppTest.from_file(Path(__file__).resolve().parents[1] / "frontend/horoscope_ui.py", default_timeout=20).run()
+    payload = horoscope_read(make_request(provider="mock"))
+    payload["ho_ten"] = "Lê An"
+    payload["meta"]["attempts_detail"] = [
+        {"provider": "groq", "model": "llama-3.3-70b-versatile", "code": "quota", "message": "Rate limit 429"},
+        {"provider": "deepseek", "model": "deepseek-chat", "code": "deepseek_insufficient_balance", "message": "Số dư không đủ 402"},
+    ]
+    response = Mock()
+    response.iter_lines.return_value = iter([
+        json.dumps({'event': 'prepared', 'report': payload}),
+        json.dumps({'event': 'result', 'report': payload}),
+    ])
+    with patch("requests.post", return_value=response):
+        app.sidebar.button[0].click().run()
+    assert not app.exception
+    labels = [exp.label for exp in app.expander]
+    assert any("Chi tiết lỗi các provider AI" in label for label in labels)
+    all_md = " ".join(item.value for item in app.markdown)
+    assert "Groq" in all_md
+    assert "Deepseek" in all_md
+    assert "llama-3.3-70b-versatile" in all_md
+    assert "quota" in all_md
+    assert "deepseek_insufficient_balance" in all_md
+    assert "Rate limit 429" in all_md
+    assert "Số dư không đủ 402" in all_md
+
+
+def test_ui_no_attempts_detail_expander_when_not_present():
+    """Verify attempts_detail expander is NOT shown when attempts_detail is absent."""
+    from streamlit.testing.v1 import AppTest
+
+    app = AppTest.from_file(Path(__file__).resolve().parents[1] / "frontend/horoscope_ui.py", default_timeout=20).run()
+    _submit_mock_report(app)
+    labels = [exp.label for exp in app.expander]
+    assert not any("Chi tiết lỗi các provider AI" in label for label in labels)
+
+
+def test_provider_labels_mapping():
+    """Verify provider labels in Khối 7 map to expected user-friendly strings."""
+    from frontend.horoscope_sections import render_evidence_and_specialist_section
+    import streamlit as st
+    from unittest.mock import patch, MagicMock
+
+    for prov, expected in [
+        ("gemini", "Google Gemini (Online)"),
+        ("groq", "Groq (Online)"),
+        ("deepseek", "DeepSeek (Online)"),
+        ("mock", "Chỉ dữ kiện lá số (không dùng AI)"),
+    ]:
+        mock_exp = MagicMock()
+        mock_exp.__enter__.return_value = mock_exp
+        mock_exp.__exit__.return_value = None
+        with patch.object(st, "expander", return_value=mock_exp), patch.object(st, "caption") as mock_caption:
+            render_evidence_and_specialist_section({}, {"actual_provider": prov})
+            captions = [call.args[0] for call in mock_caption.call_args_list if call.args]
+            assert any(f"Chế độ: {expected}" in c for c in captions)
+
+

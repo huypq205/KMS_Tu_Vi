@@ -486,7 +486,9 @@ def render_evidence_and_specialist_section(report: dict[str, Any], meta: dict[st
         with st.expander('Thời gian xử lý và chế độ thực chạy'):
             timings = meta.get('timings_ms', {})
             provider_label = {
-                'gemini': 'Luận giải thông minh (online)',
+                'gemini': 'Google Gemini (Online)',
+                'groq': 'Groq (Online)',
+                'deepseek': 'DeepSeek (Online)',
                 'mock': 'Chỉ dữ kiện lá số (không dùng AI)',
             }.get(meta.get('actual_provider'), meta.get('actual_provider', '—'))
             actual_m = meta.get('actual_reading_mode', meta.get('reading_mode', 'chuyen_sau'))

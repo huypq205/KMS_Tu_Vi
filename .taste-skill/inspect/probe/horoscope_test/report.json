@@ -1,0 +1,473 @@
+{
+ "url": "http://127.0.0.1:8501/",
+ "at": "2026-11-06T10:58:39.193Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.65
+   ],
+   "motion": {
+    "elements": 1,
+    "css": 0,
+    "transitions": 1,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 900,
+     "screens": 1,
+     "words": 1185,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 47,
+     "sections": 9,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Bản đồ bản thân & Chiêm nghiệm",
+     "words": 7,
+     "chars": 30,
+     "lines": 1,
+     "size": 22,
+     "vw": 1.5,
+     "font": "IBM Plex Sans",
+     "weight": 600,
+     "tracking": 0,
+     "leading": 1.3,
+     "top": 77,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "Bản đồ bản thân & Chiêm nghiệm",
+     "words": 7,
+     "lines": 1,
+     "size": 22,
+     "font": "IBM Plex Sans"
+    },
+    "headings": [],
+    "headingSummary": {
+     "count": 0,
+     "maxLines": 0,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "IBM Plex Sans",
+       "share": 0.61,
+       "mono": false
+      },
+      {
+       "family": "Source Sans",
+       "share": 0.39,
+       "mono": false
+      },
+      {
+       "family": "Material Symbols Rounded",
+       "share": 0.01,
+       "mono": true
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      20,
+      22,
+      24
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "IBM Plex Sans",
+      "size": 14,
+      "leading": 1.55,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": 18.4
+     },
+     "measureChars": 74,
+     "max": {
+      "size": 24,
+      "vw": 1.7,
+      "font": "IBM Plex Sans",
+      "text": "Lập luận từ sao và nguồn sách"
+     },
+     "monoShare": 0.01,
+     "monoProseShare": 0.01,
+     "monoFamilies": [
+      "Material Symbols Rounded"
+     ],
+     "monoSamples": [
+      "keyboard_arrow_down",
+      "keyboard_arrow_right",
+      "keyboard_arrow_right",
+      "keyboard_arrow_right"
+     ],
+     "microLabels": 2,
+     "microLabelShare": 0.002,
+     "microSamples": [
+      "KMS",
+      "Dương lịch · Âm lịch"
+     ],
+     "upperShare": 0.01,
+     "centerShare": 0.03,
+     "smallText": 58
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#f9fbfc",
+     "bodyBgHsl": {
+      "h": 200,
+      "s": 0.33,
+      "l": 0.98
+     },
+     "dark": false,
+     "sectionBgs": [
+      {
+       "color": "#f9fbfc",
+       "top": 0,
+       "hsl": {
+        "h": 200,
+        "s": 0.33,
+        "l": 0.98
+       }
+      },
+      {
+       "color": "#ffffff",
+       "top": 8,
+       "hsl": {
+        "h": 0,
+        "s": 0,
+        "l": 1
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#131416",
+       "share": 0.51
+      },
+      {
+       "color": "#5d5f60",
+       "share": 0.36
+      },
+      {
+       "color": "#1e7b4f",
+       "share": 0.04
+      },
+      {
+       "color": "#1b6c80",
+       "share": 0.03
+      },
+      {
+       "color": "#c4242a",
+       "share": 0.03
+      }
+     ],
+     "button": {
+      "bg": "#f0f2f6",
+      "hsl": {
+       "h": 220,
+       "s": 0.25,
+       "l": 0.95
+      },
+      "fg": "#31333f"
+     },
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 6,
+     "inHero": 0,
+     "radius": "pill",
+     "height": 32,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 0,
+     "shadowOverlay": 0,
+     "shadowSamples": [],
+     "gradients": 0,
+     "scrims": 0,
+     "gradientSamples": [],
+     "gradientText": 0,
+     "hairlines": 18,
+     "hairlineSamples": [
+      "div.viewer-bar 1162px",
+      "div.other-row 259px",
+      "div.other-row 259px",
+      "div.other-row 259px",
+      "div.other-row 259px"
+     ],
+     "outlinedBoxes": 21,
+     "dashed": 24,
+     "blurred": 0,
+     "roundedBoxes": 21,
+     "boxRadius": 8,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 12,
+       "iconTopped": false,
+       "rounded": true,
+       "top": 735
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 2,
+     "fixed": false,
+     "height": 121,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "source sans",
+     "material symbols rounded",
+     "ibm plex sans"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 900,
+    "margins": {
+     "left": 30,
+     "right": 58
+    },
+    "sections": [],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Bản đồ bản thân & Chiêm nghiệm",
+      "size": 22,
+      "top": 77,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 269,
+      "n": 17
+     },
+     {
+      "x": 253,
+      "n": 5
+     },
+     {
+      "x": 871,
+      "n": 3
+     },
+     {
+      "x": 30,
+      "n": 1
+     },
+     {
+      "x": 295,
+      "n": 1
+     }
+    ],
+    "leftBlocks": 27,
+    "bodySize": 14,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.07,
+    "voidBox": {
+     "x": 840,
+     "y": 120,
+     "w": 480,
+     "h": 180
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": false,
+    "ground": "#f9fbfc",
+    "sidebar": {
+     "w": 228,
+     "tag": "section",
+     "links": 18,
+     "share": 0.16
+    },
+    "topbar": {
+     "h": 60
+    },
+    "canvas": {
+     "left": 25,
+     "right": 50
+    },
+    "hero": {
+     "text": "Bản đồ bản thân & Chiêm nghiệm",
+     "words": 7,
+     "chars": 30,
+     "lines": 1,
+     "size": 22,
+     "vw": 1.5,
+     "font": "IBM Plex Sans",
+     "weight": 600,
+     "tracking": 0,
+     "leading": 1.3,
+     "top": 77,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 1,
+    "layout": {
+     "panels": 2,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 21,
+     "radii": [
+      [
+       8,
+       19
+      ],
+      [
+       0,
+       1
+      ],
+      [
+       16,
+       1
+      ]
+     ],
+     "heavyBorders": 1,
+     "borderSamples": [
+      "#323241 on #ffffff (12.59:1)"
+     ],
+     "heavyShadows": 0,
+     "softShadows": 0,
+     "shadowSamples": [],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 2,
+     "tabularShare": 0,
+     "kpiMax": 13
+    },
+    "rows": {
+     "count": 24,
+     "median": 38
+    },
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.34,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      18,
+      20,
+      22,
+      24
+     ]
+    },
+    "title": {
+     "text": "Bản đồ bản thân & Chiêm nghiệm",
+     "size": 22,
+     "top": 77
+    },
+    "colourShare": 0.001
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "micro-label",
+   "width": 1440,
+   "message": "2 tiny uppercase letter-spaced label(s): \"KMS\", \"Dương lịch · Âm lịch\"",
+   "fix": "Prefer sentence case at body size."
+  },
+  {
+   "level": "WARN",
+   "id": "no-data-hue",
+   "width": 1440,
+   "message": "The screen has a chart but no hue on any of its data (0.1% coloured pixels).",
+   "fix": "Put the style's one chart hue (or the brand's) on the screen's main data element: today's line, the booked bars, the current period, the cover margin. Keep the chrome neutral; the hue still stays under the style's colour budget."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\Ki7\\KMS_Tu_Vi\\.taste-skill\\inspect\\probe\\horoscope_test\\desktop-fold.jpg",
+   "pages": [
+    "D:\\Ki7\\KMS_Tu_Vi\\.taste-skill\\inspect\\probe\\horoscope_test\\desktop-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

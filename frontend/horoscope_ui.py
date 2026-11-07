@@ -258,6 +258,22 @@ else:
     if is_mock:
         reason = "Bạn đã chọn chế độ chỉ dữ kiện lá số." if meta.get('reason') == 'requested' else meta.get('message', 'Luận giải thông minh chưa trả được bài hợp lệ.')
         st.markdown('<p class="notice">Phân tích dữ kiện lá số · ' + text(reason) + ' Phần dưới mô tả sao/cung tính được; chưa phải bài luận giải thông minh.</p>', unsafe_allow_html=True)
+        attempts_detail = meta.get("attempts_detail")
+        if attempts_detail and isinstance(attempts_detail, list):
+            with st.expander("Chi tiết lỗi các provider AI (Chẩn đoán kết nối)", expanded=False):
+                rows = []
+                for att in attempts_detail:
+                    p_name = str(att.get("provider", "—")).capitalize()
+                    m_name = str(att.get("model", "—"))
+                    code = str(att.get("code", "—"))
+                    msg = str(att.get("message", "—")).replace("|", "-").replace("\n", " ")
+                    rows.append(f"| **{p_name}** | `{m_name}` | `{code}` | {msg} |")
+                table_md = (
+                    "| Provider | Model | Mã lỗi | Chi tiết thông báo |\n"
+                    "| :--- | :--- | :--- | :--- |\n"
+                    + "\n".join(rows)
+                )
+                st.markdown(table_md)
     elif is_mock is None:
         st.markdown('<p class="notice">Dịch vụ chưa cung cấp thông tin xác nhận chế độ tạo bài.</p>', unsafe_allow_html=True)
     else:

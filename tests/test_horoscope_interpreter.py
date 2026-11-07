@@ -7,6 +7,7 @@ from __future__ import annotations
 import json
 import sys
 import unittest
+from unittest.mock import patch
 
 if sys.stdout and hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
@@ -19,6 +20,7 @@ from backend.app.services.horoscope_rag_bridge import (
     retrieve_horoscope_context,
     format_context_for_prompt,
 )
+from backend.app.services import horoscope_interpreter
 from backend.app.services.horoscope_interpreter import (
     HOROSCOPE_SYSTEM_PROMPT,
     HoroscopeGenerationError,
@@ -164,6 +166,124 @@ class TestHoroscopeInterpreter(unittest.TestCase):
         self.assertIn("tong_quan", result)
         self.assertIn("su_nghiep", result)
         self.assertIn("loi_khuyen_hanh_dong", result)
+
+    @patch("backend.app.services.horoscope_interpreter._request_groq")
+    @patch("backend.app.services.horoscope_interpreter._request_gemini")
+    def test_tc08_fallback_gemini_fail_groq_success(self, mock_gemini, mock_groq):
+        """TC-INT-08: Gemini lỗi 429 -> Fallback tuần tự sang Groq thành công (Gemini chính, Groq dự phòng)."""
+        mock_gemini.side_effect = HoroscopeGenerationError("quota")
+        mock_reading = generate_mock_reading(self.features, self.context_raw)
+        mock_groq.return_value = mock_reading
+
+        with patch.object(horoscope_interpreter, "GEMINI_API_KEY", "test-key"), \
+             patch.object(horoscope_interpreter, "GROQ_API_KEY", "gsk-test"), \
+             patch.object(horoscope_interpreter, "HOROSCOPE_FALLBACK_MODELS", ()):
+            res = interpret_horoscope(self.features, self.formatted_context, provider="auto", context=self.context_raw)
+
+        gen = res["_generation"]
+        self.assertEqual(gen["actual_provider"], "groq")
+        self.assertFalse(gen["is_mock"])
+        self.assertEqual(len(gen["attempts_detail"]), 1)
+        self.assertEqual(gen["attempts_detail"][0]["provider"], "gemini")
+        self.assertEqual(gen["attempts_detail"][0]["code"], "quota")
+
+    @patch("backend.app.services.horoscope_interpreter._request_deepseek")
+    @patch("backend.app.services.horoscope_interpreter._request_groq")
+    @patch("backend.app.services.horoscope_interpreter._request_gemini")
+    def test_tc09_gemini_primary_success_skips_groq_and_deepseek(self, mock_gemini, mock_groq, mock_ds):
+        """TC-INT-09: Gemini thành công ngay lần đầu -> Không gọi Groq hay DeepSeek."""
+        mock_reading = generate_mock_reading(self.features, self.context_raw)
+        mock_gemini.return_value = mock_reading
+
+        with patch.object(horoscope_interpreter, "GEMINI_API_KEY", "test-key"), \
+             patch.object(horoscope_interpreter, "GROQ_API_KEY", "gsk-test"), \
+             patch.object(horoscope_interpreter, "DEEPSEEK_API_KEY", "sk-test"):
+            res = interpret_horoscope(self.features, self.formatted_context, provider="auto", context=self.context_raw)
+
+        gen = res["_generation"]
+        self.assertEqual(gen["actual_provider"], "gemini")
+        self.assertFalse(gen["is_mock"])
+        self.assertEqual(len(gen["attempts_detail"]), 0)
+        mock_groq.assert_not_called()
+        mock_ds.assert_not_called()
+
+    @patch("backend.app.services.horoscope_interpreter._request_groq")
+    @patch("backend.app.services.horoscope_interpreter._request_gemini")
+    def test_tc10_fallback_all_fail_saves_attempts_detail(self, mock_gemini, mock_groq):
+        """TC-INT-10: Cả Gemini và Groq đều lỗi -> Fallback về mock, lưu 2 attempts_detail."""
+        mock_gemini.side_effect = HoroscopeGenerationError("quota")
+        mock_groq.side_effect = HoroscopeGenerationError("invalid_key")
+
+        with patch.object(horoscope_interpreter, "GEMINI_API_KEY", "test-key"), \
+             patch.object(horoscope_interpreter, "GROQ_API_KEY", "gsk-test"), \
+             patch.object(horoscope_interpreter, "HOROSCOPE_FALLBACK_MODELS", ()):
+            res = interpret_horoscope(self.features, self.formatted_context, provider="auto", context=self.context_raw)
+
+        gen = res["_generation"]
+        self.assertEqual(gen["actual_provider"], "mock")
+        self.assertTrue(gen["is_mock"])
+        self.assertEqual(len(gen["attempts_detail"]), 2)
+        self.assertEqual(gen["attempts_detail"][0]["provider"], "gemini")
+        self.assertEqual(gen["attempts_detail"][1]["provider"], "groq")
+        for att in gen["attempts_detail"]:
+            self.assertIn("provider", att)
+            self.assertIn("model", att)
+            self.assertIn("code", att)
+            self.assertIn("message", att)
+
+    @patch("backend.app.services.horoscope_interpreter._request_groq")
+    @patch("backend.app.services.horoscope_interpreter._request_gemini")
+    def test_tc11_error_prioritization_quota_over_401(self, mock_gemini, mock_groq):
+        """TC-INT-11: Ưu tiên mã lỗi (Gemini 429 quota không bị che lấp bởi Groq 401 invalid_key)."""
+        mock_gemini.side_effect = HoroscopeGenerationError("quota")
+        mock_groq.side_effect = HoroscopeGenerationError("invalid_key")
+        with patch.object(horoscope_interpreter, "GEMINI_API_KEY", "test-key"), \
+             patch.object(horoscope_interpreter, "GROQ_API_KEY", "gsk-test"), \
+             patch.object(horoscope_interpreter, "HOROSCOPE_FALLBACK_MODELS", ()):
+            res = interpret_horoscope(self.features, self.formatted_context, provider="auto", context=self.context_raw)
+        self.assertEqual(res["_generation"]["reason"], "quota")
+
+    @patch("backend.app.services.horoscope_interpreter._request_deepseek")
+    @patch("backend.app.services.horoscope_interpreter._request_groq")
+    @patch("backend.app.services.horoscope_interpreter._request_gemini")
+    def test_tc13_deepseek_excluded_from_auto_fallback(self, mock_gemini, mock_groq, mock_ds):
+        """TC-INT-13: DeepSeek bị loại bỏ khỏi chuỗi fallback auto dù có DEEPSEEK_API_KEY."""
+        mock_gemini.side_effect = HoroscopeGenerationError("quota")
+        mock_groq.side_effect = HoroscopeGenerationError("busy")
+
+        with patch.object(horoscope_interpreter, "GEMINI_API_KEY", "test-key"), \
+             patch.object(horoscope_interpreter, "GROQ_API_KEY", "gsk-test"), \
+             patch.object(horoscope_interpreter, "DEEPSEEK_API_KEY", "sk-test"), \
+             patch.object(horoscope_interpreter, "HOROSCOPE_FALLBACK_MODELS", ()):
+            res = interpret_horoscope(self.features, self.formatted_context, provider="auto", context=self.context_raw)
+
+        # Mock được gọi sau khi Gemini và Groq thất bại, DeepSeek hoàn toàn bị bỏ qua
+        mock_ds.assert_not_called()
+        self.assertEqual(res["_generation"]["actual_provider"], "mock")
+
+    @patch("backend.app.services.horoscope_interpreter._request_gemini")
+    @patch("backend.app.services.horoscope_interpreter._request_groq")
+    def test_tc12_explicit_provider_modes(self, mock_groq, mock_gemini):
+        """TC-INT-12: Kiểm tra gọi đích danh provider (mock, groq lỗi, gemini lỗi)."""
+        # Case 1: provider="mock"
+        res_mock = interpret_horoscope(self.features, self.formatted_context, provider="mock")
+        self.assertEqual(res_mock["_generation"]["actual_provider"], "mock")
+        self.assertEqual(res_mock["_generation"]["attempts_detail"], [])
+
+        # Case 2: provider="groq" gặp lỗi -> fallback mock với 1 attempt trong attempts_detail
+        mock_groq.side_effect = HoroscopeGenerationError("quota")
+        with patch.object(horoscope_interpreter, "GROQ_API_KEY", "gsk-test"):
+            res_groq = interpret_horoscope(self.features, self.formatted_context, provider="groq")
+        self.assertEqual(res_groq["_generation"]["actual_provider"], "mock")
+        self.assertEqual(len(res_groq["_generation"]["attempts_detail"]), 1)
+        self.assertEqual(res_groq["_generation"]["attempts_detail"][0]["provider"], "groq")
+
+        # Case 3: provider="gemini" gặp lỗi -> raise HoroscopeGenerationError (forced gemini không âm thầm trả mock)
+        mock_gemini.side_effect = HoroscopeGenerationError("quota")
+        with patch.object(horoscope_interpreter, "GEMINI_API_KEY", "test-key"), \
+             patch.object(horoscope_interpreter, "HOROSCOPE_FALLBACK_MODELS", ()):
+            with self.assertRaises(HoroscopeGenerationError):
+                interpret_horoscope(self.features, self.formatted_context, provider="gemini")
 
 
 if __name__ == "__main__":

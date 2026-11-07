@@ -1,5 +1,11 @@
 # TEST PLAN: Horoscope — Khắc phục 4 điểm feedback giảng viên + baseline facts schema
 
+> Review LLM Provider Refactor (2026-11-07): PASSED.
+> - Bỏ DeepSeek: Xóa DeepSeek khỏi fallback chain và cấu hình runtime (.env, .env.example, config.py).
+> - Gemini API làm chính: Thiết lập làm provider ưu tiên hàng đầu trong horoscope (`interpret_horoscope`) và chat RAG (`FallbackLLMProvider`).
+> - Groq API làm dự phòng: Tự động fallback sang Groq khi Gemini gặp sự cố, lỗi timeout/network hoặc hết quota (429).
+> - Kiểm thử: Toàn bộ test suite `test_fallback_provider.py`, `test_horoscope_interpreter.py`, `test_groq_provider.py`, `test_llm_provider_sdk.py` và 208 horoscope tests đều **PASSED 100%**.
+
 > Review Plan Cải thiện nội dung báo cáo Tử Vi cho người xem phổ thông (Gói 1–4, 2026-11-04): PASSED.
 > - **Gói 1 (Nguồn kiến thức):** Mở rộng `star_meanings_reference.py` nạp và chọn lọc từ `star_meanings.md` và `cach_cuc_luan_giai.md`. Nguồn hiển thị "Tử Vi Đẩu Số Toàn Tập", ghi chú tham khảo, không số trang. Bộ lọc nội dung nhạy cảm, lọc theo từng chủ đề.
 > - **Gói 2 (Hợp đồng và luận giải):** Bổ sung `reading.tom_tat_nam` (3 đoạn 150–220 từ), `reading.can_cu_noi_dung`, `reference_ids`, `knowledge_references`. Tăng token budget mặc định lên 12288. Cập nhật prompt tiếng Việt đời thường. Bump `CONTRACT_VERSION = 2`, `CACHE_SCHEMA_VERSION = 8`.
