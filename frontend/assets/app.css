@@ -941,10 +941,9 @@ code, pre, .mono-data, .stCaption code, [data-testid="stCaptionContainer"] code,
 }
 
 .horoscope-chart .cell.center.thien-ban {
-  /* O thien-ban nam o (row 1, col 1) va da chiem san 4 o trong grid 4x4:
-     khong gan them grid-column/row, neu khong se chen vao cac o khac. */
-  grid-column: auto;
-  grid-row: auto;
+  /* Reserve the central 2x2 area so the twelve palaces stay on the perimeter. */
+  grid-column: 2 / 4;
+  grid-row: 2 / 4;
   background: var(--raised);
   border: 1px solid var(--border);
   border-radius: var(--radius-card);

@@ -34,10 +34,15 @@ from backend.app.services.star_classification import (
 GOOD_SAOS = set(CAT_TINH_IDS) | {92, 93, 94}
 BAD_SAOS = set(HUNG_TINH_IDS) | {95}
 
+# Vendor numbering: 1 = Tý, ..., 12 = Hợi. Zero-based (row, column):
+# Tỵ   Ngọ   Mùi   Thân
+# Thìn [ Thiên bàn ] Dậu
+# Mão  [    2×2    ] Tuất
+# Dần  Sửu   Tý    Hợi
 CHI_GRID_POS = {
-    1: (3, 0), 2: (3, 1), 3: (0, 3), 4: (1, 3), 5: (2, 3),
-    6: (0, 2), 7: (0, 1), 8: (0, 0), 9: (1, 0), 10: (2, 0),
-    11: (3, 2), 12: (3, 3),
+    1: (3, 2), 2: (3, 1), 3: (3, 0), 4: (2, 0), 5: (1, 0),
+    6: (0, 0), 7: (0, 1), 8: (0, 2), 9: (0, 3), 10: (1, 3),
+    11: (2, 3), 12: (3, 3),
 }
 
 

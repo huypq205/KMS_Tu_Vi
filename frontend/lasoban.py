@@ -170,7 +170,7 @@ if submitted:
                "Sao tốt màu xanh, sao hung màu đỏ.")
 
     # --- lưới 12 cung ---
-    st.markdown(luoi_html(info["thap_ni_cung"]), unsafe_allow_html=True)
+    st.markdown('<div class="horoscope-chart">' + luoi_html(info["thap_ni_cung"]) + '</div>', unsafe_allow_html=True)
 
     # --- phân tích (rule-based, offline) ---
     st.subheader("Phân tích cấu trúc lá số")
